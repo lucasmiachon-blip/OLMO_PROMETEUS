@@ -1,0 +1,1340 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OLMO Roadmap HQ</title>
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --panel: rgba(255, 251, 245, 0.86);
+      --panel-strong: rgba(255, 252, 248, 0.96);
+      --ink: #201915;
+      --muted: #6b5e55;
+      --line: rgba(32, 25, 21, 0.12);
+      --accent: #1f5d5b;
+      --accent-soft: rgba(31, 93, 91, 0.10);
+      --warn: #8a5123;
+      --warn-soft: rgba(138, 81, 35, 0.12);
+      --safe: #2c6b44;
+      --safe-soft: rgba(44, 107, 68, 0.12);
+      --night: #30445f;
+      --night-soft: rgba(48, 68, 95, 0.12);
+      --shadow: 0 20px 45px rgba(56, 41, 30, 0.10);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --body: "Aptos", "Segoe UI Variable", "Trebuchet MS", sans-serif;
+      --mono: Consolas, "SFMono-Regular", monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--body);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.92), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(31, 93, 91, 0.12), transparent 32%),
+        linear-gradient(180deg, #f7f3ed 0%, #ede1d0 100%);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1380px, calc(100vw - 32px));
+      margin: 24px auto 40px;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+    }
+
+    .panel {
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+      padding: 24px 20px;
+      position: sticky;
+      top: 24px;
+      height: fit-content;
+    }
+
+    .content {
+      display: grid;
+      gap: 20px;
+    }
+
+    .hero,
+    .section {
+      padding: 24px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: var(--display);
+      font-weight: 700;
+      line-height: 1.02;
+    }
+
+    h1 {
+      margin-top: 14px;
+      font-size: clamp(34px, 6vw, 60px);
+      max-width: 12ch;
+    }
+
+    h2 {
+      font-size: clamp(26px, 4vw, 36px);
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    textarea,
+    input,
+    select,
+    button {
+      font: inherit;
+    }
+
+    textarea,
+    input,
+    select {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      color: var(--ink);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 140px;
+      line-height: 1.55;
+    }
+
+    input[readonly] {
+      background: rgba(255, 250, 243, 0.92);
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 16px;
+      cursor: pointer;
+      color: white;
+      background: var(--accent);
+      transition: transform 120ms ease, opacity 120ms ease;
+    }
+
+    button:hover,
+    .link-card:hover {
+      transform: translateY(-1px);
+      opacity: 0.97;
+    }
+
+    button.secondary {
+      background: rgba(32, 25, 21, 0.80);
+    }
+
+    button.ghost {
+      background: white;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .hero-grid,
+    .stats,
+    .toolbar,
+    .two-col,
+    .digest-grid,
+    .link-grid,
+    .lane-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .hero-grid {
+      margin-top: 20px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .toolbar {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .two-col {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .digest-grid,
+    .link-grid,
+    .lane-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .section-note {
+      font-size: 14px;
+      max-width: 52ch;
+    }
+
+    .stat,
+    .digest-card,
+    .link-card,
+    .lane-card,
+    .list-card {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-family: var(--display);
+      color: var(--ink);
+    }
+
+    .card-index {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      text-align: center;
+      line-height: 28px;
+      font-weight: 700;
+      background: var(--accent-soft);
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .kicker {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .path {
+      display: block;
+      margin-top: 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .link-card {
+      display: block;
+      text-decoration: none;
+      transition: transform 120ms ease, opacity 120ms ease;
+    }
+
+    .form-grid,
+    .form-grid-wide {
+      display: grid;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .form-grid {
+      grid-template-columns: 1.45fr 1fr 1fr auto;
+    }
+
+    .form-grid-wide {
+      grid-template-columns: 1.4fr 1fr 1fr 1fr auto;
+    }
+
+    .items {
+      display: grid;
+      gap: 10px;
+    }
+
+    .item {
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.82);
+      border-radius: var(--radius-md);
+      display: grid;
+      gap: 10px;
+    }
+
+    .item-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .item-title {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .pill.warn { color: var(--warn); background: var(--warn-soft); }
+    .pill.safe { color: var(--safe); background: var(--safe-soft); }
+    .pill.accent { color: var(--accent); background: var(--accent-soft); }
+    .pill.night { color: var(--night); background: var(--night-soft); }
+
+    .muted {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .mono {
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+
+    .small {
+      font-size: 13px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: rgba(32, 25, 21, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 10px 0 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #1f5d5b 0%, #5e8d88 100%);
+      border-radius: 999px;
+      width: 0;
+      transition: width 220ms ease;
+    }
+
+    .sidebar-block + .sidebar-block {
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+    }
+
+    .empty {
+      padding: 16px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius-md);
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.44);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 1140px) {
+      .shell,
+      .two-col,
+      .hero-grid,
+      .digest-grid,
+      .link-grid,
+      .lane-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+    }
+
+    @media (max-width: 880px) {
+      .toolbar,
+      .form-grid,
+      .form-grid-wide,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="panel sidebar">
+      <span class="eyebrow">Private Learning</span>
+      <h2 style="margin-top: 14px;">Quartel-general local</h2>
+      <p style="margin-top: 10px;">
+        Inbox, estudo, experimentos e candidatos a migracao, separados em um painel simples e local. Nada daqui deve tocar o repo principal sem autorizacao explicita.
+      </p>
+
+      <div class="sidebar-block">
+        <div class="small muted">Progresso da trilha</div>
+        <div class="progress-bar">
+          <div id="studyProgress" class="progress-fill"></div>
+        </div>
+        <div id="studyProgressLabel" class="small">0% dos itens marcados como done</div>
+      </div>
+
+      <div class="sidebar-block stats">
+        <div class="stat">
+          <span class="stat-label">Deadlines abertos</span>
+          <div id="deadlineOpenCount" class="stat-value">0</div>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Trilha ativa</span>
+          <div id="studyOpenCount" class="stat-value">0</div>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Experimentos vivos</span>
+          <div id="experimentCount" class="stat-value">0</div>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Candidatos</span>
+          <div id="candidateCount" class="stat-value">0</div>
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="stat">
+          <span class="stat-label">Ultimo autosave</span>
+          <div id="lastSaved" class="mono">--:--</div>
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <h3>Cadencia</h3>
+        <label class="small muted" for="reviewCadence">Revisar digest e trilha a cada</label>
+        <select id="reviewCadence">
+          <option value="2">2 dias</option>
+          <option value="3">3 dias</option>
+          <option value="7">7 dias</option>
+          <option value="14">14 dias</option>
+        </select>
+        <p class="footer-note">
+          Autosave local via localStorage. Use export/import JSON para backup manual do estado do painel.
+        </p>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="panel hero">
+        <span class="eyebrow">Roadmap + Study</span>
+        <h1>Baixo risco para roadmap, inbox e estudo.</h1>
+        <p style="margin-top: 14px; max-width: 66ch;">
+          Use o digest em 4 paragrafos para transformar email em foco. Depois roteie tudo para prazo, trilha de estudo, experimento ou candidato a migracao. O dashboard e local; `private-learning/` continua separado do que pode um dia sair deste workspace.
+        </p>
+
+        <div class="hero-grid">
+          <div class="stat">
+            <span class="stat-label">Foco atual</span>
+            <input id="focus" type="text" placeholder="Ex.: email digest operacional com baixo risco">
+          </div>
+          <div class="stat">
+            <span class="stat-label">Pergunta da semana</span>
+            <input id="weeklyQuestion" type="text" placeholder="Ex.: o que ja esta pronto para virar candidato?">
+          </div>
+          <div class="stat">
+            <span class="stat-label">Proximo checkpoint</span>
+            <input id="checkpoint" type="text" placeholder="Ex.: revisar painel na sexta 09:00">
+          </div>
+          <div class="stat">
+            <span class="stat-label">Fronteira</span>
+            <input value="OLMO principal continua intocado" readonly>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <button id="exportBtn" type="button">Exportar JSON</button>
+          <button id="importBtn" class="secondary" type="button">Importar JSON</button>
+          <button id="resetBtn" class="ghost" type="button">Resetar painel</button>
+          <button id="sampleBtn" class="ghost" type="button">Carregar exemplo</button>
+        </div>
+        <input id="importFile" type="file" accept="application/json" hidden>
+      </section>
+
+      <section class="panel section">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Mapa</span>
+            <h2>Sistema local</h2>
+          </div>
+          <p class="section-note">Esses arquivos mantem a separacao entre material pessoal, experimento reversivel e qualquer coisa que possa um dia migrar.</p>
+        </div>
+
+        <div class="link-grid">
+          <a class="link-card" href="../roadmap/EMAIL-DIGEST-4P.md">
+            <span class="card-index">1</span>
+            <h3>Digest 4P</h3>
+            <p>Regra simples para resumir email em fatos, deadlines, estudo e filosofia.</p>
+            <span class="path">roadmap/EMAIL-DIGEST-4P.md</span>
+          </a>
+          <a class="link-card" href="../roadmap/STUDY-TRACK-DONE.md">
+            <span class="card-index">2</span>
+            <h3>Study Track</h3>
+            <p>Status curtos e um gate objetivo para marcar `done` sem autoengano.</p>
+            <span class="path">roadmap/STUDY-TRACK-DONE.md</span>
+          </a>
+          <a class="link-card" href="../roadmap/WORK-LANES.md">
+            <span class="card-index">3</span>
+            <h3>Work Lanes</h3>
+            <p>Define o que e `private`, o que e `experiment` e o que pode virar `candidate`.</p>
+            <span class="path">roadmap/WORK-LANES.md</span>
+          </a>
+          <a class="link-card" href="../playground/README.md">
+            <span class="card-index">4</span>
+            <h3>Playground</h3>
+            <p>Zona de testes reversiveis. Se nao puder ser deletado sem dor, nao pertence aqui.</p>
+            <span class="path">playground/README.md</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="panel section">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Digest</span>
+            <h2>Resumo em 4 paragrafos</h2>
+          </div>
+          <p class="section-note">Padrao sugerido: fatos, deadlines, conceitos e filosofia. O objetivo e reduzir difusao, nao escrever um ensaio.</p>
+        </div>
+
+        <div class="digest-grid">
+          <div class="digest-card">
+            <div class="card-index">1</div>
+            <h3>O que aconteceu</h3>
+            <textarea id="digest1" placeholder="Resumo do que importa na inbox e no periodo."></textarea>
+          </div>
+          <div class="digest-card">
+            <div class="card-index">2</div>
+            <h3>Deadlines e cobrancas</h3>
+            <textarea id="digest2" placeholder="O que vence, o que bloqueia, o que exige resposta."></textarea>
+          </div>
+          <div class="digest-card">
+            <div class="card-index">3</div>
+            <h3>Conceitos para estudar</h3>
+            <textarea id="digest3" placeholder="Topicos, ferramentas, pessoas ou sistemas que entraram no radar."></textarea>
+          </div>
+          <div class="digest-card">
+            <div class="card-index">4</div>
+            <h3>Filosofia e tensoes</h3>
+            <textarea id="digest4" placeholder="O que os emails revelam sobre valores, direcao, medo, identidade ou criterio."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel section">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Routing</span>
+            <h2>Inbox para lanes</h2>
+          </div>
+          <p class="section-note">Toda saida do digest precisa cair em uma lane clara. Isso evita confundir nota pessoal, experimento e artefato que pode ser reaproveitado depois.</p>
+        </div>
+
+        <div class="lane-grid">
+          <article class="lane-card">
+            <span class="kicker">Lane 1</span>
+            <h3>Deadline</h3>
+            <p>Use quando existe prazo, resposta pendente ou compromisso. Se custa atraso, entra aqui.</p>
+          </article>
+          <article class="lane-card">
+            <span class="kicker">Lane 2</span>
+            <h3>Study Track</h3>
+            <p>Use para conceito ou habilidade que precisa sair do nebuloso e virar capacidade real com `done` visivel.</p>
+          </article>
+          <article class="lane-card">
+            <span class="kicker">Lane 3</span>
+            <h3>Experiment</h3>
+            <p>Use quando a pergunta ainda esta aberta. O objetivo e responder algo localmente, com artefato pequeno e reversivel.</p>
+          </article>
+          <article class="lane-card">
+            <span class="kicker">Lane 4</span>
+            <h3>Candidate</h3>
+            <p>Use so depois de validar localmente. Aqui ficam os padroes que podem migrar um dia, nunca diretamente para o repo principal.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="two-col">
+        <section class="panel section">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Deadlines</span>
+              <h2>Prazos e compromissos</h2>
+            </div>
+            <p class="section-note">Capture o que vence e marque quando saiu do radar ou foi resolvido.</p>
+          </div>
+
+          <div class="form-grid">
+            <input id="deadlineTitle" type="text" placeholder="Deadline ou pendencia">
+            <input id="deadlineDue" type="date">
+            <select id="deadlineStatus">
+              <option value="open">aberto</option>
+              <option value="waiting">esperando</option>
+              <option value="done">feito</option>
+            </select>
+            <button id="addDeadlineBtn" type="button">Adicionar</button>
+          </div>
+
+          <div id="deadlineList" class="items"></div>
+        </section>
+
+        <section class="panel section">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Study Track</span>
+              <h2>Trilha visual com done</h2>
+            </div>
+            <p class="section-note">Os status vao de `capturado` ate `done`. Marque `done` so quando voce souber explicar, aplicar e delimitar o uso.</p>
+          </div>
+
+          <div class="form-grid">
+            <input id="studyTitle" type="text" placeholder="Conceito ou habilidade">
+            <input id="studySource" type="text" placeholder="Origem: email, doc, conversa">
+            <select id="studyStatus">
+              <option value="capturado">capturado</option>
+              <option value="em-estudo">em estudo</option>
+              <option value="aplicando">aplicando</option>
+              <option value="done">done</option>
+            </select>
+            <button id="addStudyBtn" type="button">Adicionar</button>
+          </div>
+
+          <div id="studyList" class="items"></div>
+        </section>
+      </section>
+
+      <section class="two-col">
+        <section class="panel section">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Experiments</span>
+              <h2>Experimentos reversiveis</h2>
+            </div>
+            <p class="section-note">Todo experimento precisa ter artefato e risco. Quando deixar de ser pergunta aberta, promova para candidato.</p>
+          </div>
+
+          <div class="form-grid-wide">
+            <input id="experimentTitle" type="text" placeholder="Experimento">
+            <input id="experimentArtifact" type="text" placeholder="Artefato esperado">
+            <input id="experimentRisk" type="text" placeholder="Risco ou blast radius">
+            <select id="experimentStatus">
+              <option value="idea">ideia</option>
+              <option value="running">rodando</option>
+              <option value="stopped">parado</option>
+            </select>
+            <button id="addExperimentBtn" type="button">Adicionar</button>
+          </div>
+
+          <div id="experimentList" class="items"></div>
+        </section>
+
+        <section class="panel section">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Candidates</span>
+              <h2>O que pode migrar</h2>
+            </div>
+            <p class="section-note">Aqui entram so padroes que ja provaram utilidade local. O proximo passo ainda depende de validacao humana.</p>
+          </div>
+
+          <div class="form-grid-wide">
+            <input id="candidateTitle" type="text" placeholder="Candidato">
+            <input id="candidateArtifact" type="text" placeholder="Artefato">
+            <input id="candidateTrigger" type="text" placeholder="Trigger minimo">
+            <select id="candidateStatus">
+              <option value="draft">draft</option>
+              <option value="validated">validado</option>
+              <option value="ready">pronto para discutir</option>
+            </select>
+            <button id="addCandidateBtn" type="button">Adicionar</button>
+          </div>
+
+          <div id="candidateList" class="items"></div>
+        </section>
+      </section>
+
+      <section class="panel section">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Notes</span>
+            <h2>Criterios de operacao</h2>
+          </div>
+          <p class="section-note">Espaco para criterio, tensoes, observacoes de comportamento e o que voce nao quer esquecer quando o sistema ficar mais cheio.</p>
+        </div>
+        <textarea id="philosophyNotes" style="min-height: 190px;" placeholder="Ex.: nao promover nada sem trigger real; dashboard e cockpit pessoal; multimodel so com objetivo, trigger, artefato, custo e risco."></textarea>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'olmo-roadmap-private-learning-v2';
+
+    const defaultState = {
+      focus: '',
+      weeklyQuestion: '',
+      checkpoint: '',
+      reviewCadence: '3',
+      digest1: '',
+      digest2: '',
+      digest3: '',
+      digest4: '',
+      philosophyNotes: '',
+      deadlines: [],
+      studyItems: [],
+      experiments: [],
+      migrationCandidates: [],
+      lastSaved: null
+    };
+
+    const state = loadState();
+
+    const refs = {
+      focus: document.getElementById('focus'),
+      weeklyQuestion: document.getElementById('weeklyQuestion'),
+      checkpoint: document.getElementById('checkpoint'),
+      reviewCadence: document.getElementById('reviewCadence'),
+      digest1: document.getElementById('digest1'),
+      digest2: document.getElementById('digest2'),
+      digest3: document.getElementById('digest3'),
+      digest4: document.getElementById('digest4'),
+      philosophyNotes: document.getElementById('philosophyNotes'),
+      deadlineList: document.getElementById('deadlineList'),
+      studyList: document.getElementById('studyList'),
+      experimentList: document.getElementById('experimentList'),
+      candidateList: document.getElementById('candidateList'),
+      deadlineOpenCount: document.getElementById('deadlineOpenCount'),
+      studyOpenCount: document.getElementById('studyOpenCount'),
+      experimentCount: document.getElementById('experimentCount'),
+      candidateCount: document.getElementById('candidateCount'),
+      lastSaved: document.getElementById('lastSaved'),
+      studyProgress: document.getElementById('studyProgress'),
+      studyProgressLabel: document.getElementById('studyProgressLabel'),
+      importFile: document.getElementById('importFile')
+    };
+
+    hydrateInputs();
+    renderAll();
+    bindInputs();
+
+    document.getElementById('addDeadlineBtn').addEventListener('click', addDeadline);
+    document.getElementById('addStudyBtn').addEventListener('click', addStudyItem);
+    document.getElementById('addExperimentBtn').addEventListener('click', addExperiment);
+    document.getElementById('addCandidateBtn').addEventListener('click', addCandidate);
+    document.getElementById('exportBtn').addEventListener('click', exportState);
+    document.getElementById('importBtn').addEventListener('click', () => refs.importFile.click());
+    document.getElementById('resetBtn').addEventListener('click', resetState);
+    document.getElementById('sampleBtn').addEventListener('click', loadSample);
+    refs.importFile.addEventListener('change', importState);
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return structuredClone(defaultState);
+        return { ...structuredClone(defaultState), ...JSON.parse(raw) };
+      } catch {
+        return structuredClone(defaultState);
+      }
+    }
+
+    function hydrateInputs() {
+      refs.focus.value = state.focus;
+      refs.weeklyQuestion.value = state.weeklyQuestion;
+      refs.checkpoint.value = state.checkpoint;
+      refs.reviewCadence.value = state.reviewCadence;
+      refs.digest1.value = state.digest1;
+      refs.digest2.value = state.digest2;
+      refs.digest3.value = state.digest3;
+      refs.digest4.value = state.digest4;
+      refs.philosophyNotes.value = state.philosophyNotes;
+    }
+
+    function bindInputs() {
+      [
+        'focus',
+        'weeklyQuestion',
+        'checkpoint',
+        'reviewCadence',
+        'digest1',
+        'digest2',
+        'digest3',
+        'digest4',
+        'philosophyNotes'
+      ].forEach((key) => {
+        refs[key].addEventListener('input', () => {
+          state[key] = refs[key].value;
+          saveState();
+        });
+      });
+    }
+
+    function saveState() {
+      state.lastSaved = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderStats();
+    }
+
+    function renderAll() {
+      renderDeadlines();
+      renderStudyItems();
+      renderExperiments();
+      renderCandidates();
+      renderStats();
+    }
+
+    function renderDeadlines() {
+      const container = refs.deadlineList;
+      container.innerHTML = '';
+
+      if (!state.deadlines.length) {
+        container.innerHTML = '<div class="empty">Nenhum prazo registrado ainda.</div>';
+        return;
+      }
+
+      state.deadlines
+        .slice()
+        .sort((a, b) => (a.due || '').localeCompare(b.due || ''))
+        .forEach((item) => {
+          const card = document.createElement('article');
+          card.className = 'item';
+          card.innerHTML = `
+            <div class="item-head">
+              <div>
+                <div class="item-title">${escapeHtml(item.title)}</div>
+                <div class="muted">${item.due ? 'Vence em ' + formatDate(item.due) : 'Sem data definida'}</div>
+              </div>
+              <span class="pill ${pillToneForDeadline(item.status)}">${deadlineLabel(item.status)}</span>
+            </div>
+            <div class="toolbar" style="grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 0;">
+              <button type="button" class="ghost" data-action="set-open" data-id="${item.id}">Aberto</button>
+              <button type="button" class="ghost" data-action="set-waiting" data-id="${item.id}">Esperando</button>
+              <button type="button" class="ghost" data-action="set-done" data-id="${item.id}">Feito</button>
+              <button type="button" class="secondary" data-action="delete" data-id="${item.id}">Remover</button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+      bindDeadlineActions();
+    }
+
+    function renderStudyItems() {
+      const container = refs.studyList;
+      container.innerHTML = '';
+
+      if (!state.studyItems.length) {
+        container.innerHTML = '<div class="empty">Nenhum item na trilha ainda. Capture o que entrou pelo email, estudo ou friccao real.</div>';
+        return;
+      }
+
+      state.studyItems
+        .slice()
+        .sort((a, b) => studyRank(a.status) - studyRank(b.status))
+        .forEach((item) => {
+          const card = document.createElement('article');
+          card.className = 'item';
+          card.innerHTML = `
+            <div class="item-head">
+              <div>
+                <div class="item-title">${escapeHtml(item.title)}</div>
+                <div class="muted">${item.source ? escapeHtml(item.source) : 'Sem origem registrada'}</div>
+              </div>
+              <span class="pill ${pillToneForStudy(item.status)}">${studyLabel(item.status)}</span>
+            </div>
+            <div class="toolbar" style="grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 0;">
+              <button type="button" class="ghost" data-action="set-capturado" data-id="${item.id}">Capturado</button>
+              <button type="button" class="ghost" data-action="set-em-estudo" data-id="${item.id}">Estudo</button>
+              <button type="button" class="ghost" data-action="set-aplicando" data-id="${item.id}">Aplicando</button>
+              <button type="button" class="ghost" data-action="set-done" data-id="${item.id}">Done</button>
+              <button type="button" class="secondary" data-action="delete" data-id="${item.id}">Remover</button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+      bindStudyActions();
+    }
+
+    function renderExperiments() {
+      const container = refs.experimentList;
+      container.innerHTML = '';
+
+      if (!state.experiments.length) {
+        container.innerHTML = '<div class="empty">Nenhum experimento ativo. Coloque aqui apenas o que ainda e pergunta aberta.</div>';
+        return;
+      }
+
+      state.experiments.forEach((item) => {
+        const card = document.createElement('article');
+        card.className = 'item';
+        card.innerHTML = `
+          <div class="item-head">
+            <div>
+              <div class="item-title">${escapeHtml(item.title)}</div>
+              <div class="muted">Artefato: ${item.artifact ? escapeHtml(item.artifact) : 'nao definido'} | Risco: ${item.risk ? escapeHtml(item.risk) : 'nao definido'}</div>
+            </div>
+            <span class="pill ${pillToneForExperiment(item.status)}">${experimentLabel(item.status)}</span>
+          </div>
+          <div class="toolbar" style="grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 0;">
+            <button type="button" class="ghost" data-action="set-idea" data-id="${item.id}">Ideia</button>
+            <button type="button" class="ghost" data-action="set-running" data-id="${item.id}">Rodando</button>
+            <button type="button" class="ghost" data-action="set-stopped" data-id="${item.id}">Parado</button>
+            <button type="button" class="ghost" data-action="promote" data-id="${item.id}">Promover</button>
+            <button type="button" class="secondary" data-action="delete" data-id="${item.id}">Remover</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      bindExperimentActions();
+    }
+
+    function renderCandidates() {
+      const container = refs.candidateList;
+      container.innerHTML = '';
+
+      if (!state.migrationCandidates.length) {
+        container.innerHTML = '<div class="empty">Nenhum candidato a migracao ainda. Isso e bom quando o sistema ainda esta amadurecendo.</div>';
+        return;
+      }
+
+      state.migrationCandidates.forEach((item) => {
+        const card = document.createElement('article');
+        card.className = 'item';
+        card.innerHTML = `
+          <div class="item-head">
+            <div>
+              <div class="item-title">${escapeHtml(item.title)}</div>
+              <div class="muted">Artefato: ${item.artifact ? escapeHtml(item.artifact) : 'nao definido'} | Trigger: ${item.trigger ? escapeHtml(item.trigger) : 'nao definido'}</div>
+            </div>
+            <span class="pill ${pillToneForCandidate(item.status)}">${candidateLabel(item.status)}</span>
+          </div>
+          <div class="toolbar" style="grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 0;">
+            <button type="button" class="ghost" data-action="set-draft" data-id="${item.id}">Draft</button>
+            <button type="button" class="ghost" data-action="set-validated" data-id="${item.id}">Validado</button>
+            <button type="button" class="ghost" data-action="set-ready" data-id="${item.id}">Pronto</button>
+            <button type="button" class="secondary" data-action="delete" data-id="${item.id}">Remover</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      bindCandidateActions();
+    }
+
+    function bindDeadlineActions() {
+      refs.deadlineList.querySelectorAll('button[data-id]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const { action, id } = button.dataset;
+          const item = state.deadlines.find((deadline) => deadline.id === id);
+          if (!item) return;
+
+          if (action === 'delete') {
+            state.deadlines = state.deadlines.filter((deadline) => deadline.id !== id);
+          } else if (action === 'set-open') {
+            item.status = 'open';
+          } else if (action === 'set-waiting') {
+            item.status = 'waiting';
+          } else if (action === 'set-done') {
+            item.status = 'done';
+          }
+
+          saveState();
+          renderDeadlines();
+        });
+      });
+    }
+
+    function bindStudyActions() {
+      refs.studyList.querySelectorAll('button[data-id]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const { action, id } = button.dataset;
+          const item = state.studyItems.find((studyItem) => studyItem.id === id);
+          if (!item) return;
+
+          if (action === 'delete') {
+            state.studyItems = state.studyItems.filter((studyItem) => studyItem.id !== id);
+          } else if (action === 'set-capturado') {
+            item.status = 'capturado';
+          } else if (action === 'set-em-estudo') {
+            item.status = 'em-estudo';
+          } else if (action === 'set-aplicando') {
+            item.status = 'aplicando';
+          } else if (action === 'set-done') {
+            item.status = 'done';
+          }
+
+          saveState();
+          renderStudyItems();
+        });
+      });
+    }
+
+    function bindExperimentActions() {
+      refs.experimentList.querySelectorAll('button[data-id]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const { action, id } = button.dataset;
+          const item = state.experiments.find((experiment) => experiment.id === id);
+          if (!item) return;
+
+          if (action === 'delete') {
+            state.experiments = state.experiments.filter((experiment) => experiment.id !== id);
+          } else if (action === 'set-idea') {
+            item.status = 'idea';
+          } else if (action === 'set-running') {
+            item.status = 'running';
+          } else if (action === 'set-stopped') {
+            item.status = 'stopped';
+          } else if (action === 'promote') {
+            state.migrationCandidates.unshift({
+              id: crypto.randomUUID(),
+              title: item.title,
+              artifact: item.artifact,
+              trigger: `Validar utilidade local do experimento: ${item.title}`,
+              status: 'draft'
+            });
+            item.status = 'stopped';
+          }
+
+          saveState();
+          renderExperiments();
+          renderCandidates();
+        });
+      });
+    }
+
+    function bindCandidateActions() {
+      refs.candidateList.querySelectorAll('button[data-id]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const { action, id } = button.dataset;
+          const item = state.migrationCandidates.find((candidate) => candidate.id === id);
+          if (!item) return;
+
+          if (action === 'delete') {
+            state.migrationCandidates = state.migrationCandidates.filter((candidate) => candidate.id !== id);
+          } else if (action === 'set-draft') {
+            item.status = 'draft';
+          } else if (action === 'set-validated') {
+            item.status = 'validated';
+          } else if (action === 'set-ready') {
+            item.status = 'ready';
+          }
+
+          saveState();
+          renderCandidates();
+        });
+      });
+    }
+
+    function addDeadline() {
+      const titleEl = document.getElementById('deadlineTitle');
+      const dueEl = document.getElementById('deadlineDue');
+      const statusEl = document.getElementById('deadlineStatus');
+      const title = titleEl.value.trim();
+      if (!title) return;
+
+      state.deadlines.push({
+        id: crypto.randomUUID(),
+        title,
+        due: dueEl.value,
+        status: statusEl.value
+      });
+
+      titleEl.value = '';
+      dueEl.value = '';
+      statusEl.value = 'open';
+      saveState();
+      renderDeadlines();
+    }
+
+    function addStudyItem() {
+      const titleEl = document.getElementById('studyTitle');
+      const sourceEl = document.getElementById('studySource');
+      const statusEl = document.getElementById('studyStatus');
+      const title = titleEl.value.trim();
+      if (!title) return;
+
+      state.studyItems.push({
+        id: crypto.randomUUID(),
+        title,
+        source: sourceEl.value.trim(),
+        status: statusEl.value
+      });
+
+      titleEl.value = '';
+      sourceEl.value = '';
+      statusEl.value = 'capturado';
+      saveState();
+      renderStudyItems();
+    }
+
+    function addExperiment() {
+      const titleEl = document.getElementById('experimentTitle');
+      const artifactEl = document.getElementById('experimentArtifact');
+      const riskEl = document.getElementById('experimentRisk');
+      const statusEl = document.getElementById('experimentStatus');
+      const title = titleEl.value.trim();
+      if (!title) return;
+
+      state.experiments.push({
+        id: crypto.randomUUID(),
+        title,
+        artifact: artifactEl.value.trim(),
+        risk: riskEl.value.trim(),
+        status: statusEl.value
+      });
+
+      titleEl.value = '';
+      artifactEl.value = '';
+      riskEl.value = '';
+      statusEl.value = 'idea';
+      saveState();
+      renderExperiments();
+    }
+
+    function addCandidate() {
+      const titleEl = document.getElementById('candidateTitle');
+      const artifactEl = document.getElementById('candidateArtifact');
+      const triggerEl = document.getElementById('candidateTrigger');
+      const statusEl = document.getElementById('candidateStatus');
+      const title = titleEl.value.trim();
+      if (!title) return;
+
+      state.migrationCandidates.push({
+        id: crypto.randomUUID(),
+        title,
+        artifact: artifactEl.value.trim(),
+        trigger: triggerEl.value.trim(),
+        status: statusEl.value
+      });
+
+      titleEl.value = '';
+      artifactEl.value = '';
+      triggerEl.value = '';
+      statusEl.value = 'draft';
+      saveState();
+      renderCandidates();
+    }
+
+    function renderStats() {
+      const openDeadlines = state.deadlines.filter((item) => item.status !== 'done').length;
+      const openStudy = state.studyItems.filter((item) => item.status !== 'done').length;
+      const doneStudy = state.studyItems.filter((item) => item.status === 'done').length;
+      const activeExperiments = state.experiments.filter((item) => item.status !== 'stopped').length;
+      const studyPct = state.studyItems.length ? Math.round((doneStudy / state.studyItems.length) * 100) : 0;
+
+      refs.deadlineOpenCount.textContent = String(openDeadlines);
+      refs.studyOpenCount.textContent = String(openStudy);
+      refs.experimentCount.textContent = String(activeExperiments);
+      refs.candidateCount.textContent = String(state.migrationCandidates.length);
+      refs.lastSaved.textContent = state.lastSaved ? new Date(state.lastSaved).toLocaleString('pt-BR') : '--:--';
+      refs.studyProgress.style.width = studyPct + '%';
+      refs.studyProgressLabel.textContent = `${studyPct}% dos itens marcados como done`;
+    }
+
+    function exportState() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'private-learning-export.json';
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    async function importState(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      try {
+        const imported = JSON.parse(await file.text());
+        Object.assign(state, structuredClone(defaultState), imported);
+        hydrateInputs();
+        saveState();
+        renderAll();
+      } catch {
+        alert('Nao consegui importar esse JSON.');
+      } finally {
+        event.target.value = '';
+      }
+    }
+
+    function resetState() {
+      if (!confirm('Resetar o painel e limpar o autosave local?')) return;
+      Object.assign(state, structuredClone(defaultState));
+      hydrateInputs();
+      saveState();
+      renderAll();
+    }
+
+    function loadSample() {
+      Object.assign(state, structuredClone(defaultState), {
+        focus: 'Sistema de digest e estudo sem contaminar o repo principal',
+        weeklyQuestion: 'O que ja esta maduro para ser candidato, e o que ainda e so experimento?',
+        checkpoint: 'Revisar digest, trilha e lanes na sexta 09:00',
+        digest1: 'A inbox esta apontando para dois eixos reais: organizar o sistema de digest e tornar visivel a trilha de estudo com artefatos simples. O objetivo aqui nao e automacao pelo brilho, e sim clareza operacional.',
+        digest2: 'Os prazos mais importantes sao os que bloqueiam criterio: separar o que e pessoal do que pode migrar, manter o dashboard local em private-learning e nao deixar itens sem destino. Qualquer pressa para tocar o repo principal deve ser tratada como risco.',
+        digest3: 'Conceitos quentes: digest em 4 paragrafos, study track com done gate, experimento reversivel, trigger de migracao, blast radius pequeno e diferenca entre cockpit pessoal e artefato reaproveitavel.',
+        digest4: 'A camada filosofica gira em torno de autonomia com prudencia: usar o modelo para estruturar, nao para terceirizar criterio. Se o item ainda nao tem trigger, artefato e risco, ele ainda nao pode sair do laboratorio.',
+        philosophyNotes: 'Principio guia: clareza antes de throughput. O dashboard e local, playground e descartavel, e qualquer coisa que pareca migravel precisa provar utilidade aqui antes de virar conversa sobre OLMO.',
+        deadlines: [
+          { id: crypto.randomUUID(), title: 'Definir cadencia do digest de email', due: '', status: 'open' },
+          { id: crypto.randomUUID(), title: 'Revisar o painel local no fim da semana', due: '', status: 'waiting' }
+        ],
+        studyItems: [
+          { id: crypto.randomUUID(), title: 'Digest em 4 paragrafos', source: 'email + operacao', status: 'aplicando' },
+          { id: crypto.randomUUID(), title: 'Done gate para trilha de estudo', source: 'roadmap', status: 'em-estudo' },
+          { id: crypto.randomUUID(), title: 'Separacao entre cockpit e candidato', source: 'governanca local', status: 'capturado' }
+        ],
+        experiments: [
+          { id: crypto.randomUUID(), title: 'Template de import/export do painel', artifact: 'JSON local', risk: 'baixo', status: 'running' },
+          { id: crypto.randomUUID(), title: 'Promocao de experimento para candidato', artifact: 'registro no dashboard', risk: 'baixo', status: 'idea' }
+        ],
+        migrationCandidates: [
+          { id: crypto.randomUUID(), title: 'Framework de digest 4P', artifact: 'roadmap/EMAIL-DIGEST-4P.md', trigger: '3 ciclos uteis seguidos', status: 'draft' },
+          { id: crypto.randomUUID(), title: 'Done gate de estudo', artifact: 'roadmap/STUDY-TRACK-DONE.md', trigger: 'reducao visivel de retrabalho', status: 'validated' }
+        ]
+      });
+
+      hydrateInputs();
+      saveState();
+      renderAll();
+    }
+
+    function studyRank(status) {
+      if (status === 'capturado') return 0;
+      if (status === 'em-estudo') return 1;
+      if (status === 'aplicando') return 2;
+      if (status === 'done') return 3;
+      return 4;
+    }
+
+    function deadlineLabel(status) {
+      if (status === 'open') return 'aberto';
+      if (status === 'waiting') return 'esperando';
+      if (status === 'done') return 'feito';
+      return status;
+    }
+
+    function studyLabel(status) {
+      if (status === 'capturado') return 'capturado';
+      if (status === 'em-estudo') return 'em estudo';
+      if (status === 'aplicando') return 'aplicando';
+      if (status === 'done') return 'done';
+      return status;
+    }
+
+    function experimentLabel(status) {
+      if (status === 'idea') return 'ideia';
+      if (status === 'running') return 'rodando';
+      if (status === 'stopped') return 'parado';
+      return status;
+    }
+
+    function candidateLabel(status) {
+      if (status === 'draft') return 'draft';
+      if (status === 'validated') return 'validado';
+      if (status === 'ready') return 'pronto';
+      return status;
+    }
+
+    function pillToneForDeadline(status) {
+      if (status === 'done') return 'safe';
+      if (status === 'waiting') return 'night';
+      return 'warn';
+    }
+
+    function pillToneForStudy(status) {
+      if (status === 'done') return 'safe';
+      if (status === 'aplicando') return 'accent';
+      if (status === 'em-estudo') return 'night';
+      return 'warn';
+    }
+
+    function pillToneForExperiment(status) {
+      if (status === 'running') return 'accent';
+      if (status === 'stopped') return 'safe';
+      return 'night';
+    }
+
+    function pillToneForCandidate(status) {
+      if (status === 'ready') return 'safe';
+      if (status === 'validated') return 'accent';
+      return 'night';
+    }
+
+    function formatDate(value) {
+      if (!value) return 'sem data';
+      const [year, month, day] = value.split('-');
+      return `${day}/${month}/${year}`;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+  </script>
+</body>
+</html>
