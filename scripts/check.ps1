@@ -36,28 +36,54 @@ function Require-File {
   }
 }
 
-function Invoke-RgCheck {
+function Invoke-TextCheck {
   param(
     [string]$Label,
     [string]$Pattern,
     [string[]]$ExtraArgs = @()
   )
 
-  if (-not (Get-Command rg -ErrorAction SilentlyContinue)) {
-    Write-Warn "rg unavailable; skipped: $Label"
-    return
+  $excludePatterns = New-Object System.Collections.Generic.List[string]
+  $excludePatterns.Add(".git/*") | Out-Null
+
+  for ($i = 0; $i -lt $ExtraArgs.Count; $i++) {
+    if ($ExtraArgs[$i] -eq "-g" -and ($i + 1) -lt $ExtraArgs.Count) {
+      $glob = $ExtraArgs[$i + 1]
+      if ($glob.StartsWith("!")) {
+        $excludePatterns.Add($glob.Substring(1)) | Out-Null
+      }
+      $i++
+    }
   }
 
-  $args = @("--hidden", $Pattern, ".", "-g", "!.git/**") + $ExtraArgs
-  $output = & rg @args 2>$null
-  $code = $LASTEXITCODE
+  $matches = New-Object System.Collections.Generic.List[string]
+  $rootPath = $Root.Path
+  $files = Get-ChildItem -LiteralPath "." -Recurse -File -Force -ErrorAction SilentlyContinue
 
-  if ($code -eq 0) {
-    Write-Fail "$Label found:`n$output"
-  } elseif ($code -eq 1) {
-    Write-Ok $Label
+  foreach ($file in $files) {
+    $relativePath = $file.FullName.Substring($rootPath.Length).TrimStart("\", "/").Replace("\", "/")
+    $excluded = $false
+    foreach ($excludePattern in $excludePatterns) {
+      if ($relativePath -like $excludePattern) {
+        $excluded = $true
+        break
+      }
+    }
+
+    if ($excluded) {
+      continue
+    }
+
+    $results = Select-String -LiteralPath $file.FullName -Pattern $Pattern -CaseSensitive -ErrorAction SilentlyContinue
+    foreach ($result in @($results)) {
+      $matches.Add("${relativePath}:$($result.LineNumber):$($result.Line)") | Out-Null
+    }
+  }
+
+  if ($matches.Count -gt 0) {
+    Write-Fail "$Label found:`n$($matches -join "`n")"
   } else {
-    Write-Fail "rg failed for: $Label"
+    Write-Ok $Label
   }
 }
 
@@ -379,8 +405,8 @@ if ($wikilinkIssueCount -eq 0) {
   Write-Ok "obsidian wikilinks resolve"
 }
 
-Invoke-RgCheck "no old roadmap/SOTA references" "OLMO_ROADMAP|SOTA-AGENTS|SOTA-INCORPORATION" @("-g", "!scripts/check.ps1")
-Invoke-RgCheck "no obvious secret strings" "API_KEY|SECRET|TOKEN|password" @("-g", "!scripts/check.ps1")
+Invoke-TextCheck "no old roadmap/SOTA references" "OLMO_ROADMAP|SOTA-AGENTS|SOTA-INCORPORATION" @("-g", "!scripts/check.ps1")
+Invoke-TextCheck "no obvious secret strings" "API_KEY|SECRET|TOKEN|password" @("-g", "!scripts/check.ps1")
 
 $ignoreTargets = @(
   "private-learning/checkpoints/probe.txt",
