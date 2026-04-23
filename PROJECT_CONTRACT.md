@@ -11,6 +11,7 @@ Validar um laboratorio paralelo, guiado por orquestracao de baixo risco, para da
 - Nao editar, mover, deletar, criar, arquivar ou sincronizar nada em repositorios siblings.
 - Qualquer write externo exige autorizacao explicita na conversa, com caminho e acao exata.
 - Nao copiar infraestrutura sensivel, hooks ou config de MCP.
+- Hooks so entram como documentacao ou scripts manuais inativos ate gate humano explicito.
 - Nao criar sincronizacao automatica com o repo principal.
 - Nao promover artefatos sem trigger, evidencia e rollback.
 
@@ -35,6 +36,7 @@ Um artefato daqui so entra em conversa de migracao quando:
 ## Estrutura minima racional
 
 - `AGENTS.md` define o contrato do repo.
+- `TREE.md` define a arvore profissional, casas dos artefatos e politica de incorporacao segura.
 - `.agents/skills/` guarda workflows reutilizaveis pequenos.
 - `.codex/agents/` guarda papeis estreitos para delegacao.
 - `shadow/WORK-LANES.md` registra a classificacao dos artefatos.
@@ -43,3 +45,4 @@ Um artefato daqui so entra em conversa de migracao quando:
 - `Prometeus/README.md` e a entrada documental do vault.
 - `Prometeus/.obsidian/` configura o vault Obsidian `Prometeus`.
 - `Prometeus/wiki/` guarda a wiki Obsidian versionada do projeto.
+- `hooks/` guarda somente documentacao ou scripts manuais inativos.

@@ -17,6 +17,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 - Git local limpo e commits pequenos.
 - `AGENTS.md` como contrato operacional.
 - `PROJECT_CONTRACT.md` como limite de risco.
+- `TREE.md` como mapa profissional da arvore e da politica de incorporacao segura.
 - `shadow/` para decisoes, gates e memoria operacional.
 - `Prometeus/.obsidian/` para configurar o vault Obsidian `Prometeus`.
 - `Prometeus/wiki/` para notas Obsidian e conhecimento duravel.
@@ -27,7 +28,7 @@ Nao existe sincronizacao automatica com `C:\Dev\Projetos\OLMO`.
 
 ## 2. Hooks
 
-Hooks reais ficam fora do core por enquanto.
+Hooks reais ficam fora do core por enquanto. `hooks/README.md` documenta a politica; nada ali e ativo por padrao.
 
 Motivo: no nosso ambiente Windows, hooks de agente ainda sao uma base instavel para depender. O caminho seguro e:
 

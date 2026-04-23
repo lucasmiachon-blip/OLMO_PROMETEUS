@@ -21,6 +21,7 @@ Rodar higiene quando:
 - `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`: rodar harness local.
 - `rg --hidden --files -g "!private-learning/**" -g "!.git/**"`: ver sprawl fora da area privada.
 - Checar se novos arquivos estao em uma casa clara: `shadow/`, `Prometeus/wiki/`, `private-learning/`, `playground/`, `.agents/skills/` ou `.codex/agents/`.
+- Checar `TREE.md` quando a raiz, hooks, skills ou agentes mudarem.
 - Checar se instrucoes de abertura do Obsidian apontam para `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
 - Checar se o harness valida `[[wikilinks]]`, aliases e referencias de Canvas antes de commit.
 - Checar se notas wiki duraveis estao em `Prometeus/wiki/Notes`, `Prometeus/wiki/Categories` ou `Prometeus/wiki/References`.
@@ -35,6 +36,7 @@ Rodar higiene quando:
 - Nao deletar arquivos sem confirmacao humana.
 - Nao mover arquivos se isso puder quebrar referencias sem revisar os links.
 - Nao criar nova skill/agente para cada ideia; exigir uso recorrente.
+- Nao ativar hooks; primeiro documentar ou rodar manualmente com gate.
 - Nao transformar pesquisa em arquitetura se nao houver trigger real.
 - Nao colocar material privado em `shadow/`.
 - Nao colocar captura crua ou pessoal no vault versionado.

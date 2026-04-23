@@ -71,6 +71,7 @@ $requiredFiles = @(
   "AGENTS.md",
   "PROJECT_CONTRACT.md",
   "README.md",
+  "TREE.md",
   "shadow/FOUNDATION.md",
   "shadow/HYGIENE.md",
   "shadow/SOTA-DECISIONS.md",
@@ -91,6 +92,7 @@ $requiredFiles = @(
   "Prometeus/.obsidian/graph.json",
   "Prometeus/.obsidian/snippets/prometeus-visuals.css",
   "private-learning/dashboard.html",
+  "hooks/README.md",
   ".codex/config.toml"
 )
 
@@ -101,6 +103,7 @@ foreach ($file in $requiredFiles) {
 $boundaryFiles = @(
   "AGENTS.md",
   "PROJECT_CONTRACT.md",
+  "TREE.md",
   "shadow/FOUNDATION.md"
 )
 

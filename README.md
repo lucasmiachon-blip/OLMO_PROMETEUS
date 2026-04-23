@@ -12,8 +12,10 @@ Laboratorio paralelo e independente para validar fluxo, dashboard, digest e stud
 ## Sistema operacional do repo
 
 - `AGENTS.md`: contrato operacional do laboratorio
+- `TREE.md`: mapa profissional da arvore e politica de incorporacao segura
 - `.agents/skills/`: workflows reutilizaveis e pequenos
 - `.codex/agents/`: agentes customizados estreitos, com baixo paralelismo
+- `hooks/`: documentacao e scripts manuais inativos; nada ativo sem gate
 - `private-learning/`: interfaces locais e cockpit visual
 - `shadow/`: regras operacionais, gates e pesquisa aplicada
 - `playground/`: espaco para prototipos descartaveis

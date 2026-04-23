@@ -47,12 +47,14 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 
 - `private-learning/`: cockpit visual, digests, progresso e uso diario.
 - `shadow/`: contratos, trilhas, gates, pesquisa e arquitetura operacional.
+- `TREE.md`: mapa da arvore raiz, casas dos artefatos e politica de incorporacao do `OLMO`.
 - `Prometeus/README.md`: entrada documental do vault Obsidian.
 - `Prometeus/.obsidian/`: configuracao do vault Obsidian `Prometeus`.
 - `Prometeus/wiki/`: notas Obsidian versionadas para conhecimento duravel do projeto.
 - `playground/`: testes locais e prototipos descartaveis.
 - `.agents/skills/`: workflows reutilizaveis deste laboratorio.
 - `.codex/agents/`: agentes customizados estreitos para delegacao.
+- `hooks/`: apenas documentacao ou scripts manuais inativos ate aprovacao explicita.
 
 ## Do
 
@@ -67,6 +69,7 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 - tocar o repo principal por reflexo;
 - escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`;
 - copiar hooks, MCP ou infraestrutura sensivel do `OLMO`;
+- ativar hook sem trigger, evidencia, rollback e aprovacao humana explicita;
 - marcar `done` sem evidencia de entendimento ou aplicacao;
 - misturar material pessoal com runtime do projeto;
 - colocar captura privada/crua no vault versionado;
