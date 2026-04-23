@@ -64,6 +64,7 @@ Ele valida:
 
 - arquivos essenciais;
 - estrutura basica do Obsidian vault `Prometeus`;
+- cross-references do Obsidian: `[[wikilinks]]`, aliases e arquivos referenciados em Canvas;
 - evals JSON das skills;
 - ausencia de referencias antigas;
 - ausencia de tokens/segredos obvios;

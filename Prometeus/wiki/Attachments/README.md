@@ -1,6 +1,8 @@
 ---
 type: buffer
 status: active
+aliases:
+  - Attachments
 tags:
   - prometeus/buffer
 ---

@@ -22,6 +22,7 @@ Rodar higiene quando:
 - `rg --hidden --files -g "!private-learning/**" -g "!.git/**"`: ver sprawl fora da area privada.
 - Checar se novos arquivos estao em uma casa clara: `shadow/`, `Prometeus/wiki/`, `private-learning/`, `playground/`, `.agents/skills/` ou `.codex/agents/`.
 - Checar se instrucoes de abertura do Obsidian apontam para `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
+- Checar se o harness valida `[[wikilinks]]`, aliases e referencias de Canvas antes de commit.
 - Checar se notas wiki duraveis estao em `Prometeus/wiki/Notes`, `Prometeus/wiki/Categories` ou `Prometeus/wiki/References`.
 - Checar se capturas cruas continuam ignoradas em `Prometeus/wiki/Clippings`, `Prometeus/wiki/Daily` e `Prometeus/wiki/Attachments`.
 - Checar se `private-learning/` continua em `.gitignore` e `.claudeignore`.

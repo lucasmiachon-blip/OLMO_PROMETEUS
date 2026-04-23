@@ -1,6 +1,8 @@
 ---
 type: buffer
 status: active
+aliases:
+  - Clippings
 tags:
   - prometeus/buffer
 ---

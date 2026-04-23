@@ -19,4 +19,4 @@ tags:
 
 ## Links
 
-- [[]]
+- Adicione links quando a decisao tiver conexao real com um hub, sistema ou conceito.

@@ -186,9 +186,155 @@ foreach ($canvasFile in $canvasFiles) {
     } else {
       Write-Fail "canvas missing nodes or edges: $($canvasFile.FullName)"
     }
+
+    foreach ($node in @($canvas.nodes)) {
+      if ($node.type -eq "file" -and $node.file) {
+        $canvasTarget = Join-Path "Prometeus" $node.file
+        if (Test-Path -LiteralPath $canvasTarget -PathType Leaf) {
+          Write-Ok "canvas file reference resolves: $($node.file)"
+        } else {
+          Write-Fail "canvas file reference is broken: $($node.file) in $($canvasFile.FullName)"
+        }
+      }
+    }
   } catch {
     Write-Fail "canvas JSON invalid: $($canvasFile.FullName)"
   }
+}
+
+function Add-LinkTarget {
+  param(
+    [hashtable]$Targets,
+    [string]$Key,
+    [string]$Path
+  )
+
+  if ([string]::IsNullOrWhiteSpace($Key)) {
+    return
+  }
+
+  $cleanKey = $Key.Trim()
+  if (-not $Targets.ContainsKey($cleanKey)) {
+    $Targets[$cleanKey] = New-Object System.Collections.Generic.List[string]
+  }
+  $Targets[$cleanKey].Add($Path)
+}
+
+function Get-FrontmatterAliases {
+  param([string]$Text)
+
+  $aliases = New-Object System.Collections.Generic.List[string]
+  if ($Text -notmatch "(?s)^---\r?\n(.*?)\r?\n---") {
+    return $aliases
+  }
+
+  $frontmatter = $Matches[1]
+  $inAliases = $false
+  foreach ($line in ($frontmatter -split "\r?\n")) {
+    if ($line -match "^\s*aliases:\s*\[(.*)\]\s*$") {
+      foreach ($alias in ($Matches[1] -split ",")) {
+        $cleanAlias = $alias.Trim().Trim('"').Trim("'")
+        if (-not [string]::IsNullOrWhiteSpace($cleanAlias)) {
+          $aliases.Add($cleanAlias)
+        }
+      }
+      $inAliases = $false
+      continue
+    }
+
+    if ($line -match "^\s*aliases:\s*$") {
+      $inAliases = $true
+      continue
+    }
+
+    if ($inAliases) {
+      if ($line -match "^\s*-\s*(.+?)\s*$") {
+        $cleanAlias = $Matches[1].Trim().Trim('"').Trim("'")
+        if (-not [string]::IsNullOrWhiteSpace($cleanAlias)) {
+          $aliases.Add($cleanAlias)
+        }
+      } elseif ($line -match "^\S") {
+        $inAliases = $false
+      }
+    }
+  }
+
+  return $aliases
+}
+
+function Get-VaultRelativePath {
+  param(
+    [string]$VaultPath,
+    [string]$FullPath
+  )
+
+  return $FullPath.Substring($VaultPath.Length).TrimStart("\", "/").Replace("\", "/")
+}
+
+$vaultRoot = Resolve-Path -LiteralPath "Prometeus"
+$linkTargets = @{}
+$vaultLinkFiles = Get-ChildItem -LiteralPath $vaultRoot -Recurse -File | Where-Object {
+  $_.Extension -in @(".md", ".canvas")
+}
+
+foreach ($file in $vaultLinkFiles) {
+  $relativePath = Get-VaultRelativePath $vaultRoot.Path $file.FullName
+  $relativeWithoutExtension = $relativePath -replace "\.[^./]+$", ""
+  $basename = [System.IO.Path]::GetFileNameWithoutExtension($file.Name)
+
+  Add-LinkTarget $linkTargets $relativePath $relativePath
+  Add-LinkTarget $linkTargets $relativeWithoutExtension $relativePath
+  Add-LinkTarget $linkTargets $file.Name $relativePath
+  Add-LinkTarget $linkTargets $basename $relativePath
+
+  if ($file.Extension -eq ".md") {
+    $text = Get-Content -LiteralPath $file.FullName -Raw
+    foreach ($alias in (Get-FrontmatterAliases $text)) {
+      Add-LinkTarget $linkTargets $alias $relativePath
+    }
+  }
+}
+
+$wikilinkIssueCount = 0
+$markdownFiles = Get-ChildItem -LiteralPath $vaultRoot -Recurse -File -Filter "*.md"
+foreach ($mdFile in $markdownFiles) {
+  $text = Get-Content -LiteralPath $mdFile.FullName -Raw
+  $relativePath = Get-VaultRelativePath $vaultRoot.Path $mdFile.FullName
+  $wikilinks = [regex]::Matches($text, "\[\[([^\]]*)\]\]")
+
+  foreach ($link in $wikilinks) {
+    $rawTarget = $link.Groups[1].Value.Trim()
+    if ([string]::IsNullOrWhiteSpace($rawTarget)) {
+      Write-Fail "empty wikilink in: $relativePath"
+      $wikilinkIssueCount++
+      continue
+    }
+
+    $target = ($rawTarget -split "\|", 2)[0].Trim()
+    $target = ($target -split "#", 2)[0].Trim()
+    $target = ($target -split "\^", 2)[0].Trim()
+
+    if ([string]::IsNullOrWhiteSpace($target)) {
+      Write-Fail "wikilink missing target in: $relativePath -> [[$rawTarget]]"
+      $wikilinkIssueCount++
+      continue
+    }
+
+    if (-not $linkTargets.ContainsKey($target)) {
+      Write-Fail "wikilink target missing in $relativePath -> [[$rawTarget]]"
+      $wikilinkIssueCount++
+      continue
+    }
+
+    if ($linkTargets[$target].Count -gt 1 -and $target -notmatch "/") {
+      Write-Fail "ambiguous wikilink target in $relativePath -> [[$rawTarget]] resolves to: $($linkTargets[$target] -join ', ')"
+      $wikilinkIssueCount++
+    }
+  }
+}
+
+if ($wikilinkIssueCount -eq 0) {
+  Write-Ok "obsidian wikilinks resolve"
 }
 
 Invoke-RgCheck "no old roadmap/SOTA references" "OLMO_ROADMAP|SOTA-AGENTS|SOTA-INCORPORATION" @("-g", "!scripts/check.ps1")
