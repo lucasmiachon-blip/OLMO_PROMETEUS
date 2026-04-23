@@ -12,6 +12,8 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 ## Sistema operacional do repo
 
 - `AGENTS.md`: contrato operacional do laboratorio
+- `CLAUDE.md`: adaptador para Claude Code, importando `AGENTS.md`
+- `GEMINI.md`: adaptador para Gemini CLI, importando `AGENTS.md`
 - `TREE.md`: mapa profissional da arvore e politica de incorporacao segura
 - `shadow/`: regras operacionais, gates e pesquisa aplicada
 - `private-learning/`: area local ignorada para cockpit e material pessoal
@@ -25,6 +27,7 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 ## Nucleo enxuto
 
 - Sem diretórios locais de agents, subagents, skills ou hooks.
+- `CLAUDE.md` e `GEMINI.md` sao pontes de contexto, nao novas fontes de verdade.
 - Procedimentos duraveis ficam em `shadow/` ou em notas do `Prometeus/wiki/`.
 - `private-learning/` fica local e ignorado, sem entrar no contexto versionado.
 - Qualquer nova automacao ou agente precisa passar por trigger, evidencia, custo, risco e rollback.

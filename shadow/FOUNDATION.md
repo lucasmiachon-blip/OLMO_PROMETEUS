@@ -16,6 +16,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 
 - Git local limpo e commits pequenos.
 - `AGENTS.md` como contrato operacional.
+- `CLAUDE.md` e `GEMINI.md` como adaptadores de ferramenta que importam `AGENTS.md`.
 - `PROJECT_CONTRACT.md` como limite de risco.
 - `TREE.md` como mapa profissional da arvore e da politica de incorporacao segura.
 - `shadow/` para decisoes, gates e memoria operacional.
@@ -28,7 +29,7 @@ Nao existe sincronizacao automatica com `C:\Dev\Projetos\OLMO`.
 
 ## 2. Sem scaffolds fantasmas
 
-Diretorios locais de agents, subagents, skills, hooks e playground ficam fora do core.
+Diretorios locais de agents, subagents, skills, hooks, `.claude/`, `.gemini/` e playground ficam fora do core.
 
 Motivo: no nosso ambiente Windows e neste repo pequeno, scaffolds sem runtime real confundem memoria, contexto e decisao.
 
@@ -45,6 +46,7 @@ Regra: nenhum hook pode tocar `C:\Dev\Projetos\OLMO`, arquivar email, mover arqu
 Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo:
 
 - contrato vivo: `AGENTS.md`;
+- adaptadores de ferramenta: `CLAUDE.md` e `GEMINI.md`;
 - limites do projeto: `PROJECT_CONTRACT.md`;
 - decisoes SOTA: `shadow/SOTA-DECISIONS.md`;
 - incorporacoes: `shadow/INCORPORATION-LOG.md`;
@@ -68,7 +70,6 @@ Ele valida:
 - arquivos essenciais;
 - estrutura basica do Obsidian vault `Prometeus`;
 - cross-references do Obsidian: `[[wikilinks]]`, aliases e arquivos referenciados em Canvas;
-- evals JSON das skills;
 - ausencia de referencias antigas;
 - ausencia de tokens/segredos obvios;
 - `private-learning` gerado continua ignorado;

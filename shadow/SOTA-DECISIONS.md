@@ -11,6 +11,7 @@ O melhor do SOTA para este projeto pequeno e manter pouca estrutura, bem nomeada
 Manter:
 
 - `AGENTS.md` como contrato central e portavel.
+- `CLAUDE.md` e `GEMINI.md` como adaptadores finos para ferramentas que nao leem `AGENTS.md` por padrao.
 - Procedimentos pequenos como docs em `shadow/` ou notas em `Prometeus/wiki/`.
 - Gmail como fila simples: `Processar`, `Alta`, `Ruido`, `Digerido`.
 - `Digerido` somente depois de artefato persistente.
@@ -28,6 +29,7 @@ Nao incorporar agora:
 - agentes demais;
 - skills especulativas;
 - registry local de agentes ou skills;
+- `.claude/`, `.gemini/` ou configs de ferramenta como runtime ativo;
 - relatorios SOTA longos que viram museu.
 - hooks reais antes de um comando manual provar utilidade.
 
@@ -60,13 +62,29 @@ Busca oficial em 2026-04-23: OpenAI, Anthropic e Google convergem em quatro pont
 | --- | --- | --- |
 | OpenAI Codex Skills | Skills sao workflows reutilizaveis com `SKILL.md`, `name`, `description`, recursos opcionais e progressive disclosure. Descricao define matching implicito. | Manter playbooks em `shadow/` ate haver uso repetido. Se virar skill, exigir trigger/nao-trigger forte, corpo curto e mini-evals. |
 | OpenAI Codex Subagents | Subagentes servem para tarefas paralelas complexas, custam mais tokens e so devem ser usados quando explicitamente pedidos. | Nao manter registry local de subagentes. Delegacao fica por conversa, nao por scaffold persistente. |
+| Anthropic Claude Code Memory | Claude Code le `CLAUDE.md`, nao `AGENTS.md`; recomenda criar `CLAUDE.md` importando `AGENTS.md` quando o repo ja usa AGENTS. | Criar apenas um adaptador fino `CLAUDE.md` com `@AGENTS.md`. Nao criar `.claude/`, rules, hooks ou auto-memory versionada. |
 | Anthropic Claude Skills | Skills entram quando o usuario repete playbooks/checklists ou quando uma parte de memoria vira procedimento; corpo carrega sob demanda. | A regra "procedimento primeiro, skill depois" esta correta. Migrar para skill apenas quando a repeticao justificar custo. |
 | Anthropic Subagents | Subagentes devem ter escopo, ferramentas e modelo claros; subagente read-only deve limitar ferramentas. | Se algum dia voltar, deve ser read-only por padrao, com ferramentas minimas e uso explicito. |
 | Anthropic Hooks | Hooks dao controle deterministico, mas rodam comandos automaticamente no ciclo do agente. | Continuar sem hooks ativos. Primeiro comando manual, depois harness, so entao discutir automacao. |
+| Google Gemini CLI `GEMINI.md` | Gemini CLI carrega contexto hierarquico por `GEMINI.md`, suporta imports `@file.md` e permite customizar nomes de contexto. | Criar apenas um adaptador fino `GEMINI.md` com `@AGENTS.md`. Nao criar `.gemini/`, extensoes, MCP ou comandos ativos. |
 | Google ADK Agents | Distingue LLM agents, workflow agents deterministicos e custom agents; workflow agents dao previsibilidade. | Para Prometeus, preferir workflow documentado e harness deterministico antes de agente LLM. |
 | Google ADK Evaluation/Artifacts | ADK enfatiza avaliacao, artefatos persistentes, estado/memoria e ferramentas separadas. | Separar memoria (`shadow`/wiki), artefatos e estado privado. Todo procedimento duravel precisa de mini-evals. |
 
 Conclusao: o SOTA nao pede mais pastas. Pede menos contexto carregado por padrao, gatilhos melhores, artefatos persistentes, avaliacoes pequenas e automacao so quando a regra for deterministica.
+
+## Claude Code e GEMINI.md adapters
+
+Decisao: manter `AGENTS.md` como fonte de verdade e criar `CLAUDE.md` e `GEMINI.md` apenas como pontes de contexto.
+
+Contrato dos adaptadores:
+
+- primeira linha importa `AGENTS.md`;
+- repetir apenas a boundary absoluta;
+- declarar que nao sao fonte de verdade;
+- proibir `.claude/`, `.gemini/`, hooks, MCP, subagentes, skills ou comandos ativos sem gate;
+- qualquer regra nova deve ir para a casa certa: `AGENTS.md`, `PROJECT_CONTRACT.md`, `TREE.md`, `shadow/` ou `Prometeus/wiki/`.
+
+Risco: imports carregam contexto no inicio da sessao. Por isso os adaptadores devem permanecer curtos e nao importar arvores grandes.
 
 ## Time minimo
 
@@ -82,6 +100,7 @@ Conclusao: o SOTA nao pede mais pastas. Pede menos contexto carregado por padrao
 - OpenAI Codex Subagents: `https://developers.openai.com/codex/subagents`
 - Anthropic Claude Code Skills: `https://code.claude.com/docs/en/skills`
 - Anthropic Claude Code Hooks: `https://code.claude.com/docs/en/hooks-guide`
+- Anthropic Claude Code memory: `https://code.claude.com/docs/en/memory`
 - OpenAI Agent evals: `https://developers.openai.com/api/docs/guides/agent-evals`
 - AGENTS.md convention: `https://agents.md/`
 - GitHub Copilot repository instructions: `https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions`
@@ -89,6 +108,7 @@ Conclusao: o SOTA nao pede mais pastas. Pede menos contexto carregado por padrao
 - Google ADK agents: `https://adk.dev/agents/`
 - Google ADK overview: `https://adk.dev/get-started/about/`
 - Google ADK skills: `https://adk.dev/skills/`
+- Google Gemini CLI GEMINI.md: `https://google-gemini.github.io/gemini-cli/docs/cli/gemini-md.html`
 - Google Gemini models: `https://ai.google.dev/gemini-api/docs/models`
 - Google Gemini long context: `https://ai.google.dev/gemini-api/docs/long-context`
 - Google Agent2Agent announcement: `https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/`

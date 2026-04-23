@@ -14,6 +14,8 @@ Nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 
 ```text
 AGENTS.md             # contrato operacional para agentes neste repo
+CLAUDE.md             # adaptador fino para Claude Code, importa AGENTS.md
+GEMINI.md             # adaptador fino para Gemini CLI, importa AGENTS.md
 PROJECT_CONTRACT.md   # limites, lanes e criterio de promocao
 README.md             # entrada humana rapida
 TREE.md               # mapa profissional da arvore do repo
@@ -22,6 +24,12 @@ shadow/               # decisoes, gates, memoria operacional e higiene
 Prometeus/            # vault Obsidian versionado
 private-learning/     # area local ignorada; nao entra no contexto versionado
 ```
+
+## Adaptadores de Ferramenta
+
+`CLAUDE.md` e `GEMINI.md` existem porque Claude Code e Gemini CLI procuram arquivos de contexto proprios.
+
+Regra: eles importam `AGENTS.md`, nao duplicam politica e nao autorizam criar `.claude/`, `.gemini/`, hooks, MCP, agents ou skills ativos.
 
 ## Areas Vivas
 
@@ -59,6 +67,8 @@ Estes nomes nao ficam na raiz sem necessidade repetida, gate humano explicito e 
 
 - `.agents/`
 - `.codex/`
+- `.claude/`
+- `.gemini/`
 - `agents/`
 - `subagents/`
 - `skills/`

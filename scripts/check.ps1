@@ -69,6 +69,8 @@ if ((Split-Path -Leaf $Root) -ne "OLMO_PROMETEUS") {
 
 $requiredFiles = @(
   "AGENTS.md",
+  "CLAUDE.md",
+  "GEMINI.md",
   "PROJECT_CONTRACT.md",
   "README.md",
   "TREE.md",
@@ -101,6 +103,8 @@ foreach ($file in $requiredFiles) {
 
 $boundaryFiles = @(
   "AGENTS.md",
+  "CLAUDE.md",
+  "GEMINI.md",
   "PROJECT_CONTRACT.md",
   "TREE.md",
   "shadow/FOUNDATION.md"
@@ -118,6 +122,8 @@ foreach ($file in $boundaryFiles) {
 $forbiddenRootDirs = @(
   ".agents",
   ".codex",
+  ".claude",
+  ".gemini",
   "agents",
   "subagents",
   "skills",
@@ -130,6 +136,20 @@ foreach ($dir in $forbiddenRootDirs) {
     Write-Fail "forbidden root scaffold exists: $dir"
   } else {
     Write-Ok "forbidden root scaffold absent: $dir"
+  }
+}
+
+$agentAdapters = @{
+  "CLAUDE.md" = "@AGENTS.md"
+  "GEMINI.md" = "@AGENTS.md"
+}
+
+foreach ($entry in $agentAdapters.GetEnumerator()) {
+  $text = Get-Content -LiteralPath $entry.Key -Raw
+  if ($text.Contains($entry.Value)) {
+    Write-Ok "agent adapter imports AGENTS.md: $($entry.Key)"
+  } else {
+    Write-Fail "agent adapter must import AGENTS.md: $($entry.Key)"
   }
 }
 
@@ -146,7 +166,7 @@ $procedureContracts = @{
   "shadow/EMAIL-DIGEST-4P.md" = @("## Trigger", "## Contrato de entrada", "## Workflow", "## Mini-evals")
   "shadow/STUDY-TRACK-DONE.md" = @("## Trigger", "## Saida padrao", "## Workflow", "## Mini-evals")
   "shadow/WORK-LANES.md" = @("## Trigger", "## Promotion gate", "## Decisao", "## Mini-evals")
-  "shadow/SOTA-DECISIONS.md" = @("## Padrao SOTA para procedimentos", "## Big Three scan")
+  "shadow/SOTA-DECISIONS.md" = @("## Padrao SOTA para procedimentos", "## Big Three scan", "## Claude Code e GEMINI.md adapters")
 }
 
 foreach ($entry in $procedureContracts.GetEnumerator()) {

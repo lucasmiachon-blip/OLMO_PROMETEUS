@@ -11,7 +11,7 @@ Validar um laboratorio paralelo, guiado por orquestracao de baixo risco, para va
 - Nao editar, mover, deletar, criar, arquivar ou sincronizar nada em repositorios siblings.
 - Qualquer write externo exige autorizacao explicita na conversa, com caminho e acao exata.
 - Nao copiar infraestrutura sensivel, hooks ou config de MCP.
-- Nao manter scaffolds locais de agents, subagents, skills ou hooks sem necessidade repetida e gate humano explicito.
+- Nao manter scaffolds locais de agents, subagents, skills, hooks, `.claude/` ou `.gemini/` sem necessidade repetida e gate humano explicito.
 - Nao criar sincronizacao automatica com o repo principal.
 - Nao promover artefatos sem trigger, evidencia e rollback.
 
@@ -36,6 +36,7 @@ Um artefato daqui so entra em conversa de migracao quando:
 ## Estrutura minima racional
 
 - `AGENTS.md` define o contrato do repo.
+- `CLAUDE.md` e `GEMINI.md` sao adaptadores finos que importam `AGENTS.md`.
 - `TREE.md` define a arvore profissional, casas dos artefatos e politica de incorporacao segura.
 - `shadow/WORK-LANES.md` registra a classificacao dos artefatos.
 - `shadow/FOUNDATION.md` define infra, memoria, harness e orquestracao.

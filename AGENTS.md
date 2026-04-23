@@ -46,6 +46,8 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 ## Layout
 
 - `private-learning/`: cockpit visual e material pessoal local, ignorado pelo Git e pelo contexto.
+- `CLAUDE.md`: adaptador fino para Claude Code; importa `AGENTS.md`.
+- `GEMINI.md`: adaptador fino para Gemini CLI; importa `AGENTS.md`.
 - `shadow/`: contratos, trilhas, gates, pesquisa e arquitetura operacional.
 - `TREE.md`: mapa da arvore raiz, casas dos artefatos e politica de incorporacao do `OLMO`.
 - `Prometeus/README.md`: entrada documental do vault Obsidian.
@@ -67,7 +69,7 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 - escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`;
 - copiar hooks, MCP ou infraestrutura sensivel do `OLMO`;
 - ativar hook sem trigger, evidencia, rollback e aprovacao humana explicita;
-- recriar diretorios locais de agents, subagents, skills ou hooks sem necessidade repetida e aprovacao explicita;
+- recriar diretorios locais de agents, subagents, skills, hooks, `.claude/` ou `.gemini/` sem necessidade repetida e aprovacao explicita;
 - marcar `done` sem evidencia de entendimento ou aplicacao;
 - misturar material pessoal com runtime do projeto;
 - colocar captura privada/crua no vault versionado;
