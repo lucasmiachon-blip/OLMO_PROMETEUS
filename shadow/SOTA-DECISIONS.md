@@ -17,7 +17,7 @@ Manter:
 - `Digerido` somente depois de artefato persistente.
 - `shadow/INCORPORATION-LOG.md` como gate antes de qualquer conversa sobre OLMO.
 - `scripts/check.ps1` como harness leve antes de commit.
-- `C:\Dev\Projetos\OLMO_PROMETEUS` como vault Obsidian, com notas em `wiki/`, nao como inbox privado permanente.
+- `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus` como vault Obsidian, com notas em `wiki/`, nao como inbox privado permanente.
 - Boundary absoluta: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 
 Nao incorporar agora:

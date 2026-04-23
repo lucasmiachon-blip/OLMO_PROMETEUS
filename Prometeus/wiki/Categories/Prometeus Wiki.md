@@ -15,7 +15,7 @@ Mapa central do vault. Use como ponto de partida, nao como taxonomia obrigatoria
 - [[Second Brain Atlas]]
 - [[Graph Operating System]]
 - [[Knowledge Lifecycle]]
-- [[OLMO_PROMETEUS.canvas]]
+- [[Prometeus.canvas]]
 - [[Foundation Harness]]
 - [[Workspace Boundary]]
 - [[Email Digest System]]

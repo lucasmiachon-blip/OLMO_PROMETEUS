@@ -76,19 +76,19 @@ $requiredFiles = @(
   "shadow/SOTA-DECISIONS.md",
   "shadow/INCORPORATION-LOG.md",
   "shadow/WORK-LANES.md",
-  "wiki/Home.md",
-  "wiki/Atlas/Second Brain Atlas.md",
-  "wiki/Atlas/Graph Operating System.md",
-  "wiki/Atlas/Knowledge Lifecycle.md",
-  "wiki/Maps/OLMO_PROMETEUS.canvas",
-  "wiki/Categories/Prometeus Wiki.md",
-  "wiki/Notes/Workspace Boundary.md",
-  "wiki/Notes/Foundation Harness.md",
-  "wiki/References/Kepano and Karpathy Principles.md",
-  ".obsidian/app.json",
-  ".obsidian/core-plugins.json",
-  ".obsidian/graph.json",
-  ".obsidian/snippets/prometeus-visuals.css",
+  "Prometeus/wiki/Home.md",
+  "Prometeus/wiki/Atlas/Second Brain Atlas.md",
+  "Prometeus/wiki/Atlas/Graph Operating System.md",
+  "Prometeus/wiki/Atlas/Knowledge Lifecycle.md",
+  "Prometeus/wiki/Maps/Prometeus.canvas",
+  "Prometeus/wiki/Categories/Prometeus Wiki.md",
+  "Prometeus/wiki/Notes/Workspace Boundary.md",
+  "Prometeus/wiki/Notes/Foundation Harness.md",
+  "Prometeus/wiki/References/Kepano and Karpathy Principles.md",
+  "Prometeus/.obsidian/app.json",
+  "Prometeus/.obsidian/core-plugins.json",
+  "Prometeus/.obsidian/graph.json",
+  "Prometeus/.obsidian/snippets/prometeus-visuals.css",
   "private-learning/dashboard.html",
   ".codex/config.toml"
 )
@@ -137,7 +137,7 @@ if ($evalFiles.Count -eq 0) {
   }
 }
 
-$obsidianJsonFiles = Get-ChildItem -LiteralPath ".obsidian" -Filter "*.json"
+$obsidianJsonFiles = Get-ChildItem -LiteralPath "Prometeus/.obsidian" -Filter "*.json"
 foreach ($jsonFile in $obsidianJsonFiles) {
   try {
     Get-Content -LiteralPath $jsonFile.FullName -Raw | ConvertFrom-Json | Out-Null
@@ -148,7 +148,7 @@ foreach ($jsonFile in $obsidianJsonFiles) {
 }
 
 try {
-  $graphConfig = Get-Content -LiteralPath ".obsidian/graph.json" -Raw | ConvertFrom-Json
+  $graphConfig = Get-Content -LiteralPath "Prometeus/.obsidian/graph.json" -Raw | ConvertFrom-Json
   if ($graphConfig.search -eq "path:wiki") {
     Write-Ok "graph search is graph-first: path:wiki"
   } else {
@@ -176,7 +176,7 @@ try {
   Write-Fail "graph configuration invalid"
 }
 
-$canvasFiles = Get-ChildItem -LiteralPath "wiki" -Recurse -Filter "*.canvas"
+$canvasFiles = Get-ChildItem -LiteralPath "Prometeus/wiki" -Recurse -Filter "*.canvas"
 foreach ($canvasFile in $canvasFiles) {
   try {
     $canvas = Get-Content -LiteralPath $canvasFile.FullName -Raw | ConvertFrom-Json
@@ -197,10 +197,10 @@ $ignoreTargets = @(
   "private-learning/checkpoints/probe.txt",
   "private-learning/exports/probe.json",
   "private-learning/state.local.json",
-  "wiki/Clippings/probe.md",
-  "wiki/Daily/probe.md",
-  "wiki/Attachments/probe.png",
-  ".obsidian/workspace.json"
+  "Prometeus/wiki/Clippings/probe.md",
+  "Prometeus/wiki/Daily/probe.md",
+  "Prometeus/wiki/Attachments/probe.png",
+  "Prometeus/.obsidian/workspace.json"
 )
 
 foreach ($target in $ignoreTargets) {

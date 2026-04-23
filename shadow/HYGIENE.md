@@ -20,9 +20,9 @@ Rodar higiene quando:
 - `git status --short`: entender o que mudou.
 - `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`: rodar harness local.
 - `rg --hidden --files -g "!private-learning/**" -g "!.git/**"`: ver sprawl fora da area privada.
-- Checar se novos arquivos estao em uma casa clara: `shadow/`, `wiki/`, `private-learning/`, `playground/`, `.agents/skills/` ou `.codex/agents/`.
-- Checar se notas wiki duraveis estao em `wiki/Notes`, `wiki/Categories` ou `wiki/References`.
-- Checar se capturas cruas continuam ignoradas em `wiki/Clippings`, `wiki/Daily` e `wiki/Attachments`.
+- Checar se novos arquivos estao em uma casa clara: `shadow/`, `Prometeus/wiki/`, `private-learning/`, `playground/`, `.agents/skills/` ou `.codex/agents/`.
+- Checar se notas wiki duraveis estao em `Prometeus/wiki/Notes`, `Prometeus/wiki/Categories` ou `Prometeus/wiki/References`.
+- Checar se capturas cruas continuam ignoradas em `Prometeus/wiki/Clippings`, `Prometeus/wiki/Daily` e `Prometeus/wiki/Attachments`.
 - Checar se `private-learning/` continua em `.gitignore` e `.claudeignore`.
 - Checar se docs SOTA antigos foram referenciados ou consolidados.
 - Checar se `C:\Dev\Projetos\OLMO` aparece apenas como destino protegido, nunca como alvo de edicao.

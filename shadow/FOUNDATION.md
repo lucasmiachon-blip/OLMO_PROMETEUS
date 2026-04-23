@@ -18,8 +18,8 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 - `AGENTS.md` como contrato operacional.
 - `PROJECT_CONTRACT.md` como limite de risco.
 - `shadow/` para decisoes, gates e memoria operacional.
-- `.obsidian/` para configurar a raiz `OLMO_PROMETEUS` como vault Obsidian.
-- `wiki/` para notas Obsidian e conhecimento duravel.
+- `Prometeus/.obsidian/` para configurar o vault Obsidian `Prometeus`.
+- `Prometeus/wiki/` para notas Obsidian e conhecimento duravel.
 - `private-learning/` para interface e material pessoal.
 - `scripts/check.ps1` como harness local.
 
@@ -46,7 +46,7 @@ Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo
 - decisoes SOTA: `shadow/SOTA-DECISIONS.md`;
 - incorporacoes: `shadow/INCORPORATION-LOG.md`;
 - higiene: `shadow/HYGIENE.md`;
-- wiki navegavel: `wiki/Home.md`;
+- wiki navegavel: `Prometeus/wiki/Home.md`;
 - material pessoal: `private-learning/`.
 
 Regra: se uma memoria nao muda comportamento futuro, ela nao entra no repo.
@@ -62,7 +62,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1
 Ele valida:
 
 - arquivos essenciais;
-- estrutura basica do Obsidian vault raiz + `wiki/`;
+- estrutura basica do Obsidian vault `Prometeus`;
 - evals JSON das skills;
 - ausencia de referencias antigas;
 - ausencia de tokens/segredos obvios;

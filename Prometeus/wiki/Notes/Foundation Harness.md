@@ -20,7 +20,7 @@ Ele valida:
 
 - boundary fundamental;
 - arquivos essenciais;
-- Obsidian vault basico com a raiz nomeada `OLMO_PROMETEUS`;
+- Obsidian vault basico nomeado `Prometeus`;
 - evals JSON;
 - ausencia de referencias antigas;
 - ausencia de segredos obvios;

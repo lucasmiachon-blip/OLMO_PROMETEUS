@@ -13,7 +13,8 @@ tags:
 - Consolidado SOTA em decisoes curtas.
 - Adicionado harness local.
 - Boundary fundamental registrada: nunca escrever fora do repo.
-- Criado Obsidian vault do projeto, usando `C:\Dev\Projetos\OLMO_PROMETEUS` como raiz e `wiki/` como area de notas.
+- Criado Obsidian vault do projeto.
+- Renomeado o vault para `Prometeus`, mantendo o repo isolado em `C:\Dev\Projetos\OLMO_PROMETEUS`.
 
 ## Regra
 

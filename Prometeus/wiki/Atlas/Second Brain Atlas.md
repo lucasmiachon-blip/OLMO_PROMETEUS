@@ -15,7 +15,7 @@ Este e o mapa principal do second brain. O Graph View e a interface principal; C
 - [[Prometeus Wiki]]
 - [[Graph Operating System]]
 - [[Knowledge Lifecycle]]
-- [[OLMO_PROMETEUS.canvas]]
+- [[Prometeus.canvas]]
 
 ## Sistemas vivos
 
@@ -50,4 +50,3 @@ Toda nota nova deve responder:
 - qual problema ela reduz;
 - se ela e duravel, temporaria ou candidata;
 - qual link futuro ela cria.
-

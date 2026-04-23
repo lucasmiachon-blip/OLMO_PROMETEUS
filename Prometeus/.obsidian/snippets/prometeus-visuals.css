@@ -1,4 +1,4 @@
-/* Professional Canvas polish for OLMO_PROMETEUS. */
+/* Professional Canvas polish for Prometeus. */
 .canvas-wrapper .canvas-node-container {
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.10);
@@ -33,4 +33,3 @@
 .canvas-wrapper .canvas-node-content.markdown-embed {
   padding: 6px 8px;
 }
-

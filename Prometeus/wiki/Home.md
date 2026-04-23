@@ -6,9 +6,9 @@ tags:
   - prometeus/graph
 ---
 
-# OLMO_PROMETEUS Wiki
+# Prometeus Wiki
 
-Este projeto inteiro e o vault Obsidian. A wiki operacional mora em `wiki/` e usa uma abordagem bottom-up: notas pequenas primeiro, organizacao depois.
+Este vault Obsidian se chama `Prometeus` e mora dentro do repo isolado `OLMO_PROMETEUS`. A wiki operacional mora em `wiki/` e usa uma abordagem bottom-up: notas pequenas primeiro, organizacao depois.
 
 Direcao atual: second brain graph-first. O Graph View deve ser grande e vivo; Canvas e mapa curado opcional.
 
@@ -17,7 +17,7 @@ Comece por:
 - [[Second Brain Atlas]]
 - [[Graph Operating System]]
 - [[Knowledge Lifecycle]]
-- [[OLMO_PROMETEUS.canvas|Mapa visual em Canvas]]
+- [[Prometeus.canvas|Mapa visual em Canvas]]
 - [[Prometeus Wiki]]
 - [[Foundation Harness]]
 - [[Workspace Boundary]]
@@ -52,7 +52,7 @@ path:wiki
 
 ## Canvas
 
-Use [[OLMO_PROMETEUS.canvas|OLMO_PROMETEUS Canvas]] como vitrine curada. Ele e manual e bonito, mas nao substitui o grafo.
+Use [[Prometeus.canvas|Prometeus Canvas]] como vitrine curada. Ele e manual e bonito, mas nao substitui o grafo.
 
 Se o Graph abrir cinza, confira `Groups`. O Obsidian pode regravar `graph.json` enquanto o Graph esta aberto; nesse caso, reabra o vault e aplique o preset de [[Graph Operating System]].
 

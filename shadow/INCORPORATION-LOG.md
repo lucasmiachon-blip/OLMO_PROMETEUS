@@ -18,7 +18,7 @@ Regra: nada migra para OLMO sem autorizacao humana explicita, evidencia, rollbac
 | 2026-04-23 | SOTA agents/skills/team | experiment | Pesquisa SOTA ate hoje para decidir incorporacoes | `shadow/SOTA-DECISIONS.md` | Inflar arquitetura cedo demais | Manter decisoes curtas e cortar relatorios longos |
 | 2026-04-23 | Janitor editorial | experiment | Repo separado permite limpeza mais agressiva | `shadow/SOTA-DECISIONS.md` | Deletar material util por impulso | Cortar duplicacao, preservar contratos e dashboard |
 | 2026-04-23 | Foundation + harness | experiment | Fortalecer base, infra, hooks, memoria, harness e orquestracao | `shadow/FOUNDATION.md`, `scripts/check.ps1` | Burocracia e falsa seguranca | Usar em 3 sessoes antes de promover para candidate |
-| 2026-04-23 | Obsidian project wiki | experiment | Criar vault wiki para conhecimento duravel | `wiki/Home.md` | Virar deposito de captura crua | Usar em 3 ciclos e consolidar notas duplicadas |
+| 2026-04-23 | Obsidian project wiki | experiment | Criar vault wiki para conhecimento duravel | `Prometeus/wiki/Home.md` | Virar deposito de captura crua | Usar em 3 ciclos e consolidar notas duplicadas |
 
 ## Gate para virar candidate
 

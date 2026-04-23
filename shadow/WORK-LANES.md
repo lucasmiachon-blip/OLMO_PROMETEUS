@@ -22,7 +22,7 @@ So o que provar utilidade local, repetibilidade e baixo risco pode virar candida
 | Dashboard local simples | `private` | `private-learning/` | nao, por enquanto | n/a | misturar camada pessoal com runtime |
 | Novos fluxos multimodelo | `experiment` | `playground/` | talvez | declarar objetivo, trigger, artefato, custo e risco | contaminar o repo principal |
 | Foundation + harness local | `experiment` | `shadow/` + `scripts/` | talvez | passar em 3 sessoes reais e reduzir regressao | virar burocracia sem ganho |
-| Obsidian project wiki | `experiment` | `wiki/` | talvez | ser usado em 3 ciclos sem virar deposito | acumular notas sem decisao |
+| Obsidian project wiki | `experiment` | `Prometeus/wiki/` | talvez | ser usado em 3 ciclos sem virar deposito | acumular notas sem decisao |
 
 ## Template de candidato a migracao
 

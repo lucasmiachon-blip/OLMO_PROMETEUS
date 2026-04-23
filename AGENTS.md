@@ -47,8 +47,8 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 
 - `private-learning/`: cockpit visual, digests, progresso e uso diario.
 - `shadow/`: contratos, trilhas, gates, pesquisa e arquitetura operacional.
-- `.obsidian/`: configuracao para abrir `C:\Dev\Projetos\OLMO_PROMETEUS` como vault Obsidian.
-- `wiki/`: notas Obsidian versionadas para conhecimento duravel do projeto.
+- `Prometeus/.obsidian/`: configuracao do vault Obsidian `Prometeus`.
+- `Prometeus/wiki/`: notas Obsidian versionadas para conhecimento duravel do projeto.
 - `playground/`: testes locais e prototipos descartaveis.
 - `.agents/skills/`: workflows reutilizaveis deste laboratorio.
 - `.codex/agents/`: agentes customizados estreitos para delegacao.

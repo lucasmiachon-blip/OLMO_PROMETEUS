@@ -3,7 +3,7 @@
     {
       "id": "hero",
       "type": "text",
-      "text": "# OLMO_PROMETEUS\n\nCanvas curado do laboratorio seguro. Use para explicar o sistema; o Graph View e o second brain principal.",
+      "text": "# Prometeus\n\nCanvas curado do laboratorio seguro. Use para explicar o sistema; o Graph View e o second brain principal.",
       "x": -760,
       "y": -420,
       "width": 560,
@@ -13,7 +13,7 @@
     {
       "id": "contract",
       "type": "text",
-      "text": "## Regra absoluta\n\nNada fora de `C:\\Dev\\Projetos\\OLMO_PROMETEUS`.\n\nTudo que parecer migravel passa por gate humano antes de qualquer conversa sobre OLMO.",
+      "text": "## Regra absoluta\n\nVault: `C:\\Dev\\Projetos\\OLMO_PROMETEUS\\Prometeus`.\n\nNada fora de `C:\\Dev\\Projetos\\OLMO_PROMETEUS`.\n\nTudo que parecer migravel passa por gate humano antes de qualquer conversa sobre OLMO.",
       "x": -160,
       "y": -420,
       "width": 520,
