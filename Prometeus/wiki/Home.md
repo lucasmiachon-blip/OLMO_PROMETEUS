@@ -25,6 +25,7 @@ Comece por:
 - [[Foundation Harness]]
 - [[Workspace Boundary]]
 - [[Email Digest System]]
+- [[Email Triage]]
 - [[Study Track System]]
 - [[Promotion Gate]]
 - [[Kepano and Karpathy Principles]]

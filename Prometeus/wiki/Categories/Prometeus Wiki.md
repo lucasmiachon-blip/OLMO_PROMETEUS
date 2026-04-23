@@ -20,6 +20,7 @@ Mapa central do vault. Use como ponto de partida, nao como taxonomia obrigatoria
 - [[Foundation Harness]]
 - [[Workspace Boundary]]
 - [[Email Digest System]]
+- [[Email Triage]]
 - [[Study Track System]]
 - [[Promotion Gate]]
 
@@ -55,3 +56,4 @@ Mapa central do vault. Use como ponto de partida, nao como taxonomia obrigatoria
 ## Regra
 
 Se uma nota nao merece link, provavelmente ainda e clipping ou rascunho.
+

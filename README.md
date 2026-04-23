@@ -81,6 +81,7 @@ O Canvas `Prometeus/wiki/Maps/Prometeus.canvas` continua como vitrine curada. El
 
 ## Origem da primeira fatia
 
-A base inicial veio de uma area de roadmap anterior que nao oferecia isolamento Git real. Este repo existe para manter a separacao segura em `OLMO_PROMETEUS`.
+A base inicial veio de um laboratorio anterior que nao oferecia isolamento Git real. Este repo existe para manter a separacao segura em `OLMO_PROMETEUS`.
+
 
 

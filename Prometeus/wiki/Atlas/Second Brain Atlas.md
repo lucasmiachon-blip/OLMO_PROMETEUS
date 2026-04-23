@@ -23,6 +23,7 @@ Este e o mapa principal do second brain. O Graph View e a interface principal; C
 - [[SOTA Research Gate]]
 - [[Workspace Boundary]]
 - [[Email Digest System]]
+- [[Email Triage]]
 - [[Study Track System]]
 - [[Promotion Gate]]
 
@@ -61,3 +62,4 @@ O cluster mais importante agora e agentes como modulos encapsulados:
 - [[Agent Module Encapsulation]] transforma entusiasmo por agente em contrato verificavel.
 - [[Promotion Gate]] decide se algo pode virar `candidate`.
 - [[Foundation Harness]] impede regressao mecanica.
+

@@ -25,4 +25,13 @@ Digest completo tem quatro paragrafos:
 3. Conceitos para estudar.
 4. Filosofia e tensoes.
 
+Conceitos operacionais de triagem:
+
+- [[Email Triage]]
+- [[Action vs FYI]]
+- [[Waiting]]
+- [[Deadline Externo]]
+- [[Signal vs Noise]]
+- [[Subscription Drift]]
+
 Link: [[Artifact]]
