@@ -18,6 +18,7 @@ Rodar higiene quando:
 ## Checklist rapido
 
 - `git status --short`: entender o que mudou.
+- `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`: rodar harness local.
 - `rg --hidden --files -g "!private-learning/**" -g "!.git/**"`: ver sprawl fora da area privada.
 - Checar se novos arquivos estao em uma casa clara: `shadow/`, `private-learning/`, `playground/`, `.agents/skills/` ou `.codex/agents/`.
 - Checar se `private-learning/` continua em `.gitignore` e `.claudeignore`.

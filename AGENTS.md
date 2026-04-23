@@ -62,6 +62,8 @@
 
 - Se editar docs ou HTML, cheque nomes, titulos e links locais.
 - Se editar skill, mantenha a descricao clara sobre quando ela dispara.
+- Se editar base, memoria, harness ou orquestracao, atualize `shadow/FOUNDATION.md`.
+- Quando houver mudanca persistente, rode `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`.
 - Se um artefato virar `candidate`, atualize `shadow/WORK-LANES.md`.
 - Se a sessao criar varios artefatos, confira `shadow/HYGIENE.md`.
 - Se a tarefa esbarrar no repo principal, pare e peca autorizacao explicita.

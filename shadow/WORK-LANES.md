@@ -21,6 +21,7 @@ So o que provar utilidade local, repetibilidade e baixo risco pode virar candida
 | Study track com `done` | `candidate` | `shadow/` + `private-learning/` | sim | reduzir retrabalho e dar visibilidade de progresso | marcar `done` cedo demais |
 | Dashboard local simples | `private` | `private-learning/` | nao, por enquanto | n/a | misturar camada pessoal com runtime |
 | Novos fluxos multimodelo | `experiment` | `playground/` | talvez | declarar objetivo, trigger, artefato, custo e risco | contaminar o repo principal |
+| Foundation + harness local | `experiment` | `shadow/` + `scripts/` | talvez | passar em 3 sessoes reais e reduzir regressao | virar burocracia sem ganho |
 
 ## Template de candidato a migracao
 

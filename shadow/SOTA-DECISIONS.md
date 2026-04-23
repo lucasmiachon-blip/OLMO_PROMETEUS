@@ -16,6 +16,7 @@ Manter:
 - Gmail como fila simples: `Processar`, `Alta`, `Ruido`, `Digerido`.
 - `Digerido` somente depois de artefato persistente.
 - `shadow/INCORPORATION-LOG.md` como gate antes de qualquer conversa sobre OLMO.
+- `scripts/check.ps1` como harness leve antes de commit.
 
 Nao incorporar agora:
 
@@ -25,6 +26,7 @@ Nao incorporar agora:
 - agentes demais;
 - skills especulativas;
 - relatorios SOTA longos que viram museu.
+- hooks reais antes de um comando manual provar utilidade.
 
 ## Regras praticas
 

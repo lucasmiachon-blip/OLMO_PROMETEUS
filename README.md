@@ -19,6 +19,8 @@ Laboratorio paralelo e independente para validar fluxo, dashboard, digest e stud
 - `playground/`: espaco para prototipos descartaveis
 - `shadow/HYGIENE.md`: checklist de higiene para evitar sprawl
 - `shadow/SOTA-DECISIONS.md`: decisoes SOTA consolidadas, sem relatorio longo
+- `shadow/FOUNDATION.md`: base de infra, hooks, memoria, harness e orquestracao
+- `scripts/check.ps1`: harness local de regressao leve
 
 ## Primeiro lote enxuto
 
@@ -37,6 +39,14 @@ Laboratorio paralelo e independente para validar fluxo, dashboard, digest e stud
 ## Higiene do projeto
 
 Ao final de sessoes com edicao, conferir `shadow/HYGIENE.md` antes de criar mais estrutura.
+
+## Harness local
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1
+```
+
+Use antes de commit quando a sessao mexer em docs, skills, agentes ou dashboard.
 
 ## Origem da primeira fatia
 

@@ -35,5 +35,7 @@ Um artefato daqui so entra em conversa de migracao quando:
 - `.agents/skills/` guarda workflows reutilizaveis pequenos.
 - `.codex/agents/` guarda papeis estreitos para delegacao.
 - `shadow/WORK-LANES.md` registra a classificacao dos artefatos.
+- `shadow/FOUNDATION.md` define infra, hooks, memoria, harness e orquestracao.
+- `scripts/check.ps1` valida regressao leve antes de commit.
 
 
