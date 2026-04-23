@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OLMO Roadmap HQ</title>
+  <title>open OLMO_PROMETEUS HQ</title>
   <style>
     :root {
       --bg: #f4efe7;
@@ -478,7 +478,7 @@
     <main class="content">
       <section class="panel hero">
         <span class="eyebrow">Roadmap + Study</span>
-        <h1>Baixo risco para roadmap, inbox e estudo.</h1>
+        <h1>Baixo risco para Prometeus, inbox e estudo.</h1>
         <p style="margin-top: 14px; max-width: 66ch;">
           Use o digest em 4 paragrafos para transformar email em foco. Depois roteie tudo para prazo, trilha de estudo, experimento ou candidato a migracao. O dashboard e local; `private-learning/` continua separado do que pode um dia sair deste workspace.
         </p>
@@ -521,23 +521,23 @@
         </div>
 
         <div class="link-grid">
-          <a class="link-card" href="../roadmap/EMAIL-DIGEST-4P.md">
+          <a class="link-card" href="../shadow/EMAIL-DIGEST-4P.md">
             <span class="card-index">1</span>
             <h3>Digest 4P</h3>
             <p>Regra simples para resumir email em fatos, deadlines, estudo e filosofia.</p>
-            <span class="path">roadmap/EMAIL-DIGEST-4P.md</span>
+            <span class="path">shadow/EMAIL-DIGEST-4P.md</span>
           </a>
-          <a class="link-card" href="../roadmap/STUDY-TRACK-DONE.md">
+          <a class="link-card" href="../shadow/STUDY-TRACK-DONE.md">
             <span class="card-index">2</span>
             <h3>Study Track</h3>
             <p>Status curtos e um gate objetivo para marcar `done` sem autoengano.</p>
-            <span class="path">roadmap/STUDY-TRACK-DONE.md</span>
+            <span class="path">shadow/STUDY-TRACK-DONE.md</span>
           </a>
-          <a class="link-card" href="../roadmap/WORK-LANES.md">
+          <a class="link-card" href="../shadow/WORK-LANES.md">
             <span class="card-index">3</span>
             <h3>Work Lanes</h3>
             <p>Define o que e `private`, o que e `experiment` e o que pode virar `candidate`.</p>
-            <span class="path">roadmap/WORK-LANES.md</span>
+            <span class="path">shadow/WORK-LANES.md</span>
           </a>
           <a class="link-card" href="../playground/README.md">
             <span class="card-index">4</span>
@@ -727,7 +727,8 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'olmo-roadmap-private-learning-v2';
+    const STORAGE_KEY = 'open-olmo-prometeus-private-learning-v2';
+    const LEGACY_STORAGE_KEY = 'olmo-prometeus-private-learning-v2';
 
     const defaultState = {
       focus: '',
@@ -788,7 +789,7 @@
 
     function loadState() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
         if (!raw) return structuredClone(defaultState);
         return { ...structuredClone(defaultState), ...JSON.parse(raw) };
       } catch {
@@ -830,6 +831,7 @@
     function saveState() {
       state.lastSaved = new Date().toISOString();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      localStorage.removeItem(LEGACY_STORAGE_KEY);
       renderStats();
     }
 
@@ -1241,7 +1243,7 @@
         ],
         studyItems: [
           { id: crypto.randomUUID(), title: 'Digest em 4 paragrafos', source: 'email + operacao', status: 'aplicando' },
-          { id: crypto.randomUUID(), title: 'Done gate para trilha de estudo', source: 'roadmap', status: 'em-estudo' },
+          { id: crypto.randomUUID(), title: 'Done gate para trilha de estudo', source: 'shadow', status: 'em-estudo' },
           { id: crypto.randomUUID(), title: 'Separacao entre cockpit e candidato', source: 'governanca local', status: 'capturado' }
         ],
         experiments: [
@@ -1249,8 +1251,8 @@
           { id: crypto.randomUUID(), title: 'Promocao de experimento para candidato', artifact: 'registro no dashboard', risk: 'baixo', status: 'idea' }
         ],
         migrationCandidates: [
-          { id: crypto.randomUUID(), title: 'Framework de digest 4P', artifact: 'roadmap/EMAIL-DIGEST-4P.md', trigger: '3 ciclos uteis seguidos', status: 'draft' },
-          { id: crypto.randomUUID(), title: 'Done gate de estudo', artifact: 'roadmap/STUDY-TRACK-DONE.md', trigger: 'reducao visivel de retrabalho', status: 'validated' }
+          { id: crypto.randomUUID(), title: 'Framework de digest 4P', artifact: 'shadow/EMAIL-DIGEST-4P.md', trigger: '3 ciclos uteis seguidos', status: 'draft' },
+          { id: crypto.randomUUID(), title: 'Done gate de estudo', artifact: 'shadow/STUDY-TRACK-DONE.md', trigger: 'reducao visivel de retrabalho', status: 'validated' }
         ]
       });
 
@@ -1338,3 +1340,5 @@
   </script>
 </body>
 </html>
+
+

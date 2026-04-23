@@ -2,5 +2,3 @@ private-learning/*.json
 private-learning/*.local.*
 private-learning/exports/
 private-learning/checkpoints/
-node_modules/
-.venv/

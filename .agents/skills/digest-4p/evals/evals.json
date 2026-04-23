@@ -1,0 +1,20 @@
+{
+  "skill_name": "digest-4p",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Transforme estas notas de inbox em um digest curto para amanha cedo, em 4 paragrafos, preservando os sinais mais importantes.",
+      "expected_output": "Quatro paragrafos curtos, com contexto, sinais principais, riscos e proximos passos."
+    },
+    {
+      "id": 2,
+      "prompt": "Tenho emails, anotacoes e um backlog baguncado. Quero um resumo operacional em portugues, sem listas, em exatamente 4 paragrafos.",
+      "expected_output": "Sintese em portugues, sem listas, exatamente 4 paragrafos, removendo ruido."
+    },
+    {
+      "id": 3,
+      "prompt": "Triar Gmail com Prometeus/Alta e Prometeus/Processar; depois marcar tudo como Digerido.",
+      "expected_output": "Processa Alta antes de Processar, gera ou exige artefato persistente, e recusa marcar Digerido sem digest ou nota salva."
+    }
+  ]
+}

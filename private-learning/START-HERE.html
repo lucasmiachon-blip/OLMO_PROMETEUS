@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OLMO HQ - Modo Iniciante</title>
+  <title>open OLMO_PROMETEUS - Modo Iniciante</title>
   <style>
     :root {
       --bg: #f7f2ea;
@@ -359,17 +359,17 @@
       <div class="sidebar-block">
         <h3>Arquivos base</h3>
         <div class="link-grid" style="grid-template-columns: 1fr;">
-          <a class="link-card" href="../roadmap/EMAIL-DIGEST-4P.md">
+          <a class="link-card" href="../shadow/EMAIL-DIGEST-4P.md">
             Digest 4P
-            <span class="path">roadmap/EMAIL-DIGEST-4P.md</span>
+            <span class="path">shadow/EMAIL-DIGEST-4P.md</span>
           </a>
-          <a class="link-card" href="../roadmap/STUDY-TRACK-DONE.md">
+          <a class="link-card" href="../shadow/STUDY-TRACK-DONE.md">
             Study Track
-            <span class="path">roadmap/STUDY-TRACK-DONE.md</span>
+            <span class="path">shadow/STUDY-TRACK-DONE.md</span>
           </a>
-          <a class="link-card" href="../roadmap/WORK-LANES.md">
+          <a class="link-card" href="../shadow/WORK-LANES.md">
             Work Lanes
-            <span class="path">roadmap/WORK-LANES.md</span>
+            <span class="path">shadow/WORK-LANES.md</span>
           </a>
         </div>
       </div>
@@ -553,7 +553,8 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "olmo-roadmap-start-here-v1";
+    const STORAGE_KEY = "open-olmo-prometeus-start-here-v1";
+    const LEGACY_STORAGE_KEY = "olmo-prometeus-start-here-v1";
 
     const refs = {
       sessionLength: () => document.querySelector('input[name="sessionLength"]:checked')?.value || "30 min",
@@ -615,7 +616,7 @@
 
     function hydrate() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
         if (!raw) return;
         const state = JSON.parse(raw);
         if (state.sessionLength) {
@@ -642,6 +643,7 @@
       });
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      localStorage.removeItem(LEGACY_STORAGE_KEY);
     }
 
     function buildSummary() {
@@ -691,6 +693,7 @@
     function clearState() {
       if (!confirm("Limpar tudo deste painel?")) return;
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(LEGACY_STORAGE_KEY);
       inputKeys.forEach((key) => {
         refs[key].value = "";
       });
@@ -750,3 +753,5 @@
   </script>
 </body>
 </html>
+
+

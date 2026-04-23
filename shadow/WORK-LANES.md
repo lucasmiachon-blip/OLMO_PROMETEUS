@@ -11,14 +11,14 @@ So o que provar utilidade local, repetibilidade e baixo risco pode virar candida
 | --- | --- | --- | --- |
 | `private` | `private-learning/` | material pessoal, cockpit, digests, notas | fica local |
 | `experiment` | `playground/` | pergunta aberta, prototipo, teste de fluxo | descartado ou promovido |
-| `candidate` | `roadmap/` | padrao que parece reutilizavel e ja gerou artefato | aguarda validacao humana |
+| `candidate` | `shadow/` | padrao que parece reutilizavel e ja gerou artefato | aguarda validacao humana |
 
 ## Mapa inicial das prioridades
 
 | Item | Lane atual | Casa | Pode migrar | Trigger minimo | Risco principal |
 | --- | --- | --- | --- | --- | --- |
-| Digest de email em 4 paragrafos | `candidate` | `roadmap/` + `private-learning/` | sim | funcionar por 3 ciclos uteis seguidos | virar ritual sem acao |
-| Study track com `done` | `candidate` | `roadmap/` + `private-learning/` | sim | reduzir retrabalho e dar visibilidade de progresso | marcar `done` cedo demais |
+| Digest de email em 4 paragrafos | `candidate` | `shadow/` + `private-learning/` | sim | funcionar por 3 ciclos uteis seguidos | virar ritual sem acao |
+| Study track com `done` | `candidate` | `shadow/` + `private-learning/` | sim | reduzir retrabalho e dar visibilidade de progresso | marcar `done` cedo demais |
 | Dashboard local simples | `private` | `private-learning/` | nao, por enquanto | n/a | misturar camada pessoal com runtime |
 | Novos fluxos multimodelo | `experiment` | `playground/` | talvez | declarar objetivo, trigger, artefato, custo e risco | contaminar o repo principal |
 
@@ -32,3 +32,4 @@ Antes de pensar em migrar algo para `OLMO`, responda:
 - `custo`: limite operacional e de manutencao;
 - `risco`: o que pode contaminar ou quebrar;
 - `rollback`: como voltar atras sem dano.
+

@@ -28,3 +28,4 @@ Marque `done` so quando as tres respostas forem "sim":
 - marcar `done` so porque leu;
 - mover para o repo principal antes de aplicar localmente;
 - transformar curiosidade em backlog infinito.
+

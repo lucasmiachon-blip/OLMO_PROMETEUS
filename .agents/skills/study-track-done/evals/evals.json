@@ -1,0 +1,15 @@
+{
+  "skill_name": "study-track-done",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Organize minha trilha de estudo em capturado, em-estudo, aplicando e done. Nao quero marcar done cedo demais.",
+      "expected_output": "Tabela ou estrutura visual com os quatro estados e criterio conservador para done."
+    },
+    {
+      "id": 2,
+      "prompt": "Revise estes topicos e me diga o que realmente pode ir para done com base em evidencia de aplicacao.",
+      "expected_output": "Classificacao prudente, explicando por que alguns itens permanecem em estudo ou aplicando."
+    }
+  ]
+}

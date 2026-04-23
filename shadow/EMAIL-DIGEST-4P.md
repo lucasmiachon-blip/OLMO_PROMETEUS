@@ -29,14 +29,27 @@ Depois do digest, cada item precisa cair em um destino:
 - `deadline`: entra no painel como prazo ou compromisso.
 - `study track`: entra como topico a aprender com status visivel.
 - `experimento`: vai para `playground/` quando a pergunta ainda estiver aberta.
-- `candidato a migracao`: entra em `roadmap/WORK-LANES.md` quando o padrao parecer reutilizavel.
+- `candidato a migracao`: entra em `shadow/WORK-LANES.md` quando o padrao parecer reutilizavel.
+
+## Labels Gmail
+
+Gmail e fila de entrada, nao taxonomia duravel.
+
+- `Prometeus/Processar`: fila normal.
+- `Prometeus/Alta`: prioridade, compoe com a fila.
+- `Prometeus/Ruido`: ignorar ou usar apenas para detectar padrao de ruido.
+- `Prometeus/Digerido`: aplicar somente depois de artefato persistente.
+
+Regra dura: um email so vira `Digerido` quando existir digest ou nota com data, origem/thread e sintese em 4 paragrafos.
 
 ## Done do digest
 
 O digest esta completo quando:
 
 - os 4 paragrafos existem;
+- o artefato persistente existe, quando houver Gmail envolvido;
 - nenhum prazo critico ficou sem destino;
 - cada topico de estudo recebeu um status inicial;
 - cada experimento tem artefato e risco;
 - cada possivel migracao tem trigger documentado.
+
