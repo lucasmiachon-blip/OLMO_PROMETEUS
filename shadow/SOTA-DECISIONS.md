@@ -39,6 +39,19 @@ Nao incorporar agora:
 4. Qualquer coisa que pareca migravel passa por `private -> experiment -> candidate`.
 5. Nada toca `C:\Dev\Projetos\OLMO` sem autorizacao humana explicita.
 
+## Padrao SOTA para procedimentos
+
+Enquanto nao houver skill real, cada procedimento duravel deve ter:
+
+- trigger e nao-trigger;
+- contrato de entrada;
+- output esperado;
+- workflow curto;
+- criterios negativos;
+- mini-evals com prompts realistas.
+
+Se algum procedimento passar a ser usado recorrentemente, so entao considerar uma skill real com `SKILL.md`, descricao forte de trigger, progressive disclosure e evals. Ate la, procedimento em `shadow/` e mais barato que scaffold.
+
 ## Time minimo
 
 | Papel | Modelo/ferramenta | Uso | Risco controlado |

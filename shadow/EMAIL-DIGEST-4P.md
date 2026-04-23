@@ -4,6 +4,28 @@
 
 Transformar inbox difusa em sinal operacional curto, recorrente e acionavel.
 
+## Trigger
+
+Usar este procedimento quando houver:
+
+- emails, notas, updates ou bullets misturados que precisam virar leitura operacional;
+- pedido de digest, morning brief, resumo executivo ou inbox synthesis;
+- Gmail com `Prometeus/Alta` ou `Prometeus/Processar`;
+- necessidade de decidir destino de prazos, estudo, experimento ou candidato.
+
+Nao usar quando a entrada for uma unica pergunta simples, um documento que exige fichamento profundo ou material privado que nao deve gerar artefato.
+
+## Contrato de entrada
+
+Antes de escrever, separar a entrada em quatro pilhas:
+
+- `sinal`: fatos, decisoes, prazos, pedidos e nomes concretos;
+- `ruido`: repeticao, ansiedade, tom emocional bruto e mensagem sem acao;
+- `incerteza`: coisa que parece importante mas ainda nao tem fonte, data ou dono;
+- `destino`: prazo, estudo, experimento, candidato ou descarte.
+
+Se faltar data, origem ou contexto suficiente para uma conclusao, marcar como incerteza em vez de completar por imaginacao.
+
 ## Cadencia
 
 - `2 dias`: caixa quente ou semana de decisao.
@@ -13,6 +35,8 @@ Transformar inbox difusa em sinal operacional curto, recorrente e acionavel.
 
 ## Estrutura fixa
 
+O output principal deve ter exatamente 4 paragrafos curtos.
+
 1. `O que aconteceu`
    Fatos, movimentos, threads, reunioes, pedidos e contexto que realmente importam.
 2. `Deadlines e cobrancas`
@@ -21,6 +45,16 @@ Transformar inbox difusa em sinal operacional curto, recorrente e acionavel.
    Termos, sistemas, padroes, pessoas, ferramentas e referencias que entraram no radar.
 4. `Filosofia e tensoes`
    O que os emails revelam sobre valores, identidade, medo, estrategia e direcao.
+
+## Workflow
+
+1. Deduplicar mensagens e remover ruido.
+2. Processar `Prometeus/Alta` antes de `Prometeus/Processar`.
+3. Agrupar por tema, decisao, bloqueio ou proxima acao.
+4. Preservar nomes, datas, deadlines e links quando mudam a decisao.
+5. Escrever os 4 paragrafos.
+6. Fazer a conversao obrigatoria de destinos.
+7. So marcar `Digerido` depois de artefato persistente.
 
 ## Conversao obrigatoria
 
@@ -52,4 +86,22 @@ O digest esta completo quando:
 - cada topico de estudo recebeu um status inicial;
 - cada experimento tem artefato e risco;
 - cada possivel migracao tem trigger documentado.
+
+## Antipadroes
+
+- Produzir lista longa em vez de 4 paragrafos densos.
+- Copiar o tom bruto dos emails e chamar isso de sintese.
+- Marcar `Digerido` so porque foi lido.
+- Tratar Gmail como sistema de conhecimento duravel.
+- Criar candidato sem trigger, risco e rollback.
+
+## Mini-evals
+
+Use estes prompts para testar se o procedimento ainda funciona:
+
+| Caso | Prompt | Esperado |
+| --- | --- | --- |
+| digest ruidoso | "Tenho emails, notas e cobrancas misturadas; gere um digest operacional para amanha." | exatamente 4 paragrafos, com ruido removido e proximos destinos |
+| Gmail alta | "Triar `Prometeus/Alta` e `Prometeus/Processar`; depois marcar como `Digerido`." | processar alta primeiro e recusar `Digerido` sem artefato persistente |
+| candidato | "Este padrao apareceu em varios emails; talvez migre para OLMO." | extrair trigger, evidencia, risco e mandar para `shadow/WORK-LANES.md` |
 

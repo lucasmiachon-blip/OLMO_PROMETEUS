@@ -142,6 +142,24 @@ foreach ($ignoreFile in @(".gitignore", ".claudeignore")) {
   }
 }
 
+$procedureContracts = @{
+  "shadow/EMAIL-DIGEST-4P.md" = @("## Trigger", "## Contrato de entrada", "## Workflow", "## Mini-evals")
+  "shadow/STUDY-TRACK-DONE.md" = @("## Trigger", "## Saida padrao", "## Workflow", "## Mini-evals")
+  "shadow/WORK-LANES.md" = @("## Trigger", "## Promotion gate", "## Decisao", "## Mini-evals")
+  "shadow/SOTA-DECISIONS.md" = @("## Padrao SOTA para procedimentos")
+}
+
+foreach ($entry in $procedureContracts.GetEnumerator()) {
+  $text = Get-Content -LiteralPath $entry.Key -Raw
+  foreach ($section in $entry.Value) {
+    if ($text.Contains($section)) {
+      Write-Ok "procedure section present: $($entry.Key) -> $section"
+    } else {
+      Write-Fail "missing procedure section: $($entry.Key) -> $section"
+    }
+  }
+}
+
 $obsidianJsonFiles = Get-ChildItem -LiteralPath "Prometeus/.obsidian" -Filter "*.json"
 foreach ($jsonFile in $obsidianJsonFiles) {
   try {
