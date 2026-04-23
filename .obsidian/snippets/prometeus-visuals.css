@@ -1,0 +1,36 @@
+/* Professional Canvas polish for OLMO_PROMETEUS. */
+.canvas-wrapper .canvas-node-container {
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+
+.canvas-wrapper .canvas-node.is-focused .canvas-node-container,
+.canvas-wrapper .canvas-node.is-selected .canvas-node-container {
+  box-shadow:
+    0 0 0 2px rgba(245, 193, 92, 0.55),
+    0 20px 48px rgba(0, 0, 0, 0.34);
+}
+
+.canvas-wrapper .canvas-node-label {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.canvas-wrapper .canvas-group-label {
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.canvas-wrapper .canvas-node-content {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01));
+}
+
+.canvas-wrapper .canvas-node-content.markdown-embed {
+  padding: 6px 8px;
+}
+

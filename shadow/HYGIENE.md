@@ -20,7 +20,9 @@ Rodar higiene quando:
 - `git status --short`: entender o que mudou.
 - `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`: rodar harness local.
 - `rg --hidden --files -g "!private-learning/**" -g "!.git/**"`: ver sprawl fora da area privada.
-- Checar se novos arquivos estao em uma casa clara: `shadow/`, `private-learning/`, `playground/`, `.agents/skills/` ou `.codex/agents/`.
+- Checar se novos arquivos estao em uma casa clara: `shadow/`, `wiki/`, `private-learning/`, `playground/`, `.agents/skills/` ou `.codex/agents/`.
+- Checar se notas wiki duraveis estao em `wiki/Notes`, `wiki/Categories` ou `wiki/References`.
+- Checar se capturas cruas continuam ignoradas em `wiki/Clippings`, `wiki/Daily` e `wiki/Attachments`.
 - Checar se `private-learning/` continua em `.gitignore` e `.claudeignore`.
 - Checar se docs SOTA antigos foram referenciados ou consolidados.
 - Checar se `C:\Dev\Projetos\OLMO` aparece apenas como destino protegido, nunca como alvo de edicao.
@@ -33,6 +35,7 @@ Rodar higiene quando:
 - Nao criar nova skill/agente para cada ideia; exigir uso recorrente.
 - Nao transformar pesquisa em arquitetura se nao houver trigger real.
 - Nao colocar material privado em `shadow/`.
+- Nao colocar captura crua ou pessoal no vault versionado.
 - Nao manter dois documentos que respondem a mesma pergunta.
 
 ## Barra de qualidade

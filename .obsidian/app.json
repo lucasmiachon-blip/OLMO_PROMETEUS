@@ -1,0 +1,20 @@
+{
+  "alwaysUpdateLinks": true,
+  "attachmentFolderPath": "wiki/Attachments",
+  "newFileLocation": "current",
+  "promptDelete": false,
+  "userIgnoreFilters": [
+    ".git/",
+    ".agents/",
+    ".codex/",
+    ".gitignore",
+    ".claudeignore",
+    "AGENTS.md",
+    "PROJECT_CONTRACT.md",
+    "README.md",
+    "private-learning/",
+    "playground/",
+    "scripts/",
+    "shadow/"
+  ]
+}

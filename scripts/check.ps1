@@ -76,6 +76,19 @@ $requiredFiles = @(
   "shadow/SOTA-DECISIONS.md",
   "shadow/INCORPORATION-LOG.md",
   "shadow/WORK-LANES.md",
+  "wiki/Home.md",
+  "wiki/Atlas/Second Brain Atlas.md",
+  "wiki/Atlas/Graph Operating System.md",
+  "wiki/Atlas/Knowledge Lifecycle.md",
+  "wiki/Maps/OLMO_PROMETEUS.canvas",
+  "wiki/Categories/Prometeus Wiki.md",
+  "wiki/Notes/Workspace Boundary.md",
+  "wiki/Notes/Foundation Harness.md",
+  "wiki/References/Kepano and Karpathy Principles.md",
+  ".obsidian/app.json",
+  ".obsidian/core-plugins.json",
+  ".obsidian/graph.json",
+  ".obsidian/snippets/prometeus-visuals.css",
   "private-learning/dashboard.html",
   ".codex/config.toml"
 )
@@ -124,13 +137,70 @@ if ($evalFiles.Count -eq 0) {
   }
 }
 
+$obsidianJsonFiles = Get-ChildItem -LiteralPath ".obsidian" -Filter "*.json"
+foreach ($jsonFile in $obsidianJsonFiles) {
+  try {
+    Get-Content -LiteralPath $jsonFile.FullName -Raw | ConvertFrom-Json | Out-Null
+    Write-Ok "obsidian JSON parses: $($jsonFile.FullName)"
+  } catch {
+    Write-Fail "obsidian JSON invalid: $($jsonFile.FullName)"
+  }
+}
+
+try {
+  $graphConfig = Get-Content -LiteralPath ".obsidian/graph.json" -Raw | ConvertFrom-Json
+  if ($graphConfig.search -eq "path:wiki") {
+    Write-Ok "graph search is graph-first: path:wiki"
+  } else {
+    Write-Fail "graph search must stay graph-first: path:wiki"
+  }
+
+  if ($graphConfig.showTags -eq $true) {
+    Write-Ok "graph tags are enabled"
+  } else {
+    Write-Fail "graph tags must stay enabled"
+  }
+
+  if ($graphConfig.showOrphans -eq $true) {
+    Write-Ok "graph orphans are visible"
+  } else {
+    Write-Fail "graph orphans must stay visible"
+  }
+
+  if ($graphConfig.colorGroups.Count -ge 6) {
+    Write-Ok "graph color groups are configured"
+  } else {
+    Write-Fail "graph color groups missing or too small"
+  }
+} catch {
+  Write-Fail "graph configuration invalid"
+}
+
+$canvasFiles = Get-ChildItem -LiteralPath "wiki" -Recurse -Filter "*.canvas"
+foreach ($canvasFile in $canvasFiles) {
+  try {
+    $canvas = Get-Content -LiteralPath $canvasFile.FullName -Raw | ConvertFrom-Json
+    if ($canvas.nodes -and $canvas.edges) {
+      Write-Ok "canvas JSON parses: $($canvasFile.FullName)"
+    } else {
+      Write-Fail "canvas missing nodes or edges: $($canvasFile.FullName)"
+    }
+  } catch {
+    Write-Fail "canvas JSON invalid: $($canvasFile.FullName)"
+  }
+}
+
 Invoke-RgCheck "no old roadmap/SOTA references" "OLMO_ROADMAP|SOTA-AGENTS|SOTA-INCORPORATION" @("-g", "!scripts/check.ps1")
 Invoke-RgCheck "no obvious secret strings" "API_KEY|SECRET|TOKEN|password" @("-g", "!scripts/check.ps1")
 
 $ignoreTargets = @(
   "private-learning/checkpoints/probe.txt",
   "private-learning/exports/probe.json",
-  "private-learning/state.local.json"
+  "private-learning/state.local.json",
+  "wiki/Clippings/probe.md",
+  "wiki/Daily/probe.md",
+  "wiki/Attachments/probe.png",
+  ".obsidian/workspace.json"
 )
 
 foreach ($target in $ignoreTargets) {

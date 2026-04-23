@@ -21,6 +21,8 @@ Laboratorio paralelo e independente para validar fluxo, dashboard, digest e stud
 - `shadow/SOTA-DECISIONS.md`: decisoes SOTA consolidadas, sem relatorio longo
 - `shadow/FOUNDATION.md`: base de infra, hooks, memoria, harness e orquestracao
 - `scripts/check.ps1`: harness local de regressao leve
+- `.obsidian/`: configuracao do Obsidian para abrir a raiz como vault `OLMO_PROMETEUS`
+- `wiki/`: wiki operacional versionada do projeto
 
 ## Primeiro lote enxuto
 
@@ -47,6 +49,20 @@ powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1
 ```
 
 Use antes de commit quando a sessao mexer em docs, skills, agentes ou dashboard.
+
+## Obsidian
+
+Abra no Obsidian a pasta raiz do projeto:
+
+```text
+C:\Dev\Projetos\OLMO_PROMETEUS
+```
+
+Use `wiki/Home.md` como entrada. Assim o nome do vault aparece como `OLMO_PROMETEUS`, e nao como uma subpasta generica. A wiki segue a ideia bottom-up do Kepano e o minimalismo do Karpathy: notas pequenas, links claros, escopo limitado e harness simples. Captura crua, diaria ou privada fica ignorada pelo Git em `wiki/Clippings/`, `wiki/Daily/` e `wiki/Attachments/`.
+
+O second brain e Graph-first. No Graph View, use `path:wiki`, tags ligadas e orfaos visiveis. O grafo deve crescer; a qualidade vem de hubs como `wiki/Atlas/Second Brain Atlas.md`, nao de esconder nos.
+
+O Canvas `wiki/Maps/OLMO_PROMETEUS.canvas` continua como vitrine curada. Ele mostra uma narrativa bonita; o Graph View mostra o second brain real.
 
 ## Origem da primeira fatia
 

@@ -1,0 +1,5 @@
+{
+  "folder": "wiki/Daily",
+  "format": "YYYY-MM-DD",
+  "template": "wiki/Templates/Daily Note.md"
+}

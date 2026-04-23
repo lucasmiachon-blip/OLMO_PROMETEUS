@@ -2,5 +2,14 @@ private-learning/*.json
 private-learning/*.local.*
 private-learning/exports/
 private-learning/checkpoints/
+.obsidian/workspace*.json
+.obsidian/cache/
+.obsidian/plugins/
+wiki/Clippings/*
+!wiki/Clippings/README.md
+wiki/Daily/*
+!wiki/Daily/README.md
+wiki/Attachments/*
+!wiki/Attachments/README.md
 node_modules/
 .venv/

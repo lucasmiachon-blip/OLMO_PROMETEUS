@@ -1,0 +1,378 @@
+{
+  "nodes": [
+    {
+      "id": "hero",
+      "type": "text",
+      "text": "# OLMO_PROMETEUS\n\nCanvas curado do laboratorio seguro. Use para explicar o sistema; o Graph View e o second brain principal.",
+      "x": -760,
+      "y": -420,
+      "width": 560,
+      "height": 180,
+      "color": "6"
+    },
+    {
+      "id": "contract",
+      "type": "text",
+      "text": "## Regra absoluta\n\nNada fora de `C:\\Dev\\Projetos\\OLMO_PROMETEUS`.\n\nTudo que parecer migravel passa por gate humano antes de qualquer conversa sobre OLMO.",
+      "x": -160,
+      "y": -420,
+      "width": 520,
+      "height": 180,
+      "color": "1"
+    },
+    {
+      "id": "home",
+      "type": "file",
+      "file": "wiki/Home.md",
+      "x": -120,
+      "y": -120,
+      "width": 360,
+      "height": 240,
+      "color": "6"
+    },
+    {
+      "id": "index",
+      "type": "file",
+      "file": "wiki/Categories/Prometeus Wiki.md",
+      "x": 300,
+      "y": -120,
+      "width": 360,
+      "height": 240,
+      "color": "2"
+    },
+    {
+      "id": "flow-group",
+      "type": "group",
+      "label": "Loop de 30 a 60 min",
+      "x": -780,
+      "y": 0,
+      "width": 560,
+      "height": 650,
+      "color": "5"
+    },
+    {
+      "id": "capture",
+      "type": "text",
+      "text": "## 1. Capturar\n\nEmail, ideia, estudo ou problema entram como materia-prima. Gmail e fila, nao taxonomia final.",
+      "x": -740,
+      "y": 90,
+      "width": 480,
+      "height": 140,
+      "color": "5"
+    },
+    {
+      "id": "digest",
+      "type": "file",
+      "file": "wiki/Notes/Email Digest System.md",
+      "x": -740,
+      "y": 270,
+      "width": 220,
+      "height": 170,
+      "color": "5"
+    },
+    {
+      "id": "study",
+      "type": "file",
+      "file": "wiki/Notes/Study Track System.md",
+      "x": -500,
+      "y": 270,
+      "width": 220,
+      "height": 170,
+      "color": "5"
+    },
+    {
+      "id": "done",
+      "type": "file",
+      "file": "wiki/Notes/Done.md",
+      "x": -740,
+      "y": 480,
+      "width": 220,
+      "height": 130,
+      "color": "4"
+    },
+    {
+      "id": "artifact",
+      "type": "file",
+      "file": "wiki/Notes/Artifact.md",
+      "x": -500,
+      "y": 480,
+      "width": 220,
+      "height": 130,
+      "color": "4"
+    },
+    {
+      "id": "base-group",
+      "type": "group",
+      "label": "Base e memoria",
+      "x": -160,
+      "y": 170,
+      "width": 520,
+      "height": 480,
+      "color": "3"
+    },
+    {
+      "id": "foundation",
+      "type": "file",
+      "file": "wiki/Notes/Foundation Harness.md",
+      "x": -120,
+      "y": 260,
+      "width": 220,
+      "height": 170,
+      "color": "3"
+    },
+    {
+      "id": "boundary",
+      "type": "file",
+      "file": "wiki/Notes/Workspace Boundary.md",
+      "x": 100,
+      "y": 260,
+      "width": 220,
+      "height": 170,
+      "color": "3"
+    },
+    {
+      "id": "sota",
+      "type": "file",
+      "file": "wiki/Notes/SOTA Dev Solo.md",
+      "x": -120,
+      "y": 470,
+      "width": 220,
+      "height": 130,
+      "color": "4"
+    },
+    {
+      "id": "principles",
+      "type": "file",
+      "file": "wiki/References/Kepano and Karpathy Principles.md",
+      "x": 100,
+      "y": 470,
+      "width": 220,
+      "height": 130,
+      "color": "4"
+    },
+    {
+      "id": "promotion-group",
+      "type": "group",
+      "label": "Promocao controlada",
+      "x": 440,
+      "y": 170,
+      "width": 540,
+      "height": 480,
+      "color": "1"
+    },
+    {
+      "id": "promotion",
+      "type": "file",
+      "file": "wiki/Notes/Promotion Gate.md",
+      "x": 480,
+      "y": 260,
+      "width": 240,
+      "height": 170,
+      "color": "1"
+    },
+    {
+      "id": "candidate",
+      "type": "file",
+      "file": "wiki/Notes/Candidate.md",
+      "x": 740,
+      "y": 260,
+      "width": 200,
+      "height": 170,
+      "color": "1"
+    },
+    {
+      "id": "log",
+      "type": "file",
+      "file": "wiki/Notes/Project Log.md",
+      "x": 480,
+      "y": 470,
+      "width": 240,
+      "height": 130,
+      "color": "2"
+    },
+    {
+      "id": "decision",
+      "type": "file",
+      "file": "wiki/Templates/Decision Note.md",
+      "x": 740,
+      "y": 470,
+      "width": 200,
+      "height": 130,
+      "color": "2"
+    },
+    {
+      "id": "use",
+      "type": "text",
+      "text": "## Uso recomendado\n\n- Abra o Graph View primeiro.\n- Use este Canvas quando quiser uma narrativa limpa.\n- Mantenha o Graph com filtro `path:wiki`.\n- Se aparecer solto no Graph, conecte a um atlas ou sistema; nao esconda por estetica.",
+      "x": 420,
+      "y": -420,
+      "width": 560,
+      "height": 180,
+      "color": "6"
+    }
+  ],
+  "edges": [
+    {
+      "id": "hero-home",
+      "fromNode": "hero",
+      "fromSide": "right",
+      "toNode": "home",
+      "toSide": "top",
+      "label": "abre",
+      "color": "6"
+    },
+    {
+      "id": "contract-boundary",
+      "fromNode": "contract",
+      "fromSide": "bottom",
+      "toNode": "boundary",
+      "toSide": "top",
+      "label": "governa",
+      "color": "1"
+    },
+    {
+      "id": "use-index",
+      "fromNode": "use",
+      "fromSide": "left",
+      "toNode": "index",
+      "toSide": "top",
+      "label": "navega",
+      "color": "6"
+    },
+    {
+      "id": "home-index",
+      "fromNode": "home",
+      "fromSide": "right",
+      "toNode": "index",
+      "toSide": "left",
+      "label": "mapa",
+      "color": "6"
+    },
+    {
+      "id": "home-capture",
+      "fromNode": "home",
+      "fromSide": "left",
+      "toNode": "capture",
+      "toSide": "right",
+      "label": "dia a dia",
+      "color": "5"
+    },
+    {
+      "id": "capture-digest",
+      "fromNode": "capture",
+      "fromSide": "bottom",
+      "toNode": "digest",
+      "toSide": "top",
+      "label": "email",
+      "color": "5"
+    },
+    {
+      "id": "capture-study",
+      "fromNode": "capture",
+      "fromSide": "bottom",
+      "toNode": "study",
+      "toSide": "top",
+      "label": "estudo",
+      "color": "5"
+    },
+    {
+      "id": "digest-artifact",
+      "fromNode": "digest",
+      "fromSide": "bottom",
+      "toNode": "artifact",
+      "toSide": "top",
+      "label": "sintese",
+      "color": "5"
+    },
+    {
+      "id": "study-done",
+      "fromNode": "study",
+      "fromSide": "bottom",
+      "toNode": "done",
+      "toSide": "top",
+      "label": "criterio",
+      "color": "5"
+    },
+    {
+      "id": "home-foundation",
+      "fromNode": "home",
+      "fromSide": "bottom",
+      "toNode": "foundation",
+      "toSide": "top",
+      "label": "base",
+      "color": "3"
+    },
+    {
+      "id": "foundation-boundary",
+      "fromNode": "foundation",
+      "fromSide": "right",
+      "toNode": "boundary",
+      "toSide": "left",
+      "label": "protege",
+      "color": "3"
+    },
+    {
+      "id": "foundation-sota",
+      "fromNode": "foundation",
+      "fromSide": "bottom",
+      "toNode": "sota",
+      "toSide": "top",
+      "label": "melhora",
+      "color": "4"
+    },
+    {
+      "id": "principles-sota",
+      "fromNode": "principles",
+      "fromSide": "left",
+      "toNode": "sota",
+      "toSide": "right",
+      "label": "informa",
+      "color": "4"
+    },
+    {
+      "id": "artifact-promotion",
+      "fromNode": "artifact",
+      "fromSide": "right",
+      "toNode": "promotion",
+      "toSide": "left",
+      "label": "se reutilizavel",
+      "color": "1"
+    },
+    {
+      "id": "promotion-candidate",
+      "fromNode": "promotion",
+      "fromSide": "right",
+      "toNode": "candidate",
+      "toSide": "left",
+      "label": "aprovado",
+      "color": "1"
+    },
+    {
+      "id": "promotion-log",
+      "fromNode": "promotion",
+      "fromSide": "bottom",
+      "toNode": "log",
+      "toSide": "top",
+      "label": "registra",
+      "color": "2"
+    },
+    {
+      "id": "decision-log",
+      "fromNode": "decision",
+      "fromSide": "left",
+      "toNode": "log",
+      "toSide": "right",
+      "label": "template",
+      "color": "2"
+    },
+    {
+      "id": "index-promotion",
+      "fromNode": "index",
+      "fromSide": "bottom",
+      "toNode": "promotion",
+      "toSide": "top",
+      "label": "gate",
+      "color": "1"
+    }
+  ]
+}

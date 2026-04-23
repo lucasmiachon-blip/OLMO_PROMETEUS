@@ -1,0 +1,93 @@
+{
+  "collapse-filter": false,
+  "search": "path:wiki",
+  "showTags": true,
+  "showAttachments": false,
+  "hideUnresolved": true,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:wiki/Atlas",
+      "color": {
+        "a": 1,
+        "rgb": 16044894
+      }
+    },
+    {
+      "query": "path:wiki/Home.md",
+      "color": {
+        "a": 1,
+        "rgb": 16044894
+      }
+    },
+    {
+      "query": "path:wiki/Categories",
+      "color": {
+        "a": 1,
+        "rgb": 15885337
+      }
+    },
+    {
+      "query": "path:wiki/Notes",
+      "color": {
+        "a": 1,
+        "rgb": 2792847
+      }
+    },
+    {
+      "query": "path:wiki/References",
+      "color": {
+        "a": 1,
+        "rgb": 4553629
+      }
+    },
+    {
+      "query": "path:wiki/Templates",
+      "color": {
+        "a": 1,
+        "rgb": 9288110
+      }
+    },
+    {
+      "query": "path:wiki/Maps",
+      "color": {
+        "a": 1,
+        "rgb": 11250603
+      }
+    },
+    {
+      "query": "path:wiki/Clippings",
+      "color": {
+        "a": 1,
+        "rgb": 15320170
+      }
+    },
+    {
+      "query": "path:wiki/Daily",
+      "color": {
+        "a": 1,
+        "rgb": 15320170
+      }
+    },
+    {
+      "query": "path:wiki/Attachments",
+      "color": {
+        "a": 1,
+        "rgb": 11887990
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": false,
+  "textFadeMultiplier": 0.2,
+  "nodeSizeMultiplier": 1.35,
+  "lineSizeMultiplier": 1.2,
+  "collapse-forces": true,
+  "centerStrength": 0.32,
+  "repelStrength": 15,
+  "linkStrength": 0.82,
+  "linkDistance": 190,
+  "scale": 0.43023112534252766,
+  "close": true
+}

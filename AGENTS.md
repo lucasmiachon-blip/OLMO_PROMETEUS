@@ -47,6 +47,8 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 
 - `private-learning/`: cockpit visual, digests, progresso e uso diario.
 - `shadow/`: contratos, trilhas, gates, pesquisa e arquitetura operacional.
+- `.obsidian/`: configuracao para abrir `C:\Dev\Projetos\OLMO_PROMETEUS` como vault Obsidian.
+- `wiki/`: notas Obsidian versionadas para conhecimento duravel do projeto.
 - `playground/`: testes locais e prototipos descartaveis.
 - `.agents/skills/`: workflows reutilizaveis deste laboratorio.
 - `.codex/agents/`: agentes customizados estreitos para delegacao.
@@ -66,6 +68,7 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 - copiar hooks, MCP ou infraestrutura sensivel do `OLMO`;
 - marcar `done` sem evidencia de entendimento ou aplicacao;
 - misturar material pessoal com runtime do projeto;
+- colocar captura privada/crua no vault versionado;
 - inflar o repo com agentes e skills sem uso recorrente.
 - manter relatorios longos quando uma decisao curta resolve.
 
@@ -74,6 +77,7 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 - Se editar docs ou HTML, cheque nomes, titulos e links locais.
 - Se editar skill, mantenha a descricao clara sobre quando ela dispara.
 - Se editar base, memoria, harness ou orquestracao, atualize `shadow/FOUNDATION.md`.
+- Se editar a wiki, preserve links Obsidian e a separacao entre conhecimento duravel e captura privada.
 - Quando houver mudanca persistente, rode `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`.
 - Se um artefato virar `candidate`, atualize `shadow/WORK-LANES.md`.
 - Se a sessao criar varios artefatos, confira `shadow/HYGIENE.md`.

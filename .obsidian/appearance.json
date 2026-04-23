@@ -1,0 +1,8 @@
+{
+  "baseFontSize": 16,
+  "cssTheme": "",
+  "theme": "obsidian",
+  "enabledCssSnippets": [
+    "prometeus-visuals"
+  ]
+}
