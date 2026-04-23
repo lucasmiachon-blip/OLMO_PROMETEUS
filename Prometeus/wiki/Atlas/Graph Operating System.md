@@ -19,6 +19,16 @@ O Graph View e o second brain visual. Ele deve crescer.
 - Orfaos: ligado; revisar periodicamente, sem esconder por estetica.
 - Groups: por pasta e por tag quando o volume justificar.
 
+## Abertura correta
+
+Abra no Obsidian:
+
+```text
+C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus
+```
+
+Nao abra `C:\Dev\Projetos\OLMO_PROMETEUS` como vault. O repo e a caixa de seguranca; `Prometeus` e o vault.
+
 ## Politica de crescimento
 
 - Nao esconder grafo para parecer limpo.

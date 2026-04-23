@@ -14,6 +14,7 @@ Direcao atual: second brain graph-first. O Graph View deve ser grande e vivo; Ca
 
 Comece por:
 
+- [[Prometeus Vault]]
 - [[Second Brain Atlas]]
 - [[Graph Operating System]]
 - [[Knowledge Lifecycle]]
@@ -28,11 +29,17 @@ Comece por:
 
 ## Regra de uso
 
-- Captura crua e pessoal fica em `private-learning/`.
+- Captura crua e pessoal fica em `private-learning/` no repo, fora da wiki versionada.
 - `wiki/Clippings/` e `wiki/Daily/` sao buffers locais ignorados pelo Git.
 - Uma nota so entra no wiki quando muda comportamento futuro.
 - Qualquer coisa migravel passa por [[Promotion Gate]].
 - Nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+
+## Abrir
+
+No Obsidian, abra `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
+
+Nao abra a raiz `OLMO_PROMETEUS` como vault, senao o nome e a arvore ficam errados.
 
 ## Graph View
 

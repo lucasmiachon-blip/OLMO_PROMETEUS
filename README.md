@@ -58,7 +58,7 @@ Abra no Obsidian esta pasta:
 C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus
 ```
 
-Use `wiki/Home.md` como entrada. Assim o nome do vault aparece como `Prometeus`, enquanto o repo continua isolado em `OLMO_PROMETEUS`. A wiki segue a ideia bottom-up do Kepano e o minimalismo do Karpathy: notas pequenas, links claros, escopo limitado e harness simples. Captura crua, diaria ou privada fica ignorada pelo Git em `Prometeus/wiki/Clippings/`, `Prometeus/wiki/Daily/` e `Prometeus/wiki/Attachments/`.
+Use `Prometeus/README.md` ou `Prometeus/wiki/Home.md` como entrada. Assim o nome do vault aparece como `Prometeus`, enquanto o repo continua isolado em `OLMO_PROMETEUS`. A wiki segue a ideia bottom-up do Kepano e o minimalismo do Karpathy: notas pequenas, links claros, escopo limitado e harness simples. Captura crua, diaria ou privada fica ignorada pelo Git em `Prometeus/wiki/Clippings/`, `Prometeus/wiki/Daily/` e `Prometeus/wiki/Attachments/`.
 
 O second brain e Graph-first. No Graph View, use `path:wiki`, tags ligadas e orfaos visiveis. O grafo deve crescer; a qualidade vem de hubs como `Prometeus/wiki/Atlas/Second Brain Atlas.md`, nao de esconder nos.
 

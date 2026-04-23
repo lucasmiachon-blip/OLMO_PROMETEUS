@@ -76,6 +76,7 @@ $requiredFiles = @(
   "shadow/SOTA-DECISIONS.md",
   "shadow/INCORPORATION-LOG.md",
   "shadow/WORK-LANES.md",
+  "Prometeus/README.md",
   "Prometeus/wiki/Home.md",
   "Prometeus/wiki/Atlas/Second Brain Atlas.md",
   "Prometeus/wiki/Atlas/Graph Operating System.md",

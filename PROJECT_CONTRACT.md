@@ -40,6 +40,6 @@ Um artefato daqui so entra em conversa de migracao quando:
 - `shadow/WORK-LANES.md` registra a classificacao dos artefatos.
 - `shadow/FOUNDATION.md` define infra, hooks, memoria, harness e orquestracao.
 - `scripts/check.ps1` valida regressao leve antes de commit.
+- `Prometeus/README.md` e a entrada documental do vault.
 - `Prometeus/.obsidian/` configura o vault Obsidian `Prometeus`.
 - `Prometeus/wiki/` guarda a wiki Obsidian versionada do projeto.
-

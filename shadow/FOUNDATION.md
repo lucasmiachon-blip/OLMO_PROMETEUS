@@ -46,6 +46,7 @@ Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo
 - decisoes SOTA: `shadow/SOTA-DECISIONS.md`;
 - incorporacoes: `shadow/INCORPORATION-LOG.md`;
 - higiene: `shadow/HYGIENE.md`;
+- entrada do vault: `Prometeus/README.md`;
 - wiki navegavel: `Prometeus/wiki/Home.md`;
 - material pessoal: `private-learning/`.
 
