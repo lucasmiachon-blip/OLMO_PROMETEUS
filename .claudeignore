@@ -1,1 +1,12 @@
 private-learning/
+Prometeus/.obsidian/workspace*.json
+Prometeus/.obsidian/cache/
+Prometeus/.obsidian/plugins/
+Prometeus/wiki/Clippings/*
+!Prometeus/wiki/Clippings/README.md
+Prometeus/wiki/Daily/*
+!Prometeus/wiki/Daily/README.md
+Prometeus/wiki/Attachments/*
+!Prometeus/wiki/Attachments/README.md
+node_modules/
+.venv/

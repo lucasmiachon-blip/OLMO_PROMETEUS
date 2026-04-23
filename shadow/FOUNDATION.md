@@ -27,6 +27,8 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 
 Nao existe sincronizacao automatica com `C:\Dev\Projetos\OLMO`.
 
+Arquivos privados ou gerados devem ficar fora de Git e fora do contexto de agentes. Manter `.gitignore` e `.claudeignore` em paridade para `private-learning/`, buffers do Obsidian, workspace local, caches, plugins, `node_modules/` e `.venv/`.
+
 ## 2. Sem scaffolds fantasmas
 
 Diretorios locais de agents, subagents, skills, hooks, `.claude/`, `.gemini/` e playground ficam fora do core.
@@ -72,7 +74,8 @@ Ele valida:
 - cross-references do Obsidian: `[[wikilinks]]`, aliases e arquivos referenciados em Canvas;
 - ausencia de referencias antigas;
 - ausencia de tokens/segredos obvios;
-- `private-learning` gerado continua ignorado;
+- caminhos privados e gerados continuam ignorados por Git e pelo contexto de agentes;
+- checks textuais pulam arquivos ignorados e redigem linhas em achados de segredo;
 - ausencia de scaffolds fantasmas na raiz;
 - Git status legivel.
 

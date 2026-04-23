@@ -26,7 +26,7 @@ Rodar higiene quando:
 - Checar se o harness valida `[[wikilinks]]`, aliases e referencias de Canvas antes de commit.
 - Checar se notas wiki duraveis estao em `Prometeus/wiki/Notes`, `Prometeus/wiki/Categories` ou `Prometeus/wiki/References`.
 - Checar se capturas cruas continuam ignoradas em `Prometeus/wiki/Clippings`, `Prometeus/wiki/Daily` e `Prometeus/wiki/Attachments`.
-- Checar se `private-learning/` continua integralmente em `.gitignore` e `.claudeignore`.
+- Checar se `private-learning/`, buffers do Obsidian, workspace local, caches, plugins, `node_modules/` e `.venv/` continuam em `.gitignore` e `.claudeignore`.
 - Checar que `.agents/`, `.codex/`, `agents/`, `subagents/`, `skills/`, `hooks/` e `playground/` nao reapareceram na raiz sem gate.
 - Checar se docs SOTA antigos foram referenciados ou consolidados.
 - Checar se `C:\Dev\Projetos\OLMO` aparece apenas como destino protegido, nunca como alvo de edicao.
@@ -68,5 +68,6 @@ Se nao passar nessa barra, consolidar ou deletar.
 - Principal risco: recriar sprawl SOTA depois da limpeza.
 - Acoes aplicadas: `INCORPORATION-LOG.md`, regra de `Digerido` persistido, este checklist e consolidacao em `SOTA-DECISIONS.md`.
 - Sem edicao autorizada em `C:\Dev\Projetos\OLMO`.
+- Frame adversarial aplicado: contexto de agente e Git precisam ignorar as mesmas areas privadas/geradas.
 
 Coautoria: Lucas + GPT-5.4 (Codex)

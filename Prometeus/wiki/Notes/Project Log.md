@@ -20,6 +20,7 @@ tags:
 - Registrado [[SOTA Research Gate]] como regra para arquitetura, memoria e orquestracao.
 - Documentada a fronteira [[Agent Module Encapsulation]]: agente como modulo com contrato, tools, memoria, guardrails, eval e rollback.
 - Estabilizado [[Foundation Harness]] para checks textuais sem dependencia fragil de `rg`.
+- Aplicado frame adversarial de seguranca: `.claudeignore` espelha buffers privados do Git e o harness nao imprime conteudo de possiveis segredos.
 
 ## Regra
 

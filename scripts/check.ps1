@@ -40,7 +40,8 @@ function Invoke-TextCheck {
   param(
     [string]$Label,
     [string]$Pattern,
-    [string[]]$ExtraArgs = @()
+    [string[]]$ExtraArgs = @(),
+    [switch]$RedactLine
   )
 
   $excludePatterns = New-Object System.Collections.Generic.List[string]
@@ -74,9 +75,18 @@ function Invoke-TextCheck {
       continue
     }
 
+    & git check-ignore -q -- $relativePath
+    if ($LASTEXITCODE -eq 0) {
+      continue
+    }
+
     $results = Select-String -LiteralPath $file.FullName -Pattern $Pattern -CaseSensitive -ErrorAction SilentlyContinue
     foreach ($result in @($results)) {
-      $matches.Add("${relativePath}:$($result.LineNumber):$($result.Line)") | Out-Null
+      if ($RedactLine) {
+        $matches.Add("${relativePath}:$($result.LineNumber):<redacted>") | Out-Null
+      } else {
+        $matches.Add("${relativePath}:$($result.LineNumber):$($result.Line)") | Out-Null
+      }
     }
   }
 
@@ -182,12 +192,30 @@ foreach ($entry in $agentAdapters.GetEnumerator()) {
   }
 }
 
+$requiredIgnorePatterns = @(
+  "private-learning/",
+  "Prometeus/.obsidian/workspace*.json",
+  "Prometeus/.obsidian/cache/",
+  "Prometeus/.obsidian/plugins/",
+  "Prometeus/wiki/Clippings/*",
+  "!Prometeus/wiki/Clippings/README.md",
+  "Prometeus/wiki/Daily/*",
+  "!Prometeus/wiki/Daily/README.md",
+  "Prometeus/wiki/Attachments/*",
+  "!Prometeus/wiki/Attachments/README.md",
+  "node_modules/",
+  ".venv/"
+)
+
 foreach ($ignoreFile in @(".gitignore", ".claudeignore")) {
   $ignoreText = Get-Content -LiteralPath $ignoreFile -Raw
-  if ($ignoreText -match "(?m)^private-learning/$") {
-    Write-Ok "private-learning fully ignored in: $ignoreFile"
-  } else {
-    Write-Fail "private-learning must be fully ignored in: $ignoreFile"
+  foreach ($ignorePattern in $requiredIgnorePatterns) {
+    $escapedPattern = [regex]::Escape($ignorePattern)
+    if ($ignoreText -match "(?m)^$escapedPattern$") {
+      Write-Ok "ignore pattern present in ${ignoreFile}: $ignorePattern"
+    } else {
+      Write-Fail "missing ignore pattern in ${ignoreFile}: $ignorePattern"
+    }
   }
 }
 
@@ -412,7 +440,7 @@ if ($wikilinkIssueCount -eq 0) {
 }
 
 Invoke-TextCheck "no old roadmap/SOTA references" "OLMO_ROADMAP|SOTA-AGENTS|SOTA-INCORPORATION" @("-g", "!scripts/check.ps1")
-Invoke-TextCheck "no obvious secret strings" "API_KEY|SECRET|TOKEN|password" @("-g", "!scripts/check.ps1")
+Invoke-TextCheck "no obvious secret strings" "API_KEY|SECRET|TOKEN|password" @("-g", "!scripts/check.ps1") -RedactLine
 
 $ignoreTargets = @(
   "private-learning/checkpoints/probe.txt",

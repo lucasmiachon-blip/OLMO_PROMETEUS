@@ -28,7 +28,9 @@ Ele valida:
 - referencias de arquivos no Canvas;
 - ausencia de referencias antigas;
 - ausencia de segredos obvios;
-- ignores privados;
+- paridade entre `.gitignore` e `.claudeignore`;
+- ignores privados e gerados;
+- checks textuais pulam arquivos ignorados e redigem linhas de segredo;
 - estado Git.
 
 Nao substitui julgamento. Evita regressao boba.
