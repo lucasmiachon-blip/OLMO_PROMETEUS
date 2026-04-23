@@ -11,14 +11,14 @@ O melhor do SOTA para este projeto pequeno e manter pouca estrutura, bem nomeada
 Manter:
 
 - `AGENTS.md` como contrato central e portavel.
-- Skills pequenas com trigger claro e eval minima.
-- Subagentes read-only, estreitos e com `max_depth = 1`.
+- Procedimentos pequenos como docs em `shadow/` ou notas em `Prometeus/wiki/`.
 - Gmail como fila simples: `Processar`, `Alta`, `Ruido`, `Digerido`.
 - `Digerido` somente depois de artefato persistente.
 - `shadow/INCORPORATION-LOG.md` como gate antes de qualquer conversa sobre OLMO.
 - `scripts/check.ps1` como harness leve antes de commit.
 - `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus` como vault Obsidian, com notas em `wiki/`, nao como inbox privado permanente.
 - Boundary absoluta: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+- Raiz sem scaffolds fantasmas: nada de `.agents`, `.codex`, `agents`, `subagents`, `skills`, `hooks` ou `playground` sem gate.
 
 Nao incorporar agora:
 
@@ -27,13 +27,14 @@ Nao incorporar agora:
 - A2A local;
 - agentes demais;
 - skills especulativas;
+- registry local de agentes ou skills;
 - relatorios SOTA longos que viram museu.
 - hooks reais antes de um comando manual provar utilidade.
 
 ## Regras praticas
 
-1. Criar skill nova apenas depois de uso recorrente ou dor repetida.
-2. Criar agente novo apenas se ele tiver dono claro, output claro e ferramenta limitada.
+1. Criar skill/agente novo apenas depois de uso recorrente, dor repetida e aprovacao explicita.
+2. Antes disso, manter o procedimento em `shadow/` ou na wiki.
 3. Pesquisa externa vira decisao curta, nao biblioteca grande.
 4. Qualquer coisa que pareca migravel passa por `private -> experiment -> candidate`.
 5. Nada toca `C:\Dev\Projetos\OLMO` sem autorizacao humana explicita.
@@ -43,9 +44,6 @@ Nao incorporar agora:
 | Papel | Modelo/ferramenta | Uso | Risco controlado |
 |------|--------------------|-----|------------------|
 | Orquestrador | Codex | integrar, editar, decidir proximo passo | nao delegar por reflexo |
-| Explorer | custom agent read-only | mapear estado local | sem edicao |
-| Promotion reviewer | custom agent read-only | classificar private/experiment/candidate | sem promocao automatica |
-| Docs researcher | custom agent read-only | verificar docs primarias | fontes antes de opiniao |
 | Gemini | externo/manual | pesquisa longa, multimodal, PDFs | artefato curto em `shadow/` |
 
 ## Fontes base

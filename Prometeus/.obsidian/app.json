@@ -4,17 +4,8 @@
   "newFileLocation": "current",
   "promptDelete": false,
   "userIgnoreFilters": [
-    ".git/",
-    ".agents/",
-    ".codex/",
-    ".gitignore",
-    ".claudeignore",
-    "AGENTS.md",
-    "PROJECT_CONTRACT.md",
-    "README.md",
-    "private-learning/",
-    "playground/",
-    "scripts/",
-    "shadow/"
+    ".obsidian/workspace.json",
+    ".obsidian/cache/",
+    ".obsidian/plugins/"
   ]
 }

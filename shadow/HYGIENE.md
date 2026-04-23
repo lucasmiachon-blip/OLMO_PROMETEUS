@@ -9,7 +9,7 @@ Regra: higiene nao remove nem move arquivo sem motivo claro. Primeiro audita, de
 Rodar higiene quando:
 
 - uma pesquisa SOTA gerar mais de um arquivo novo;
-- uma skill ou agente novo for criado;
+- alguem sugerir criar skill, agente, hook, playground ou scaffold novo;
 - `private-learning/` comecar a misturar dado privado com runtime;
 - um item mudar de `experiment` para `candidate`;
 - o `git status` ficar dificil de explicar em uma frase;
@@ -20,13 +20,14 @@ Rodar higiene quando:
 - `git status --short`: entender o que mudou.
 - `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`: rodar harness local.
 - `rg --hidden --files -g "!private-learning/**" -g "!.git/**"`: ver sprawl fora da area privada.
-- Checar se novos arquivos estao em uma casa clara: `shadow/`, `Prometeus/wiki/`, `private-learning/`, `playground/`, `.agents/skills/` ou `.codex/agents/`.
+- Checar se novos arquivos estao em uma casa clara: `shadow/`, `Prometeus/wiki/`, `private-learning/` local ignorado ou `scripts/`.
 - Checar `TREE.md` quando a raiz, hooks, skills ou agentes mudarem.
 - Checar se instrucoes de abertura do Obsidian apontam para `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
 - Checar se o harness valida `[[wikilinks]]`, aliases e referencias de Canvas antes de commit.
 - Checar se notas wiki duraveis estao em `Prometeus/wiki/Notes`, `Prometeus/wiki/Categories` ou `Prometeus/wiki/References`.
 - Checar se capturas cruas continuam ignoradas em `Prometeus/wiki/Clippings`, `Prometeus/wiki/Daily` e `Prometeus/wiki/Attachments`.
-- Checar se `private-learning/` continua em `.gitignore` e `.claudeignore`.
+- Checar se `private-learning/` continua integralmente em `.gitignore` e `.claudeignore`.
+- Checar que `.agents/`, `.codex/`, `agents/`, `subagents/`, `skills/`, `hooks/` e `playground/` nao reapareceram na raiz sem gate.
 - Checar se docs SOTA antigos foram referenciados ou consolidados.
 - Checar se `C:\Dev\Projetos\OLMO` aparece apenas como destino protegido, nunca como alvo de edicao.
 - Checar se a regra "nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`" continua presente.
@@ -36,7 +37,7 @@ Rodar higiene quando:
 - Nao deletar arquivos sem confirmacao humana.
 - Nao mover arquivos se isso puder quebrar referencias sem revisar os links.
 - Nao criar nova skill/agente para cada ideia; exigir uso recorrente.
-- Nao ativar hooks; primeiro documentar ou rodar manualmente com gate.
+- Nao criar diretorio de runtime sem trigger, evidencia, custo, risco e rollback.
 - Nao transformar pesquisa em arquitetura se nao houver trigger real.
 - Nao colocar material privado em `shadow/`.
 - Nao colocar captura crua ou pessoal no vault versionado.

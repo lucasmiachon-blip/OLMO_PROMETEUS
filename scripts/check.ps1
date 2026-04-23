@@ -91,9 +91,8 @@ $requiredFiles = @(
   "Prometeus/.obsidian/core-plugins.json",
   "Prometeus/.obsidian/graph.json",
   "Prometeus/.obsidian/snippets/prometeus-visuals.css",
-  "private-learning/dashboard.html",
-  "hooks/README.md",
-  ".codex/config.toml"
+  ".gitignore",
+  ".claudeignore"
 )
 
 foreach ($file in $requiredFiles) {
@@ -116,28 +115,30 @@ foreach ($file in $boundaryFiles) {
   }
 }
 
-$config = Get-Content -LiteralPath ".codex/config.toml" -Raw
-if ($config -match "max_depth\s*=\s*1") {
-  Write-Ok "subagent max_depth is 1"
-} else {
-  Write-Fail "subagent max_depth must stay at 1"
+$forbiddenRootDirs = @(
+  ".agents",
+  ".codex",
+  "agents",
+  "subagents",
+  "skills",
+  "hooks",
+  "playground"
+)
+
+foreach ($dir in $forbiddenRootDirs) {
+  if (Test-Path -LiteralPath $dir -PathType Container) {
+    Write-Fail "forbidden root scaffold exists: $dir"
+  } else {
+    Write-Ok "forbidden root scaffold absent: $dir"
+  }
 }
 
-$evalFiles = Get-ChildItem -LiteralPath ".agents/skills" -Recurse -Filter "evals.json"
-if ($evalFiles.Count -eq 0) {
-  Write-Fail "no skill eval files found"
-} else {
-  foreach ($eval in $evalFiles) {
-    try {
-      $json = Get-Content -LiteralPath $eval.FullName -Raw | ConvertFrom-Json
-      if ($json.skill_name) {
-        Write-Ok "eval JSON parses: $($eval.FullName)"
-      } else {
-        Write-Fail "eval JSON missing skill_name: $($eval.FullName)"
-      }
-    } catch {
-      Write-Fail "eval JSON invalid: $($eval.FullName)"
-    }
+foreach ($ignoreFile in @(".gitignore", ".claudeignore")) {
+  $ignoreText = Get-Content -LiteralPath $ignoreFile -Raw
+  if ($ignoreText -match "(?m)^private-learning/$") {
+    Write-Ok "private-learning fully ignored in: $ignoreFile"
+  } else {
+    Write-Fail "private-learning must be fully ignored in: $ignoreFile"
   }
 }
 
@@ -362,14 +363,12 @@ foreach ($target in $ignoreTargets) {
   }
 }
 
-$trackedPrivateGenerated = & git ls-files private-learning | Where-Object {
-  $_ -match "\.json$|\.local\.|exports/|checkpoints/"
-}
+$trackedPrivateGenerated = & git ls-files private-learning
 
 if ($trackedPrivateGenerated) {
-  Write-Fail "generated private-learning files are tracked:`n$trackedPrivateGenerated"
+  Write-Fail "private-learning files are tracked:`n$trackedPrivateGenerated"
 } else {
-  Write-Ok "no generated private-learning files are tracked"
+  Write-Ok "no private-learning files are tracked"
 }
 
 $status = & git status --short

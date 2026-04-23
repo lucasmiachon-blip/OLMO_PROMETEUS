@@ -1,7 +1,4 @@
-private-learning/*.json
-private-learning/*.local.*
-private-learning/exports/
-private-learning/checkpoints/
+private-learning/
 Prometeus/.obsidian/workspace*.json
 Prometeus/.obsidian/cache/
 Prometeus/.obsidian/plugins/

@@ -20,11 +20,7 @@ TREE.md               # mapa profissional da arvore do repo
 scripts/check.ps1     # harness local, sem writes externos
 shadow/               # decisoes, gates, memoria operacional e higiene
 Prometeus/            # vault Obsidian versionado
-private-learning/     # cockpit e material pessoal local, gitignored
-playground/           # prototipos descartaveis
-.agents/skills/       # skills pequenas, com trigger claro
-.codex/agents/        # agentes estreitos, preferencialmente read-only
-hooks/                # docs e scripts manuais inativos; nenhum hook ativo por padrao
+private-learning/     # area local ignorada; nao entra no contexto versionado
 ```
 
 ## Areas Vivas
@@ -48,33 +44,28 @@ Memoria operacional, nao deposito de pesquisa longa.
 - `WORK-LANES.md`: classificacao `private`, `experiment`, `candidate`.
 - `SOTA-DECISIONS.md`: decisoes curtas, sem relatorios longos.
 
-### `.agents/skills/`
+### `private-learning/`
 
-Cada skill precisa ter:
+Area pessoal e local.
 
-- trigger de uso;
-- output claro;
-- risco limitado;
-- comportamento de arquivo explicito quando persistir algo.
+- fica em `.gitignore` e `.claudeignore`;
+- pode conter cockpit, exports, checkpoints e rascunhos pessoais;
+- nao e fonte de verdade do projeto;
+- nao deve ser exigida pelo harness.
 
-Nao criar skill para ideia avulsa. Se nao houver uso recorrente, documentar em `shadow/` ou descartar.
+## Diretorios Proibidos Por Padrao
 
-### `.codex/agents/`
+Estes nomes nao ficam na raiz sem necessidade repetida, gate humano explicito e atualizacao deste arquivo:
 
-Agentes devem ser estreitos e preferencialmente read-only.
+- `.agents/`
+- `.codex/`
+- `agents/`
+- `subagents/`
+- `skills/`
+- `hooks/`
+- `playground/`
 
-Regras atuais:
-
-- `max_depth = 1` em `.codex/config.toml`;
-- sem fan-out automatico;
-- sem agente que escreva fora de `OLMO_PROMETEUS`;
-- sem copiar subagentes do `OLMO` por reflexo.
-
-### `hooks/`
-
-Hooks entram primeiro como documentacao ou script manual.
-
-Nada em `hooks/` e registrado automaticamente. Antes de virar hook ativo, precisa de trigger, evidencia, rollback, custo e aprovacao humana explicita.
+Motivo: esses nomes sugerem runtime ativo, aumentam contexto e recriam sprawl legado.
 
 ## Politica de Incorporacao do OLMO
 
@@ -85,6 +76,7 @@ Nao copiar:
 - `.env`, tokens, chaves, caches, workspaces, settings locais;
 - `config/mcp/` ou MCP sensivel;
 - hooks ativos;
+- scaffolds locais de agents, subagents ou skills;
 - `node_modules`, `.venv`, `__pycache__`, zips e outputs;
 - historico longo que nao muda comportamento.
 

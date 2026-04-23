@@ -1,42 +1,38 @@
 # open OLMO_PROMETEUS
 
-Laboratorio paralelo e independente para validar fluxo, dashboard, digest e study track sem qualquer contaminacao do repo principal.
+Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki operacional sem qualquer contaminacao do repo principal.
 
 ## Regra principal
 
 - Este repositorio nao e o `OLMO`.
 - Nada daqui sincroniza automaticamente com `C:\Dev\Projetos\OLMO`.
 - Toda promocao para o repo principal depende de validacao humana explicita.
-- O foco inicial continua sendo a fatia: dashboard + digest + study flow.
+- O foco inicial continua sendo a fatia: Prometeus vault + shadow decisions + harness.
 
 ## Sistema operacional do repo
 
 - `AGENTS.md`: contrato operacional do laboratorio
 - `TREE.md`: mapa profissional da arvore e politica de incorporacao segura
-- `.agents/skills/`: workflows reutilizaveis e pequenos
-- `.codex/agents/`: agentes customizados estreitos, com baixo paralelismo
-- `hooks/`: documentacao e scripts manuais inativos; nada ativo sem gate
-- `private-learning/`: interfaces locais e cockpit visual
 - `shadow/`: regras operacionais, gates e pesquisa aplicada
-- `playground/`: espaco para prototipos descartaveis
+- `private-learning/`: area local ignorada para cockpit e material pessoal
 - `shadow/HYGIENE.md`: checklist de higiene para evitar sprawl
 - `shadow/SOTA-DECISIONS.md`: decisoes SOTA consolidadas, sem relatorio longo
-- `shadow/FOUNDATION.md`: base de infra, hooks, memoria, harness e orquestracao
+- `shadow/FOUNDATION.md`: base de infra, memoria, harness e orquestracao
 - `scripts/check.ps1`: harness local de regressao leve
 - `Prometeus/.obsidian/`: configuracao do Obsidian para abrir o vault `Prometeus`
 - `Prometeus/wiki/`: wiki operacional versionada do projeto
 
-## Primeiro lote enxuto
+## Nucleo enxuto
 
-- 3 skills: `digest-4p`, `study-track-done`, `promotion-gate`
-- 3 agentes: `prometeus_explorer`, `promotion_reviewer`, `docs_researcher`
-- Limite de paralelismo: `max_threads = 4`
-- Profundidade de delegacao: `max_depth = 1`
+- Sem diretórios locais de agents, subagents, skills ou hooks.
+- Procedimentos duraveis ficam em `shadow/` ou em notas do `Prometeus/wiki/`.
+- `private-learning/` fica local e ignorado, sem entrar no contexto versionado.
+- Qualquer nova automacao ou agente precisa passar por trigger, evidencia, custo, risco e rollback.
 
 ## Fluxo diario recomendado
 
 1. capturar materia-prima em `private-learning/`;
-2. transformar com uma skill pequena;
+2. transformar com um procedimento pequeno documentado em `shadow/` ou na wiki;
 3. classificar o artefato em `private`, `experiment` ou `candidate`;
 4. so discutir migracao para `OLMO` depois do gate humano.
 
@@ -50,7 +46,7 @@ Ao final de sessoes com edicao, conferir `shadow/HYGIENE.md` antes de criar mais
 powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1
 ```
 
-Use antes de commit quando a sessao mexer em docs, skills, agentes ou dashboard.
+Use antes de commit quando a sessao mexer em docs, wiki, shadow ou scripts.
 
 ## Obsidian
 

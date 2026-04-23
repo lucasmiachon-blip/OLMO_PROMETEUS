@@ -1,4 +1,1 @@
-private-learning/*.json
-private-learning/*.local.*
-private-learning/exports/
-private-learning/checkpoints/
+private-learning/

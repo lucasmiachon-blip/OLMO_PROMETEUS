@@ -2,7 +2,7 @@
 
 Objetivo: fortalecer a base do open OLMO_PROMETEUS sem criar infraestrutura falsa.
 
-Esta base cobre cinco camadas: infra, hooks, memoria, harness e orquestracao.
+Esta base cobre quatro camadas: infra, memoria, harness e orquestracao.
 
 ## Regra fundamental
 
@@ -26,15 +26,17 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 
 Nao existe sincronizacao automatica com `C:\Dev\Projetos\OLMO`.
 
-## 2. Hooks
+## 2. Sem scaffolds fantasmas
 
-Hooks reais ficam fora do core por enquanto. `hooks/README.md` documenta a politica; nada ali e ativo por padrao.
+Diretorios locais de agents, subagents, skills, hooks e playground ficam fora do core.
 
-Motivo: no nosso ambiente Windows, hooks de agente ainda sao uma base instavel para depender. O caminho seguro e:
+Motivo: no nosso ambiente Windows e neste repo pequeno, scaffolds sem runtime real confundem memoria, contexto e decisao.
+
+O caminho seguro e:
 
 1. Primeiro, comando manual.
 2. Depois, harness repetivel.
-3. So depois de uso recorrente, considerar hook.
+3. So depois de uso recorrente, considerar novo diretorio ou automacao.
 
 Regra: nenhum hook pode tocar `C:\Dev\Projetos\OLMO`, arquivar email, mover arquivo sensivel ou fazer qualquer write externo sem autorizacao humana explicita.
 
@@ -49,7 +51,7 @@ Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo
 - higiene: `shadow/HYGIENE.md`;
 - entrada do vault: `Prometeus/README.md`;
 - wiki navegavel: `Prometeus/wiki/Home.md`;
-- material pessoal: `private-learning/`.
+- material pessoal local e ignorado: `private-learning/`.
 
 Regra: se uma memoria nao muda comportamento futuro, ela nao entra no repo.
 
@@ -70,7 +72,7 @@ Ele valida:
 - ausencia de referencias antigas;
 - ausencia de tokens/segredos obvios;
 - `private-learning` gerado continua ignorado;
-- `max_depth = 1` para subagentes;
+- ausencia de scaffolds fantasmas na raiz;
 - Git status legivel.
 
 O harness nao substitui revisao humana. Ele evita regressao boba.
@@ -80,7 +82,7 @@ O harness nao substitui revisao humana. Ele evita regressao boba.
 Loop padrao:
 
 1. Capturar materia-prima.
-2. Escolher uma skill ou acao pequena.
+2. Escolher uma acao pequena.
 3. Produzir artefato persistente.
 4. Rodar harness.
 5. Classificar em `private`, `experiment` ou `candidate`.
@@ -89,12 +91,10 @@ Loop padrao:
 Delegacao:
 
 - Codex orquestra e edita.
-- Explorer le, nao edita.
-- Promotion reviewer classifica risco.
-- Docs researcher verifica fontes.
-- Gemini entra para pesquisa longa/multimodal.
+- Leituras auxiliares podem ser feitas por subagentes externos apenas quando a conversa justificar.
+- Gemini entra para pesquisa longa/multimodal somente com objetivo, trigger, artefato, custo e risco.
 
-Sem fan-out automatico. `max_depth = 1` continua a regra.
+Sem fan-out automatico e sem registry local de agentes neste repo.
 
 ## Barra de promocao
 

@@ -8,7 +8,7 @@
 
 - Pode editar arquivos dentro deste repositorio.
 - Nao deve editar `C:\Dev\Projetos\OLMO` nem `C:\Dev\Projetos\OLMO_COWORK` sem autorizacao humana explicita.
-- O foco e validar fluxo, digest, estudo, dashboards locais e gates de promocao.
+- O foco e validar fluxo, digest, estudo, wiki operacional e gates de promocao.
 
 ## Fundamental Boundary
 
@@ -31,7 +31,7 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 ## Daily Loop
 
 1. Capture materia-prima em `private-learning/` ou em uma nota temporaria.
-2. Converta a materia com uma skill pequena e especifica.
+2. Converta a materia com um procedimento pequeno documentado em `shadow/` ou na wiki.
 3. Classifique o resultado como `private`, `experiment` ou `candidate`.
 4. So discuta migracao para `OLMO` quando houver trigger, evidencia e rollback.
 
@@ -45,16 +45,13 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 
 ## Layout
 
-- `private-learning/`: cockpit visual, digests, progresso e uso diario.
+- `private-learning/`: cockpit visual e material pessoal local, ignorado pelo Git e pelo contexto.
 - `shadow/`: contratos, trilhas, gates, pesquisa e arquitetura operacional.
 - `TREE.md`: mapa da arvore raiz, casas dos artefatos e politica de incorporacao do `OLMO`.
 - `Prometeus/README.md`: entrada documental do vault Obsidian.
 - `Prometeus/.obsidian/`: configuracao do vault Obsidian `Prometeus`.
 - `Prometeus/wiki/`: notas Obsidian versionadas para conhecimento duravel do projeto.
-- `playground/`: testes locais e prototipos descartaveis.
-- `.agents/skills/`: workflows reutilizaveis deste laboratorio.
-- `.codex/agents/`: agentes customizados estreitos para delegacao.
-- `hooks/`: apenas documentacao ou scripts manuais inativos ate aprovacao explicita.
+- `scripts/`: harness local pequeno.
 
 ## Do
 
@@ -70,16 +67,16 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 - escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`;
 - copiar hooks, MCP ou infraestrutura sensivel do `OLMO`;
 - ativar hook sem trigger, evidencia, rollback e aprovacao humana explicita;
+- recriar diretorios locais de agents, subagents, skills ou hooks sem necessidade repetida e aprovacao explicita;
 - marcar `done` sem evidencia de entendimento ou aplicacao;
 - misturar material pessoal com runtime do projeto;
 - colocar captura privada/crua no vault versionado;
-- inflar o repo com agentes e skills sem uso recorrente.
+- inflar o repo com agentes, skills ou scaffolds sem uso recorrente.
 - manter relatorios longos quando uma decisao curta resolve.
 
 ## Validation Before Finish
 
 - Se editar docs ou HTML, cheque nomes, titulos e links locais.
-- Se editar skill, mantenha a descricao clara sobre quando ela dispara.
 - Se editar base, memoria, harness ou orquestracao, atualize `shadow/FOUNDATION.md`.
 - Se editar a wiki, preserve links Obsidian e a separacao entre conhecimento duravel e captura privada.
 - Quando houver mudanca persistente, rode `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`.

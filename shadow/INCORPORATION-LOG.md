@@ -19,6 +19,7 @@ Regra: nada migra para OLMO sem autorizacao humana explicita, evidencia, rollbac
 | 2026-04-23 | Janitor editorial | experiment | Repo separado permite limpeza mais agressiva | `shadow/SOTA-DECISIONS.md` | Deletar material util por impulso | Cortar duplicacao, preservar contratos e dashboard |
 | 2026-04-23 | Foundation + harness | experiment | Fortalecer base, infra, hooks, memoria, harness e orquestracao | `shadow/FOUNDATION.md`, `scripts/check.ps1` | Burocracia e falsa seguranca | Usar em 3 sessoes antes de promover para candidate |
 | 2026-04-23 | Obsidian project wiki | experiment | Criar vault wiki para conhecimento duravel | `Prometeus/wiki/Home.md` | Virar deposito de captura crua | Usar em 3 ciclos e consolidar notas duplicadas |
+| 2026-04-23 | Retirar scaffolds locais de agents/skills/hooks | candidate | Diretorios fantasmas estavam confundindo memoria e contexto | `TREE.md`, `scripts/check.ps1` | Perder metodo util se apagar sem consolidar | Manter procedimentos em `shadow/` e wiki; harness bloqueia retorno sem gate |
 
 ## Gate para virar candidate
 

@@ -28,7 +28,7 @@ Depois do digest, cada item precisa cair em um destino:
 
 - `deadline`: entra no painel como prazo ou compromisso.
 - `study track`: entra como topico a aprender com status visivel.
-- `experimento`: vai para `playground/` quando a pergunta ainda estiver aberta.
+- `experimento`: vira nota curta em `shadow/` ou `Prometeus/wiki/Notes` quando a pergunta ainda estiver aberta.
 - `candidato a migracao`: entra em `shadow/WORK-LANES.md` quando o padrao parecer reutilizavel.
 
 ## Labels Gmail

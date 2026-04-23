@@ -19,7 +19,7 @@ Marque `done` so quando as tres respostas forem "sim":
 
 - digest de email;
 - friccao real do workspace;
-- experimento em `playground/`;
+- experimento documentado em `shadow/` ou `Prometeus/wiki/Notes`;
 - documentacao que respondeu uma pergunta concreta.
 
 ## Antipadroes
