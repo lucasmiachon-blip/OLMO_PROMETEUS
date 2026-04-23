@@ -14,6 +14,19 @@ Validar um laboratorio paralelo, guiado por orquestracao de baixo risco, para va
 - Nao manter scaffolds locais de agents, subagents, skills, hooks, `.claude/` ou `.gemini/` sem necessidade repetida e gate humano explicito.
 - Nao criar sincronizacao automatica com o repo principal.
 - Nao promover artefatos sem trigger, evidencia e rollback.
+- Nao mudar arquitetura, agentes, skills, hooks, MCP, memoria ou orquestracao sem SOTA research gate previo.
+
+## SOTA research gate
+
+Mudancas estruturais exigem:
+
+1. auditoria local;
+2. pesquisa SOTA em fonte primaria atual;
+3. decisao curta registrada;
+4. risco, custo, rollback e criterio negativo;
+5. harness passando antes de commit.
+
+Se a pesquisa apontar que a ideia nao e necessaria para este repo pequeno, a acao correta e nao implementar.
 
 ## Faixas operacionais
 

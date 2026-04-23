@@ -27,6 +27,19 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 - Use pesquisa e docs para reduzir incerteza antes de aumentar estrutura.
 - Consolide antes de criar documento novo; pesquisa vira decisao curta.
 - Trate migracao para `OLMO` como evento humano, nao como reflexo.
+- Mudanca de arquitetura, agente, skill, hook, MCP ou orquestracao exige SOTA research gate antes de editar.
+
+## SOTA Research Gate
+
+Antes de mudar arquitetura, agentes, skills, hooks, MCP, memoria ou orquestracao:
+
+1. Auditar o estado local primeiro.
+2. Pesquisar fontes primarias e atuais, preferindo docs oficiais.
+3. Registrar uma decisao curta em `shadow/SOTA-DECISIONS.md` ou no arquivo operacional correto.
+4. Explicitar trigger, nao-trigger, risco, custo, rollback e criterio negativo.
+5. So entao editar.
+
+Se a pesquisa nao justificar a mudanca, nao implementar. Sem bajulacao, sem arquitetura aspiracional e sem copiar moda.
 
 ## Daily Loop
 

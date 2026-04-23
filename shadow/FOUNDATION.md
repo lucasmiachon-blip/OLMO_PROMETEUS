@@ -97,6 +97,18 @@ Delegacao:
 
 Sem fan-out automatico e sem registry local de agentes neste repo.
 
+## 6. SOTA research gate
+
+Mudancas de arquitetura, agentes, skills, hooks, MCP, memoria ou orquestracao seguem este gate:
+
+1. Auditar o estado local.
+2. Pesquisar fontes primarias atuais.
+3. Escrever decisao curta, com trigger e nao-trigger.
+4. Registrar risco, custo, rollback e criterio negativo.
+5. Editar apenas se a pesquisa justificar.
+
+Regra anti-sprawl: se a melhor pratica externa depende de escala, equipe, CI, produto ou runtime que este repo nao tem, nao copiar. Adaptar para procedimento pequeno ou rejeitar.
+
 ## Barra de promocao
 
 Algo so sobe de nivel quando tem:

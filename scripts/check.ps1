@@ -189,10 +189,12 @@ foreach ($ignoreFile in @(".gitignore", ".claudeignore")) {
 }
 
 $procedureContracts = @{
+  "AGENTS.md" = @("## SOTA Research Gate")
+  "PROJECT_CONTRACT.md" = @("## SOTA research gate")
   "shadow/EMAIL-DIGEST-4P.md" = @("## Trigger", "## Contrato de entrada", "## Workflow", "## Mini-evals")
   "shadow/STUDY-TRACK-DONE.md" = @("## Trigger", "## Saida padrao", "## Workflow", "## Mini-evals")
   "shadow/WORK-LANES.md" = @("## Trigger", "## Promotion gate", "## Decisao", "## Mini-evals")
-  "shadow/SOTA-DECISIONS.md" = @("## Padrao SOTA para procedimentos", "## Big Three scan", "## Claude Code e GEMINI.md adapters")
+  "shadow/SOTA-DECISIONS.md" = @("## SOTA research gate", "## Padrao SOTA para procedimentos", "## Big Three scan", "## Claude Code e GEMINI.md adapters")
 }
 
 foreach ($entry in $procedureContracts.GetEnumerator()) {

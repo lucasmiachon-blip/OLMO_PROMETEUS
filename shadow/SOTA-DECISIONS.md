@@ -41,6 +41,22 @@ Nao incorporar agora:
 4. Qualquer coisa que pareca migravel passa por `private -> experiment -> candidate`.
 5. Nada toca `C:\Dev\Projetos\OLMO` sem autorizacao humana explicita.
 
+## SOTA research gate
+
+Decisao: toda mudanca de arquitetura, agente, skill, hook, MCP, memoria ou orquestracao precisa de pesquisa SOTA antes de editar.
+
+Contrato minimo:
+
+- auditar primeiro o estado local;
+- usar fontes primarias atuais, preferindo docs oficiais;
+- registrar uma decisao curta, nao um relatorio longo;
+- citar fontes quando a decisao depender de pesquisa externa;
+- explicitar trigger, nao-trigger, risco, custo e rollback;
+- incluir criterio negativo: quando nao aplicar a ideia;
+- rodar harness antes de commit.
+
+Regra anti-sycophancy: se a pesquisa nao sustenta a proposta para o tamanho real do Prometeus, a resposta correta e rejeitar, reduzir ou adiar a mudanca. SOTA nao e moda; e ajuste entre pratica externa, escala local e risco operacional.
+
 ## Padrao SOTA para procedimentos
 
 Enquanto nao houver skill real, cada procedimento duravel deve ter:
@@ -63,12 +79,14 @@ Busca oficial em 2026-04-23: OpenAI, Anthropic e Google convergem em quatro pont
 | OpenAI Codex Skills | Skills sao workflows reutilizaveis com `SKILL.md`, `name`, `description`, recursos opcionais e progressive disclosure. Descricao define matching implicito. | Manter playbooks em `shadow/` ate haver uso repetido. Se virar skill, exigir trigger/nao-trigger forte, corpo curto e mini-evals. |
 | OpenAI Codex Subagents | Subagentes servem para tarefas paralelas complexas, custam mais tokens e so devem ser usados quando explicitamente pedidos. | Nao manter registry local de subagentes. Delegacao fica por conversa, nao por scaffold persistente. |
 | Anthropic Claude Code Memory | Claude Code le `CLAUDE.md`, nao `AGENTS.md`; recomenda criar `CLAUDE.md` importando `AGENTS.md` quando o repo ja usa AGENTS. | Criar apenas um adaptador fino `CLAUDE.md` com `@AGENTS.md`. Nao criar `.claude/`, rules, hooks ou auto-memory versionada. |
+| Anthropic Claude Code Best Practices | Recomenda explorar primeiro, planejar, dar verificacao ao agente, gerenciar contexto agressivamente e usar subagentes para investigacao quando isso poupar contexto principal. | Antes de mudanca estrutural: auditar, pesquisar, decidir e verificar. Subagente nao vira pasta persistente por padrao. |
 | Anthropic Claude Skills | Skills entram quando o usuario repete playbooks/checklists ou quando uma parte de memoria vira procedimento; corpo carrega sob demanda. | A regra "procedimento primeiro, skill depois" esta correta. Migrar para skill apenas quando a repeticao justificar custo. |
 | Anthropic Subagents | Subagentes devem ter escopo, ferramentas e modelo claros; subagente read-only deve limitar ferramentas. | Se algum dia voltar, deve ser read-only por padrao, com ferramentas minimas e uso explicito. |
 | Anthropic Hooks | Hooks dao controle deterministico, mas rodam comandos automaticamente no ciclo do agente. | Continuar sem hooks ativos. Primeiro comando manual, depois harness, so entao discutir automacao. |
 | Google Gemini CLI `GEMINI.md` | Gemini CLI carrega contexto hierarquico por `GEMINI.md`, suporta imports `@file.md` e permite customizar nomes de contexto. | Criar apenas um adaptador fino `GEMINI.md` com `@AGENTS.md`. Nao criar `.gemini/`, extensoes, MCP ou comandos ativos. |
 | Google ADK Agents | Distingue LLM agents, workflow agents deterministicos e custom agents; workflow agents dao previsibilidade. | Para Prometeus, preferir workflow documentado e harness deterministico antes de agente LLM. |
 | Google ADK Evaluation/Artifacts | ADK enfatiza avaliacao, artefatos persistentes, estado/memoria e ferramentas separadas. | Separar memoria (`shadow`/wiki), artefatos e estado privado. Todo procedimento duravel precisa de mini-evals. |
+| Google ADK Evaluation | Agentes precisam ser avaliados por resposta final, trajetoria, uso de ferramentas, groundedness e seguranca; testes agenticos nao sao so unit tests deterministas. | Se Prometeus criar agente real, precisa eval minimo antes de virar runtime. Enquanto isso, mini-evals nos procedimentos bastam. |
 
 Conclusao: o SOTA nao pede mais pastas. Pede menos contexto carregado por padrao, gatilhos melhores, artefatos persistentes, avaliacoes pequenas e automacao so quando a regra for deterministica.
 
