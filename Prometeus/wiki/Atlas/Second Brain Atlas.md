@@ -20,6 +20,7 @@ Este e o mapa principal do second brain. O Graph View e a interface principal; C
 ## Sistemas vivos
 
 - [[Foundation Harness]]
+- [[SOTA Research Gate]]
 - [[Workspace Boundary]]
 - [[Email Digest System]]
 - [[Study Track System]]
@@ -28,6 +29,7 @@ Este e o mapa principal do second brain. O Graph View e a interface principal; C
 ## Conceitos
 
 - [[SOTA Dev Solo]]
+- [[Agent Module Encapsulation]]
 - [[Artifact]]
 - [[Done]]
 - [[Candidate]]
@@ -50,3 +52,12 @@ Toda nota nova deve responder:
 - qual problema ela reduz;
 - se ela e duravel, temporaria ou candidata;
 - qual link futuro ela cria.
+
+## Fronteira atual
+
+O cluster mais importante agora e agentes como modulos encapsulados:
+
+- [[SOTA Research Gate]] decide se a mudanca merece pesquisa e edicao.
+- [[Agent Module Encapsulation]] transforma entusiasmo por agente em contrato verificavel.
+- [[Promotion Gate]] decide se algo pode virar `candidate`.
+- [[Foundation Harness]] impede regressao mecanica.

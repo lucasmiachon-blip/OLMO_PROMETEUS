@@ -101,6 +101,7 @@ $requiredFiles = @(
   "README.md",
   "TREE.md",
   "shadow/FOUNDATION.md",
+  "shadow/AGENT-MODULES.md",
   "shadow/HYGIENE.md",
   "shadow/SOTA-DECISIONS.md",
   "shadow/INCORPORATION-LOG.md",
@@ -114,6 +115,8 @@ $requiredFiles = @(
   "Prometeus/wiki/Categories/Prometeus Wiki.md",
   "Prometeus/wiki/Notes/Workspace Boundary.md",
   "Prometeus/wiki/Notes/Foundation Harness.md",
+  "Prometeus/wiki/Notes/SOTA Research Gate.md",
+  "Prometeus/wiki/Notes/Agent Module Encapsulation.md",
   "Prometeus/wiki/References/Kepano and Karpathy Principles.md",
   "Prometeus/.obsidian/app.json",
   "Prometeus/.obsidian/core-plugins.json",
@@ -191,10 +194,11 @@ foreach ($ignoreFile in @(".gitignore", ".claudeignore")) {
 $procedureContracts = @{
   "AGENTS.md" = @("## SOTA Research Gate")
   "PROJECT_CONTRACT.md" = @("## SOTA research gate")
+  "shadow/AGENT-MODULES.md" = @("## Trigger", "## Contract", "## Evaluation", "## Mini-evals")
   "shadow/EMAIL-DIGEST-4P.md" = @("## Trigger", "## Contrato de entrada", "## Workflow", "## Mini-evals")
   "shadow/STUDY-TRACK-DONE.md" = @("## Trigger", "## Saida padrao", "## Workflow", "## Mini-evals")
   "shadow/WORK-LANES.md" = @("## Trigger", "## Promotion gate", "## Decisao", "## Mini-evals")
-  "shadow/SOTA-DECISIONS.md" = @("## SOTA research gate", "## Padrao SOTA para procedimentos", "## Big Three scan", "## Claude Code e GEMINI.md adapters")
+  "shadow/SOTA-DECISIONS.md" = @("## SOTA research gate", "## Agent module frontier", "## Padrao SOTA para procedimentos", "## Big Three scan", "## Claude Code e GEMINI.md adapters")
 }
 
 foreach ($entry in $procedureContracts.GetEnumerator()) {

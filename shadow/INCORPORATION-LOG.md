@@ -20,6 +20,8 @@ Regra: nada migra para OLMO sem autorizacao humana explicita, evidencia, rollbac
 | 2026-04-23 | Foundation + harness | experiment | Fortalecer base, infra, hooks, memoria, harness e orquestracao | `shadow/FOUNDATION.md`, `scripts/check.ps1` | Burocracia e falsa seguranca | Usar em 3 sessoes antes de promover para candidate |
 | 2026-04-23 | Obsidian project wiki | experiment | Criar vault wiki para conhecimento duravel | `Prometeus/wiki/Home.md` | Virar deposito de captura crua | Usar em 3 ciclos e consolidar notas duplicadas |
 | 2026-04-23 | Retirar scaffolds locais de agents/skills/hooks | candidate | Diretorios fantasmas estavam confundindo memoria e contexto | `TREE.md`, `scripts/check.ps1` | Perder metodo util se apagar sem consolidar | Manter procedimentos em `shadow/` e wiki; harness bloqueia retorno sem gate |
+| 2026-04-23 | SOTA research gate | candidate | Usuario exigiu pesquisa SOTA antes de mudancas estruturais | `AGENTS.md`, `PROJECT_CONTRACT.md`, `shadow/SOTA-DECISIONS.md`, `scripts/check.ps1` | Virar ritual burocratico se aplicado a tarefas simples | Aplicar so a arquitetura, agentes, skills, hooks, MCP, memoria e orquestracao |
+| 2026-04-23 | Agent module encapsulation | experiment | Agente como modulo encapsulado parece fronteira util | `shadow/AGENT-MODULES.md`, `Prometeus/wiki/Notes/Agent Module Encapsulation.md` | Recriar sprawl de agentes por entusiasmo | Usar como contrato; nao criar runtime antes de 3 usos reais e eval |
 
 ## Gate para virar candidate
 

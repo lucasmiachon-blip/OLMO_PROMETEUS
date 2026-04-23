@@ -20,6 +20,8 @@ Entrada principal:
 - [[wiki/Home|Home]]
 - [[Second Brain Atlas]]
 - [[Graph Operating System]]
+- [[SOTA Research Gate]]
+- [[Agent Module Encapsulation]]
 
 ## Regra
 
@@ -37,5 +39,7 @@ Nada deve ser escrito fora desse repo sem autorizacao explicita.
 - Filtro do Graph: `path:wiki`.
 - Canvas e vitrine curada, nao substitui o grafo.
 - Captura crua e material pessoal ficam fora da wiki versionada.
+- Mudanca estrutural passa pelo SOTA Research Gate antes de virar arquivo ou runtime.
+- Ideias de agentes entram primeiro como modulo documentado, nao como scaffold ativo.
 
 Coautoria: Lucas + GPT-5.4 (Codex)

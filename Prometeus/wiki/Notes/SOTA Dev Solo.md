@@ -17,10 +17,14 @@ Principios:
 - Harness antes de commit.
 - Memoria em arquivos certos, nao em conversa solta.
 - Orquestracao conservadora.
+- Pesquisa SOTA antes de mudanca estrutural.
+- Agentes como modulos encapsulados, nao personas soltas.
 
 Links:
 
 - [[Foundation Harness]]
+- [[SOTA Research Gate]]
+- [[Agent Module Encapsulation]]
 - [[Promotion Gate]]
 - [[Artifact]]
 - [[Done]]

@@ -57,6 +57,24 @@ Contrato minimo:
 
 Regra anti-sycophancy: se a pesquisa nao sustenta a proposta para o tamanho real do Prometeus, a resposta correta e rejeitar, reduzir ou adiar a mudanca. SOTA nao e moda; e ajuste entre pratica externa, escala local e risco operacional.
 
+## Agent module frontier
+
+Decisao: tratar agentes como modulos encapsulados, nao como personas ou pastas.
+
+O contrato vive em `shadow/AGENT-MODULES.md` e a nota navegavel vive em `Prometeus/wiki/Notes/Agent Module Encapsulation.md`.
+
+Resumo operacional:
+
+- primeiro procedimento;
+- depois modulo documentado;
+- depois runner manual;
+- so entao agente real;
+- todo modulo declara input, output, estado, tools, permissoes, guardrails, eval, custo e rollback.
+
+Sinal SOTA: OpenAI enfatiza agents com instrucoes, tools, handoffs e guardrails; Anthropic enfatiza subagentes focados, contexto separado e ferramentas limitadas; Google ADK enfatiza tipos de agentes e avaliacao por resposta, trajetoria, ferramentas, groundedness e seguranca.
+
+Decisao Prometeus: nao criar runtime de agente enquanto os candidatos atuais funcionam como procedimentos e harness. `Agent Module Encapsulation` fica em `experiment`.
+
 ## Padrao SOTA para procedimentos
 
 Enquanto nao houver skill real, cada procedimento duravel deve ter:

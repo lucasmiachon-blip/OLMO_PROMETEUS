@@ -36,6 +36,8 @@ Nao abra `C:\Dev\Projetos\OLMO_PROMETEUS` como vault. O repo e a caixa de segura
 - Criar MOC pequeno quando um cluster tiver mais de 7 notas.
 - Promover clipping apenas quando houver sintese ou decisao.
 - Usar Canvas para narrativas, nao para substituir o grafo.
+- Mudanca estrutural entra no grafo via [[SOTA Research Gate]], nao como pasta nova.
+- Ideia de agente entra primeiro como [[Agent Module Encapsulation]], nao como runtime.
 
 ## Cores
 
@@ -49,3 +51,5 @@ Nao abra `C:\Dev\Projetos\OLMO_PROMETEUS` como vault. O repo e a caixa de segura
 ## Sinal de qualidade
 
 Um grafo grande esta saudavel quando existem hubs visiveis, clusters reconheciveis e poucos nos realmente sem destino.
+
+Cluster atual esperado: [[SOTA Research Gate]], [[Agent Module Encapsulation]], [[Promotion Gate]], [[Foundation Harness]] e [[SOTA Dev Solo]].

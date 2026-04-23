@@ -18,6 +18,8 @@ Comece por:
 - [[Second Brain Atlas]]
 - [[Graph Operating System]]
 - [[Knowledge Lifecycle]]
+- [[SOTA Research Gate]]
+- [[Agent Module Encapsulation]]
 - [[Prometeus.canvas|Mapa visual em Canvas]]
 - [[Prometeus Wiki]]
 - [[Foundation Harness]]
@@ -66,9 +68,10 @@ Se o Graph abrir cinza, confira `Groups`. O Obsidian pode regravar `graph.json` 
 ## Proximo ciclo
 
 1. Capturar entrada.
-2. Sintetizar em artefato.
-3. Linkar a um sistema ou conceito.
-4. Rodar `scripts/check.ps1`.
-5. Decidir se fica private, experiment ou candidate.
+2. Se for mudanca estrutural, passar por [[SOTA Research Gate]].
+3. Sintetizar em artefato.
+4. Linkar a um sistema ou conceito.
+5. Rodar `scripts/check.ps1`.
+6. Decidir se fica private, experiment ou candidate.
 
 Coautoria: Lucas + GPT-5.4 (Codex)

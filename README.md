@@ -31,6 +31,8 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 - Procedimentos duraveis ficam em `shadow/` ou em notas do `Prometeus/wiki/`.
 - `private-learning/` fica local e ignorado, sem entrar no contexto versionado.
 - Qualquer nova automacao ou agente precisa passar por trigger, evidencia, custo, risco e rollback.
+- Mudancas estruturais passam pelo SOTA research gate antes de edicao.
+- Agentes so entram como modulos encapsulados depois de procedimento, contrato, eval e uso real.
 
 ## Fluxo diario recomendado
 
@@ -42,6 +44,18 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 ## Higiene do projeto
 
 Ao final de sessoes com edicao, conferir `shadow/HYGIENE.md` antes de criar mais estrutura.
+
+## Fronteira atual
+
+O aprendizado atual e tratar agentes como modulos encapsulados:
+
+- contrato antes de runtime;
+- ferramentas minimas;
+- memoria explicita;
+- guardrails e rollback;
+- eval antes de promocao.
+
+O contrato vive em `shadow/AGENT-MODULES.md`; a nota navegavel vive no vault em `Prometeus/wiki/Notes/Agent Module Encapsulation.md`.
 
 ## Harness local
 

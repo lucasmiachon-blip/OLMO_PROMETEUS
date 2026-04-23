@@ -15,6 +15,7 @@ Mapa central do vault. Use como ponto de partida, nao como taxonomia obrigatoria
 - [[Second Brain Atlas]]
 - [[Graph Operating System]]
 - [[Knowledge Lifecycle]]
+- [[SOTA Research Gate]]
 - [[Prometeus.canvas]]
 - [[Foundation Harness]]
 - [[Workspace Boundary]]
@@ -25,6 +26,7 @@ Mapa central do vault. Use como ponto de partida, nao como taxonomia obrigatoria
 ## Conceitos
 
 - [[SOTA Dev Solo]]
+- [[Agent Module Encapsulation]]
 - [[Artifact]]
 - [[Done]]
 - [[Candidate]]

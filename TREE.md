@@ -47,6 +47,7 @@ Vault Obsidian graph-first.
 Memoria operacional, nao deposito de pesquisa longa.
 
 - `FOUNDATION.md`: infra, hooks, memoria, harness e orquestracao.
+- `AGENT-MODULES.md`: contrato experimental para agentes como modulos encapsulados.
 - `HYGIENE.md`: checklist anti-sprawl.
 - `INCORPORATION-LOG.md`: registro de experimentos e candidatos.
 - `WORK-LANES.md`: classificacao `private`, `experiment`, `candidate`.
