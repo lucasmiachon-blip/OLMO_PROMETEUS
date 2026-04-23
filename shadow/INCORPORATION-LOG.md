@@ -15,7 +15,8 @@ Regra: nada migra para OLMO sem autorizacao humana explicita, evidencia, rollbac
 
 | Data | Item | Estado | Trigger | Evidencia | Risco | Proxima acao |
 |------|------|--------|---------|-----------|-------|--------------|
-| 2026-04-23 | SOTA agents/skills/team | experiment | Pesquisa SOTA ate hoje para decidir incorporacoes | `shadow/SOTA-INCORPORATION-2026-04-23.md` | Inflar arquitetura cedo demais | Aplicar apenas log e regra de Digerido persistido |
+| 2026-04-23 | SOTA agents/skills/team | experiment | Pesquisa SOTA ate hoje para decidir incorporacoes | `shadow/SOTA-DECISIONS.md` | Inflar arquitetura cedo demais | Manter decisoes curtas e cortar relatorios longos |
+| 2026-04-23 | Janitor editorial | experiment | Repo separado permite limpeza mais agressiva | `shadow/SOTA-DECISIONS.md` | Deletar material util por impulso | Cortar duplicacao, preservar contratos e dashboard |
 
 ## Gate para virar candidate
 

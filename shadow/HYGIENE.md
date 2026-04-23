@@ -31,6 +31,18 @@ Rodar higiene quando:
 - Nao criar nova skill/agente para cada ideia; exigir uso recorrente.
 - Nao transformar pesquisa em arquitetura se nao houver trigger real.
 - Nao colocar material privado em `shadow/`.
+- Nao manter dois documentos que respondem a mesma pergunta.
+
+## Barra de qualidade
+
+Um arquivo fica no repo se:
+
+- tem uso diario ou recorrente;
+- e contrato, gate, skill, dashboard ou evidencia ainda necessaria;
+- reduz risco operacional;
+- pode ser explicado em uma frase.
+
+Se nao passar nessa barra, consolidar ou deletar.
 
 ## Cadencia
 
@@ -43,8 +55,8 @@ Rodar higiene quando:
 2026-04-23:
 
 - Estrutura esta pequena e clara.
-- Principal risco: acumulo de docs SOTA sem consolidacao futura.
-- Acoes aplicadas: `INCORPORATION-LOG.md`, regra de `Digerido` persistido, este checklist.
+- Principal risco: recriar sprawl SOTA depois da limpeza.
+- Acoes aplicadas: `INCORPORATION-LOG.md`, regra de `Digerido` persistido, este checklist e consolidacao em `SOTA-DECISIONS.md`.
 - Sem edicao autorizada em `C:\Dev\Projetos\OLMO`.
 
 Coautoria: Lucas + GPT-5.4 (Codex)

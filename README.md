@@ -18,6 +18,7 @@ Laboratorio paralelo e independente para validar fluxo, dashboard, digest e stud
 - `shadow/`: regras operacionais, gates e pesquisa aplicada
 - `playground/`: espaco para prototipos descartaveis
 - `shadow/HYGIENE.md`: checklist de higiene para evitar sprawl
+- `shadow/SOTA-DECISIONS.md`: decisoes SOTA consolidadas, sem relatorio longo
 
 ## Primeiro lote enxuto
 

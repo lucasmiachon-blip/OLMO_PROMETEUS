@@ -15,6 +15,7 @@
 - Prefira artefatos reversiveis: Markdown, HTML simples, JSON e scripts pequenos.
 - Mantenha o blast radius baixo: faca a menor mudanca util.
 - Use pesquisa e docs para reduzir incerteza antes de aumentar estrutura.
+- Consolide antes de criar documento novo; pesquisa vira decisao curta.
 - Trate migracao para `OLMO` como evento humano, nao como reflexo.
 
 ## Daily Loop
@@ -55,6 +56,7 @@
 - marcar `done` sem evidencia de entendimento ou aplicacao;
 - misturar material pessoal com runtime do projeto;
 - inflar o repo com agentes e skills sem uso recorrente.
+- manter relatorios longos quando uma decisao curta resolve.
 
 ## Validation Before Finish
 
