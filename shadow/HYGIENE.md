@@ -24,6 +24,7 @@ Rodar higiene quando:
 - Checar se `private-learning/` continua em `.gitignore` e `.claudeignore`.
 - Checar se docs SOTA antigos foram referenciados ou consolidados.
 - Checar se `C:\Dev\Projetos\OLMO` aparece apenas como destino protegido, nunca como alvo de edicao.
+- Checar se a regra "nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`" continua presente.
 
 ## Limites
 

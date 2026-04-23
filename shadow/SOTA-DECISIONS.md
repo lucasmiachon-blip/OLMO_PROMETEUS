@@ -17,6 +17,7 @@ Manter:
 - `Digerido` somente depois de artefato persistente.
 - `shadow/INCORPORATION-LOG.md` como gate antes de qualquer conversa sobre OLMO.
 - `scripts/check.ps1` como harness leve antes de commit.
+- Boundary absoluta: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 
 Nao incorporar agora:
 

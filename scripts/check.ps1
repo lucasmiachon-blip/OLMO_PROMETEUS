@@ -84,6 +84,21 @@ foreach ($file in $requiredFiles) {
   Require-File $file
 }
 
+$boundaryFiles = @(
+  "AGENTS.md",
+  "PROJECT_CONTRACT.md",
+  "shadow/FOUNDATION.md"
+)
+
+foreach ($file in $boundaryFiles) {
+  $text = Get-Content -LiteralPath $file -Raw
+  if ($text -match "nunca escrever fora de ``?C:\\Dev\\Projetos\\OLMO_PROMETEUS``?") {
+    Write-Ok "fundamental boundary present: $file"
+  } else {
+    Write-Fail "missing fundamental boundary in: $file"
+  }
+}
+
 $config = Get-Content -LiteralPath ".codex/config.toml" -Raw
 if ($config -match "max_depth\s*=\s*1") {
   Write-Ok "subagent max_depth is 1"

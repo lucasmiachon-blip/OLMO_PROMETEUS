@@ -6,7 +6,10 @@ Validar um laboratorio paralelo, guiado por orquestracao de baixo risco, para da
 
 ## Limites
 
+- Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 - Nao editar `C:\Dev\Projetos\OLMO` a partir daqui.
+- Nao editar, mover, deletar, criar, arquivar ou sincronizar nada em repositorios siblings.
+- Qualquer write externo exige autorizacao explicita na conversa, com caminho e acao exata.
 - Nao copiar infraestrutura sensivel, hooks ou config de MCP.
 - Nao criar sincronizacao automatica com o repo principal.
 - Nao promover artefatos sem trigger, evidencia e rollback.

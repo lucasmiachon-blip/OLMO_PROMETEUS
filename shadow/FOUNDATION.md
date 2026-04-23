@@ -4,6 +4,12 @@ Objetivo: fortalecer a base do open OLMO_PROMETEUS sem criar infraestrutura fals
 
 Esta base cobre cinco camadas: infra, hooks, memoria, harness e orquestracao.
 
+## Regra fundamental
+
+Nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+
+Isso inclui scripts, hooks, automacoes, conectores, agentes, shell commands e edicoes manuais. Se uma tarefa exigir write externo, parar e pedir autorizacao explicita com caminho e acao exata.
+
 ## 1. Infra
 
 O repo e um laboratorio isolado. A infraestrutura minima e:
@@ -27,7 +33,7 @@ Motivo: no nosso ambiente Windows, hooks de agente ainda sao uma base instavel p
 2. Depois, harness repetivel.
 3. So depois de uso recorrente, considerar hook.
 
-Regra: nenhum hook pode tocar `C:\Dev\Projetos\OLMO`, arquivar email, mover arquivo sensivel ou fazer write externo sem autorizacao humana explicita.
+Regra: nenhum hook pode tocar `C:\Dev\Projetos\OLMO`, arquivar email, mover arquivo sensivel ou fazer qualquer write externo sem autorizacao humana explicita.
 
 ## 3. Memoria
 

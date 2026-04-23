@@ -10,6 +10,16 @@
 - Nao deve editar `C:\Dev\Projetos\OLMO` nem `C:\Dev\Projetos\OLMO_COWORK` sem autorizacao humana explicita.
 - O foco e validar fluxo, digest, estudo, dashboards locais e gates de promocao.
 
+## Fundamental Boundary
+
+Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+
+- Nao editar, mover, deletar, criar, arquivar, sincronizar ou gerar artefatos fora deste repo.
+- Nao executar automacao, hook, script ou ferramenta que faca write externo.
+- Nao tocar `C:\Dev\Projetos\OLMO`, `C:\Dev\Projetos\OLMO_COWORK` ou outros siblings.
+- Se uma tarefa exigir write fora daqui, parar e pedir autorizacao explicita na conversa.
+- A autorizacao precisa citar o caminho externo e a acao exata.
+
 ## Operating Principles
 
 - Prefira artefatos reversiveis: Markdown, HTML simples, JSON e scripts pequenos.
@@ -52,6 +62,7 @@
 ## Do Not
 
 - tocar o repo principal por reflexo;
+- escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`;
 - copiar hooks, MCP ou infraestrutura sensivel do `OLMO`;
 - marcar `done` sem evidencia de entendimento ou aplicacao;
 - misturar material pessoal com runtime do projeto;
