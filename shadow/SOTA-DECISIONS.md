@@ -126,6 +126,8 @@ Conclusao: o SOTA nao pede mais pastas. Pede menos contexto carregado por padrao
 
 Decisao: permitir `.claude/skills/` local como casa para skills reais promovidas de procedures `operational`. Mantem `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` proibidos.
 
+Precisao de linguagem: "aberto" aqui significa que o diretorio pode existir e o harness valida `SKILL.md` quando houver. Nao significa skill instalada imediatamente. Primeira skill so entra quando o primeiro procedure atingir `operational` conforme gate abaixo. Enquanto isso, `.claude/skills/` deve estar vazio ou ausente.
+
 Auditoria local: 3 procedures com `## Rubric` (`email-digest-4p`, `study-track-done`, `sota-research-gate`); nenhum skill existe ainda; C3 anterior proibia `.claude/skills/` preventivamente.
 
 Fontes: Claude Code Skills docs (`https://code.claude.com/docs/en/skills`), Anthropic Skills repo (`https://github.com/anthropics/skills`), Anthropic Skill Creator plugin (`https://claude.com/plugins/skill-creator`).
