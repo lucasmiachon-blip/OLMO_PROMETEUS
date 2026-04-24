@@ -122,6 +122,23 @@ Busca oficial em 2026-04-23: OpenAI, Anthropic e Google convergem em quatro pont
 
 Conclusao: o SOTA nao pede mais pastas. Pede menos contexto carregado por padrao, gatilhos melhores, artefatos persistentes, avaliacoes pequenas e automacao so quando a regra for deterministica.
 
+## Local skills gate (2026-04-23)
+
+Decisao: permitir `.claude/skills/` local como casa para skills reais promovidas de procedures `operational`. Mantem `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` proibidos.
+
+Auditoria local: 3 procedures com `## Rubric` (`email-digest-4p`, `study-track-done`, `sota-research-gate`); nenhum skill existe ainda; C3 anterior proibia `.claude/skills/` preventivamente.
+
+Fontes: Claude Code Skills docs (`https://code.claude.com/docs/en/skills`), Anthropic Skills repo (`https://github.com/anthropics/skills`), Anthropic Skill Creator plugin (`https://claude.com/plugins/skill-creator`).
+
+- Trigger: procedure em `operational` >=30 dias + rubric media >=0.8 em entries de `EVIDENCE-LOG.md` + aprovacao humana explicita por skill.
+- Nao trigger: procedure em `candidate` ou `experiment`; skill especulativa; copia de skill da comunidade sem ajuste; instalar skill "so pra ter".
+- Risco: sprawl; redundancia com procedure em shadow/; runtime scaffold reemergindo; SKILL.md desalinhado do procedure.
+- Custo: manutencao dupla (SKILL.md + procedure); harness overhead; contexto carregado em sessao.
+- Rollback: deletar `.claude/skills/<name>/`; procedure em shadow/ continua intocado.
+- Criterio negativo: se em 60 dias (ate 2026-06-22) nenhuma skill promovida gerar reducao mensuravel de retrabalho OU a skill virar duplicata estatica, reverter decisao e voltar a proibir `.claude/skills/`.
+
+Harness: `.claude/skills/` removido de `forbiddenClaudeSubdirs`; novo check exige `SKILL.md` em cada subdir de `.claude/skills/`. Contrato de SKILL.md (name, description, trigger, non-trigger) vive em `shadow/AGENT-USAGE.md > Local skills contract`.
+
 ## Applied when
 
 Registro de quando cada decisao acima foi aplicada a uma mudanca real. Uma entrada por aplicacao, com data, artefato e commit quando disponivel. Se uma decisao ficar >30 dias sem aplicacao registrada, e candidata a remocao (museu).
@@ -133,6 +150,7 @@ Registro de quando cada decisao acima foi aplicada a uma mudanca real. Uma entra
 | 2026-04-23 | Agent module frontier (modulo primeiro, runtime depois) | Rejeitar criacao de `.claude/agents/` local; mapear agentes globais em `shadow/AGENT-USAGE.md` | `shadow/AGENT-USAGE.md` |
 | 2026-04-23 | Padrao SOTA para procedimentos (mini-evals + rubrica) | Adicionar `## Rubric` em email-digest-4p, study-track-done e SOTA research gate | `shadow/EMAIL-DIGEST-4P.md`, `shadow/STUDY-TRACK-DONE.md`, `shadow/SOTA-DECISIONS.md` |
 | 2026-04-23 | Adaptadores CLAUDE.md/GEMINI.md finos | Refactor Boris-style "things that will bite you" | commit 1c02049 |
+| 2026-04-23 | Local skills gate (C2 -> promocao parcial) | Abertura condicional de `.claude/skills/`; harness, docs e AGENT-USAGE atualizados | (esta rodada) |
 
 ## Claude Code e GEMINI.md adapters
 
@@ -202,9 +220,9 @@ Decisoes rascunho aguardando evidencia em `shadow/EVIDENCE-LOG.md` antes de vira
 - Risco: skill nao carregar automaticamente, duplicar procedure.
 - Rollback: deletar skill, manter procedure.
 
-### C3 — `.claude/` local scaffolds (REJEITADO agora)
+### C3 — `.claude/` local scaffolds (parcialmente aberto 2026-04-23)
 
-- Decisao: nao criar `.claude/agents/`, `.claude/skills/`, `.claude/hooks/`, `.claude/commands/`. Reavaliar apenas com 3 dores concretas documentadas em `EVIDENCE-LOG.md` onde ausencia de scaffold local causou retrabalho real.
+- Decisao: `.claude/skills/` foi promovido e aberto (ver secao "Local skills gate" acima). `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` continuam REJEITADOS. Reavaliar subdir restante apenas com 3 dores concretas documentadas em `EVIDENCE-LOG.md` onde ausencia de scaffold local causou retrabalho real.
 
 ### C4 — Memoria operacional durable layer
 

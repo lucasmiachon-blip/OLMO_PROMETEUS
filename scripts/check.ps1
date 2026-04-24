@@ -252,7 +252,6 @@ foreach ($dir in $forbiddenRootDirs) {
 
 $forbiddenClaudeSubdirs = @(
   ".claude/agents",
-  ".claude/skills",
   ".claude/hooks",
   ".claude/commands"
 )
@@ -263,6 +262,25 @@ foreach ($claudeDir in $forbiddenClaudeSubdirs) {
   } else {
     Write-Ok "forbidden claude scaffold absent: $claudeDir"
   }
+}
+
+$skillsRoot = ".claude/skills"
+if (Test-Path -LiteralPath $skillsRoot -PathType Container) {
+  $skillDirs = Get-ChildItem -LiteralPath $skillsRoot -Directory -ErrorAction SilentlyContinue
+  if ($skillDirs.Count -eq 0) {
+    Write-Ok ".claude/skills/ exists but empty"
+  } else {
+    foreach ($skillDir in $skillDirs) {
+      $skillManifest = Join-Path $skillDir.FullName "SKILL.md"
+      if (Test-Path -LiteralPath $skillManifest -PathType Leaf) {
+        Write-Ok "skill manifest present: .claude/skills/$($skillDir.Name)/SKILL.md"
+      } else {
+        Write-Fail "skill missing SKILL.md: .claude/skills/$($skillDir.Name)/"
+      }
+    }
+  }
+} else {
+  Write-Ok ".claude/skills/ gate open; no skills installed yet"
 }
 
 $agentAdapters = @{
@@ -280,7 +298,7 @@ foreach ($entry in $agentAdapters.GetEnumerator()) {
 }
 
 $requiredIgnorePatterns = @(
-  ".claude/",
+  ".claude/settings.local.json",
   "private-learning/",
   "Prometeus/.obsidian/workspace*.json",
   "Prometeus/.obsidian/cache/",

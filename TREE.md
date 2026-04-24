@@ -84,14 +84,19 @@ Motivo: esses nomes sugerem runtime ativo, aumentam contexto e recriam sprawl le
 
 ### `.claude/` tratamento especial
 
-`.claude/` nao e totalmente proibido: Claude Code cria `.claude/settings.local.json` automaticamente como state local do harness. O diretorio fica em `.gitignore` e `.claudeignore`, nunca versionado. Sao proibidos sem gate os seguintes subdirs (harness falha se aparecerem):
+`.claude/` nao e totalmente proibido: Claude Code cria `.claude/settings.local.json` automaticamente como state local do harness. O diretorio fica em `.gitignore` e `.claudeignore`, nunca versionado.
+
+Subdirs proibidos sem gate individual (harness falha):
 
 - `.claude/agents/`
-- `.claude/skills/`
 - `.claude/hooks/`
 - `.claude/commands/`
 
-Para necessidade de agentes/skills, o mapa de recursos globais vive em `shadow/AGENT-USAGE.md`.
+Subdirs com gate aberto (harness valida):
+
+- `.claude/skills/`: aberto em 2026-04-23. Cada subdir `.claude/skills/<name>/` precisa de `SKILL.md` com frontmatter valido. Contrato em `shadow/AGENT-USAGE.md > Local skills contract`. Gate de promocao em `shadow/SOTA-DECISIONS.md > Local skills gate`.
+
+Para mapa de uso de agentes/skills globais, ver `shadow/AGENT-USAGE.md`.
 
 ## Politica de Incorporacao do OLMO
 

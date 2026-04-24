@@ -98,7 +98,8 @@ Este projeto nao usa a memoria automatica do Claude Code. `C:\Users\lucas\.claud
 - escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`;
 - copiar hooks, MCP ou infraestrutura sensivel do `OLMO`;
 - ativar hook sem trigger, evidencia, rollback e aprovacao humana explicita;
-- recriar diretorios locais de agents, subagents, skills, hooks, `.claude/agents/`, `.claude/skills/`, `.claude/hooks/`, `.claude/commands/` ou `.gemini/` sem necessidade repetida e aprovacao explicita;
+- recriar diretorios locais de agents, subagents, skills, hooks, `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` ou `.gemini/` sem necessidade repetida e aprovacao explicita;
+- criar skill em `.claude/skills/<name>/` sem procedure operational em `shadow/` e sem frontmatter valido (`name`, `description`, `trigger`, `non-trigger`, `source`, `status`, `owner`) — ver `shadow/AGENT-USAGE.md > Local skills contract`;
 - tratar `.claude/settings.local.json` como runtime ativo (e state local; fica em `.gitignore`/`.claudeignore`);
 - marcar `done` sem evidencia de entendimento ou aplicacao;
 - misturar material pessoal com runtime do projeto;

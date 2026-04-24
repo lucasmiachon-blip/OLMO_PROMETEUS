@@ -1,4 +1,4 @@
-.claude/
+.claude/settings.local.json
 private-learning/
 Prometeus/.obsidian/workspace*.json
 Prometeus/.obsidian/cache/

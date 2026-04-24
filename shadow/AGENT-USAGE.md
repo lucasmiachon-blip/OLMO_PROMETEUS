@@ -63,6 +63,43 @@ Este projeto nao mantem memoria propria do Claude Code (`.claude/projects/.../me
 ### Tool minimalism
 Cada subagent recebe apenas as ferramentas que precisa. `Explore` ja e read-only; `Plan` ja e read-only. Subagent que precise editar deve ter justificativa no prompt, e preferencialmente usar worktree isolation.
 
+## Local skills contract
+
+Aberto em 2026-04-23 por decisao em `shadow/SOTA-DECISIONS.md > Local skills gate`. `.claude/skills/` agora e casa valida para skills promovidas. `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` permanecem proibidos.
+
+### Quando um procedure vira skill local (cumulativo)
+
+- procedure em lane `operational` em `shadow/WORK-LANES.md`;
+- >=3 entradas em `shadow/EVIDENCE-LOG.md` com rubric media >=0.8;
+- >=30 dias em `operational` sem edit estrutural do procedure;
+- dor concreta onde matching por description (SKILL.md) ganha sobre Read do procedure;
+- aprovacao humana explicita por skill.
+
+### SKILL.md minimo
+
+Cada subdir `.claude/skills/<name>/SKILL.md` precisa de frontmatter:
+
+```yaml
+---
+name: <curto, verbo-substantivo>
+description: <1 frase para matching implicito>
+trigger: <quando entra>
+non-trigger: <quando nao entra>
+source: <caminho do procedure em shadow/>
+status: experiment | candidate | operational
+owner: Lucas
+---
+```
+
+Corpo: resumo curto + links + mini-evals. Nao duplicar integralmente o procedure; o procedure em `shadow/` continua fonte de verdade. Edits estruturais vao no procedure; SKILL.md so atualiza quando trigger ou description mudam.
+
+### Guardrails de skills locais
+
+- Uma skill por procedure; nao criar skill sem procedure em shadow/.
+- Skill nao pode escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+- Cada uso real de skill vira linha em `shadow/EVIDENCE-LOG.md`.
+- Se em 60 dias (ate 2026-06-22) nenhuma skill reduzir retrabalho, reverter e voltar a proibir `.claude/skills/`.
+
 ## Guardrails
 
 - Subagents read-only por default.
