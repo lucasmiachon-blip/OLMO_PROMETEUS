@@ -24,6 +24,8 @@ Este arquivo nao redefine estados nem criterios: a fonte unica esta em `shadow/W
 | 2026-04-23 | Escada de estados expandida (operational, retired) | — | experiment | Sem transicao clara candidate -> operational antes | `shadow/WORK-LANES.md`, `AGENTS.md` | Inflar gate se ninguem usar | Revisar em 4 semanas se nenhum procedimento chegar a operational |
 | 2026-04-23 | `.claude/skills/` local gate (C2 promocao parcial) | blocked (C3) | experiment | User pedido para permitir instalar skills (ex: skill-creator) e promover procedures; SOTA scan confirma casa | `shadow/SOTA-DECISIONS.md > Local skills gate`, `shadow/AGENT-USAGE.md > Local skills contract`, `scripts/check.ps1`, docs | Sprawl, redundancia com procedure, runtime scaffold reemergindo | Aguardar primeiro procedure `operational`; revisar em 60 dias (2026-06-22) |
 
-| 2026-04-23 | Wiki graph lab | — | experiment | Consolidar o unico artefato vivo do ROADMAP no survivor Prometeus | `lab/wiki-graph-lab/`, `Prometeus/wiki/`, `TREE.md` | Duplicar fonte de verdade ou manter dependencia do ROADMAP | Usar o lab lendo apenas `Prometeus/wiki/` e aposentar o repo antigo |
+| 2026-04-23 | Wiki graph lab | — | experiment | Consolidar o unico artefato vivo do laboratorio legado no survivor Prometeus | `lab/wiki-graph-lab/`, `Prometeus/wiki/`, `TREE.md` | Duplicar fonte de verdade ou manter dependencia de diretorio legado | Usar o lab lendo apenas `Prometeus/wiki/` e aposentar o repo antigo |
 
 Coautoria: Lucas + Claude Opus 4.7 (1M)
+
+

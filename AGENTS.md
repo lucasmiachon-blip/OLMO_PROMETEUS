@@ -122,3 +122,4 @@ Este projeto nao usa a memoria automatica do Claude Code. `C:\Users\lucas\.claud
 
 - Codex: `Coautoria: Lucas + GPT-5.4 (Codex)`
 - Outros modelos: registrar papel, trigger, artefato, custo e risco antes de adotar no fluxo.
+

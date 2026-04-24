@@ -36,7 +36,7 @@ Como transformar as notas do `Prometeus/wiki/` em uma interface mais bonita e na
 ## Criterio de descarte ou promocao
 
 - descartar se o preview nao melhorar navegacao real;
-- promover para `roadmap/` se a interface reduzir friccao de leitura e fizer sentido como candidate de migracao.
+- manter em `lab/wiki-graph-lab/` enquanto reduzir friccao de leitura; qualquer promocao precisa continuar dentro do Prometeus.
 
 ## Como usar
 
@@ -48,3 +48,4 @@ start .\index.html
 Se o dataset mudar, rode o script de novo.
 
 Coautoria: Lucas + GPT-5.4 (Codex)
+
