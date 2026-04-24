@@ -32,16 +32,9 @@ Se a pesquisa apontar que a ideia nao e necessaria para este repo pequeno, a aca
 
 ## Faixas operacionais
 
-Fonte unica da verdade dos estados: `shadow/WORK-LANES.md`. Transicoes aplicadas sao registradas em `shadow/INCORPORATION-LOG.md`.
+Estados dos artefatos: `private`, `experiment`, `candidate`, `operational`, `retired`, `blocked`.
 
-| Faixa | Significado | Acao padrao |
-|-------|-------------|-------------|
-| `private` | material pessoal ou dependente de contexto | permanece local |
-| `experiment` | artefato promissor, mas ainda instavel | repetir e medir |
-| `candidate` | padrao reutilizavel e com gate claro | pode entrar em conversa de migracao |
-| `operational` | padrao em uso real, citado em `AGENTS.md`, com evidencia em `shadow/EVIDENCE-LOG.md` | parte do fluxo diario |
-| `retired` | padrao descontinuado, substituido ou obsoleto | historico; nao reanima sem nova evidencia |
-| `blocked` | util mas depende de write externo, segredo, MCP sensivel ou hook ativo | desbloqueio exige gate explicito |
+Fonte unica da verdade dos estados, significados e acoes padrao: `shadow/WORK-LANES.md`. Transicoes aplicadas em `shadow/INCORPORATION-LOG.md`. Evidencia de uso real em `shadow/EVIDENCE-LOG.md`.
 
 ## Criterio de promocao
 

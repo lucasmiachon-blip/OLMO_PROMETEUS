@@ -50,16 +50,11 @@ Se a pesquisa nao justificar a mudanca, nao implementar. Sem bajulacao, sem arqu
 
 ## Lanes
 
-| Lane | Uso | Pode migrar? | Gate minimo |
-|------|-----|--------------|--------------|
-| `private` | notas pessoais, digests, estudo e checkpoints | nao | fica local |
-| `experiment` | prototipos e fluxos ainda instaveis | talvez, depois | repetir em alguns ciclos |
-| `candidate` | padrao reutilizavel, ja com artefato claro | sim, com humano | trigger + evidencia + rollback |
-| `operational` | padrao em uso real, referenciado em `AGENTS.md` ou outro contrato | sim, com humano | >=3 entradas em `shadow/EVIDENCE-LOG.md`, rubrica passando, >=14 dias sem edit |
-| `retired` | padrao descontinuado, substituido ou obsoleto | nao | historico; nao reanimar sem nova evidencia |
-| `blocked` | util mas exige write externo, segredo, MCP sensivel ou hook ativo | nao ate desbloquear | desbloqueio exige gate explicito |
+Estados dos artefatos: `private`, `experiment`, `candidate`, `operational`, `retired`, `blocked`.
 
-Fonte unica de verdade dos estados e criterios: `shadow/WORK-LANES.md`. Transicoes de estado sao registradas em `shadow/INCORPORATION-LOG.md`.
+Fonte unica de verdade dos estados, criterios e gate minimo: `shadow/WORK-LANES.md`. Transicoes aplicadas ficam em `shadow/INCORPORATION-LOG.md`. Evidencia que sustenta promocao ate `operational` vive em `shadow/EVIDENCE-LOG.md`.
+
+Regra: agentes que precisarem de criterio detalhado seguem o link acima. Duplicar a tabela aqui cria drift.
 
 ## Layout
 
