@@ -20,4 +20,4 @@ Requisitos:
 - harness passando;
 - autorizacao humana antes de tocar OLMO.
 
-Link: [[Promotion Gate]]
+Links: [[Promotion Gate]], [[Artifact]]

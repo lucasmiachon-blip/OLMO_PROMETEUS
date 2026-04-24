@@ -18,4 +18,4 @@ Algo pode ser `done` quando:
 
 Se a evidencia for fraca, fica em `em-estudo` ou `aplicando`.
 
-Link: [[Study Track System]]
+Links: [[Study Track System]], [[Artifact]]

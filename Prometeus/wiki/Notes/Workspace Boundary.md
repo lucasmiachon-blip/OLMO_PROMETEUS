@@ -21,3 +21,5 @@ Proibido sem autorizacao explicita:
 - tocar `C:\Dev\Projetos\OLMO`.
 
 Se uma tarefa exigir write externo, parar e pedir autorizacao citando caminho e acao exata.
+
+Links: [[Foundation Harness]], [[SOTA Research Gate]]

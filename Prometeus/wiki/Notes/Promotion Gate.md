@@ -32,4 +32,4 @@ Antes de qualquer conversa sobre OLMO:
 - risco;
 - rollback.
 
-Link: [[Candidate]]
+Links: [[Candidate]], [[Artifact]]

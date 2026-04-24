@@ -19,3 +19,5 @@ Exemplos:
 - dashboard atualizado.
 
 Sem artefato, nao ha evidencia suficiente para marcar como `done` ou `candidate`.
+
+Links: [[Candidate]], [[Done]], [[Study Track System]]

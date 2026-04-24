@@ -25,9 +25,14 @@ Rodar higiene quando:
 - Checar se instrucoes de abertura do Obsidian apontam para `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
 - Checar se o harness valida `[[wikilinks]]`, aliases e referencias de Canvas antes de commit.
 - Checar se notas wiki duraveis estao em `Prometeus/wiki/Notes`, `Prometeus/wiki/Categories` ou `Prometeus/wiki/References`.
+- Checar se notas em `Prometeus/wiki/Notes` tem >=2 wikilinks (warn do harness); notas com <2 links sao espelhos de `shadow/` e viram candidatas a delete.
 - Checar se capturas cruas continuam ignoradas em `Prometeus/wiki/Clippings`, `Prometeus/wiki/Daily` e `Prometeus/wiki/Attachments`.
-- Checar se `private-learning/`, buffers do Obsidian, workspace local, caches, plugins, `node_modules/` e `.venv/` continuam em `.gitignore` e `.claudeignore`.
-- Checar que `.agents/`, `.codex/`, `agents/`, `subagents/`, `skills/`, `hooks/` e `playground/` nao reapareceram na raiz sem gate.
+- Checar se `.claude/`, `private-learning/`, buffers do Obsidian, workspace local, caches, plugins, `node_modules/` e `.venv/` continuam em `.gitignore` e `.claudeignore`.
+- Checar que `.agents/`, `.codex/`, `agents/`, `subagents/`, `skills/`, `hooks/`, `playground/` e `.claude/agents|skills|hooks|commands/` nao reapareceram na raiz sem gate.
+- Checar se `shadow/EVIDENCE-LOG.md` tem entries recentes (warn do harness se >21 dias sem mudanca); se nao tiver, considerar que o procedimento nao esta em uso real.
+- Checar se `shadow/AGENT-USAGE.md` existe e foi revisado recentemente (delete em 30 dias sem referencia conforme criterio negativo interno).
+- Checar se o `shadow/PLAN-*.md` mais recente esta referenciado como gate em `shadow/SOTA-DECISIONS.md > Applied when`.
+- Checar se procedures em `candidate` ou `operational` tem secao `## Rubric` e `## Mini-evals`.
 - Checar se docs SOTA antigos foram referenciados ou consolidados.
 - Checar se `C:\Dev\Projetos\OLMO` aparece apenas como destino protegido, nunca como alvo de edicao.
 - Checar se a regra "nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`" continua presente.

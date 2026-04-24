@@ -308,13 +308,15 @@ foreach ($ignoreFile in @(".gitignore", ".claudeignore")) {
 }
 
 $procedureContracts = @{
-  "AGENTS.md" = @("## SOTA Research Gate")
+  "AGENTS.md" = @("## SOTA Research Gate", "## Memoria")
   "PROJECT_CONTRACT.md" = @("## SOTA research gate")
   "shadow/AGENT-MODULES.md" = @("## Trigger", "## Contract", "## Evaluation", "## Mini-evals")
-  "shadow/EMAIL-DIGEST-4P.md" = @("## Trigger", "## Contrato de entrada", "## Workflow", "## Mini-evals")
-  "shadow/STUDY-TRACK-DONE.md" = @("## Trigger", "## Saida padrao", "## Workflow", "## Mini-evals")
-  "shadow/WORK-LANES.md" = @("## Trigger", "## Promotion gate", "## Decisao", "## Mini-evals")
-  "shadow/SOTA-DECISIONS.md" = @("## SOTA research gate", "## Agent module frontier", "## Padrao SOTA para procedimentos", "## Big Three scan", "## Claude Code e GEMINI.md adapters")
+  "shadow/EMAIL-DIGEST-4P.md" = @("## Trigger", "## Contrato de entrada", "## Workflow", "## Rubric", "## Mini-evals")
+  "shadow/STUDY-TRACK-DONE.md" = @("## Trigger", "## Saida padrao", "## Workflow", "## Rubric", "## Mini-evals")
+  "shadow/WORK-LANES.md" = @("## Trigger", "## Promotion gate", "## Decisao", "## Transicao candidate -> operational", "## Mini-evals")
+  "shadow/SOTA-DECISIONS.md" = @("## SOTA research gate", "## Agent module frontier", "## Padrao SOTA para procedimentos", "## Big Three scan", "## Claude Code e GEMINI.md adapters", "## Applied when", "## Blocked ate evidencia")
+  "shadow/AGENT-USAGE.md" = @("## Purpose", "## SOTA agent contract", "## Guardrails", "## Non-triggers")
+  "shadow/EVIDENCE-LOG.md" = @("## Schema", "## Entradas")
 }
 
 foreach ($entry in $procedureContracts.GetEnumerator()) {

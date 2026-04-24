@@ -14,15 +14,16 @@ Nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 
 ```text
 AGENTS.md             # contrato operacional para agentes neste repo
-CLAUDE.md             # adaptador fino para Claude Code, importa AGENTS.md
+CLAUDE.md             # adaptador fino Boris-style para Claude Code, importa AGENTS.md
 GEMINI.md             # adaptador fino para Gemini CLI, importa AGENTS.md
 PROJECT_CONTRACT.md   # limites, lanes e criterio de promocao
 README.md             # entrada humana rapida
 TREE.md               # mapa profissional da arvore do repo
 scripts/check.ps1     # harness local, sem writes externos
-shadow/               # decisoes, gates, memoria operacional e higiene
+shadow/               # decisoes, gates, memoria operacional, evidencia e agent usage
 Prometeus/            # vault Obsidian versionado
 private-learning/     # area local ignorada; nao entra no contexto versionado
+.claude/              # state local do Claude Code (settings.local.json); ignorado por Git
 ```
 
 ## Adaptadores de Ferramenta
@@ -47,11 +48,15 @@ Vault Obsidian graph-first.
 Memoria operacional, nao deposito de pesquisa longa.
 
 - `FOUNDATION.md`: infra, hooks, memoria, harness e orquestracao.
-- `AGENT-MODULES.md`: contrato experimental para agentes como modulos encapsulados.
+- `WORK-LANES.md`: fonte unica dos estados (`private`, `experiment`, `candidate`, `operational`, `retired`, `blocked`) e promotion gate.
+- `INCORPORATION-LOG.md`: log de transicoes de estado aplicadas (nao redefine estados).
+- `EVIDENCE-LOG.md`: registro de uso real dos procedimentos; gate para `operational`.
+- `SOTA-DECISIONS.md`: decisoes curtas apos SOTA research gate; secao `Applied when` e stubs `Blocked ate evidencia`.
+- `AGENT-MODULES.md`: contrato experimental para agentes como modulos; eixo tecnico ortogonal a WORK-LANES.
+- `AGENT-USAGE.md`: mapa de agentes/skills globais usados sem scaffold local + SOTA agent contract.
 - `HYGIENE.md`: checklist anti-sprawl.
-- `INCORPORATION-LOG.md`: registro de experimentos e candidatos.
-- `WORK-LANES.md`: classificacao `private`, `experiment`, `candidate`.
-- `SOTA-DECISIONS.md`: decisoes curtas, sem relatorios longos.
+- `PLAN-*.md`: plans operacionais por rodada estrutural (um por mudanca grande, ex: `PLAN-2026-04-23.md`).
+- `EMAIL-DIGEST-4P.md`, `STUDY-TRACK-DONE.md`: procedures com trigger, contrato, workflow, rubric e mini-evals.
 
 ### `private-learning/`
 
@@ -68,7 +73,6 @@ Estes nomes nao ficam na raiz sem necessidade repetida, gate humano explicito e 
 
 - `.agents/`
 - `.codex/`
-- `.claude/`
 - `.gemini/`
 - `agents/`
 - `subagents/`
@@ -77,6 +81,17 @@ Estes nomes nao ficam na raiz sem necessidade repetida, gate humano explicito e 
 - `playground/`
 
 Motivo: esses nomes sugerem runtime ativo, aumentam contexto e recriam sprawl legado.
+
+### `.claude/` tratamento especial
+
+`.claude/` nao e totalmente proibido: Claude Code cria `.claude/settings.local.json` automaticamente como state local do harness. O diretorio fica em `.gitignore` e `.claudeignore`, nunca versionado. Sao proibidos sem gate os seguintes subdirs (harness falha se aparecerem):
+
+- `.claude/agents/`
+- `.claude/skills/`
+- `.claude/hooks/`
+- `.claude/commands/`
+
+Para necessidade de agentes/skills, o mapa de recursos globais vive em `shadow/AGENT-USAGE.md`.
 
 ## Politica de Incorporacao do OLMO
 

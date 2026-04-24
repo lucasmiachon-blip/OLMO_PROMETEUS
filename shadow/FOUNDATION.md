@@ -51,11 +51,17 @@ Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo
 - adaptadores de ferramenta: `CLAUDE.md` e `GEMINI.md`;
 - limites do projeto: `PROJECT_CONTRACT.md`;
 - decisoes SOTA: `shadow/SOTA-DECISIONS.md`;
-- incorporacoes: `shadow/INCORPORATION-LOG.md`;
+- lanes e promotion gate: `shadow/WORK-LANES.md`;
+- transicoes aplicadas: `shadow/INCORPORATION-LOG.md`;
+- evidencia de uso real: `shadow/EVIDENCE-LOG.md`;
+- plans de rodada estrutural: `shadow/PLAN-*.md`;
+- mapa de agentes/skills globais: `shadow/AGENT-USAGE.md`;
 - higiene: `shadow/HYGIENE.md`;
 - entrada do vault: `Prometeus/README.md`;
 - wiki navegavel: `Prometeus/wiki/Home.md`;
 - material pessoal local e ignorado: `private-learning/`.
+
+Memoria automatica do Claude Code em `C:\Users\lucas\.claude\projects\...\memory\` e intencionalmente vazia para este projeto. Memoria global do usuario (`~/.claude/CLAUDE.md`) e read-only por este repo.
 
 Regra: se uma memoria nao muda comportamento futuro, ela nao entra no repo.
 
@@ -95,10 +101,11 @@ Loop padrao:
 Delegacao:
 
 - Codex orquestra e edita.
-- Leituras auxiliares podem ser feitas por subagentes externos apenas quando a conversa justificar.
+- Claude Code usa subagentes globais (`Explore`, `Plan`, `general-purpose`) conforme mapa em `shadow/AGENT-USAGE.md`; sem scaffold local.
+- Leituras auxiliares podem ser feitas por subagentes apenas quando a conversa justificar (ver padroes SOTA em `shadow/AGENT-USAGE.md`).
 - Gemini entra para pesquisa longa/multimodal somente com objetivo, trigger, artefato, custo e risco.
 
-Sem fan-out automatico e sem registry local de agentes neste repo.
+Sem fan-out automatico e sem registry local de agentes neste repo. Todo uso real de subagent ou procedure registrado em `shadow/EVIDENCE-LOG.md`.
 
 ## 6. SOTA research gate
 
