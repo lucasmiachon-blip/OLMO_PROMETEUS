@@ -57,6 +57,20 @@ Contrato minimo:
 
 Regra anti-sycophancy: se a pesquisa nao sustenta a proposta para o tamanho real do Prometeus, a resposta correta e rejeitar, reduzir ou adiar a mudanca. SOTA nao e moda; e ajuste entre pratica externa, escala local e risco operacional.
 
+### Rubric do SOTA research gate
+
+Score minimo pass = 0.7 (de 1.0). Rodar apos cada aplicacao do gate e registrar em `shadow/EVIDENCE-LOG.md`.
+
+| Dimensao | Peso | 0 | 1 | 2 |
+| --- | --- | --- | --- | --- |
+| Auditoria local primeiro | 0.2 | pulou | superficial | estado atual explicitado antes de buscar externo |
+| Fontes primarias atuais | 0.2 | sem fontes | fontes secundarias ou antigas | docs oficiais vigentes (Anthropic, OpenAI, Google, papers) |
+| Decisao curta | 0.2 | relatorio longo | decisao com bullets excessivos | decisao <=20 linhas com trigger, risco, rollback |
+| Criterio negativo explicito | 0.2 | ausente | vago | "se X em Y prazo, rejeitar/ajustar" operacional |
+| Artefato registrado | 0.2 | sem artefato persistente | decisao solta | linha em SOTA-DECISIONS + transicao em INCORPORATION-LOG |
+
+Formula: `score = 0.2 * soma(niveis)/10`. Normalizar cada dimensao para 0-1.
+
 ## Agent module frontier
 
 Decisao: tratar agentes como modulos encapsulados, nao como personas ou pastas.
@@ -108,6 +122,18 @@ Busca oficial em 2026-04-23: OpenAI, Anthropic e Google convergem em quatro pont
 
 Conclusao: o SOTA nao pede mais pastas. Pede menos contexto carregado por padrao, gatilhos melhores, artefatos persistentes, avaliacoes pequenas e automacao so quando a regra for deterministica.
 
+## Applied when
+
+Registro de quando cada decisao acima foi aplicada a uma mudanca real. Uma entrada por aplicacao, com data, artefato e commit quando disponivel. Se uma decisao ficar >30 dias sem aplicacao registrada, e candidata a remocao (museu).
+
+| Data | Decisao | Aplicada em | Artefato/commit |
+| --- | --- | --- | --- |
+| 2026-04-23 | Decisao central (manter pouca estrutura bem nomeada) | Bloco A deste plano | commit 1c02049 |
+| 2026-04-23 | SOTA research gate | Redacao do `shadow/PLAN-2026-04-23.md` como gate formal desta rodada | `shadow/PLAN-2026-04-23.md` |
+| 2026-04-23 | Agent module frontier (modulo primeiro, runtime depois) | Rejeitar criacao de `.claude/agents/` local; mapear agentes globais em `shadow/AGENT-USAGE.md` | `shadow/AGENT-USAGE.md` |
+| 2026-04-23 | Padrao SOTA para procedimentos (mini-evals + rubrica) | Adicionar `## Rubric` em email-digest-4p, study-track-done e SOTA research gate | `shadow/EMAIL-DIGEST-4P.md`, `shadow/STUDY-TRACK-DONE.md`, `shadow/SOTA-DECISIONS.md` |
+| 2026-04-23 | Adaptadores CLAUDE.md/GEMINI.md finos | Refactor Boris-style "things that will bite you" | commit 1c02049 |
+
 ## Claude Code e GEMINI.md adapters
 
 Decisao: manter `AGENTS.md` como fonte de verdade e criar `CLAUDE.md` e `GEMINI.md` apenas como pontes de contexto.
@@ -155,5 +181,39 @@ Risco: imports carregam contexto no inicio da sessao. Por isso os adaptadores de
 - Relatorio SOTA longo de 2026-04-22: bom para exploracao, ruim como documento operacional.
 - Mapa SOTA intermediario de 2026-04-23: substituido por esta decisao curta.
 - Recomendacoes especulativas de skills/agentes que ainda nao tiveram uso real.
+
+## Blocked ate evidencia (Bloco C do PLAN-2026-04-23)
+
+Decisoes rascunho aguardando evidencia em `shadow/EVIDENCE-LOG.md` antes de virar rodada de implementacao. Cada item exige SOTA research gate separado quando o trigger bater.
+
+### C1 — Evaluator-optimizer via subagent
+
+- Trigger: rubrica de algum procedure (Bloco B1) rodada >=8 vezes sem ajuste (rubrica estavel).
+- Nao trigger: rubricas ainda em calibracao.
+- Decisao candidata: usar `Explore` subagent com prompt contendo a rubrica para critica cega de output do procedure.
+- Risco: custo de tokens e ciclo de critica que pode virar ritual.
+- Rollback: remover subagent step; manter avaliacao manual.
+
+### C2 — Promover procedure para skill formal
+
+- Trigger: procedure chega a `operational` com >=3 execucoes documentadas e rubrica passando.
+- Nao trigger: procedure ainda em `candidate` ou `experiment`.
+- Decisao candidata: criar `Prometeus/wiki/skills/<name>/SKILL.md` dentro do repo. NAO criar `.claude/skills/` local.
+- Risco: skill nao carregar automaticamente, duplicar procedure.
+- Rollback: deletar skill, manter procedure.
+
+### C3 — `.claude/` local scaffolds (REJEITADO agora)
+
+- Decisao: nao criar `.claude/agents/`, `.claude/skills/`, `.claude/hooks/`, `.claude/commands/`. Reavaliar apenas com 3 dores concretas documentadas em `EVIDENCE-LOG.md` onde ausencia de scaffold local causou retrabalho real.
+
+### C4 — Memoria operacional durable layer
+
+- Trigger: `EVIDENCE-LOG.md` acumula >=10 entradas cujos insights destilem para <=8 frases load-bearing.
+- Nao trigger: <10 entradas ou entradas redundantes.
+- Decisao candidata: secao `## Durable insights` em `AGENTS.md`, cap de 8 linhas.
+- Risco: inflar AGENTS.md e reintroduzir memoria especulativa.
+- Rollback: deletar secao.
+
+Criterio negativo global: se ate 2026-05-23 nenhum stub for alcancado, reavaliar se Bloco C inteiro deve ser abandonado em vez de implementado.
 
 Coautoria: Lucas + GPT-5.4 (Codex)

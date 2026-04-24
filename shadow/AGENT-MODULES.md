@@ -10,13 +10,15 @@ A nova fronteira util para este repo nao e "mais agentes". E agente como modulo 
 
 Para o Prometeus, isso ainda nao autoriza criar `.agents/`, `.claude/agents/`, `.codex/agents/`, `agents/` ou `subagents/`.
 
-Escada correta:
+Eixo tecnico (maturidade de implementacao):
 
 ```text
 procedimento -> modulo documentado -> runner manual -> agente real
 ```
 
-Um modulo so vira agente real depois de uso repetido, eval minimo, risco conhecido e aprovacao humana explicita.
+Eixo de estado (maturidade de incorporacao) e ortogonal e vive em `shadow/WORK-LANES.md`: `private -> experiment -> candidate -> operational`. Um mesmo artefato tem posicao em ambos os eixos.
+
+Um modulo so vira agente real depois de atingir `operational` em WORK-LANES (>=3 entradas em `shadow/EVIDENCE-LOG.md`, rubrica passando, >=14 dias sem edit) E eval minimo aprovado E autorizacao humana explicita.
 
 ## SOTA scan
 
@@ -114,13 +116,16 @@ Para virar agente real, precisa ainda:
 
 ## Modulos candidatos atuais
 
-| Modulo | Casa atual | Estado | Proxima acao |
+Estado ortogonal (lane) vive em `shadow/WORK-LANES.md`; eixo tecnico abaixo.
+
+| Modulo | Casa atual | Eixo tecnico | Lane atual |
 | --- | --- | --- | --- |
-| `email-digest-4p` | `shadow/EMAIL-DIGEST-4P.md` | candidate procedure | manter como procedimento ate 3 execucoes recentes comprovadas |
-| `study-track-done` | `shadow/STUDY-TRACK-DONE.md` | candidate procedure | manter como procedimento; medir reducao de retrabalho |
-| `promotion-gate` | `shadow/WORK-LANES.md` | candidate procedure | usar para qualquer migracao ou scaffold |
-| `sota-research-gate` | `AGENTS.md`, `shadow/SOTA-DECISIONS.md` | active gate | manter em docs/harness; nao automatizar ainda |
-| `obsidian-crossref-check` | `scripts/check.ps1` | active harness | continuar deterministico, sem agente |
+| `email-digest-4p` | `shadow/EMAIL-DIGEST-4P.md` | procedimento | `candidate` |
+| `study-track-done` | `shadow/STUDY-TRACK-DONE.md` | procedimento | `candidate` |
+| `promotion-gate` | `shadow/WORK-LANES.md` | procedimento | `candidate` |
+| `sota-research-gate` | `AGENTS.md` + `shadow/SOTA-DECISIONS.md` | procedimento + harness deterministico | `candidate` |
+| `obsidian-crossref-check` | `scripts/check.ps1` | harness deterministico | `operational` |
+| `evidence-log` | `shadow/EVIDENCE-LOG.md` | procedimento | `experiment` |
 
 ## Antipadroes
 

@@ -62,6 +62,19 @@ Se a evidencia depende de memoria contextual ou cockpit privado, nao vira candid
 - mover para o repo principal antes de aplicar localmente;
 - transformar curiosidade em backlog infinito.
 
+## Rubric
+
+Score minimo pass = 0.7 (de 1.0). Rodar apos cada execucao em uso real e registrar resultado em `shadow/EVIDENCE-LOG.md` coluna Observacao.
+
+| Dimensao | Peso | 0 | 1 | 2 |
+| --- | --- | --- | --- | --- |
+| Tabela compacta | 0.25 | ausente ou mal formada | tabela incompleta | topico/status/evidencia/proximo/risco todos preenchidos |
+| Status conservador | 0.25 | done sem evidencia | status otimista demais | menor status honesto (`capturado` ou `em-estudo`) preferido |
+| Proximo passo unico | 0.25 | ausente ou multiplo | vago | um unico passo concreto e executavel |
+| Done gate aplicado | 0.25 | done com 0-1 sim do gate | done com 2 sim | 3 sim do gate (explicar, aplicar, saber nao usar) |
+
+Formula: `score = 0.25 * soma(niveis)/8`. Normalizar cada dimensao para 0-1 (dividir nivel por 2).
+
 ## Mini-evals
 
 | Caso | Prompt | Esperado |

@@ -95,6 +95,19 @@ O digest esta completo quando:
 - Tratar Gmail como sistema de conhecimento duravel.
 - Criar candidato sem trigger, risco e rollback.
 
+## Rubric
+
+Score minimo pass = 0.7 (de 1.0). Rodar apos cada execucao em uso real e registrar resultado em `shadow/EVIDENCE-LOG.md` coluna Observacao.
+
+| Dimensao | Peso | 0 | 1 | 2 |
+| --- | --- | --- | --- | --- |
+| Signal vs noise | 0.3 | repete tom bruto dos emails | mistura fato com ruido | sinal destilado, ruido marcado explicitamente |
+| Destinos convertidos | 0.3 | nada convertido | alguns itens sem destino | cada item tem destino (deadline, study, experimento ou candidato) |
+| Brevidade (4P) | 0.2 | lista longa ou menos que 4 paragrafos | 3-5 paragrafos | exatamente 4 paragrafos densos |
+| Gate "Digerido" | 0.2 | Digerido sem artefato persistente | artefato mas sem sintese dos 4P | artefato persistente com sintese 4P, data e origem |
+
+Formula: `score = 0.3*signal + 0.3*destinos + 0.2*brevidade + 0.2*digerido`. Normalizar cada dimensao para 0-1 (dividir nivel por 2).
+
 ## Mini-evals
 
 Use estes prompts para testar se o procedimento ainda funciona:

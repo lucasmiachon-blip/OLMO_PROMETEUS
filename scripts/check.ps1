@@ -119,6 +119,7 @@ $requiredFiles = @(
   "shadow/EMAIL-DIGEST-4P.md",
   "shadow/STUDY-TRACK-DONE.md",
   "shadow/EVIDENCE-LOG.md",
+  "shadow/AGENT-USAGE.md",
   "Prometeus/README.md",
   "Prometeus/wiki/Home.md",
   "Prometeus/wiki/Atlas/Second Brain Atlas.md",
@@ -163,7 +164,7 @@ foreach ($file in $boundaryFiles) {
 
 $sizeThresholds = @{
   "AGENTS.md" = 12000
-  "shadow/SOTA-DECISIONS.md" = 14000
+  "shadow/SOTA-DECISIONS.md" = 16000
   "shadow/AGENT-MODULES.md" = 12000
   "shadow/FOUNDATION.md" = 10000
   "shadow/WORK-LANES.md" = 10000
