@@ -67,6 +67,13 @@ Se nao passar nessa barra, consolidar ou deletar.
 
 ## Snapshot atual
 
+2026-04-24:
+
+- Workspace canonico confirmado em `C:\Dev\Projetos\OLMO_PROMETEUS`.
+- Vault canonico confirmado em `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
+- Companion visual versionado em `lab/wiki-graph-lab/`, lendo apenas `Prometeus/wiki/`.
+- Diretorio legado restante foi esvaziado; remocao fisica depende do lock externo do Windows cair.
+- Harness passou e Git ficou limpo apos a consolidacao documental.
 2026-04-23:
 
 - Estrutura esta pequena e clara.
@@ -76,3 +83,4 @@ Se nao passar nessa barra, consolidar ou deletar.
 - Frame adversarial aplicado: contexto de agente e Git precisam ignorar as mesmas areas privadas/geradas.
 
 Coautoria: Lucas + GPT-5.4 (Codex)
+

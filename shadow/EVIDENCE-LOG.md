@@ -31,3 +31,4 @@ Toda vez que um procedimento em `shadow/` rodar em uso real, registrar uma linha
 Em 4 semanas, se este arquivo tiver <3 entradas por procedure ativo, considerar que o procedimento nao esta em uso real. Acao: reclassificar o procedimento para `experiment` e simplificar/deletar rubrica associada.
 
 Coautoria: Lucas + Claude Opus 4.7 (1M)
+
