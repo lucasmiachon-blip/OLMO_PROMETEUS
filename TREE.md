@@ -22,6 +22,7 @@ TREE.md               # mapa profissional da arvore do repo
 scripts/check.ps1     # harness local, sem writes externos
 shadow/               # decisoes, gates, memoria operacional, evidencia e agent usage
 Prometeus/            # vault Obsidian versionado
+lab/                  # companions visuais e prototipos locais que leem o vault sem virar runtime
 private-learning/     # area local ignorada; nao entra no contexto versionado
 .claude/              # state local do Claude Code (settings.local.json); ignorado por Git
 ```
@@ -33,6 +34,12 @@ private-learning/     # area local ignorada; nao entra no contexto versionado
 Regra: eles importam `AGENTS.md`, nao duplicam politica e nao autorizam criar `.claude/`, `.gemini/`, hooks, MCP, agents ou skills ativos.
 
 ## Areas Vivas
+
+### `lab/`
+
+Companions visuais reversiveis.
+
+- `lab/wiki-graph-lab/`: grafo HTML/JS que consome `Prometeus/wiki/` e abre notas no Obsidian.
 
 ### `Prometeus/`
 

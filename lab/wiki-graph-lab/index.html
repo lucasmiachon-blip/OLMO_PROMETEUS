@@ -1,0 +1,2261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wiki Graph Lab</title>
+  <style>
+    @font-face {
+      font-family: "DM Sans Lab";
+      src: url("../../content/aulas/shared-v2/assets/fonts/DMSans-Variable.woff2") format("woff2");
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Instrument Serif Lab";
+      src: url("../../content/aulas/shared-v2/assets/fonts/InstrumentSerif-Regular.woff2") format("woff2");
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "JetBrains Mono Lab";
+      src: url("../../content/aulas/shared-v2/assets/fonts/JetBrainsMono-Variable.woff2") format("woff2");
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #0b0f10;
+      --bg-elevated: rgba(20, 26, 29, 0.88);
+      --bg-elevated-strong: rgba(14, 18, 21, 0.94);
+      --bg-soft: rgba(255, 255, 255, 0.04);
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 255, 255, 0.14);
+      --text: #f5efe6;
+      --text-soft: #efe4d4;
+      --muted: #98a8af;
+      --medicina: #b9f55a;
+      --medicina-deep: #77ae1f;
+      --medicina-tint: rgba(185, 245, 90, 0.14);
+      --sistema: #ff8d6b;
+      --sistema-deep: #d85d39;
+      --sistema-tint: rgba(255, 141, 107, 0.14);
+      --topic: #ffd166;
+      --topic-tint: rgba(255, 209, 102, 0.14);
+      --ink: #182024;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      --shadow-strong: 0 30px 110px rgba(0, 0, 0, 0.52);
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      overflow: hidden;
+      font-family: "DM Sans Lab", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(185, 245, 90, 0.16), transparent 26%),
+        radial-gradient(circle at 86% 16%, rgba(255, 141, 107, 0.18), transparent 24%),
+        radial-gradient(circle at 52% 78%, rgba(255, 209, 102, 0.1), transparent 28%),
+        linear-gradient(160deg, #060809 0%, #0b0f10 44%, #0d1417 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.04), transparent 18%),
+        radial-gradient(circle at 80% 18%, rgba(255, 255, 255, 0.025), transparent 22%),
+        radial-gradient(circle at 48% 82%, rgba(255, 255, 255, 0.02), transparent 16%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      opacity: 0.65;
+    }
+
+    .app-shell {
+      position: relative;
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr) 400px;
+      gap: 18px;
+      height: 100%;
+      padding: 18px;
+    }
+
+    .pane {
+      backdrop-filter: blur(18px);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0)),
+        var(--bg-elevated);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      min-height: 0;
+    }
+
+    .control-pane,
+    .detail-pane {
+      padding: 22px;
+      overflow: auto;
+    }
+
+    .control-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #d7e2e8;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(120deg, var(--medicina), var(--sistema));
+      box-shadow: 0 0 18px rgba(255, 209, 102, 0.28);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-family: "Instrument Serif Lab", serif;
+      font-size: 2rem;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .search-block {
+      display: grid;
+      gap: 10px;
+    }
+
+    .search-input {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font: inherit;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+      outline: none;
+      transition: border-color 160ms ease, background 160ms ease;
+    }
+
+    .search-input:focus {
+      border-color: rgba(255, 209, 102, 0.42);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .section-copy {
+      font-size: 0.84rem;
+    }
+
+    .chip {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, color 160ms ease, background 160ms ease;
+      font: inherit;
+      font-size: 0.86rem;
+    }
+
+    .chip:hover {
+      transform: translateY(-1px);
+      color: var(--text);
+    }
+
+    .chip.is-active {
+      color: var(--ink);
+      background: var(--topic);
+      border-color: rgba(255, 209, 102, 0.5);
+      box-shadow: 0 8px 24px rgba(255, 209, 102, 0.2);
+    }
+
+    .section-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    details.control-card {
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.03);
+      overflow: hidden;
+    }
+
+    details.control-card[open] {
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    details.control-card summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    details.control-card summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.control-card summary::after {
+      content: "+";
+      color: var(--muted);
+      font-size: 1.15rem;
+    }
+
+    details.control-card[open] summary::after {
+      content: "–";
+    }
+
+    .control-card__body {
+      padding: 0 16px 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--text);
+    }
+
+    .toggle label {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 0.9rem;
+    }
+
+    .toggle small {
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .toggle input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--topic);
+    }
+
+    .slider-row {
+      display: grid;
+      gap: 8px;
+    }
+
+    .slider-row label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      color: var(--text);
+    }
+
+    .slider-row input[type="range"] {
+      width: 100%;
+      accent-color: var(--topic);
+    }
+
+    .legend {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .legend-swatch {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      flex: none;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .legend-swatch.medicina {
+      background: var(--medicina);
+    }
+
+    .legend-swatch.sistema {
+      background: var(--sistema);
+    }
+
+    .legend-swatch.topic {
+      background: var(--topic);
+    }
+
+    .legend-swatch.concept {
+      background:
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.22) 0 34%, transparent 36%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)),
+        rgba(255, 209, 102, 0.2);
+      border-color: rgba(255, 209, 102, 0.46);
+    }
+
+    .concept-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .concept-card {
+      appearance: none;
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 13px 14px;
+      text-align: left;
+      font: inherit;
+      color: var(--text);
+      cursor: pointer;
+      background:
+        linear-gradient(180deg, rgba(255, 209, 102, 0.06), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, 0.03);
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+
+    .concept-card:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 209, 102, 0.28);
+      background:
+        linear-gradient(180deg, rgba(255, 209, 102, 0.1), rgba(255, 255, 255, 0.03)),
+        rgba(255, 255, 255, 0.04);
+    }
+
+    .concept-card.is-active {
+      border-color: rgba(255, 209, 102, 0.42);
+      box-shadow: 0 14px 34px rgba(255, 209, 102, 0.12);
+    }
+
+    .concept-card__meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .concept-card strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .concept-card p {
+      font-size: 0.84rem;
+      line-height: 1.55;
+      color: var(--text-soft);
+    }
+
+    .concept-empty {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .scene-pane {
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    .scene-pane::before,
+    .scene-pane::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(70px);
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    .scene-pane::before {
+      width: 240px;
+      height: 240px;
+      left: -80px;
+      top: 18%;
+      background: var(--medicina-tint);
+    }
+
+    .scene-pane::after {
+      width: 280px;
+      height: 280px;
+      right: -120px;
+      top: 16%;
+      background: var(--sistema-tint);
+    }
+
+    .scene-header {
+      position: absolute;
+      inset: 18px 18px auto 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .scene-title {
+      max-width: 560px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .scene-title h2 {
+      font-family: "Instrument Serif Lab", serif;
+      font-size: 2.8rem;
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+    }
+
+    .scene-stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .stat-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font-size: 0.82rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .graph-stage {
+      position: absolute;
+      inset: 0;
+    }
+
+    #linkLayer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    #nodeLayer {
+      position: absolute;
+      inset: 0;
+    }
+
+    .link-line {
+      stroke: rgba(255, 255, 255, 0.08);
+      stroke-width: 1.3;
+      transition: stroke 160ms ease, stroke-opacity 160ms ease, stroke-width 160ms ease;
+    }
+
+    .link-line.domain-medicina {
+      stroke: rgba(185, 245, 90, 0.12);
+    }
+
+    .link-line.domain-sistema {
+      stroke: rgba(255, 141, 107, 0.12);
+    }
+
+    .link-line.is-cross-domain {
+      stroke-dasharray: 5 6;
+      stroke: rgba(255, 209, 102, 0.12);
+    }
+
+    .link-line.is-hot {
+      stroke: rgba(255, 209, 102, 0.44);
+      stroke-width: 2;
+    }
+
+    .node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      appearance: none;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+      transition: transform 160ms ease, opacity 160ms ease;
+    }
+
+    .node.is-dimmed {
+      opacity: 0.24;
+    }
+
+    .node:hover,
+    .node.is-selected {
+      transform: translate(-50%, -50%) scale(1.04);
+    }
+
+    .node-core {
+      position: relative;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      transition: box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 12px 32px rgba(0, 0, 0, 0.28);
+    }
+
+    .node-core::after {
+      content: "";
+      position: absolute;
+      inset: -14px;
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity 180ms ease;
+      background: radial-gradient(circle, currentColor 0%, transparent 70%);
+      filter: blur(14px);
+      z-index: -1;
+    }
+
+    .node.use-glow .node-core::after,
+    .node:hover .node-core::after,
+    .node.is-selected .node-core::after {
+      opacity: 0.35;
+    }
+
+    .node.is-concept .node-core {
+      width: 26px;
+      height: 26px;
+      border: 2px solid rgba(255, 209, 102, 0.48);
+      background:
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.78) 0 20%, transparent 22%),
+        rgba(255, 209, 102, 0.18) !important;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 12px 32px rgba(0, 0, 0, 0.28),
+        0 0 0 6px rgba(255, 209, 102, 0.06);
+    }
+
+    .node.is-topic .node-core {
+      width: 34px;
+      height: 34px;
+      border: 2px solid rgba(255, 209, 102, 0.9);
+      background: rgba(255, 209, 102, 0.18) !important;
+    }
+
+    .node.is-index .node-core {
+      border-radius: 12px;
+      border: 2px solid rgba(255, 209, 102, 0.75);
+      background: rgba(255, 209, 102, 0.16) !important;
+    }
+
+    .node.is-guide .node-core {
+      border-radius: 10px;
+      border: 2px solid rgba(194, 210, 217, 0.65);
+      background: rgba(194, 210, 217, 0.14) !important;
+      color: #c2d2d9;
+    }
+
+    .node.domain-sistema .node-core {
+      background: var(--sistema);
+      color: var(--sistema);
+    }
+
+    .node.domain-medicina .node-core {
+      background: var(--medicina);
+      color: var(--medicina);
+    }
+
+    .node-label {
+      max-width: 220px;
+      text-align: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 1rem;
+      line-height: 1.18;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
+      background: rgba(9, 12, 14, 0.42);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+    }
+
+    .node.hide-labels .node-label {
+      display: none;
+    }
+
+    .peek-card {
+      position: absolute;
+      width: 320px;
+      padding: 18px 18px 16px;
+      border-radius: 20px;
+      background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02)),
+        var(--bg-elevated-strong);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow-strong);
+      backdrop-filter: blur(20px);
+      z-index: 20;
+      pointer-events: auto;
+      display: grid;
+      gap: 12px;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .peek-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 3px;
+      border-radius: 20px 20px 0 0;
+      background: linear-gradient(90deg, var(--topic), rgba(255, 255, 255, 0));
+    }
+
+    .peek-card::after {
+      content: "";
+      position: absolute;
+      top: 26px;
+      width: 14px;
+      height: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(15, 19, 21, 0.94);
+      transform: rotate(-45deg);
+    }
+
+    .peek-card[data-side="right"]::after {
+      left: -8px;
+    }
+
+    .peek-card[data-side="left"]::after {
+      right: -8px;
+      left: auto;
+      transform: rotate(135deg);
+    }
+
+    .peek-card.domain-medicina::before {
+      background: linear-gradient(90deg, var(--medicina), rgba(255, 255, 255, 0));
+    }
+
+    .peek-card.domain-sistema::before {
+      background: linear-gradient(90deg, var(--sistema), rgba(255, 255, 255, 0));
+    }
+
+    .peek-card.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(6px);
+    }
+
+    .peek-card__top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .peek-card h3 {
+      font-family: "Instrument Serif Lab", serif;
+      font-size: 1.4rem;
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+    }
+
+    .peek-summary {
+      color: var(--text-soft);
+      font-size: 0.96rem;
+      line-height: 1.55;
+    }
+
+    .peek-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .peek-metric {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      display: grid;
+      gap: 4px;
+    }
+
+    .peek-metric strong {
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .peek-metric span {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .peek-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .peek-path {
+      font-family: "JetBrains Mono Lab", monospace;
+      font-size: 0.7rem;
+      line-height: 1.45;
+      color: #bdd1d8;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 14px;
+      padding: 10px 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .peek-tag {
+      padding: 5px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .peek-concepts {
+      display: grid;
+      gap: 8px;
+    }
+
+    .peek-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .peek-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .peek-button {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font: inherit;
+      cursor: pointer;
+      color: var(--ink);
+      background: var(--topic);
+      box-shadow: 0 10px 22px rgba(255, 209, 102, 0.18);
+    }
+
+    .peek-button.secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    .peek-button.ghost {
+      background: rgba(255, 255, 255, 0.04);
+      color: #cfe2e8;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: none;
+    }
+
+    .detail-pane {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .detail-empty {
+      display: grid;
+      gap: 14px;
+      padding-top: 16px;
+    }
+
+    .detail-empty h2 {
+      font-family: "Instrument Serif Lab", serif;
+      font-size: 2rem;
+      line-height: 0.98;
+    }
+
+    .detail-card {
+      display: none;
+      gap: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+        rgba(7, 10, 12, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .detail-card.is-active {
+      display: grid;
+    }
+
+    .detail-card.domain-medicina {
+      box-shadow: inset 3px 0 0 var(--medicina);
+    }
+
+    .detail-card.domain-sistema {
+      box-shadow: inset 3px 0 0 var(--sistema);
+    }
+
+    .detail-header {
+      display: grid;
+      gap: 12px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .detail-header h2 {
+      font-family: "Instrument Serif Lab", serif;
+      font-size: 2.3rem;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+    }
+
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .detail-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .action-button {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font: inherit;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .action-button:hover {
+      background: rgba(255, 209, 102, 0.12);
+      border-color: rgba(255, 209, 102, 0.26);
+      transform: translateY(-1px);
+    }
+
+    .path-chip {
+      font-family: "JetBrains Mono Lab", monospace;
+      font-size: 0.72rem;
+      color: #c2d2d9;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 999px;
+      padding: 8px 12px;
+      word-break: break-all;
+    }
+
+    .detail-markdown {
+      display: grid;
+      gap: 16px;
+      color: #e9dfd2;
+      line-height: 1.7;
+    }
+
+    .detail-markdown > p:first-of-type {
+      font-size: 1.03rem;
+      line-height: 1.8;
+      color: var(--text-soft);
+      padding: 0 0 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .detail-markdown h1,
+    .detail-markdown h2,
+    .detail-markdown h3 {
+      color: var(--text);
+      letter-spacing: -0.03em;
+    }
+
+    .detail-markdown h1 {
+      font-family: "Instrument Serif Lab", serif;
+      font-size: 2rem;
+      line-height: 0.96;
+    }
+
+    .detail-markdown h2 {
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--topic);
+    }
+
+    .detail-markdown pre {
+      overflow: auto;
+      margin: 0;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.34);
+      color: #e6f2f5;
+      font-family: "JetBrains Mono Lab", monospace;
+      font-size: 0.82rem;
+    }
+
+    .detail-markdown code {
+      font-family: "JetBrains Mono Lab", monospace;
+      font-size: 0.86em;
+      color: #ffe4b3;
+    }
+
+    .detail-markdown strong {
+      color: var(--text);
+    }
+
+    .detail-markdown a {
+      color: #ffd785;
+      text-decoration-color: rgba(255, 209, 102, 0.4);
+    }
+
+    .detail-markdown blockquote {
+      margin: 0;
+      padding: 14px 16px;
+      border-left: 3px solid var(--topic);
+      background: rgba(255, 255, 255, 0.035);
+      border-radius: 0 16px 16px 0;
+      color: var(--text-soft);
+    }
+
+    .detail-markdown p,
+    .detail-markdown li {
+      color: #dfd3c4;
+    }
+
+    .detail-markdown ul {
+      margin: 0;
+      padding-left: 22px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .detail-markdown table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .detail-markdown th,
+    .detail-markdown td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.88rem;
+    }
+
+    .detail-markdown th {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .detail-markdown hr {
+      width: 100%;
+      border: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin: 6px 0;
+    }
+
+    .wikilink {
+      appearance: none;
+      border: 0;
+      padding: 2px 8px;
+      margin: 0 2px;
+      border-radius: 999px;
+      background: rgba(255, 209, 102, 0.14);
+      color: #ffd785;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .related-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .context-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .context-block {
+      display: grid;
+      gap: 8px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .context-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .context-label::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--topic);
+      box-shadow: 0 0 18px rgba(255, 209, 102, 0.2);
+    }
+
+    .context-copy {
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .related-link {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .related-link:hover {
+      background: rgba(255, 209, 102, 0.12);
+      border-color: rgba(255, 209, 102, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .detail-footer {
+      padding-top: 8px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .empty-badge {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 1320px) {
+      .app-shell {
+        grid-template-columns: 300px minmax(0, 1fr);
+      }
+
+      .detail-pane {
+        position: absolute;
+        right: 18px;
+        top: 18px;
+        bottom: 18px;
+        width: 360px;
+        z-index: 25;
+      }
+    }
+
+    @media (max-width: 980px) {
+      body {
+        overflow: auto;
+      }
+
+      .app-shell {
+        height: auto;
+        min-height: 100%;
+        grid-template-columns: 1fr;
+      }
+
+      .scene-pane {
+        min-height: 68vh;
+      }
+
+      .detail-pane {
+        position: relative;
+        width: auto;
+        inset: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="pane control-pane">
+      <div class="section-stack">
+        <span class="eyebrow"><span class="dot"></span> Playground draft</span>
+        <div class="section-stack">
+          <h1>Wiki Graph Lab</h1>
+          <p>Um graph view mais legivel que o bruto: clusters por dominio, cores mais intencionais, preview card perto do no e painel de Markdown com wikilinks navegaveis.</p>
+        </div>
+      </div>
+
+      <section class="search-block">
+        <input id="searchInput" class="search-input" type="search" placeholder="Buscar por titulo, tag ou conceito">
+        <p id="searchHint">Sem mock: os nos saem da wiki real gerada por <code>build_graph_data.py</code>.</p>
+      </section>
+
+      <section class="section-stack">
+        <div>
+          <h2>Concept Lens</h2>
+          <p class="section-copy">Usa os conceitos como espinha dorsal do grafo. Sem foco selecionado, mostra so a camada conceitual; com foco, abre a vizinhanca sem perder o contexto.</p>
+        </div>
+        <details class="control-card" open>
+          <summary>Conceitos</summary>
+          <div class="control-card__body">
+            <div class="toggle">
+              <label>
+                Lens conceitual
+                <small>Transforma a vista em modo de estudo, com foco em conceitos e nos que herdam esses conceitos.</small>
+              </label>
+              <input id="toggleConceptLens" type="checkbox">
+            </div>
+            <div id="conceptQuickList" class="concept-list"></div>
+          </div>
+        </details>
+      </section>
+
+      <section class="section-stack">
+        <div>
+          <h2>Dominios</h2>
+        </div>
+        <div id="domainChips" class="chip-group"></div>
+      </section>
+
+      <section class="section-stack">
+        <div>
+          <h2>Tipos</h2>
+        </div>
+        <div id="kindChips" class="chip-group"></div>
+      </section>
+
+      <section class="section-stack">
+        <details class="control-card" open>
+          <summary>Display</summary>
+          <div class="control-card__body">
+            <div class="toggle">
+              <label>
+                Labels dos nos
+                <small>Esconde nomes para uma leitura mais limpa do grafo.</small>
+              </label>
+              <input id="toggleLabels" type="checkbox" checked>
+            </div>
+            <div class="toggle">
+              <label>
+                Glow ambiente
+                <small>Halo sutil para facilitar foco visual.</small>
+              </label>
+              <input id="toggleGlow" type="checkbox" checked>
+            </div>
+            <div class="toggle">
+              <label>
+                Split por dominio
+                <small>Separa medicina e sistema em dois clusters principais.</small>
+              </label>
+              <input id="toggleSplit" type="checkbox" checked>
+            </div>
+          </div>
+        </details>
+
+        <details class="control-card">
+          <summary>Forces</summary>
+          <div class="control-card__body">
+            <div class="slider-row">
+              <label for="repulsionRange">Repulsao <span id="repulsionValue"></span></label>
+              <input id="repulsionRange" type="range" min="1400" max="7600" step="200" value="4200">
+            </div>
+            <div class="slider-row">
+              <label for="springRange">Spring <span id="springValue"></span></label>
+              <input id="springRange" type="range" min="10" max="70" step="1" value="28">
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section class="legend">
+        <div class="legend-item"><span class="legend-swatch medicina"></span> medicina-clinica</div>
+        <div class="legend-item"><span class="legend-swatch sistema"></span> sistema-olmo</div>
+        <div class="legend-item"><span class="legend-swatch concept"></span> conceito (camada-base)</div>
+        <div class="legend-item"><span class="legend-swatch topic"></span> topico (anel dourado)</div>
+        <div class="legend-item"><span class="legend-swatch topic" style="border-radius:6px"></span> index / mapa da wiki</div>
+      </section>
+    </aside>
+
+    <main class="pane scene-pane">
+      <div class="scene-header">
+        <div class="scene-title">
+          <span class="eyebrow"><span class="dot"></span> Segundo cerebro</span>
+          <h2>Graph view com preview contextual</h2>
+          <p>Clique num no para fixar o card e abrir a nota. Hover mostra uma leitura rapida sem tirar o olho do grafo.</p>
+        </div>
+        <div id="sceneStats" class="scene-stats"></div>
+      </div>
+
+      <div id="graphStage" class="graph-stage">
+        <svg id="linkLayer"></svg>
+        <div id="nodeLayer"></div>
+        <div id="peekCard" class="peek-card is-hidden"></div>
+      </div>
+    </main>
+
+    <aside class="pane detail-pane">
+      <div id="detailEmpty" class="detail-empty">
+        <span class="empty-badge">Selecione um no</span>
+        <h2>Markdown com cara de interface, nao de dump.</h2>
+        <p>O card flutuante te orienta no grafo. O painel lateral entrega a nota renderizada com headings, tabelas, listas e wikilinks clicaveis. Quando quiser continuar o fluxo natural, abra a mesma nota no Obsidian.</p>
+      </div>
+
+      <article id="detailCard" class="detail-card">
+        <header class="detail-header">
+          <div id="detailMeta" class="detail-meta"></div>
+          <h2 id="detailTitle"></h2>
+          <p id="detailDescription"></p>
+          <div id="detailActions" class="detail-actions"></div>
+          <div id="conceptContext" class="context-stack"></div>
+          <div id="relatedStrip" class="related-strip"></div>
+          <div id="detailPath" class="path-chip"></div>
+        </header>
+        <section id="detailMarkdown" class="detail-markdown"></section>
+        <footer id="detailFooter" class="detail-footer"></footer>
+      </article>
+    </aside>
+  </div>
+
+  <script src="./graph-data.js"></script>
+  <script>
+    (() => {
+      const dataset = window.WIKI_GRAPH_DATA;
+      if (!dataset) {
+        document.body.innerHTML = "<pre style='padding:24px;color:#fff'>graph-data.js ausente. Rode build_graph_data.py.</pre>";
+        return;
+      }
+
+      const graphStage = document.getElementById("graphStage");
+      const linkLayer = document.getElementById("linkLayer");
+      const nodeLayer = document.getElementById("nodeLayer");
+      const peekCard = document.getElementById("peekCard");
+      const detailEmpty = document.getElementById("detailEmpty");
+      const detailCard = document.getElementById("detailCard");
+      const detailMeta = document.getElementById("detailMeta");
+      const detailTitle = document.getElementById("detailTitle");
+      const detailDescription = document.getElementById("detailDescription");
+      const detailActions = document.getElementById("detailActions");
+      const conceptContext = document.getElementById("conceptContext");
+      const detailPath = document.getElementById("detailPath");
+      const detailMarkdown = document.getElementById("detailMarkdown");
+      const detailFooter = document.getElementById("detailFooter");
+      const relatedStrip = document.getElementById("relatedStrip");
+      const sceneStats = document.getElementById("sceneStats");
+      const searchInput = document.getElementById("searchInput");
+      const domainChips = document.getElementById("domainChips");
+      const kindChips = document.getElementById("kindChips");
+      const toggleLabels = document.getElementById("toggleLabels");
+      const toggleGlow = document.getElementById("toggleGlow");
+      const toggleSplit = document.getElementById("toggleSplit");
+      const toggleConceptLens = document.getElementById("toggleConceptLens");
+      const conceptQuickList = document.getElementById("conceptQuickList");
+      const repulsionRange = document.getElementById("repulsionRange");
+      const springRange = document.getElementById("springRange");
+      const repulsionValue = document.getElementById("repulsionValue");
+      const springValue = document.getElementById("springValue");
+
+      const nodes = dataset.nodes.map((node) => ({
+        ...node,
+        x: 0,
+        y: 0,
+        vx: 0,
+        vy: 0,
+        visible: true,
+      }));
+
+      const nodeMap = new Map(nodes.map((node) => [node.id, node]));
+      const aliasMap = new Map();
+      nodes.forEach((node) => {
+        (node.aliases || []).forEach((alias) => aliasMap.set(alias, node.id));
+      });
+
+      const links = dataset.links
+        .map((link) => ({
+          ...link,
+          sourceNode: nodeMap.get(link.source),
+          targetNode: nodeMap.get(link.target),
+          element: null,
+        }))
+        .filter((link) => link.sourceNode && link.targetNode);
+
+      const adjacency = new Map(nodes.map((node) => [node.id, new Set()]));
+      links.forEach((link) => {
+        adjacency.get(link.source)?.add(link.target);
+        adjacency.get(link.target)?.add(link.source);
+      });
+
+      const domains = [...new Set(nodes.map((node) => node.domain))];
+      const kinds = [...new Set(nodes.map((node) => node.kind))];
+      const conceptNodes = nodes.filter((node) => node.kind === "concept");
+
+      const state = {
+        query: "",
+        selectedId: null,
+        hoveredId: null,
+        activeDomains: new Set(domains),
+        activeKinds: new Set(kinds),
+        conceptLens: false,
+        showLabels: true,
+        glow: true,
+        splitDomains: true,
+        repulsion: Number(repulsionRange.value),
+        spring: Number(springRange.value) / 1000,
+        draggingId: null,
+        dragOffsetX: 0,
+        dragOffsetY: 0,
+        width: 0,
+        height: 0,
+      };
+
+      function normalize(value) {
+        return value
+          .normalize("NFD")
+          .replace(/\p{Diacritic}/gu, "")
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-|-$/g, "");
+      }
+
+      function escapeHtml(value) {
+        return value
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function inlineify(text) {
+        let html = escapeHtml(text);
+        html = html.replace(/\[\[([^|\]]+)(?:\|([^\]]+))?\]\]/g, (_, target, label) => {
+          const id = aliasMap.get(normalize(target)) || "";
+          const safeLabel = escapeHtml(label || target);
+          return `<button class="wikilink" data-target="${id}">${safeLabel}</button>`;
+        });
+        html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+        html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+        html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+        html = html.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+        return html;
+      }
+
+      function domainClass(domain) {
+        return domain.includes("medicina") ? "domain-medicina" : "domain-sistema";
+      }
+
+      function sortNodesByStrength(a, b) {
+        return b.degree - a.degree || a.title.localeCompare(b.title);
+      }
+
+      function getAbsolutePath(note) {
+        const combined = `${dataset.projectRoot}/${note.path}`;
+        if (/^[A-Za-z]:\//.test(combined)) {
+          return combined.replace(/\//g, "\\");
+        }
+        return combined;
+      }
+
+      function getObsidianUrl(note) {
+        return `obsidian://open?path=${encodeURIComponent(getAbsolutePath(note))}`;
+      }
+
+      function openInObsidian(note) {
+        if (!note) return;
+        window.location.href = getObsidianUrl(note);
+      }
+
+      function markdownToHtml(markdown) {
+        const lines = markdown.replace(/\r/g, "").split("\n");
+        let html = "";
+        let index = 0;
+
+        function flushParagraph(buffer) {
+          if (!buffer.length) return;
+          html += `<p>${inlineify(buffer.join(" "))}</p>`;
+          buffer.length = 0;
+        }
+
+        function renderTable(tableLines) {
+          const rows = tableLines
+            .map((line) => line.trim())
+            .filter((line) => line.startsWith("|"))
+            .map((line) => line.split("|").slice(1, -1).map((cell) => inlineify(cell.trim())));
+          if (rows.length < 2) return `<p>${inlineify(tableLines.join(" "))}</p>`;
+          const headers = rows[0];
+          const body = rows.slice(2);
+          const headerHtml = headers.map((cell) => `<th>${cell}</th>`).join("");
+          const bodyHtml = body
+            .map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join("")}</tr>`)
+            .join("");
+          return `<table><thead><tr>${headerHtml}</tr></thead><tbody>${bodyHtml}</tbody></table>`;
+        }
+
+        while (index < lines.length) {
+          const line = lines[index];
+          const trimmed = line.trim();
+
+          if (!trimmed) {
+            index += 1;
+            continue;
+          }
+
+          if (trimmed.startsWith("```")) {
+            const codeLines = [];
+            index += 1;
+            while (index < lines.length && !lines[index].trim().startsWith("```")) {
+              codeLines.push(lines[index]);
+              index += 1;
+            }
+            html += `<pre><code>${escapeHtml(codeLines.join("\n"))}</code></pre>`;
+            index += 1;
+            continue;
+          }
+
+          if (/^#{1,3}\s/.test(trimmed)) {
+            const level = trimmed.match(/^#+/)[0].length;
+            const content = trimmed.replace(/^#{1,3}\s+/, "");
+            html += `<h${Math.min(level, 3)}>${inlineify(content)}</h${Math.min(level, 3)}>`;
+            index += 1;
+            continue;
+          }
+
+          if (/^---+$/.test(trimmed)) {
+            html += "<hr>";
+            index += 1;
+            continue;
+          }
+
+          if (trimmed.startsWith(">")) {
+            const quoteLines = [];
+            while (index < lines.length && lines[index].trim().startsWith(">")) {
+              quoteLines.push(lines[index].trim().replace(/^>\s?/, ""));
+              index += 1;
+            }
+            html += `<blockquote>${inlineify(quoteLines.join(" "))}</blockquote>`;
+            continue;
+          }
+
+          if (trimmed.startsWith("|")) {
+            const tableLines = [];
+            while (index < lines.length && lines[index].trim().startsWith("|")) {
+              tableLines.push(lines[index]);
+              index += 1;
+            }
+            html += renderTable(tableLines);
+            continue;
+          }
+
+          if (/^- /.test(trimmed)) {
+            const items = [];
+            while (index < lines.length && /^- /.test(lines[index].trim())) {
+              items.push(lines[index].trim().replace(/^- /, ""));
+              index += 1;
+            }
+            html += `<ul>${items.map((item) => `<li>${inlineify(item)}</li>`).join("")}</ul>`;
+            continue;
+          }
+
+          const paragraph = [];
+          while (index < lines.length) {
+            const candidate = lines[index].trim();
+            if (!candidate || candidate.startsWith("```") || /^#{1,3}\s/.test(candidate) || candidate.startsWith("|") || /^- /.test(candidate)) {
+              break;
+            }
+            paragraph.push(candidate);
+            index += 1;
+          }
+          flushParagraph(paragraph);
+        }
+
+        return html;
+      }
+
+      function verticalBand(node) {
+        if (node.kind === "topic" || node.kind === "index" || node.kind === "guide") {
+          return 0.33;
+        }
+        if (node.kind === "concept") {
+          return 0.49;
+        }
+        return 0.62;
+      }
+
+      function clusterTarget(node) {
+        if (!state.splitDomains) {
+          return { x: state.width * 0.5, y: state.height * verticalBand(node) };
+        }
+        if (node.domain === "medicina-clinica") {
+          return { x: state.width * 0.28, y: state.height * verticalBand(node) };
+        }
+        return { x: state.width * 0.72, y: state.height * verticalBand(node) };
+      }
+
+      function initialLayout() {
+        resizeScene();
+        nodes.forEach((node, index) => {
+          const target = clusterTarget(node);
+          const angle = (index / Math.max(nodes.length, 1)) * Math.PI * 2;
+          node.x = target.x + Math.cos(angle) * (80 + (index % 4) * 24);
+          node.y = target.y + Math.sin(angle) * (68 + (index % 3) * 26);
+        });
+      }
+
+      function resizeScene() {
+        const rect = graphStage.getBoundingClientRect();
+        state.width = rect.width;
+        state.height = rect.height;
+        linkLayer.setAttribute("viewBox", `0 0 ${rect.width} ${rect.height}`);
+      }
+
+      function nodeMatchesBase(node) {
+        const haystack = [node.title, node.description, ...(node.tags || []), node.summary, node.teaser]
+          .join(" ")
+          .toLowerCase();
+        const queryOk = !state.query || haystack.includes(state.query);
+        return queryOk && state.activeDomains.has(node.domain) && state.activeKinds.has(node.kind);
+      }
+
+      function getNeighborNodes(nodeId, predicate = null) {
+        return [...(adjacency.get(nodeId) || [])]
+          .map((id) => nodeMap.get(id))
+          .filter((node) => node && (!predicate || predicate(node)))
+          .sort(sortNodesByStrength);
+      }
+
+      function getConceptLensIds() {
+        if (!state.conceptLens) return null;
+        const activeId = getActiveNodeId();
+        if (!activeId) {
+          return new Set(conceptNodes.map((node) => node.id));
+        }
+
+        const activeNode = nodeMap.get(activeId);
+        const focusIds = new Set([activeId]);
+        const firstHop = getNeighborNodes(activeId);
+        firstHop.forEach((node) => focusIds.add(node.id));
+
+        firstHop
+          .filter((node) => node.kind === "concept")
+          .forEach((conceptNode) => {
+            getNeighborNodes(
+              conceptNode.id,
+              (candidate) => candidate.kind === "topic" || candidate.id === activeId
+            ).forEach((node) => focusIds.add(node.id));
+          });
+
+        if (activeNode?.kind === "concept") {
+          focusIds.add(activeNode.id);
+        }
+
+        return focusIds;
+      }
+
+      function renderRelationButtons(nodesForButtons, attributeName) {
+        return nodesForButtons
+          .map((node) => `<button class="related-link" ${attributeName}="${node.id}">${escapeHtml(node.title)}</button>`)
+          .join("");
+      }
+
+      function renderContextBlock(label, copy, nodesForButtons, attributeName) {
+        if (!nodesForButtons.length) return "";
+        return `
+          <section class="context-block">
+            <span class="context-label">${escapeHtml(label)}</span>
+            ${copy ? `<p class="context-copy">${escapeHtml(copy)}</p>` : ""}
+            <div class="related-strip">${renderRelationButtons(nodesForButtons, attributeName)}</div>
+          </section>
+        `;
+      }
+
+      function renderConceptQuickList() {
+        const activeId = getActiveNodeId();
+        const linkedConceptIds = new Set(
+          activeId
+            ? getNeighborNodes(activeId, (node) => node.kind === "concept").map((node) => node.id)
+            : []
+        );
+
+        const visibleConcepts = conceptNodes
+          .filter((node) => nodeMatchesBase(node))
+          .sort((a, b) => {
+            const aPriority = linkedConceptIds.has(a.id) ? 0 : 1;
+            const bPriority = linkedConceptIds.has(b.id) ? 0 : 1;
+            return aPriority - bPriority || sortNodesByStrength(a, b);
+          })
+          .slice(0, 8);
+
+        conceptQuickList.innerHTML = visibleConcepts.length
+          ? visibleConcepts
+              .map((node) => {
+                const summary = node.description || node.summary || node.teaser || "Sem resumo.";
+                const badge = linkedConceptIds.has(node.id) ? "ligado ao foco" : node.domain;
+                return `
+                  <button class="concept-card ${node.id === state.selectedId ? "is-active" : ""}" data-concept-jump="${node.id}">
+                    <div class="concept-card__meta">
+                      <span>${escapeHtml(badge)}</span>
+                      <span>${node.degree} links</span>
+                    </div>
+                    <strong>${escapeHtml(node.title)}</strong>
+                    <p>${escapeHtml(summary)}</p>
+                  </button>
+                `;
+              })
+              .join("")
+          : `<div class="concept-empty">Nenhum conceito passa pelos filtros atuais. Reabre o tipo <code>concept</code> ou limpa a busca.</div>`;
+      }
+
+      function refreshUi() {
+        renderStats();
+        renderConceptQuickList();
+        updateGraphState();
+        updatePanels();
+        renderPeekCard(getActiveNodeId() ? nodeMap.get(getActiveNodeId()) : null);
+      }
+
+      function syncFocusState() {
+        if (state.conceptLens) {
+          applyFilters();
+          return;
+        }
+        refreshUi();
+      }
+
+      function applyFilters() {
+        const conceptLensIds = getConceptLensIds();
+        nodes.forEach((node) => {
+          node.visible = nodeMatchesBase(node) && (!conceptLensIds || conceptLensIds.has(node.id));
+        });
+        if (state.selectedId && !nodeMap.get(state.selectedId)?.visible) {
+          state.selectedId = null;
+        }
+        if (state.hoveredId && !nodeMap.get(state.hoveredId)?.visible) {
+          state.hoveredId = null;
+        }
+        refreshUi();
+      }
+
+      function nodeRadius(node) {
+        const base =
+          node.kind === "topic" ? 17 :
+          node.kind === "concept" ? 13 :
+          node.kind === "index" ? 15 :
+          node.kind === "guide" ? 13 :
+          11;
+        return base + Math.min(node.degree * 1.6, 14);
+      }
+
+      function getActiveNodeId() {
+        return state.hoveredId || state.selectedId;
+      }
+
+      function isHotLink(link) {
+        const active = getActiveNodeId();
+        return active && (link.source === active || link.target === active);
+      }
+
+      function isAdjacent(nodeId, activeId) {
+        return adjacency.get(activeId)?.has(nodeId);
+      }
+
+      function createLinkElements() {
+        links.forEach((link) => {
+          const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          line.classList.add("link-line");
+          if (link.sourceNode.domain === link.targetNode.domain) {
+            line.classList.add(domainClass(link.sourceNode.domain));
+          } else {
+            line.classList.add("is-cross-domain");
+          }
+          link.element = line;
+          linkLayer.appendChild(line);
+        });
+      }
+
+      function createNodeElements() {
+        nodes.forEach((node) => {
+          const button = document.createElement("button");
+          button.className = `node is-${node.kind} ${domainClass(node.domain)}`;
+          button.innerHTML = `<span class="node-core"></span><span class="node-label">${escapeHtml(node.title)}</span>`;
+          button.addEventListener("mouseenter", () => {
+            state.hoveredId = node.id;
+            syncFocusState();
+          });
+          button.addEventListener("mouseleave", () => {
+            state.hoveredId = null;
+            syncFocusState();
+          });
+          button.addEventListener("click", () => {
+            state.selectedId = node.id;
+            syncFocusState();
+          });
+          button.addEventListener("pointerdown", (event) => {
+            state.draggingId = node.id;
+            node.x = event.clientX - graphStage.getBoundingClientRect().left;
+            node.y = event.clientY - graphStage.getBoundingClientRect().top;
+            node.vx = 0;
+            node.vy = 0;
+            button.setPointerCapture(event.pointerId);
+          });
+          button.addEventListener("pointermove", (event) => {
+            if (state.draggingId !== node.id) return;
+            const rect = graphStage.getBoundingClientRect();
+            node.x = event.clientX - rect.left;
+            node.y = event.clientY - rect.top;
+            node.vx = 0;
+            node.vy = 0;
+            render();
+            renderPeekCard(state.hoveredId ? nodeMap.get(state.hoveredId) : state.selectedId ? nodeMap.get(state.selectedId) : null);
+          });
+          button.addEventListener("pointerup", () => {
+            state.draggingId = null;
+          });
+          button.addEventListener("pointercancel", () => {
+            state.draggingId = null;
+          });
+          node.element = button;
+          nodeLayer.appendChild(button);
+        });
+      }
+
+      function renderStats() {
+        const visibleNodes = nodes.filter((node) => node.visible);
+        const visibleLinks = links.filter((link) => link.sourceNode.visible && link.targetNode.visible);
+        const visibleConcepts = visibleNodes.filter((node) => node.kind === "concept").length;
+        sceneStats.innerHTML = `
+          <span class="stat-pill">${visibleNodes.length} nos</span>
+          <span class="stat-pill">${visibleLinks.length} conexoes</span>
+          <span class="stat-pill">${visibleConcepts} conceitos</span>
+          ${state.conceptLens ? `<span class="stat-pill">lens conceitual ativo</span>` : ""}
+          <span class="stat-pill">gerado em ${dataset.generatedAt}</span>
+        `;
+      }
+
+      function updateGraphState() {
+        const active = getActiveNodeId();
+        nodes.forEach((node) => {
+          node.element.classList.toggle("is-selected", node.id === state.selectedId);
+          node.element.classList.toggle("hide-labels", !state.showLabels);
+          node.element.classList.toggle("use-glow", state.glow);
+          node.element.classList.toggle(
+            "is-dimmed",
+            Boolean(active && node.id !== active && !isAdjacent(node.id, active))
+          );
+        });
+
+        links.forEach((link) => {
+          if (!link.element) return;
+          link.element.classList.toggle("is-hot", Boolean(isHotLink(link)));
+        });
+      }
+
+      function render() {
+        const active = getActiveNodeId();
+
+        nodes.forEach((node) => {
+          const display = node.visible ? "flex" : "none";
+          node.element.style.display = display;
+          if (!node.visible) return;
+          node.element.style.left = `${node.x}px`;
+          node.element.style.top = `${node.y}px`;
+          const core = node.element.querySelector(".node-core");
+          const size = nodeRadius(node) * 2;
+          core.style.width = `${size}px`;
+          core.style.height = `${size}px`;
+          node.element.classList.toggle(
+            "is-dimmed",
+            Boolean(active && node.id !== active && !isAdjacent(node.id, active))
+          );
+        });
+
+        links.forEach((link) => {
+          if (!link.element) return;
+          const visible = link.sourceNode.visible && link.targetNode.visible;
+          link.element.style.display = visible ? "block" : "none";
+          if (!visible) return;
+          link.element.setAttribute("x1", link.sourceNode.x);
+          link.element.setAttribute("y1", link.sourceNode.y);
+          link.element.setAttribute("x2", link.targetNode.x);
+          link.element.setAttribute("y2", link.targetNode.y);
+        });
+      }
+
+      function updatePanels() {
+        const selected = state.selectedId ? nodeMap.get(state.selectedId) : null;
+        if (!selected) {
+          detailEmpty.style.display = "grid";
+          detailCard.classList.remove("is-active");
+          return;
+        }
+
+        detailEmpty.style.display = "none";
+        detailCard.className = `detail-card is-active ${domainClass(selected.domain)}`;
+
+        detailMeta.innerHTML = `
+          <span class="meta-pill">${escapeHtml(selected.domain)}</span>
+          <span class="meta-pill">${escapeHtml(selected.kind)}</span>
+          ${selected.confidence ? `<span class="meta-pill">confidence ${escapeHtml(selected.confidence)}</span>` : ""}
+          <span class="meta-pill">${selected.degree} conexoes</span>
+        `;
+        detailTitle.textContent = selected.title;
+        detailDescription.textContent = selected.description || selected.summary || "Sem descricao.";
+        detailActions.innerHTML = `
+          <button class="action-button" data-open-obsidian="${selected.id}">Abrir no Obsidian</button>
+        `;
+        detailPath.textContent = selected.path;
+        detailMarkdown.innerHTML = markdownToHtml(selected.markdown || "");
+        const relatedIds = getNeighborNodes(selected.id);
+        const conceptNeighbors = relatedIds.filter((node) => node.kind === "concept");
+        const topicNeighbors = relatedIds.filter((node) => node.kind === "topic");
+        const structuralNeighbors = relatedIds.filter((node) => node.kind !== "concept" && node.kind !== "topic");
+        const primaryNeighbors = selected.kind === "concept"
+          ? [...topicNeighbors.slice(0, 6), ...structuralNeighbors.slice(0, 6)]
+          : conceptNeighbors.slice(0, 6);
+        const primaryIds = new Set(primaryNeighbors.map((node) => node.id));
+        const remainingNeighbors = relatedIds.filter((node) => !primaryIds.has(node.id)).slice(0, 10);
+
+        conceptContext.innerHTML = [
+          selected.kind === "concept"
+            ? renderContextBlock(
+                "Conceito em acao",
+                "Notas e topicos onde este conceito aparece como bloco de construcao.",
+                topicNeighbors.slice(0, 6),
+                "data-related"
+              )
+            : renderContextBlock(
+                "Conceitos conectados",
+                "A camada conceitual que ajuda a interpretar esta nota sem depender do grafo inteiro.",
+                conceptNeighbors.slice(0, 6),
+                "data-related"
+              ),
+          selected.kind === "concept"
+            ? renderContextBlock(
+                "Outras relacoes proximas",
+                "Estruturas, mapas e notas que orbitam este conceito.",
+                structuralNeighbors.slice(0, 6),
+                "data-related"
+              )
+            : ""
+        ].filter(Boolean).join("");
+
+        relatedStrip.innerHTML = remainingNeighbors.length
+          ? renderRelationButtons(remainingNeighbors, "data-related")
+          : `<span class="meta-pill">${selected.kind === "concept" ? "sem relacoes extras detectadas" : "sem links internos extras detectados"}</span>`;
+
+        detailFooter.textContent = `Criado em ${selected.created || "data ausente"} · grau ${selected.degree} · ${conceptNeighbors.length} conceitos conectados · outgoing ${selected.outgoing} · incoming ${selected.incoming}`;
+      }
+
+      function renderPeekCard(node) {
+        if (!node || !node.visible) {
+          peekCard.classList.add("is-hidden");
+          return;
+        }
+
+        const summary = node.description || node.summary || node.teaser || "Sem resumo.";
+        const conceptNeighbors = getNeighborNodes(node.id, (candidate) => candidate.kind === "concept" && candidate.id !== node.id).slice(0, 3);
+        const side = node.x > state.width * 0.62 ? "left" : "right";
+        const cardClass = `peek-card ${domainClass(node.domain)}`;
+
+        peekCard.innerHTML = `
+          <div class="peek-card__top">
+            <div class="section-stack" style="gap:8px">
+              <div class="pill-row">
+                <span class="meta-pill">${escapeHtml(node.domain)}</span>
+                <span class="meta-pill">${escapeHtml(node.kind)}</span>
+                ${node.confidence ? `<span class="meta-pill">${escapeHtml(node.confidence)}</span>` : ""}
+              </div>
+              <h3>${escapeHtml(node.title)}</h3>
+            </div>
+          </div>
+          <p class="peek-summary">${escapeHtml(summary)}</p>
+          <div class="peek-metrics">
+            <div class="peek-metric"><strong>${node.degree}</strong><span>grau</span></div>
+            <div class="peek-metric"><strong>${node.outgoing}</strong><span>saidas</span></div>
+            <div class="peek-metric"><strong>${node.incoming}</strong><span>entradas</span></div>
+          </div>
+          ${conceptNeighbors.length ? `
+            <div class="peek-concepts">
+              <span class="context-label">conceitos por perto</span>
+              <div class="peek-tag-row">
+                ${conceptNeighbors.map((conceptNode) => `<span class="peek-tag">${escapeHtml(conceptNode.title)}</span>`).join("")}
+              </div>
+            </div>
+          ` : ""}
+          <div class="peek-tags">${(node.tags || []).slice(0, 5).map((tag) => `<span class="peek-tag">#${escapeHtml(tag)}</span>`).join("")}</div>
+          <div class="peek-path">${escapeHtml(node.path)}</div>
+          <div class="peek-actions">
+            <button class="peek-button" data-open="${node.id}">Abrir nota</button>
+            <button class="peek-button ghost" data-open-obsidian="${node.id}">Abrir no Obsidian</button>
+            <button class="peek-button secondary" data-close>Fechar</button>
+          </div>
+        `;
+
+        const bounds = graphStage.getBoundingClientRect();
+        const cardWidth = 320;
+        const cardHeight = conceptNeighbors.length ? 348 : 286;
+        let left = node.x + 24;
+        let top = node.y - 18;
+
+        if (left + cardWidth > bounds.width - 18) {
+          left = node.x - cardWidth - 24;
+        }
+        if (top + cardHeight > bounds.height - 18) {
+          top = bounds.height - cardHeight - 18;
+        }
+        if (top < 92) {
+          top = 92;
+        }
+        if (left < 18) {
+          left = 18;
+        }
+
+        peekCard.className = cardClass;
+        peekCard.dataset.side = side;
+        peekCard.style.left = `${left}px`;
+        peekCard.style.top = `${top}px`;
+        peekCard.classList.remove("is-hidden");
+      }
+
+      function tick() {
+        if (!state.width || !state.height) {
+          requestAnimationFrame(tick);
+          return;
+        }
+
+        const visibleNodes = nodes.filter((node) => node.visible);
+
+        for (let i = 0; i < visibleNodes.length; i += 1) {
+          const node = visibleNodes[i];
+          if (state.draggingId === node.id) continue;
+          const target = clusterTarget(node);
+          node.vx += (target.x - node.x) * 0.0009;
+          node.vy += (target.y - node.y) * 0.0009;
+        }
+
+        for (let i = 0; i < visibleNodes.length; i += 1) {
+          for (let j = i + 1; j < visibleNodes.length; j += 1) {
+            const a = visibleNodes[i];
+            const b = visibleNodes[j];
+            const dx = b.x - a.x;
+            const dy = b.y - a.y;
+            let distSq = dx * dx + dy * dy;
+            if (!distSq) distSq = 0.01;
+            const force = state.repulsion / distSq;
+            const dist = Math.sqrt(distSq);
+            const fx = (dx / dist) * force;
+            const fy = (dy / dist) * force;
+            a.vx -= fx;
+            a.vy -= fy;
+            b.vx += fx;
+            b.vy += fy;
+          }
+        }
+
+        links.forEach((link) => {
+          const a = link.sourceNode;
+          const b = link.targetNode;
+          if (!a.visible || !b.visible) return;
+          const dx = b.x - a.x;
+          const dy = b.y - a.y;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
+          const desired = a.domain === b.domain ? 138 : 178;
+          const stretch = dist - desired;
+          const force = stretch * state.spring;
+          const fx = (dx / dist) * force;
+          const fy = (dy / dist) * force;
+          a.vx += fx;
+          a.vy += fy;
+          b.vx -= fx;
+          b.vy -= fy;
+        });
+
+        visibleNodes.forEach((node) => {
+          if (state.draggingId === node.id) return;
+          node.vx *= 0.84;
+          node.vy *= 0.84;
+          node.x += node.vx;
+          node.y += node.vy;
+
+          const padding = nodeRadius(node) + 28;
+          node.x = Math.max(padding, Math.min(state.width - padding, node.x));
+          node.y = Math.max(96, Math.min(state.height - padding, node.y));
+        });
+
+        render();
+        if (getActiveNodeId()) {
+          renderPeekCard(nodeMap.get(getActiveNodeId()));
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function makeChip(label, active, onClick) {
+        const button = document.createElement("button");
+        button.className = `chip ${active ? "is-active" : ""}`;
+        button.textContent = label;
+        button.addEventListener("click", onClick);
+        return button;
+      }
+
+      function renderFilterChips() {
+        domainChips.innerHTML = "";
+        domains.forEach((domain) => {
+          domainChips.appendChild(
+            makeChip(domain, state.activeDomains.has(domain), () => {
+              if (state.activeDomains.has(domain)) {
+                state.activeDomains.delete(domain);
+              } else {
+                state.activeDomains.add(domain);
+              }
+              renderFilterChips();
+              applyFilters();
+            })
+          );
+        });
+
+        kindChips.innerHTML = "";
+        kinds.forEach((kind) => {
+          kindChips.appendChild(
+            makeChip(kind, state.activeKinds.has(kind), () => {
+              if (state.activeKinds.has(kind)) {
+                state.activeKinds.delete(kind);
+              } else {
+                state.activeKinds.add(kind);
+              }
+              renderFilterChips();
+              applyFilters();
+            })
+          );
+        });
+      }
+
+      searchInput.addEventListener("input", (event) => {
+        state.query = event.target.value.trim().toLowerCase();
+        applyFilters();
+      });
+
+      toggleLabels.addEventListener("change", () => {
+        state.showLabels = toggleLabels.checked;
+        updateGraphState();
+      });
+
+      toggleGlow.addEventListener("change", () => {
+        state.glow = toggleGlow.checked;
+        updateGraphState();
+      });
+
+      toggleSplit.addEventListener("change", () => {
+        state.splitDomains = toggleSplit.checked;
+      });
+
+      toggleConceptLens.addEventListener("change", () => {
+        state.conceptLens = toggleConceptLens.checked;
+        applyFilters();
+      });
+
+      repulsionRange.addEventListener("input", () => {
+        state.repulsion = Number(repulsionRange.value);
+        repulsionValue.textContent = repulsionRange.value;
+      });
+
+      springRange.addEventListener("input", () => {
+        state.spring = Number(springRange.value) / 1000;
+        springValue.textContent = (Number(springRange.value) / 1000).toFixed(3);
+      });
+
+      peekCard.addEventListener("click", (event) => {
+        const openId = event.target.getAttribute("data-open");
+        if (openId) {
+          state.selectedId = openId;
+          syncFocusState();
+          return;
+        }
+        const obsidianId = event.target.getAttribute("data-open-obsidian");
+        if (obsidianId) {
+          openInObsidian(nodeMap.get(obsidianId));
+          return;
+        }
+        if (event.target.hasAttribute("data-close")) {
+          if (state.selectedId) {
+            renderPeekCard(nodeMap.get(state.selectedId));
+          } else {
+            peekCard.classList.add("is-hidden");
+          }
+        }
+      });
+
+      detailPaneEvents();
+
+      function detailPaneEvents() {
+        document.querySelector(".detail-pane").addEventListener("click", (event) => {
+          const relatedId = event.target.getAttribute("data-related");
+          if (relatedId) {
+            state.selectedId = relatedId;
+            syncFocusState();
+            return;
+          }
+          const obsidianId = event.target.getAttribute("data-open-obsidian");
+          if (obsidianId) {
+            openInObsidian(nodeMap.get(obsidianId));
+            return;
+          }
+          if (event.target.classList.contains("wikilink")) {
+            const targetId = event.target.getAttribute("data-target");
+            if (!targetId) return;
+            state.selectedId = targetId;
+            syncFocusState();
+          }
+        });
+      }
+
+      conceptQuickList.addEventListener("click", (event) => {
+        const conceptButton = event.target.closest("[data-concept-jump]");
+        if (!conceptButton) return;
+        state.selectedId = conceptButton.getAttribute("data-concept-jump");
+        state.hoveredId = null;
+        syncFocusState();
+      });
+
+      createLinkElements();
+      createNodeElements();
+      renderFilterChips();
+      initialLayout();
+      repulsionValue.textContent = repulsionRange.value;
+      springValue.textContent = (Number(springRange.value) / 1000).toFixed(3);
+      applyFilters();
+
+      const initialNode = [...conceptNodes].sort(sortNodesByStrength)[0] || [...nodes].sort(sortNodesByStrength)[0];
+      if (initialNode) {
+        state.selectedId = initialNode.id;
+        syncFocusState();
+      }
+      render();
+      tick();
+
+      window.addEventListener("resize", () => {
+        resizeScene();
+        render();
+        if (getActiveNodeId()) {
+          renderPeekCard(nodeMap.get(getActiveNodeId()));
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

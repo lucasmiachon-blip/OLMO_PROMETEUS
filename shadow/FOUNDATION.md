@@ -22,6 +22,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 - `shadow/` para decisoes, gates e memoria operacional.
 - `Prometeus/.obsidian/` para configurar o vault Obsidian `Prometeus`.
 - `Prometeus/wiki/` para notas Obsidian e conhecimento duravel.
+- `lab/wiki-graph-lab/` para a camada visual reversivel que le o vault sem duplicar a fonte de verdade.
 - `private-learning/` para interface e material pessoal.
 - `scripts/check.ps1` como harness local.
 

@@ -30,6 +30,7 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 - `scripts/check.ps1`: harness local de regressao leve
 - `Prometeus/.obsidian/`: configuracao do Obsidian para abrir o vault `Prometeus`
 - `Prometeus/wiki/`: wiki operacional versionada do projeto
+- `lab/wiki-graph-lab/`: companion visual local para explorar o vault fora do graph cru
 - `private-learning/`: area local ignorada para cockpit e material pessoal
 - `.claude/`: state local do Claude Code (`settings.local.json`); ignorado por Git
 

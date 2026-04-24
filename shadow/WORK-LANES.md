@@ -38,6 +38,7 @@ Nao usar para promover por entusiasmo. Se a evidencia for fraca, a decisao corre
 | Novos fluxos multimodelo | `experiment` | `shadow/` ou wiki | talvez | declarar objetivo, trigger, artefato, custo e risco | contaminar o repo principal |
 | Foundation + harness local | `experiment` | `shadow/` + `scripts/` | talvez | passar em 3 sessoes reais e reduzir regressao | virar burocracia sem ganho |
 | Obsidian project wiki | `experiment` | `Prometeus/wiki/` | talvez | ser usado em 3 ciclos sem virar deposito | acumular notas sem decisao |
+| Wiki graph lab | `experiment` | `lab/wiki-graph-lab/` + `Prometeus/wiki/` | talvez | ser usado em 3 ciclos sem depender do ROADMAP | virar UI paralela sem dados canonicos |
 | Agent module encapsulation | `experiment` | `shadow/AGENT-MODULES.md` + wiki | talvez | 3 usos reais, eval minimo e ferramentas minimas | recriar sprawl de agentes |
 
 ## Promotion gate
