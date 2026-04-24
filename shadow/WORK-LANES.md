@@ -32,8 +32,8 @@ Nao usar para promover por entusiasmo. Se a evidencia for fraca, a decisao corre
 
 | Item | Lane atual | Casa | Pode migrar | Trigger minimo | Risco principal |
 | --- | --- | --- | --- | --- | --- |
-| Digest de email em 4 paragrafos | `candidate` | `shadow/` + wiki | sim | funcionar por 3 ciclos uteis seguidos | virar ritual sem acao |
-| Study track com `done` | `candidate` | `shadow/` + wiki | sim | reduzir retrabalho e dar visibilidade de progresso | marcar `done` cedo demais |
+| Digest de email em 4 paragrafos | `experiment` | `shadow/` + wiki | ainda nao | funcionar por 3 ciclos uteis seguidos | virar ritual sem acao |
+| Study track com `done` | `experiment` | `shadow/` + wiki | ainda nao | reduzir retrabalho e dar visibilidade de progresso | marcar `done` cedo demais |
 | Dashboard local simples | `private` | `private-learning/` local ignorado | nao, por enquanto | n/a | misturar camada pessoal com runtime |
 | Novos fluxos multimodelo | `experiment` | `shadow/` ou wiki | talvez | declarar objetivo, trigger, artefato, custo e risco | contaminar o repo principal |
 | Foundation + harness local | `experiment` | `shadow/` + `scripts/` | talvez | passar em 3 sessoes reais e reduzir regressao | virar burocracia sem ganho |

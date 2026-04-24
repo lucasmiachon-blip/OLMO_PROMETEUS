@@ -25,7 +25,11 @@ Este arquivo nao redefine estados nem criterios: a fonte unica esta em `shadow/W
 | 2026-04-23 | `.claude/skills/` local gate (C2 promocao parcial) | blocked (C3) | experiment | User pedido para permitir instalar skills (ex: skill-creator) e promover procedures; SOTA scan confirma casa | `shadow/SOTA-DECISIONS.md > Local skills gate`, `shadow/AGENT-USAGE.md > Local skills contract`, `scripts/check.ps1`, docs | Sprawl, redundancia com procedure, runtime scaffold reemergindo | Aguardar primeiro procedure `operational`; revisar em 60 dias (2026-06-22) |
 
 | 2026-04-23 | Wiki graph lab | — | experiment | Consolidar o unico artefato vivo do laboratorio legado no survivor Prometeus | `lab/wiki-graph-lab/`, `Prometeus/wiki/`, `TREE.md` | Duplicar fonte de verdade ou manter dependencia de diretorio legado | Usar o lab lendo apenas `Prometeus/wiki/` e aposentar o repo antigo |
+| 2026-04-24 | `email-digest-4p` | candidate | experiment | Auditoria adversarial: EVIDENCE-LOG vazio viola gate candidate (WORK-LANES.md:61) | `shadow/WORK-LANES.md`, `shadow/AGENT-MODULES.md` | Bloquear migracao baseada em label aspiracional | Registrar 3 usos reais em EVIDENCE-LOG antes de reconsiderar |
+| 2026-04-24 | `study-track-done` | candidate | experiment | Mesmo motivo: 0 entradas em EVIDENCE-LOG | `shadow/WORK-LANES.md`, `shadow/AGENT-MODULES.md` | Idem | Idem |
+| 2026-04-24 | `obsidian-crossref-check` | operational | candidate | Harness roda, mas nao cumpre gate formal: nao citado em `AGENTS.md > Do`, sem rubric associada, sem entradas em EVIDENCE-LOG | `shadow/AGENT-MODULES.md` | Uso real do harness ja existe; rebaixar e honestidade de estado, nao desligamento | Citar em AGENTS.md e registrar uso em EVIDENCE-LOG ao longo de 14 dias |
+| 2026-04-24 | `.claude/settings.local.json` lane | operational | experiment | Transicao de 2026-04-23 foi mesmo dia da criacao do gate, sem entries em EVIDENCE-LOG | `shadow/INCORPORATION-LOG.md:22` | State local continua valido; apenas o rotulo de lane foi corrigido | Reavaliar apos harness rodar em 3 sessoes distintas |
 
-Coautoria: Lucas + Claude Opus 4.7 (1M)
+Coautoria: Lucas + Claude Opus 4.7 (1M, audit mode)
 
 

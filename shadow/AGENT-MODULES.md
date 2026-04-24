@@ -120,11 +120,11 @@ Estado ortogonal (lane) vive em `shadow/WORK-LANES.md`; eixo tecnico abaixo.
 
 | Modulo | Casa atual | Eixo tecnico | Lane atual |
 | --- | --- | --- | --- |
-| `email-digest-4p` | `shadow/EMAIL-DIGEST-4P.md` | procedimento | `candidate` |
-| `study-track-done` | `shadow/STUDY-TRACK-DONE.md` | procedimento | `candidate` |
+| `email-digest-4p` | `shadow/EMAIL-DIGEST-4P.md` | procedimento | `experiment` |
+| `study-track-done` | `shadow/STUDY-TRACK-DONE.md` | procedimento | `experiment` |
 | `promotion-gate` | `shadow/WORK-LANES.md` | procedimento | `candidate` |
 | `sota-research-gate` | `AGENTS.md` + `shadow/SOTA-DECISIONS.md` | procedimento + harness deterministico | `candidate` |
-| `obsidian-crossref-check` | `scripts/check.ps1` | harness deterministico | `operational` |
+| `obsidian-crossref-check` | `scripts/check.ps1` | harness deterministico | `candidate` |
 | `evidence-log` | `shadow/EVIDENCE-LOG.md` | procedimento | `experiment` |
 
 ## Antipadroes
