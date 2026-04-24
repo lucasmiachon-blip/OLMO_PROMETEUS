@@ -225,7 +225,11 @@ if (Test-Path -LiteralPath $evidenceLog -PathType Leaf) {
   $evidenceLastWrite = (Get-Item -LiteralPath $evidenceLog).LastWriteTime
   $evidenceDays = ([DateTime]::Now - $evidenceLastWrite).Days
   if ($evidenceDays -gt 21) {
-    Write-Warn "EVIDENCE-LOG.md not updated in $evidenceDays days (>21)"
+    if ($Strict) {
+      Write-Fail "EVIDENCE-LOG.md not updated in $evidenceDays days (>21); -Strict requires fresh evidence"
+    } else {
+      Write-Warn "EVIDENCE-LOG.md not updated in $evidenceDays days (>21)"
+    }
   } else {
     Write-Ok "EVIDENCE-LOG.md freshness: $evidenceDays days"
   }
