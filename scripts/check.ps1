@@ -116,6 +116,9 @@ $requiredFiles = @(
   "shadow/SOTA-DECISIONS.md",
   "shadow/INCORPORATION-LOG.md",
   "shadow/WORK-LANES.md",
+  "shadow/EMAIL-DIGEST-4P.md",
+  "shadow/STUDY-TRACK-DONE.md",
+  "shadow/EVIDENCE-LOG.md",
   "Prometeus/README.md",
   "Prometeus/wiki/Home.md",
   "Prometeus/wiki/Atlas/Second Brain Atlas.md",
@@ -151,17 +154,85 @@ $boundaryFiles = @(
 
 foreach ($file in $boundaryFiles) {
   $text = Get-Content -LiteralPath $file -Raw
-  if ($text -match "nunca escrever fora de ``?C:\\Dev\\Projetos\\OLMO_PROMETEUS``?") {
+  if ($text -match "(?i)nunca escrever fora.{0,5}C:\\Dev\\Projetos\\OLMO_PROMETEUS") {
     Write-Ok "fundamental boundary present: $file"
   } else {
     Write-Fail "missing fundamental boundary in: $file"
   }
 }
 
+$sizeThresholds = @{
+  "AGENTS.md" = 12000
+  "shadow/SOTA-DECISIONS.md" = 14000
+  "shadow/AGENT-MODULES.md" = 12000
+  "shadow/FOUNDATION.md" = 10000
+  "shadow/WORK-LANES.md" = 10000
+  "shadow/INCORPORATION-LOG.md" = 8000
+  "shadow/HYGIENE.md" = 6000
+  "shadow/EMAIL-DIGEST-4P.md" = 10000
+  "shadow/STUDY-TRACK-DONE.md" = 10000
+}
+
+foreach ($entry in $sizeThresholds.GetEnumerator()) {
+  if (Test-Path -LiteralPath $entry.Key -PathType Leaf) {
+    $sizeBytes = (Get-Item -LiteralPath $entry.Key).Length
+    if ($sizeBytes -gt $entry.Value) {
+      Write-Warn "sprawl: $($entry.Key) is $sizeBytes bytes (threshold $($entry.Value))"
+    } else {
+      Write-Ok "size ok: $($entry.Key) $sizeBytes <= $($entry.Value)"
+    }
+  }
+}
+
+$olmoFailures = New-Object System.Collections.Generic.List[string]
+$olmoContextPattern = "(?i)(leitura|auditoria|inspeca|read-?only|protegido|proibi|autoriza|aprova|humana|humano|externo|apenas|nunca|antes|fora|regra\s+fundamental|write\s+externo|\bsem\b|\bnao\b|\bnada\b|\bnenhum\b)"
+$olmoPathPattern = "C:\\Dev\\Projetos\\OLMO(?![_A-Za-z0-9])"
+$olmoScanExtensions = @(".md", ".ps1")
+$olmoScanExcluded = @("scripts/check.ps1")
+
+$olmoScanTargets = Get-ChildItem -LiteralPath "." -Recurse -File -Force -ErrorAction SilentlyContinue |
+  Where-Object { $olmoScanExtensions -contains $_.Extension.ToLowerInvariant() }
+
+foreach ($olmoFile in $olmoScanTargets) {
+  $olmoRel = $olmoFile.FullName.Substring($Root.Path.Length).TrimStart("\","/").Replace("\","/")
+  if ($olmoRel -like ".git/*") { continue }
+  if ($olmoScanExcluded -contains $olmoRel) { continue }
+  & git check-ignore -q -- $olmoRel
+  if ($LASTEXITCODE -eq 0) { continue }
+
+  $olmoLines = Get-Content -LiteralPath $olmoFile.FullName
+  for ($i = 0; $i -lt $olmoLines.Count; $i++) {
+    if ($olmoLines[$i] -match $olmoPathPattern) {
+      $startIdx = [Math]::Max(0, $i - 4)
+      $endIdx = [Math]::Min($olmoLines.Count - 1, $i + 4)
+      $window = ($olmoLines[$startIdx..$endIdx]) -join "`n"
+      if ($window -notmatch $olmoContextPattern) {
+        $olmoFailures.Add("${olmoRel}:$($i+1):$($olmoLines[$i])") | Out-Null
+      }
+    }
+  }
+}
+
+if ($olmoFailures.Count -gt 0) {
+  Write-Fail "OLMO path referenced outside read/audit context:`n$($olmoFailures -join "`n")"
+} else {
+  Write-Ok "OLMO path references stay read-only"
+}
+
+$evidenceLog = "shadow/EVIDENCE-LOG.md"
+if (Test-Path -LiteralPath $evidenceLog -PathType Leaf) {
+  $evidenceLastWrite = (Get-Item -LiteralPath $evidenceLog).LastWriteTime
+  $evidenceDays = ([DateTime]::Now - $evidenceLastWrite).Days
+  if ($evidenceDays -gt 21) {
+    Write-Warn "EVIDENCE-LOG.md not updated in $evidenceDays days (>21)"
+  } else {
+    Write-Ok "EVIDENCE-LOG.md freshness: $evidenceDays days"
+  }
+}
+
 $forbiddenRootDirs = @(
   ".agents",
   ".codex",
-  ".claude",
   ".gemini",
   "agents",
   "subagents",
@@ -175,6 +246,21 @@ foreach ($dir in $forbiddenRootDirs) {
     Write-Fail "forbidden root scaffold exists: $dir"
   } else {
     Write-Ok "forbidden root scaffold absent: $dir"
+  }
+}
+
+$forbiddenClaudeSubdirs = @(
+  ".claude/agents",
+  ".claude/skills",
+  ".claude/hooks",
+  ".claude/commands"
+)
+
+foreach ($claudeDir in $forbiddenClaudeSubdirs) {
+  if (Test-Path -LiteralPath $claudeDir -PathType Container) {
+    Write-Fail "forbidden claude scaffold exists: $claudeDir"
+  } else {
+    Write-Ok "forbidden claude scaffold absent: $claudeDir"
   }
 }
 
@@ -193,6 +279,7 @@ foreach ($entry in $agentAdapters.GetEnumerator()) {
 }
 
 $requiredIgnorePatterns = @(
+  ".claude/",
   "private-learning/",
   "Prometeus/.obsidian/workspace*.json",
   "Prometeus/.obsidian/cache/",
@@ -437,6 +524,17 @@ foreach ($mdFile in $markdownFiles) {
 
 if ($wikilinkIssueCount -eq 0) {
   Write-Ok "obsidian wikilinks resolve"
+}
+
+$wikiNotesPath = Join-Path $vaultRoot.Path "wiki/Notes"
+if (Test-Path -LiteralPath $wikiNotesPath -PathType Container) {
+  foreach ($noteFile in (Get-ChildItem -LiteralPath $wikiNotesPath -File -Filter "*.md")) {
+    $noteText = Get-Content -LiteralPath $noteFile.FullName -Raw
+    $noteLinkCount = ([regex]::Matches($noteText, "\[\[([^\]]*)\]\]")).Count
+    if ($noteLinkCount -lt 2) {
+      Write-Warn "wiki note has <2 wikilinks: wiki/Notes/$($noteFile.Name) ($noteLinkCount)"
+    }
+  }
 }
 
 Invoke-TextCheck "no old roadmap/SOTA references" "OLMO_ROADMAP|SOTA-AGENTS|SOTA-INCORPORATION" @("-g", "!scripts/check.ps1")

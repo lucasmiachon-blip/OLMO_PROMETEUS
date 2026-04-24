@@ -22,8 +22,11 @@ Nao usar para promover por entusiasmo. Se a evidencia for fraca, a decisao corre
 | Lane | Casa | Quando entra | Quando sai |
 | --- | --- | --- | --- |
 | `private` | `private-learning/` local ignorado | material pessoal, cockpit, digests, notas | fica local |
-| `experiment` | `shadow/` ou `Prometeus/wiki/Notes` | pergunta aberta, prototipo conceitual, teste de fluxo | descartado ou promovido |
-| `candidate` | `shadow/` | padrao que parece reutilizavel e ja gerou artefato | aguarda validacao humana |
+| `experiment` | `shadow/` ou `Prometeus/wiki/Notes` | pergunta aberta, prototipo conceitual, teste de fluxo | descartado, promovido a `candidate` ou marcado `retired` |
+| `candidate` | `shadow/` | padrao que parece reutilizavel e ja gerou artefato | aguarda validacao humana; vira `operational` ou `retired` |
+| `operational` | `shadow/`, referenciado em `AGENTS.md` | padrao em uso real, com >=3 entradas em `shadow/EVIDENCE-LOG.md`, rubrica passando e estabilidade | permanece ate mudanca de design; pode virar `retired` |
+| `retired` | `shadow/` com cabecalho `retired: YYYY-MM-DD` | padrao descontinuado, substituido ou obsoleto | historico; nao reanima sem nova evidencia |
+| `blocked` | `shadow/` com nota explicando bloqueio | util mas exige write externo, segredo, MCP sensivel, hook ativo ou mudanca no `OLMO` | desbloqueia com gate explicito |
 
 ## Mapa inicial das prioridades
 
@@ -56,11 +59,25 @@ Para classificar qualquer artefato, preencher:
 - `private`: depende de contexto pessoal, cockpit local ou dado sensivel.
 - `experiment`: tem potencial, mas faltam ciclos, criterio de sucesso ou rollback.
 - `candidate`: tem artefato, trigger, evidencia repetida, custo aceitavel, risco claro e rollback.
+- `operational`: ja e parte do fluxo diario; citado em `AGENTS.md` como padrao ativo.
+- `retired`: foi util, foi substituido ou abandonado; nao reanimar sem nova evidencia.
 - `blocked`: e util, mas exige write externo, segredo, MCP sensivel, hook ativo ou mudanca no `OLMO`.
 
 Por padrao, novo agente, skill, hook, automacao ou scaffold com menos de 3 usos reais fica `experiment` ou `blocked`.
 
 Se a ideia for agente, primeiro preencher o contrato de [[Agent Module Encapsulation]] em `shadow/AGENT-MODULES.md`.
+
+## Transicao candidate -> operational
+
+Gate:
+
+- >=3 entradas em `shadow/EVIDENCE-LOG.md` referenciando o procedimento;
+- rubrica (quando existir) rodada pelo menos uma vez em uso real com score >=0.7;
+- >=14 dias sem edit no procedimento (estabilidade);
+- registro da transicao em `shadow/INCORPORATION-LOG.md`;
+- citacao em `AGENTS.md` como padrao ativo.
+
+Criterio negativo: se em 4 semanas o procedimento nao atingir 3 entradas em EVIDENCE-LOG, nao esta em uso real. Acao: reclassificar para `experiment` e simplificar ou remover rubrica associada.
 
 ## Template de candidato a migracao
 

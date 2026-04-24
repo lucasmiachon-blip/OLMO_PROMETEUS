@@ -55,18 +55,34 @@ Se a pesquisa nao justificar a mudanca, nao implementar. Sem bajulacao, sem arqu
 | `private` | notas pessoais, digests, estudo e checkpoints | nao | fica local |
 | `experiment` | prototipos e fluxos ainda instaveis | talvez, depois | repetir em alguns ciclos |
 | `candidate` | padrao reutilizavel, ja com artefato claro | sim, com humano | trigger + evidencia + rollback |
+| `operational` | padrao em uso real, referenciado em `AGENTS.md` ou outro contrato | sim, com humano | >=3 entradas em `shadow/EVIDENCE-LOG.md`, rubrica passando, >=14 dias sem edit |
+| `retired` | padrao descontinuado, substituido ou obsoleto | nao | historico; nao reanimar sem nova evidencia |
+| `blocked` | util mas exige write externo, segredo, MCP sensivel ou hook ativo | nao ate desbloquear | desbloqueio exige gate explicito |
+
+Fonte unica de verdade dos estados e criterios: `shadow/WORK-LANES.md`. Transicoes de estado sao registradas em `shadow/INCORPORATION-LOG.md`.
 
 ## Layout
 
 - `private-learning/`: cockpit visual e material pessoal local, ignorado pelo Git e pelo contexto.
 - `CLAUDE.md`: adaptador fino para Claude Code; importa `AGENTS.md`.
 - `GEMINI.md`: adaptador fino para Gemini CLI; importa `AGENTS.md`.
-- `shadow/`: contratos, trilhas, gates, pesquisa e arquitetura operacional.
+- `shadow/`: fonte operacional. Contratos, gates, rubricas, evidencia e mapas de uso.
+  - `shadow/WORK-LANES.md`: fonte unica dos estados (private, experiment, candidate, operational, retired, blocked) e promotion gate.
+  - `shadow/EVIDENCE-LOG.md`: registro de uso real dos procedimentos (gate para `operational`).
+  - `shadow/SOTA-DECISIONS.md`: decisoes curtas apos SOTA research gate.
+  - `shadow/AGENT-USAGE.md`: mapa de agentes/skills globais usados sem scaffold local.
+  - `shadow/INCORPORATION-LOG.md`: log de transicoes de estado aplicadas.
+  - `shadow/PLAN-*.md`: plans operacionais de mudancas estruturais (um por rodada).
 - `TREE.md`: mapa da arvore raiz, casas dos artefatos e politica de incorporacao do `OLMO`.
 - `Prometeus/README.md`: entrada documental do vault Obsidian.
 - `Prometeus/.obsidian/`: configuracao do vault Obsidian `Prometeus`.
-- `Prometeus/wiki/`: notas Obsidian versionadas para conhecimento duravel do projeto.
+- `Prometeus/wiki/`: conhecimento duravel e navegavel via graph view. Complementa `shadow/`, nao substitui.
+  - `Prometeus/wiki/Notes/`: notas conceituais com no minimo 2 wikilinks para outras notas. Notas com <2 wikilinks sao espelhos de `shadow/` e viram candidatas a delete em HYGIENE.
 - `scripts/`: harness local pequeno.
+
+## Memoria
+
+Este projeto nao usa a memoria automatica do Claude Code. `C:\Users\lucas\.claude\projects\C--Dev-Projetos-OLMO-PROMETEUS\memory\` e intencionalmente vazio. A memoria do projeto vive em `AGENTS.md`, `shadow/` e `Prometeus/wiki/`. Memoria global do usuario fica em `~/.claude/CLAUDE.md` e e read-only por este repo.
 
 ## Do
 
@@ -82,7 +98,8 @@ Se a pesquisa nao justificar a mudanca, nao implementar. Sem bajulacao, sem arqu
 - escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`;
 - copiar hooks, MCP ou infraestrutura sensivel do `OLMO`;
 - ativar hook sem trigger, evidencia, rollback e aprovacao humana explicita;
-- recriar diretorios locais de agents, subagents, skills, hooks, `.claude/` ou `.gemini/` sem necessidade repetida e aprovacao explicita;
+- recriar diretorios locais de agents, subagents, skills, hooks, `.claude/agents/`, `.claude/skills/`, `.claude/hooks/`, `.claude/commands/` ou `.gemini/` sem necessidade repetida e aprovacao explicita;
+- tratar `.claude/settings.local.json` como runtime ativo (e state local; fica em `.gitignore`/`.claudeignore`);
 - marcar `done` sem evidencia de entendimento ou aplicacao;
 - misturar material pessoal com runtime do projeto;
 - colocar captura privada/crua no vault versionado;
@@ -97,6 +114,7 @@ Se a pesquisa nao justificar a mudanca, nao implementar. Sem bajulacao, sem arqu
 - Quando houver mudanca persistente, rode `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`.
 - Se um artefato virar `candidate`, atualize `shadow/WORK-LANES.md`.
 - Se a sessao criar varios artefatos, confira `shadow/HYGIENE.md`.
+- Se rodou um procedimento (`email-digest-4p`, `study-track-done`, `sota-research-gate`) em uso real, registre linha em `shadow/EVIDENCE-LOG.md`.
 - Se a tarefa esbarrar no repo principal, pare e peca autorizacao explicita.
 
 ## Coauthorship
