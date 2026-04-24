@@ -269,18 +269,61 @@ foreach ($claudeDir in $forbiddenClaudeSubdirs) {
 }
 
 $skillsRoot = ".claude/skills"
+$requiredSkillFields = @("name", "description", "trigger", "non-trigger", "source", "status", "owner")
+$allowedSkillStatuses = @("candidate", "operational")
 if (Test-Path -LiteralPath $skillsRoot -PathType Container) {
   $skillDirs = Get-ChildItem -LiteralPath $skillsRoot -Directory -ErrorAction SilentlyContinue
   if ($skillDirs.Count -eq 0) {
     Write-Ok ".claude/skills/ exists but empty"
   } else {
     foreach ($skillDir in $skillDirs) {
+      $skillLabel = ".claude/skills/$($skillDir.Name)/"
       $skillManifest = Join-Path $skillDir.FullName "SKILL.md"
-      if (Test-Path -LiteralPath $skillManifest -PathType Leaf) {
-        Write-Ok "skill manifest present: .claude/skills/$($skillDir.Name)/SKILL.md"
-      } else {
-        Write-Fail "skill missing SKILL.md: .claude/skills/$($skillDir.Name)/"
+      if (-not (Test-Path -LiteralPath $skillManifest -PathType Leaf)) {
+        Write-Fail "skill missing SKILL.md: $skillLabel"
+        continue
       }
+
+      $manifestText = Get-Content -LiteralPath $skillManifest -Raw
+      if ($manifestText -notmatch "(?s)^---\r?\n(.*?)\r?\n---") {
+        Write-Fail "skill SKILL.md missing YAML frontmatter: $skillLabel"
+        continue
+      }
+      $skillFrontmatter = $Matches[1]
+
+      $missingSkillFields = New-Object System.Collections.Generic.List[string]
+      foreach ($field in $requiredSkillFields) {
+        $escapedField = [regex]::Escape($field)
+        if ($skillFrontmatter -notmatch "(?m)^$($escapedField):\s*\S") {
+          $missingSkillFields.Add($field) | Out-Null
+        }
+      }
+      if ($missingSkillFields.Count -gt 0) {
+        Write-Fail "skill SKILL.md missing required fields in ${skillLabel}: $($missingSkillFields -join ', ')"
+        continue
+      }
+
+      if ($skillFrontmatter -match "(?m)^status:\s*(\S+)") {
+        $skillStatus = $Matches[1].Trim().Trim('"').Trim("'")
+        if ($allowedSkillStatuses -notcontains $skillStatus) {
+          Write-Fail "skill status must be one of [$($allowedSkillStatuses -join ', ')] in ${skillLabel}: got '$skillStatus'"
+          continue
+        }
+      }
+
+      if ($skillFrontmatter -match "(?m)^source:\s*(.+)$") {
+        $skillSource = $Matches[1].Trim().Trim('"').Trim("'")
+        if (-not $skillSource.StartsWith("shadow/")) {
+          Write-Fail "skill source must point under shadow/ in ${skillLabel}: got '$skillSource'"
+          continue
+        }
+        if (-not (Test-Path -LiteralPath $skillSource -PathType Leaf)) {
+          Write-Fail "skill source file missing in ${skillLabel}: $skillSource"
+          continue
+        }
+      }
+
+      Write-Ok "skill manifest valid: ${skillLabel}SKILL.md"
     }
   }
 } else {
