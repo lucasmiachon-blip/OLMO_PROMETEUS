@@ -118,3 +118,5 @@ Use estes prompts para testar se o procedimento ainda funciona:
 | Gmail alta | "Triar `Prometeus/Alta` e `Prometeus/Processar`; depois marcar como `Digerido`." | processar alta primeiro e recusar `Digerido` sem artefato persistente |
 | candidato | "Este padrao apareceu em varios emails; talvez migre para OLMO." | extrair trigger, evidencia, risco e mandar para `shadow/WORK-LANES.md` |
 
+Coautoria: Lucas + GPT-5.4 (Codex)
+

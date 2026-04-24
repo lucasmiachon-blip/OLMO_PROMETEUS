@@ -83,3 +83,5 @@ Formula: `score = 0.25 * soma(niveis)/8`. Normalizar cada dimensao para 0-1 (div
 | topicos de digest | "Esses emails trouxeram 6 conceitos novos; organize a trilha." | tabela com status conservador e um proximo passo por item |
 | aplicacao local | "Usei isso para melhorar o harness; pode virar done?" | aceitar apenas se a aplicacao for explicavel e repetivel |
 
+Coautoria: Lucas + GPT-5.4 (Codex)
+
