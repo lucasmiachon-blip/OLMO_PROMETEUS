@@ -151,6 +151,7 @@ Registro de quando cada decisao acima foi aplicada a uma mudanca real. Uma entra
 | 2026-04-23 | Padrao SOTA para procedimentos (mini-evals + rubrica) | Adicionar `## Rubric` em email-digest-4p, study-track-done e SOTA research gate | `shadow/EMAIL-DIGEST-4P.md`, `shadow/STUDY-TRACK-DONE.md`, `shadow/SOTA-DECISIONS.md` |
 | 2026-04-23 | Adaptadores CLAUDE.md/GEMINI.md finos | Refactor Boris-style "things that will bite you" | commit 1c02049 |
 | 2026-04-23 | Local skills gate (C2 -> promocao parcial) | Abertura condicional de `.claude/skills/`; harness, docs e AGENT-USAGE atualizados | (esta rodada) |
+| 2026-04-24 | SOTA research gate | Auditoria adversarial pos-PLAN-2026-04-23: rebaixamento de 4 labels aspiracionais, consolidacao de 3 tabelas de lanes em WORK-LANES.md, FAIL de EVIDENCE-LOG stale em `-Strict` | commits 1ea1dea, 0e6177d, b3bbdb4; primeira entrada real em `shadow/EVIDENCE-LOG.md` |
 
 ## Claude Code e GEMINI.md adapters
 

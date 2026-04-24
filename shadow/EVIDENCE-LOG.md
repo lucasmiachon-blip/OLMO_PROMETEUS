@@ -20,6 +20,7 @@ Toda vez que um procedimento em `shadow/` rodar em uso real, registrar uma linha
 
 | Data | Procedure | Input | Output | Observacao | Proximo |
 | --- | --- | --- | --- | --- | --- |
+| 2026-04-24 | sota-research-gate | HEAD pre-auditoria (98c6b64) | commits 1ea1dea, 0e6177d, b3bbdb4 + 4 linhas em `shadow/INCORPORATION-LOG.md` | EVIDENCE-LOG vazio validou o gate negativo: 4 labels em candidate/operational estavam aspiracionais. Auditor encontrou >=3 criticos e >=3 altos sem inflar escopo. | Rodar email-digest-4p e study-track-done em uso real >=3x ate 2026-05-22; se <3 entradas por procedure, rebaixar/simplificar rubrica |
 
 ## Gatilhos automaticos
 
