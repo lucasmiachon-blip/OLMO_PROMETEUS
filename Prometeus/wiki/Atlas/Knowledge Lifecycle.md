@@ -47,12 +47,14 @@ Se a nota virou padrao reutilizavel:
 - [[Promotion Gate]]
 - [[Candidate]]
 - [[Project Log]]
+- registrar cada uso real em [[Evidence Log]] (gate quantitativo para `operational`).
 
 ## 5. Modularizacao
 
 Se o padrao parece recorrente e poderia virar agente:
 
 - documentar primeiro como [[Agent Module Encapsulation]];
+- consultar [[Agent Usage Map]] para ver se um agente/skill global ja cobre a necessidade;
 - declarar input, output, estado, ferramentas, permissoes e eval;
-- manter como procedimento ate ter 3 usos reais;
-- nunca criar runtime ativo antes do gate.
+- manter como procedimento ate ter 3 usos reais em [[Evidence Log]];
+- promocao para skill real em `.claude/skills/<name>/` exige procedure `operational` (ver contrato em [[Agent Usage Map]]).

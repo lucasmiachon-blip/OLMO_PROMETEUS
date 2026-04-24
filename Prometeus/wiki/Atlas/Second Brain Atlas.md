@@ -26,6 +26,8 @@ Este e o mapa principal do second brain. O Graph View e a interface principal; C
 - [[Email Triage]]
 - [[Study Track System]]
 - [[Promotion Gate]]
+- [[Evidence Log]]
+- [[Agent Usage Map]]
 
 ## Conceitos
 
