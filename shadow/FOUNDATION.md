@@ -94,6 +94,7 @@ Ele valida:
 - ausencia de referencias antigas;
 - ausencia de tokens/segredos obvios;
 - caminhos privados e gerados continuam ignorados por Git e pelo contexto de agentes;
+- checks de ignore aceitam LF e CRLF para o workflow `windows-latest`;
 - checks textuais pulam arquivos ignorados e redigem linhas em achados de segredo;
 - ausencia de scaffolds fantasmas na raiz;
 - Git status legivel.

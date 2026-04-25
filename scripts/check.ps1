@@ -444,7 +444,7 @@ foreach ($ignoreFile in @(".gitignore", ".claudeignore")) {
   $ignoreText = Get-Content -LiteralPath $ignoreFile -Raw
   foreach ($ignorePattern in $requiredIgnorePatterns) {
     $escapedPattern = [regex]::Escape($ignorePattern)
-    if ($ignoreText -match "(?m)^$escapedPattern$") {
+    if ($ignoreText -match "(?m)^$escapedPattern\r?$") {
       Write-Ok "ignore pattern present in ${ignoreFile}: $ignorePattern"
     } else {
       Write-Fail "missing ignore pattern in ${ignoreFile}: $ignorePattern"
