@@ -57,6 +57,8 @@ Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo
 - evidencia de uso real: `shadow/EVIDENCE-LOG.md`;
 - plans de rodada estrutural: `shadow/PLAN-*.md`;
 - mapa de agentes/skills globais: `shadow/AGENT-USAGE.md`;
+- maturidade e gaps profissionais executaveis: `scripts/maturity.ps1`;
+- self-evolution interno: `scripts/evolve.ps1` + `internal/evolution/`;
 - higiene: `shadow/HYGIENE.md`;
 - entrada do vault: `Prometeus/README.md`;
 - wiki navegavel: `Prometeus/wiki/Home.md`;
@@ -111,6 +113,8 @@ Delegacao:
 Sem fan-out automatico e sem registry local de agentes neste repo. Todo uso real de subagent ou procedure registrado em `shadow/EVIDENCE-LOG.md`.
 
 Para o perfil de medico solo dev, orquestracao deve permanecer primeiro como procedimento auditavel em `shadow/`: estado claro, humano-no-loop, evidencias, custo e rollback. Frameworks externos de agentes so entram quando o procedimento manual provar retrabalho repetido sem expor dados sensiveis.
+Self-evolution: `scripts/evolve.ps1` le `internal/evolution/`, alinha com `scripts/maturity.ps1`, valida riscos e declara o proximo batch. O workflow `.github/workflows/self-evolution.yml` roda sem pedido manual, mas e read-only; ele pode falhar e informar, nao escrever ou decidir sozinho.
+
 
 ## 6. SOTA research gate
 

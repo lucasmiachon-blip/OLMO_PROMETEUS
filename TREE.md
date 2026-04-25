@@ -20,10 +20,14 @@ PROJECT_CONTRACT.md   # limites, lanes e criterio de promocao
 README.md             # entrada humana rapida
 TREE.md               # mapa profissional da arvore do repo
 scripts/check.ps1     # harness local, sem writes externos
+scripts/maturity.ps1  # camada executavel de maturidade CMMI adaptada
+scripts/evolve.ps1    # executor self-evolving read-only
+internal/evolution/   # backlog, risk register e review cadence do loop interno
 shadow/               # decisoes, gates, memoria operacional, evidencia e agent usage
 Prometeus/            # vault Obsidian versionado
 lab/                  # companions visuais e prototipos locais que leem o vault sem virar runtime
 private-learning/     # area local ignorada; nao entra no contexto versionado
+.github/workflows/    # watchdog read-only do GitHub Actions
 .claude/              # state local do Claude Code (settings.local.json); ignorado por Git
 ```
 
@@ -36,10 +40,19 @@ Regra: eles importam `AGENTS.md`, nao duplicam politica e nao autorizam criar `.
 ## Areas Vivas
 
 ### `lab/`
-
 Companions visuais reversiveis.
 
 - `lab/wiki-graph-lab/`: grafo HTML/JS que consome `Prometeus/wiki/` e abre notas no Obsidian.
+
+
+### `.github/workflows/`
+
+Automacao read-only. `self-evolution.yml` roda harness e `scripts/evolve.ps1` em push, PR, schedule semanal e workflow manual. Nao pode escrever, commitar, fazer push, abrir issue ou tocar dado sensivel.
+
+### `internal/evolution/`
+
+Estado interno versionado do self-evolution loop: backlog, risk register e review cadence. Nao e memoria privada e nao guarda dados de paciente.
+
 
 ### `Prometeus/`
 

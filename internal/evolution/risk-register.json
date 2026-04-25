@@ -1,0 +1,46 @@
+{
+  "schema": "prometeus.evolution.risk-register.v1",
+  "updated": "2026-04-25",
+  "risks": [
+    {
+      "id": "R-SELF-WRITE",
+      "severity": "high",
+      "risk": "Self-evolution virar auto-write, auto-commit ou auto-push sem supervisao humana.",
+      "control": "Workflow GitHub e scripts de evolucao ficam read-only por padrao; nenhum comando de push, commit, issue ou PR automatico.",
+      "owner": "Lucas + agent",
+      "status": "controlled"
+    },
+    {
+      "id": "R-PHI",
+      "severity": "critical",
+      "risk": "Dado sensivel, PHI ou informacao de paciente entrar em repo, prompt, artifact ou automation.",
+      "control": "Solo Doctor Dev Standard bloqueia dados sensiveis; Batch 3 cria classificacao e checklist operacional.",
+      "owner": "Lucas",
+      "status": "open"
+    },
+    {
+      "id": "R-BACKLOG-THEATER",
+      "severity": "medium",
+      "risk": "Backlog interno virar teatro de processo sem mudanca real de comportamento.",
+      "control": "Cada item exige trigger, acceptance, rollback, negative_criterion e evidencia em EVIDENCE-LOG.",
+      "owner": "Lucas + agent",
+      "status": "controlled"
+    },
+    {
+      "id": "R-CI-DRIFT",
+      "severity": "medium",
+      "risk": "GitHub Actions Windows divergir do ambiente local e gerar falso bloqueio.",
+      "control": "Workflow primeiro e read-only; branch protection so apos uma execucao verde ou bloqueio documentado.",
+      "owner": "Lucas",
+      "status": "open"
+    },
+    {
+      "id": "R-SPRAWL",
+      "severity": "medium",
+      "risk": "Estrutura interna aumentar sprawl em vez de reduzir incerteza.",
+      "control": "internal/evolution tem apenas JSON pequeno; scripts validam tamanho e campos obrigatorios.",
+      "owner": "Lucas + agent",
+      "status": "controlled"
+    }
+  ]
+}

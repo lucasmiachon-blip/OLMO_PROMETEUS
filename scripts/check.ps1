@@ -115,6 +115,12 @@ $requiredFiles = @(
   "shadow/HYGIENE.md",
   "shadow/SOTA-DECISIONS.md",
   "shadow/INCORPORATION-LOG.md",
+  "scripts/maturity.ps1",
+  "scripts/evolve.ps1",
+  "internal/evolution/backlog.json",
+  "internal/evolution/risk-register.json",
+  "internal/evolution/review.json",
+  ".github/workflows/self-evolution.yml",
   "shadow/WORK-LANES.md",
   "shadow/EMAIL-DIGEST-4P.md",
   "shadow/STUDY-TRACK-DONE.md",
@@ -163,7 +169,10 @@ foreach ($file in $boundaryFiles) {
 }
 
 $sizeThresholds = @{
+  "scripts/maturity.ps1" = 20000
   "AGENTS.md" = 12000
+  "scripts/evolve.ps1" = 20000
+  "internal/evolution/backlog.json" = 10000
   "shadow/SOTA-DECISIONS.md" = 16000
   "shadow/AGENT-MODULES.md" = 12000
   "shadow/FOUNDATION.md" = 10000
@@ -171,6 +180,9 @@ $sizeThresholds = @{
   "shadow/INCORPORATION-LOG.md" = 8000
   "shadow/HYGIENE.md" = 6000
   "shadow/EMAIL-DIGEST-4P.md" = 10000
+  "internal/evolution/risk-register.json" = 8000
+  "internal/evolution/review.json" = 5000
+  ".github/workflows/self-evolution.yml" = 5000
   "shadow/STUDY-TRACK-DONE.md" = 10000
 }
 
@@ -395,7 +407,27 @@ foreach ($entry in $procedureContracts.GetEnumerator()) {
   }
 }
 
+$maturityScript = "scripts/maturity.ps1"
+if (Test-Path -LiteralPath $maturityScript -PathType Leaf) {
+  & powershell -NoProfile -ExecutionPolicy Bypass -File $maturityScript -Mode check
+  if ($LASTEXITCODE -eq 0) {
+    Write-Ok "maturity executable passes"
+  } else {
+    Write-Fail "maturity executable failed"
+  }
+}
+
 $obsidianJsonFiles = Get-ChildItem -LiteralPath "Prometeus/.obsidian" -Filter "*.json"
+$evolveScript = "scripts/evolve.ps1"
+if (Test-Path -LiteralPath $evolveScript -PathType Leaf) {
+  & powershell -NoProfile -ExecutionPolicy Bypass -File $evolveScript -Mode check
+  if ($LASTEXITCODE -eq 0) {
+    Write-Ok "self-evolution executable passes"
+  } else {
+    Write-Fail "self-evolution executable failed"
+  }
+}
+
 foreach ($jsonFile in $obsidianJsonFiles) {
   try {
     Get-Content -LiteralPath $jsonFile.FullName -Raw | ConvertFrom-Json | Out-Null

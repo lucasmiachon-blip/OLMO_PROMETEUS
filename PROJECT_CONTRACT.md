@@ -11,6 +11,7 @@ Validar um laboratorio paralelo, guiado por orquestracao de baixo risco, para va
 - Nao editar, mover, deletar, criar, arquivar ou sincronizar nada em repositorios siblings.
 - Qualquer write externo exige autorizacao explicita na conversa, com caminho e acao exata.
 - Nao copiar infraestrutura sensivel, hooks ou config de MCP.
+- Automacao self-evolving permitida somente em modo read-only: pode checar, relatar e falhar; nao pode escrever, commitar, pushar, abrir issue/PR ou tocar dado sensivel sem aprovacao humana explicita.
 - Nao manter scaffolds locais de agents, subagents, skills, hooks, `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` ou `.gemini/` sem necessidade repetida e gate humano explicito.
 - `.claude/skills/` esta aberto desde 2026-04-23 (`shadow/SOTA-DECISIONS.md > Local skills gate`); skills exigem procedure `operational` em `shadow/`, `SKILL.md` com frontmatter valido e aprovacao humana por skill.
 - `.claude/settings.local.json` e aceito como state do harness local e fica em `.gitignore`/`.claudeignore`; nao e scaffold e nao e versionado.
@@ -57,6 +58,9 @@ Um artefato daqui so entra em conversa de migracao quando:
 - `shadow/SOTA-DECISIONS.md` consolida decisoes SOTA curtas, com `Applied when` e stubs `Blocked ate evidencia`.
 - `shadow/AGENT-USAGE.md` mapeia uso de agentes/skills globais e SOTA agent contract, sem scaffold local.
 - `shadow/FOUNDATION.md` define infra, memoria, harness e orquestracao.
+- `scripts/maturity.ps1` define camadas CMMI executaveis e proximo batch de maturidade.
+- `scripts/evolve.ps1` valida a estrutura interna self-evolving e mostra o proximo batch.
+- `internal/evolution/` guarda backlog, risk register e review cadence do loop interno.
 - `shadow/PLAN-*.md` documenta plans de mudanca estrutural por rodada.
 - `scripts/check.ps1` valida regressao leve antes de commit.
 - `Prometeus/README.md` e a entrada documental do vault.

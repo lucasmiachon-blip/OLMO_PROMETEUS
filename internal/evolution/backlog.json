@@ -1,0 +1,81 @@
+{
+  "schema": "prometeus.evolution.backlog.v1",
+  "updated": "2026-04-25",
+  "items": [
+    {
+      "id": "EV-B1",
+      "batch": 1,
+      "status": "applied",
+      "area": "Backlog e planejamento",
+      "problem": "Trabalho nascia em conversa, sem fila priorizada, aceite ou dono por item.",
+      "trigger": "Qualquer pedido estrutural, gap detectado pelo maturity check ou falha recorrente de harness.",
+      "acceptance": [
+        "internal/evolution/backlog.json existe e parseia",
+        "internal/evolution/risk-register.json existe e parseia",
+        "internal/evolution/review.json define cadence e next_review",
+        "scripts/evolve.ps1 valida a estrutura interna"
+      ],
+      "owner": "Lucas + agent",
+      "risk": "Virar backlog burocratico sem uso real.",
+      "rollback": "Remover internal/evolution e scripts/evolve.ps1; manter scripts/maturity.ps1.",
+      "negative_criterion": "Se em 14 dias nenhum item mudar de status ou gerar evidencia, reduzir a estrutura para um unico JSON.",
+      "next_action": "Rodar scripts/evolve.ps1 -Mode next antes de nova mudanca estrutural."
+    },
+    {
+      "id": "EV-B2",
+      "batch": 2,
+      "status": "next",
+      "area": "Qualidade e Git remoto",
+      "problem": "O harness local passa, mas main ainda nao exige check remoto protegido.",
+      "trigger": "Depois do workflow read-only existir e rodar uma vez no GitHub.",
+      "acceptance": [
+        ".github/workflows/self-evolution.yml existe",
+        "workflow roda scripts/check.ps1 em push, pull_request, schedule e workflow_dispatch",
+        "main tem decisao humana de branch protection ou bloqueio documentado"
+      ],
+      "owner": "Lucas",
+      "risk": "CI Windows divergir do ambiente local ou bloquear push sem ganho.",
+      "rollback": "Desabilitar workflow ou remover branch protection; checks locais continuam.",
+      "negative_criterion": "Se o workflow falhar por ambiente por 2 ciclos sem bug real, documentar bloqueio e manter apenas check local.",
+      "next_action": "Confirmar no GitHub se o workflow rodou e decidir branch protection."
+    },
+    {
+      "id": "EV-B3",
+      "batch": 3,
+      "status": "planned",
+      "area": "Seguranca e privacidade medica",
+      "problem": "Ha regra de nao usar dados sensiveis, mas falta classificacao operacional de dados.",
+      "trigger": "Antes de qualquer fluxo com saude, dado pessoal, paciente, PDF clinico ou export externo.",
+      "acceptance": [
+        "classes de dado existem",
+        "PHI checklist existe",
+        "threat model existe",
+        "incident log existe"
+      ],
+      "owner": "Lucas + agent",
+      "risk": "Privacidade virar texto sem controle operacional.",
+      "rollback": "Manter regra atual de bloqueio total de dado sensivel e retirar artefatos extras.",
+      "negative_criterion": "Se nenhum fluxo tocar saude ou dado sensivel, manter checklist minimo.",
+      "next_action": "Criar data-classification executavel ou checklist validado pelo harness."
+    },
+    {
+      "id": "EV-B4",
+      "batch": 4,
+      "status": "planned",
+      "area": "Arquitetura e documentacao",
+      "problem": "SOTA-DECISIONS.md esta grande e arquitetura ainda depende de TREE.md + contexto humano.",
+      "trigger": "Quando SOTA-DECISIONS.md continuar acima do threshold ou nova decisao estrutural for adicionada.",
+      "acceptance": [
+        "architecture note existe",
+        "ADR index existe",
+        "SOTA sprawl reduzido ou arquivado",
+        "harness continua passando"
+      ],
+      "owner": "Lucas + agent",
+      "risk": "Criar mais documentos sem reduzir sprawl.",
+      "rollback": "Reverter split e manter SOTA-DECISIONS.md como fonte unica ate nova estrategia.",
+      "negative_criterion": "Se aumentar arquivo total sem melhorar busca, reverter.",
+      "next_action": "Planejar decomposicao de SOTA-DECISIONS.md somente depois de Batch 2."
+    }
+  ]
+}

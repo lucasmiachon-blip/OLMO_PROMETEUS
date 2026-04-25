@@ -20,6 +20,9 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 - `shadow/WORK-LANES.md`: fonte unica dos 6 estados (private, experiment, candidate, operational, retired, blocked) e promotion gate
 - `shadow/INCORPORATION-LOG.md`: log de transicoes de estado aplicadas
 - `shadow/EVIDENCE-LOG.md`: registro de uso real dos procedimentos (gate para `operational`)
+- `scripts/maturity.ps1`: camada executavel de maturidade CMMI adaptada; roda gaps, batches e checks
+- `scripts/evolve.ps1`: executor self-evolving; valida backlog interno, riscos, review cadence e workflow read-only
+- `internal/evolution/`: estrutura interna versionada do self-evolution loop (backlog, risk register, review)
 - `shadow/SOTA-DECISIONS.md`: decisoes SOTA curtas + `Applied when` + stubs `Blocked ate evidencia`
 - `shadow/AGENT-MODULES.md`: contrato experimental para agentes; eixo tecnico ortogonal a WORK-LANES
 - `shadow/AGENT-USAGE.md`: mapa de agentes/skills globais usados sem scaffold local + SOTA agent contract
@@ -28,6 +31,7 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 - `shadow/HYGIENE.md`: checklist de higiene para evitar sprawl
 - `shadow/EMAIL-DIGEST-4P.md`, `shadow/STUDY-TRACK-DONE.md`: procedures com rubric e mini-evals
 - `scripts/check.ps1`: harness local de regressao leve
+- `.github/workflows/self-evolution.yml`: watchdog read-only para rodar checks sem pedido manual
 - `Prometeus/.obsidian/`: configuracao do Obsidian para abrir o vault `Prometeus`
 - `Prometeus/wiki/`: wiki operacional versionada do projeto
 - `lab/wiki-graph-lab/`: companion visual local para explorar o vault fora do graph cru
@@ -52,6 +56,7 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 4. classificar o artefato em `private`, `experiment`, `candidate`, `operational`, `retired` ou `blocked` (ver `shadow/WORK-LANES.md`);
 5. se o procedimento tem `## Rubric`, rodar a rubrica e anotar score na observacao da linha do EVIDENCE-LOG;
 6. so discutir migracao para `OLMO` depois do gate humano.
+7. antes de nova mudanca estrutural, rodar `powershell -ExecutionPolicy Bypass -File .\scripts\evolve.ps1 -Mode next`.
 
 ## Higiene do projeto
 

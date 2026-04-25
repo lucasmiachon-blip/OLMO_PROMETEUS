@@ -72,6 +72,8 @@ Regra: agentes que precisarem de criterio detalhado seguem o link acima. Duplica
 - `private-learning/`: cockpit visual e material pessoal local, ignorado pelo Git e pelo contexto.
 - `CLAUDE.md`: adaptador fino para Claude Code; importa `AGENTS.md`.
 - `GEMINI.md`: adaptador fino para Gemini CLI; importa `AGENTS.md`.
+- `.github/workflows/self-evolution.yml`: watchdog read-only que roda harness/evolucao sem write automatico.
+- `internal/evolution/`: backlog, risk register e review cadence do loop self-evolving; nao guarda dado sensivel.
 - `shadow/`: fonte operacional. Contratos, gates, rubricas, evidencia e mapas de uso.
   - `shadow/WORK-LANES.md`: fonte unica dos estados (private, experiment, candidate, operational, retired, blocked) e promotion gate.
   - `shadow/EVIDENCE-LOG.md`: registro de uso real dos procedimentos (gate para `operational`).
@@ -84,7 +86,7 @@ Regra: agentes que precisarem de criterio detalhado seguem o link acima. Duplica
 - `Prometeus/.obsidian/`: configuracao do vault Obsidian `Prometeus`.
 - `Prometeus/wiki/`: conhecimento duravel e navegavel via graph view. Complementa `shadow/`, nao substitui.
   - `Prometeus/wiki/Notes/`: notas conceituais com no minimo 2 wikilinks para outras notas. Notas com <2 wikilinks sao espelhos de `shadow/` e viram candidatas a delete em HYGIENE.
-- `scripts/`: harness local pequeno.
+- `scripts/`: harness local pequeno, maturidade (`scripts/maturity.ps1`) e self-evolution (`scripts/evolve.ps1`).
 
 ## Memoria
 
@@ -118,6 +120,7 @@ Se o erro indicar sandbox, permissao ou rede e o comando for essencial, repetir 
 - escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`;
 - copiar hooks, MCP ou infraestrutura sensivel do `OLMO`;
 - ativar hook sem trigger, evidencia, rollback e aprovacao humana explicita;
+- permitir self-evolution com write, commit, push, issue, PR ou dado sensivel sem aprovacao humana explicita;
 - recriar diretorios locais de agents, subagents, skills, hooks, `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` ou `.gemini/` sem necessidade repetida e aprovacao explicita;
 - criar skill em `.claude/skills/<name>/` sem procedure operational em `shadow/` e sem frontmatter valido (`name`, `description`, `trigger`, `non-trigger`, `source`, `status`, `owner`) — ver `shadow/AGENT-USAGE.md > Local skills contract`;
 - tratar `.claude/settings.local.json` como runtime ativo (e state local; fica em `.gitignore`/`.claudeignore`);
