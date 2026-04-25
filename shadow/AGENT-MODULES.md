@@ -35,6 +35,8 @@ Pesquisa oficial em 2026-04-23:
 
 Conclusao: encapsulamento modular e valido, mas o primeiro artefato deve ser contrato, nao scaffold.
 
+SOTA refresh 2026-04-25: `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` passa a ser o gate E2E. Antes de qualquer runtime multi-agent, medir baseline single/procedure, declarar contrato, testar caso permitido/proibido e registrar evidencia. A primeira topologia de edicao a avaliar, se o baseline falhar, e Architect/Editor; fanout paralelo fica read-only por padrao.
+
 ## Trigger
 
 Usar este documento quando:

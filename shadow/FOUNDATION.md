@@ -25,8 +25,15 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 - `lab/wiki-graph-lab/` para a camada visual reversivel que le o vault sem duplicar a fonte de verdade.
 - `private-learning/` para interface e material pessoal.
 - `scripts/check.ps1` como harness local.
+- `scripts/guard-olmo-write-hook.ps1` como guard local do Claude PreToolUse contra o caminho proibido e workspace legado ROADMAP.
+- `scripts/test-olmo-boundary-guard.ps1` como teste automatizado da trava OLMO.
+- `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` como gate E2E para orquestracao, harness e claims antifragile.
+- `scripts/test-orchestration-e2e.ps1 -DryRun` como teste E2E sem side effects desse gate.
+- `scripts/test-antifragile-learning.ps1 -DryRun -Scenario All -Seed 42` como teste de aprendizado: injeta erro sintetico de catalogo, exige deteccao, evidencia e regressao; `-Scenario CASE_edges` cobre bordas do contrato; `-Scenario Random -Seed N` reproduz um caso pseudoaleatorio.
 
 Nao existe sincronizacao automatica com `C:\Dev\Projetos\OLMO`.
+
+Excecao aprovada em 2026-04-25: `.claude/settings.local.json` pode acionar um unico `PreToolUse` local que chama `scripts/guard-olmo-write-hook.ps1` e bloqueia qualquer payload de ferramenta que mencione `C:\Dev\Projetos\OLMO` ou o workspace legado ROADMAP. Isso nao cria `.claude/hooks/`, nao escreve fora do repo e existe apenas para tornar a boundary fail-closed. O harness roda teste positivo/negativo desse guard e falha se o workspace legado reaparecer.
 
 Arquivos privados ou gerados devem ficar fora de Git e fora do contexto de agentes. Manter `.gitignore` e `.claudeignore` em paridade para `private-learning/`, buffers do Obsidian, workspace local, caches, plugins, `node_modules/` e `.venv/`.
 
@@ -113,6 +120,7 @@ Delegacao:
 Sem fan-out automatico e sem registry local de agentes neste repo. Todo uso real de subagent ou procedure registrado em `shadow/EVIDENCE-LOG.md`.
 
 Para o perfil de medico solo dev, orquestracao deve permanecer primeiro como procedimento auditavel em `shadow/`: estado claro, humano-no-loop, evidencias, custo e rollback. Frameworks externos de agentes so entram quando o procedimento manual provar retrabalho repetido sem expor dados sensiveis.
+O gate `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` e a fonte para decidir quando subir de procedimento para workflow, architect/editor, fanout ou runtime.
 Self-evolution: `scripts/evolve.ps1` le `internal/evolution/`, alinha com `scripts/maturity.ps1`, valida riscos e declara o proximo batch. O workflow `.github/workflows/self-evolution.yml` roda sem pedido manual, mas e read-only; ele pode falhar e informar, nao escrever ou decidir sozinho.
 
 

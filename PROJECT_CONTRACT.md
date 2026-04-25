@@ -14,7 +14,7 @@ Validar um laboratorio paralelo, guiado por orquestracao de baixo risco, para va
 - Automacao self-evolving permitida somente em modo read-only: pode checar, relatar e falhar; nao pode escrever, commitar, pushar, abrir issue/PR ou tocar dado sensivel sem aprovacao humana explicita.
 - Nao manter scaffolds locais de agents, subagents, skills, hooks, `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` ou `.gemini/` sem necessidade repetida e gate humano explicito.
 - `.claude/skills/` esta aberto desde 2026-04-23 (`shadow/SOTA-DECISIONS.md > Local skills gate`); skills exigem procedure `operational` em `shadow/`, `SKILL.md` com frontmatter valido e aprovacao humana por skill.
-- `.claude/settings.local.json` e aceito como state do harness local e fica em `.gitignore`/`.claudeignore`; nao e scaffold e nao e versionado.
+- `.claude/settings.local.json` e aceito como state do harness local e fica em `.gitignore`/`.claudeignore`; nao e scaffold e nao e versionado. Excecao ativa: PreToolUse boundary guard local para bloquear `C:\Dev\Projetos\OLMO` e workspace legado ROADMAP.
 - Nao criar sincronizacao automatica com o repo principal.
 - Nao promover artefatos sem trigger, evidencia e rollback.
 - Nao mudar arquitetura, agentes, skills, hooks, MCP, memoria ou orquestracao sem SOTA research gate previo.

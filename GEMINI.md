@@ -11,6 +11,7 @@ Laboratorio paralelo solo. Gemini entra para pesquisa externa, multimodalidade e
 ### Things that will bite you
 
 - Write externo nao autorizado: qualquer edit fora de `C:\Dev\Projetos\OLMO_PROMETEUS` e proibido. Se a tarefa exigir, pare e peca autorizacao citando caminho e acao exata.
+- Workspace stale: se a sessao apontar para ROADMAP legado ou cwd diferente, corrija para `C:\Dev\Projetos\OLMO_PROMETEUS` antes de editar; se a ferramenta de patch estiver presa fora daqui, pare e relate.
 - Runtime scaffolds: `.gemini/`, extensoes, MCP config, comandos ativos ou automacao ativa sao proibidos sem gate em `shadow/INCORPORATION-LOG.md`.
 - Output volumoso no repo: saidas duraveis devem virar decisao curta em `shadow/` ou nota linkavel em `Prometeus/wiki/`. Relatorios longos morrem cedo (regra anti-sprawl).
 - Duplicar politica: se precisar de regra nova, va para `AGENTS.md`, `PROJECT_CONTRACT.md`, `TREE.md`, `shadow/` ou `Prometeus/wiki/` — nao aqui.

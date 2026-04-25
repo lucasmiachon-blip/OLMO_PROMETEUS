@@ -18,6 +18,7 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 - Nao executar automacao, hook, script ou ferramenta que faca write externo.
 - Nao tocar `C:\Dev\Projetos\OLMO`, `C:\Dev\Projetos\OLMO_COWORK` ou outros siblings.
 - Se uma tarefa exigir write fora daqui, parar e pedir autorizacao explicita na conversa.
+- Se a sessao iniciar em workspace legado ROADMAP ou cwd diferente, corrigir para `C:\Dev\Projetos\OLMO_PROMETEUS` antes de qualquer edit; se a ferramenta de patch estiver presa fora daqui, parar e relatar.
 - A autorizacao precisa citar o caminho externo e a acao exata.
 
 ## Operating Principles

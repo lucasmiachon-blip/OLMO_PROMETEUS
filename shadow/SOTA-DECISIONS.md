@@ -1,273 +1,165 @@
 # SOTA Decisions
 
-Data: 2026-04-23
+Data: 2026-04-25
 Escopo: open OLMO_PROMETEUS
-Status: decisao operacional, nao arquitetura aspiracional
+Status: indice operacional de decisoes; detalhes longos ficam em docs especializados.
 
 ## Decisao central
 
-O melhor do SOTA para este projeto pequeno e manter pouca estrutura, bem nomeada e verificavel.
+Prometeus deve continuar pequeno, verificavel e reversivel.
 
 Manter:
 
-- `AGENTS.md` como contrato central e portavel.
-- `CLAUDE.md` e `GEMINI.md` como adaptadores finos para ferramentas que nao leem `AGENTS.md` por padrao.
-- Procedimentos pequenos como docs em `shadow/` ou notas em `Prometeus/wiki/`.
-- Gmail como fila simples: `Processar`, `Alta`, `Ruido`, `Digerido`.
-- `Digerido` somente depois de artefato persistente.
-- `shadow/INCORPORATION-LOG.md` como gate antes de qualquer conversa sobre OLMO.
-- `scripts/check.ps1` como harness leve antes de commit.
-- `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus` como vault Obsidian, com notas em `wiki/`, nao como inbox privado permanente.
+- `AGENTS.md` como contrato central.
+- `CLAUDE.md` e `GEMINI.md` como adaptadores finos.
+- `shadow/` para decisoes, procedures e gates.
+- `Prometeus/wiki/` para conhecimento navegavel.
+- `scripts/check.ps1` como harness antes de commit.
 - Boundary absoluta: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
-- Raiz sem scaffolds fantasmas: nada de `.agents`, `.codex`, `agents`, `subagents`, `skills`, `hooks` ou `playground` sem gate.
 
-Nao incorporar agora:
+Nao incorporar por reflexo:
 
-- hooks como base da arquitetura;
+- runtime agentico;
+- hooks como arquitetura;
 - MCP proprio;
-- A2A local;
-- agentes demais;
-- skills especulativas;
-- registry local de agentes ou skills;
-- `.claude/`, `.gemini/` ou configs de ferramenta como runtime ativo;
-- relatorios SOTA longos que viram museu.
-- hooks reais antes de um comando manual provar utilidade.
+- registry local de agentes/skills;
+- relatorios SOTA longos.
 
 ## Regras praticas
 
-1. Criar skill/agente novo apenas depois de uso recorrente, dor repetida e aprovacao explicita.
-2. Antes disso, manter o procedimento em `shadow/` ou na wiki.
-3. Pesquisa externa vira decisao curta, nao biblioteca grande.
-4. Qualquer coisa que pareca migravel passa por `private -> experiment -> candidate`.
-5. Nada toca `C:\Dev\Projetos\OLMO` sem autorizacao humana explicita.
+1. Procedimento primeiro; skill/agente apenas com uso recorrente e aprovacao humana.
+2. Pesquisa externa vira decisao curta e teste, nao museu documental.
+3. Qualquer coisa migravel passa por `private -> experiment -> candidate`.
+4. Nada toca `C:\Dev\Projetos\OLMO` sem autorizacao humana explicita.
+5. Toda mudanca estrutural precisa de trigger, risco, custo, rollback e criterio negativo.
 
 ## SOTA research gate
 
-Decisao: toda mudanca de arquitetura, agente, skill, hook, MCP, memoria ou orquestracao precisa de pesquisa SOTA antes de editar.
+Mudancas de arquitetura, agente, skill, hook, MCP, memoria ou orquestracao exigem:
 
-Contrato minimo:
+- auditoria local antes de buscar fora;
+- fontes primarias atuais;
+- decisao curta;
+- criterio negativo explicito;
+- harness passando.
 
-- auditar primeiro o estado local;
-- usar fontes primarias atuais, preferindo docs oficiais;
-- registrar uma decisao curta, nao um relatorio longo;
-- citar fontes quando a decisao depender de pesquisa externa;
-- explicitar trigger, nao-trigger, risco, custo e rollback;
-- incluir criterio negativo: quando nao aplicar a ideia;
-- rodar harness antes de commit.
-
-Regra anti-sycophancy: se a pesquisa nao sustenta a proposta para o tamanho real do Prometeus, a resposta correta e rejeitar, reduzir ou adiar a mudanca. SOTA nao e moda; e ajuste entre pratica externa, escala local e risco operacional.
-
-### Rubric do SOTA research gate
-
-Score minimo pass = 0.7 (de 1.0). Rodar apos cada aplicacao do gate e registrar em `shadow/EVIDENCE-LOG.md`.
-
-| Dimensao | Peso | 0 | 1 | 2 |
-| --- | --- | --- | --- | --- |
-| Auditoria local primeiro | 0.2 | pulou | superficial | estado atual explicitado antes de buscar externo |
-| Fontes primarias atuais | 0.2 | sem fontes | fontes secundarias ou antigas | docs oficiais vigentes (Anthropic, OpenAI, Google, papers) |
-| Decisao curta | 0.2 | relatorio longo | decisao com bullets excessivos | decisao <=20 linhas com trigger, risco, rollback |
-| Criterio negativo explicito | 0.2 | ausente | vago | "se X em Y prazo, rejeitar/ajustar" operacional |
-| Artefato registrado | 0.2 | sem artefato persistente | decisao solta | linha em SOTA-DECISIONS + transicao em INCORPORATION-LOG |
-
-Formula: `score = 0.2 * soma(niveis)/10`. Normalizar cada dimensao para 0-1.
+Rubrica minima: auditoria local, fonte primaria, decisao curta, criterio negativo e artefato registrado. Se a pesquisa nao sustenta a mudanca para este repo pequeno, rejeitar ou adiar.
 
 ## Agent module frontier
 
-Decisao: tratar agentes como modulos encapsulados, nao como personas ou pastas.
+Agentes sao modulos encapsulados, nao personas ou pastas. O contrato vive em `shadow/AGENT-MODULES.md`.
 
-O contrato vive em `shadow/AGENT-MODULES.md` e a nota navegavel vive em `Prometeus/wiki/Notes/Agent Module Encapsulation.md`.
+Escada permitida:
 
-Resumo operacional:
+1. prompt/procedure;
+2. modulo documentado;
+3. runner manual;
+4. agente real com eval, estado, tools minimas e rollback.
 
-- primeiro procedimento;
-- depois modulo documentado;
-- depois runner manual;
-- so entao agente real;
-- todo modulo declara input, output, estado, tools, permissoes, guardrails, eval, custo e rollback.
-
-Sinal SOTA: OpenAI enfatiza agents com instrucoes, tools, handoffs e guardrails; Anthropic enfatiza subagentes focados, contexto separado e ferramentas limitadas; Google ADK enfatiza tipos de agentes e avaliacao por resposta, trajetoria, ferramentas, groundedness e seguranca.
-
-Decisao Prometeus: nao criar runtime de agente enquanto os candidatos atuais funcionam como procedimentos e harness. `Agent Module Encapsulation` fica em `experiment`.
+Runtime agentico continua bloqueado ate haver 3 evidencias reais de retrabalho que um procedimento simples nao resolva.
 
 ## Padrao SOTA para procedimentos
 
-Enquanto nao houver skill real, cada procedimento duravel deve ter:
+Todo procedimento duravel precisa de:
 
 - trigger e nao-trigger;
 - contrato de entrada;
 - output esperado;
 - workflow curto;
 - criterios negativos;
-- mini-evals com prompts realistas.
+- mini-evals realistas.
 
-Se algum procedimento passar a ser usado recorrentemente, so entao considerar uma skill real com `SKILL.md`, descricao forte de trigger, progressive disclosure e evals. Ate la, procedimento em `shadow/` e mais barato que scaffold.
+Skill real so entra depois que o procedimento atingir `operational` e provar reducao de retrabalho.
 
 ## Big Three scan
 
-Busca oficial em 2026-04-23: OpenAI, Anthropic e Google convergem em quatro pontos.
+Sinais consolidados de OpenAI, Anthropic e Google:
 
-| Fonte | Sinal operacional | Decisao Prometeus |
+| Tema | Sinal SOTA | Decisao Prometeus |
 | --- | --- | --- |
-| OpenAI Codex Skills | Skills sao workflows reutilizaveis com `SKILL.md`, `name`, `description`, recursos opcionais e progressive disclosure. Descricao define matching implicito. | Manter playbooks em `shadow/` ate haver uso repetido. Se virar skill, exigir trigger/nao-trigger forte, corpo curto e mini-evals. |
-| OpenAI Codex Subagents | Subagentes servem para tarefas paralelas complexas, custam mais tokens e so devem ser usados quando explicitamente pedidos. | Nao manter registry local de subagentes. Delegacao fica por conversa, nao por scaffold persistente. |
-| Anthropic Claude Code Memory | Claude Code le `CLAUDE.md`, nao `AGENTS.md`; recomenda criar `CLAUDE.md` importando `AGENTS.md` quando o repo ja usa AGENTS. | Criar apenas um adaptador fino `CLAUDE.md` com `@AGENTS.md`. Nao criar `.claude/`, rules, hooks ou auto-memory versionada. |
-| Anthropic Claude Code Best Practices | Recomenda explorar primeiro, planejar, dar verificacao ao agente, gerenciar contexto agressivamente e usar subagentes para investigacao quando isso poupar contexto principal. | Antes de mudanca estrutural: auditar, pesquisar, decidir e verificar. Subagente nao vira pasta persistente por padrao. |
-| Anthropic Claude Skills | Skills entram quando o usuario repete playbooks/checklists ou quando uma parte de memoria vira procedimento; corpo carrega sob demanda. | A regra "procedimento primeiro, skill depois" esta correta. Migrar para skill apenas quando a repeticao justificar custo. |
-| Anthropic Subagents | Subagentes devem ter escopo, ferramentas e modelo claros; subagente read-only deve limitar ferramentas. | Se algum dia voltar, deve ser read-only por padrao, com ferramentas minimas e uso explicito. |
-| Anthropic Hooks | Hooks dao controle deterministico, mas rodam comandos automaticamente no ciclo do agente. | Continuar sem hooks ativos. Primeiro comando manual, depois harness, so entao discutir automacao. |
-| Google Gemini CLI `GEMINI.md` | Gemini CLI carrega contexto hierarquico por `GEMINI.md`, suporta imports `@file.md` e permite customizar nomes de contexto. | Criar apenas um adaptador fino `GEMINI.md` com `@AGENTS.md`. Nao criar `.gemini/`, extensoes, MCP ou comandos ativos. |
-| Google ADK Agents | Distingue LLM agents, workflow agents deterministicos e custom agents; workflow agents dao previsibilidade. | Para Prometeus, preferir workflow documentado e harness deterministico antes de agente LLM. |
-| Google ADK Evaluation/Artifacts | ADK enfatiza avaliacao, artefatos persistentes, estado/memoria e ferramentas separadas. | Separar memoria (`shadow`/wiki), artefatos e estado privado. Todo procedimento duravel precisa de mini-evals. |
-| Google ADK Evaluation | Agentes precisam ser avaliados por resposta final, trajetoria, uso de ferramentas, groundedness e seguranca; testes agenticos nao sao so unit tests deterministas. | Se Prometeus criar agente real, precisa eval minimo antes de virar runtime. Enquanto isso, mini-evals nos procedimentos bastam. |
-
-Conclusao: o SOTA nao pede mais pastas. Pede menos contexto carregado por padrao, gatilhos melhores, artefatos persistentes, avaliacoes pequenas e automacao so quando a regra for deterministica.
+| Skills | uteis para workflows repetidos, com trigger forte e progressive disclosure | manter em `shadow/` ate prova de uso |
+| Subagents | bons para pesquisa paralela e contexto separado | usar sob demanda, nao criar registry local |
+| Hooks | deterministas, mas perigosos quando viram arquitetura | aceitar apenas guard local testado |
+| Agents | precisam tools, estado, handoff, guardrails e eval | runtime bloqueado ate baseline falhar |
+| Evaluation | medir resposta, trajeto, ferramentas, groundedness e seguranca | mini-evals locais antes de framework |
 
 ## Local skills gate (2026-04-23)
 
-Decisao: permitir `.claude/skills/` local como casa para skills reais promovidas de procedures `operational`. Mantem `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` proibidos.
+`.claude/skills/` pode existir apenas para skills reais promovidas de procedures `operational`.
 
-Precisao de linguagem: "aberto" aqui significa que o diretorio pode existir e o harness valida `SKILL.md` quando houver. Nao significa skill instalada imediatamente. Primeira skill so entra quando o primeiro procedure atingir `operational` conforme gate abaixo. Enquanto isso, `.claude/skills/` deve estar vazio ou ausente.
+Trigger: procedure operacional >=30 dias, rubrica media >=0.8, evidencias em `EVIDENCE-LOG.md` e aprovacao humana por skill.
 
-Auditoria local: 3 procedures com `## Rubric` (`email-digest-4p`, `study-track-done`, `sota-research-gate`); nenhum skill existe ainda; C3 anterior proibia `.claude/skills/` preventivamente.
+Nao-trigger: skill especulativa, copia de comunidade, ou duplicata estatica de procedure.
 
-Fontes: Claude Code Skills docs (`https://code.claude.com/docs/en/skills`), Anthropic Skills repo (`https://github.com/anthropics/skills`), Anthropic Skill Creator plugin (`https://claude.com/plugins/skill-creator`).
-
-- Trigger: procedure em `operational` >=30 dias + rubric media >=0.8 em entries de `EVIDENCE-LOG.md` + aprovacao humana explicita por skill.
-- Nao trigger: procedure em `candidate` ou `experiment`; skill especulativa; copia de skill da comunidade sem ajuste; instalar skill "so pra ter".
-- Risco: sprawl; redundancia com procedure em shadow/; runtime scaffold reemergindo; SKILL.md desalinhado do procedure.
-- Custo: manutencao dupla (SKILL.md + procedure); harness overhead; contexto carregado em sessao.
-- Rollback: deletar `.claude/skills/<name>/`; procedure em shadow/ continua intocado.
-- Criterio negativo: se em 60 dias (ate 2026-06-22) nenhuma skill promovida gerar reducao mensuravel de retrabalho OU a skill virar duplicata estatica, reverter decisao e voltar a proibir `.claude/skills/`.
-
-Harness: `.claude/skills/` removido de `forbiddenClaudeSubdirs`; novo check exige `SKILL.md` em cada subdir de `.claude/skills/`. Contrato de SKILL.md (name, description, trigger, non-trigger) vive em `shadow/AGENT-USAGE.md > Local skills contract`.
+Rollback: deletar `.claude/skills/<name>/`; procedure original continua em `shadow/`.
 
 ## Error report memory protocol (2026-04-25)
 
-Decisao: persistir em `AGENTS.md` um protocolo curto para erros materiais: erro, causa provavel, mudanca de plano, impacto, acao profissional, decisao `vamos fazer?` com justificativa e regra nova.
+Erro material deve gerar resposta curta com: erro, causa provavel, impacto, mudanca de plano, acao profissional e decisao fazer/nao fazer.
 
-Auditoria local: `AGENTS.md` ja define memoria do projeto; `shadow/FOUNDATION.md` diz que memoria so entra no repo quando muda comportamento futuro. O pedido do usuario transforma o padrao de reporte em comportamento futuro.
+Trigger: erro que muda plano, validacao, confianca ou rota de execucao.
 
-Fontes: OpenAI Codex best practices (`https://developers.openai.com/codex/learn/best-practices`), AGENTS.md docs (`https://developers.openai.com/codex/guides/agents-md`) e GPT-5.5 guidance sobre outcome-first e criterios de sucesso (`https://developers.openai.com/api/docs/guides/latest-model`).
-
-- Trigger: erro material que muda plano, confianca, validacao ou rota de execucao.
-- Nao-trigger: typo, detalhe cosmetico ou falha ja corrigida sem impacto no plano.
-- Risco: burocracia e relatorios maiores que a correcao.
-- Custo: 30-90 segundos por erro material.
-- Rollback: remover a secao de `AGENTS.md` e esta decisao.
-- Criterio negativo: se em 30 dias o reporte nao reduzir repeticao de erro ou virar ruido, comprimir para uma linha em `AGENTS.md`.
+Nao-trigger: typo, falha cosmetica ou erro ja corrigido sem impacto.
 
 ## Solo medico agent/orchestration refresh (2026-04-25)
 
-Decisao: incorporar padroes de agent engineering, nao runtimes. Manter AGENTS/CLAUDE fino, procedures em `shadow/`, subagents read-only sob demanda, skills apenas quando procedure for operational. Nao instalar LangGraph, CrewAI, Paperclip ou OpenAI Agents SDK agora.
+Incorporar padroes de agent engineering, nao runtimes. Privacidade, humano-no-loop, auditoria, custo e rollback vem antes de qualquer automacao.
 
-Auditoria local: repo pequeno, sem app agentico, sem workflow repetido com estado duravel, sem dado medico versionado; `AGENT-USAGE.md` ja evita scaffold local.
+Trigger para runtime: >=3 evidencias reais de retrabalho por falta de estado, HITL, tracing ou coordenacao, sem PHI e com rollback.
 
-Fontes: Anthropic Claude memory/skills/subagents/agent teams/hooks (`https://code.claude.com/docs/en/memory`, `https://code.claude.com/docs/en/skills`, `https://code.claude.com/docs/en/sub-agents`, `https://code.claude.com/docs/en/agent-teams`, `https://code.claude.com/docs/en/hooks`); OpenAI Agents SDK/guardrails (`https://github.com/openai/openai-agents-python`, `https://openai.github.io/openai-agents-python/guardrails/`); LangGraph (`https://docs.langchain.com/oss/python/langgraph/overview`); CrewAI (`https://docs.crewai.com/en/introduction`); Paperclip (`https://github.com/paperclipai/paperclip`); HHS/ANPD privacidade (`https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html`, `https://www.gov.br/anpd/pt-br/canais_atendimento/agente-de-tratamento/perguntas-frequentes-anpd`).
-
-- Trigger: >=3 evidencias reais de retrabalho por falta de estado/HITL/tracing/coordenacao; plano de privacidade sem PHI; rollback e harness.
-- Nao-trigger: curiosidade SOTA, single-user notes, demo, workflow ainda manualmente simples.
-- Risco: sprawl, vazamento de dado sensivel, custo de tokens, autonomia excessiva.
-- Custo: dependencia nova, manutencao, observabilidade, politicas de permissao.
-- Rollback: remover overlay de `AGENT-USAGE.md`; manter procedures em `shadow/`.
-- Criterio negativo: se ate 2026-05-25 nao houver 3 evidencias, continuar sem runtime agentico.
+Nao-trigger: curiosidade SOTA, demo, single-user notes ou workflow manual simples.
 
 ## Applied when
 
-Registro de quando cada decisao acima foi aplicada a uma mudanca real. Uma entrada por aplicacao, com data, artefato e commit quando disponivel. Se uma decisao ficar >30 dias sem aplicacao registrada, e candidata a remocao (museu).
-
 | Data | Decisao | Aplicada em | Artefato/commit |
 | --- | --- | --- | --- |
-| 2026-04-23 | Decisao central (manter pouca estrutura bem nomeada) | Bloco A deste plano | commit 1c02049 |
-| 2026-04-23 | SOTA research gate | Redacao do `shadow/PLAN-2026-04-23.md` como gate formal desta rodada | `shadow/PLAN-2026-04-23.md` |
-| 2026-04-23 | Agent module frontier (modulo primeiro, runtime depois) | Rejeitar criacao de `.claude/agents/` local; mapear agentes globais em `shadow/AGENT-USAGE.md` | `shadow/AGENT-USAGE.md` |
-| 2026-04-23 | Padrao SOTA para procedimentos (mini-evals + rubrica) | Adicionar `## Rubric` em email-digest-4p, study-track-done e SOTA research gate | `shadow/EMAIL-DIGEST-4P.md`, `shadow/STUDY-TRACK-DONE.md`, `shadow/SOTA-DECISIONS.md` |
-| 2026-04-23 | Adaptadores CLAUDE.md/GEMINI.md finos | Refactor Boris-style "things that will bite you" | commit 1c02049 |
-| 2026-04-23 | Local skills gate (C2 -> promocao parcial) | Abertura condicional de `.claude/skills/`; harness, docs e AGENT-USAGE atualizados | (esta rodada) |
-| 2026-04-24 | SOTA research gate | Auditoria adversarial pos-PLAN-2026-04-23: rebaixamento de 4 labels aspiracionais, consolidacao de 3 tabelas de lanes em WORK-LANES.md, FAIL de EVIDENCE-LOG stale em `-Strict` | commits 1ea1dea, 0e6177d, b3bbdb4; primeira entrada real em `shadow/EVIDENCE-LOG.md` |
-| 2026-04-24 | SOTA research gate | Rodada II: clarificacao de linguagem no local skills gate (A3), skill sprawl check no harness (pre-mortem #2), coautoria padronizada (B1) | commits 51d59a7, cf78eec, 9ee66dd |
-| 2026-04-25 | Error report memory protocol | Protocolo de erro material e self-improvement persistido em memoria do projeto | `AGENTS.md`, `shadow/FOUNDATION.md` |
-| 2026-04-25 | Solo medico agent/orchestration refresh | Overlay de solo dev medico: privacidade, HITL, auditoria, sem runtime agentico novo | `AGENTS.md`, `shadow/AGENT-USAGE.md`, `shadow/FOUNDATION.md` |
+| 2026-04-23 | Decisao central | Bloco A do plano | commit 1c02049 |
+| 2026-04-23 | SOTA research gate | Gate formal e rubrica | `shadow/PLAN-2026-04-23.md`, `shadow/SOTA-DECISIONS.md` |
+| 2026-04-23 | Agent module frontier | Rejeicao de `.claude/agents/`; mapa de uso | `shadow/AGENT-USAGE.md` |
+| 2026-04-23 | Padrao SOTA para procedimentos | Rubricas e mini-evals | `shadow/EMAIL-DIGEST-4P.md`, `shadow/STUDY-TRACK-DONE.md` |
+| 2026-04-24 | Auditoria adversarial | Rebaixamento de labels aspiracionais e lanes | commits 1ea1dea, 0e6177d, b3bbdb4 |
+| 2026-04-25 | Error report memory protocol | Protocolo de erro material | `AGENTS.md`, `shadow/FOUNDATION.md` |
+| 2026-04-25 | Solo medico refresh | Overlay sem runtime novo | `AGENTS.md`, `shadow/AGENT-USAGE.md`, `shadow/FOUNDATION.md` |
+| 2026-04-25 | Orchestration/harness/antifragile gate | Gate E2E e fault injection seedado | `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`, `scripts/check.ps1` |
 
 ## Claude Code e GEMINI.md adapters
 
-Decisao: manter `AGENTS.md` como fonte de verdade e criar `CLAUDE.md` e `GEMINI.md` apenas como pontes de contexto.
+`AGENTS.md` e fonte de verdade. `CLAUDE.md` e `GEMINI.md` so importam contexto e repetem riscos que mordem na ferramenta.
 
-Contrato dos adaptadores:
+Contrato:
 
 - primeira linha importa `AGENTS.md`;
-- repetir apenas a boundary absoluta;
-- declarar que nao sao fonte de verdade;
-- proibir `.claude/`, `.gemini/`, hooks, MCP, subagentes, skills ou comandos ativos sem gate;
-- qualquer regra nova deve ir para a casa certa: `AGENTS.md`, `PROJECT_CONTRACT.md`, `TREE.md`, `shadow/` ou `Prometeus/wiki/`.
-
-Risco: imports carregam contexto no inicio da sessao. Por isso os adaptadores devem permanecer curtos e nao importar arvores grandes.
+- repetir apenas boundary e riscos da ferramenta;
+- regra nova vai para `AGENTS.md`, `PROJECT_CONTRACT.md`, `TREE.md`, `shadow/` ou `Prometeus/wiki/`.
 
 ## Time minimo
 
-| Papel | Modelo/ferramenta | Uso | Risco controlado |
-|------|--------------------|-----|------------------|
-| Orquestrador | Codex | integrar, editar, decidir proximo passo | nao delegar por reflexo |
-| Gemini | externo/manual | pesquisa longa, multimodal, PDFs | artefato curto em `shadow/` |
+| Papel | Ferramenta | Uso | Controle |
+| --- | --- | --- | --- |
+| Orquestrador | Codex | integrar, editar, verificar | nao delegar por reflexo |
+| Pesquisa longa | Gemini/manual | PDFs, multimodal e sintese externa | artefato curto em `shadow/` |
 
 ## Fontes base
 
 - OpenAI Codex AGENTS.md: `https://developers.openai.com/codex/guides/agents-md`
-- OpenAI Codex Skills: `https://developers.openai.com/codex/skills`
-- OpenAI Codex Subagents: `https://developers.openai.com/codex/subagents`
-- Anthropic Claude Code Skills: `https://code.claude.com/docs/en/skills`
-- Anthropic Claude Code Hooks: `https://code.claude.com/docs/en/hooks-guide`
-- Anthropic Claude Code memory: `https://code.claude.com/docs/en/memory`
-- OpenAI Agent evals: `https://developers.openai.com/api/docs/guides/agent-evals`
-- AGENTS.md convention: `https://agents.md/`
-- GitHub Copilot repository instructions: `https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions`
-- Anthropic Claude Code subagents: `https://docs.anthropic.com/en/docs/claude-code/sub-agents`
-- Google ADK agents: `https://adk.dev/agents/`
-- Google ADK overview: `https://adk.dev/get-started/about/`
-- Google ADK skills: `https://adk.dev/skills/`
-- Google Gemini CLI GEMINI.md: `https://google-gemini.github.io/gemini-cli/docs/cli/gemini-md.html`
-- Google Gemini models: `https://ai.google.dev/gemini-api/docs/models`
-- Google Gemini long context: `https://ai.google.dev/gemini-api/docs/long-context`
-- Google Agent2Agent announcement: `https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/`
+- OpenAI Codex Skills/Subagents: `https://developers.openai.com/codex/skills`, `https://developers.openai.com/codex/subagents`
+- Anthropic Claude Code memory/skills/hooks/subagents: `https://code.claude.com/docs/en/memory`, `https://code.claude.com/docs/en/skills`, `https://code.claude.com/docs/en/hooks-guide`, `https://docs.anthropic.com/en/docs/claude-code/sub-agents`
+- Google ADK/Gemini CLI: `https://adk.dev/agents/`, `https://google-gemini.github.io/gemini-cli/docs/cli/gemini-md.html`
+- OpenAI Agents SDK guardrails/evals: `https://openai.github.io/openai-agents-python/guardrails/`, `https://developers.openai.com/api/docs/guides/agent-evals`
 - MCP specification: `https://modelcontextprotocol.io/specification/2025-03-26`
 
 ## O que foi cortado
 
-- Relatorio SOTA longo de 2026-04-22: bom para exploracao, ruim como documento operacional.
-- Mapa SOTA intermediario de 2026-04-23: substituido por esta decisao curta.
-- Recomendacoes especulativas de skills/agentes que ainda nao tiveram uso real.
+- Relatorios SOTA longos e tabelas intermediarias.
+- Recomendacoes especulativas de skills/agentes sem uso real.
+- Duplicacao do gate antifragile; a fonte especializada e `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`.
 
 ## Blocked ate evidencia (Bloco C do PLAN-2026-04-23)
 
-Decisoes rascunho aguardando evidencia em `shadow/EVIDENCE-LOG.md` antes de virar rodada de implementacao. Cada item exige SOTA research gate separado quando o trigger bater.
+Rascunhos aguardam evidencia em `shadow/EVIDENCE-LOG.md` antes de implementacao.
 
-### C1 — Evaluator-optimizer via subagent
-
-- Trigger: rubrica de algum procedure (Bloco B1) rodada >=8 vezes sem ajuste (rubrica estavel).
-- Nao trigger: rubricas ainda em calibracao.
-- Decisao candidata: usar `Explore` subagent com prompt contendo a rubrica para critica cega de output do procedure.
-- Risco: custo de tokens e ciclo de critica que pode virar ritual.
-- Rollback: remover subagent step; manter avaliacao manual.
-
-### C2 — Promover procedure para skill formal
-
-- Trigger: procedure chega a `operational` com >=3 execucoes documentadas e rubrica passando.
-- Nao trigger: procedure ainda em `candidate` ou `experiment`.
-- Decisao candidata: criar `Prometeus/wiki/skills/<name>/SKILL.md` dentro do repo. NAO criar `.claude/skills/` local.
-- Risco: skill nao carregar automaticamente, duplicar procedure.
-- Rollback: deletar skill, manter procedure.
-
-### C3 — `.claude/` local scaffolds (parcialmente aberto 2026-04-23)
-
-- Decisao: `.claude/skills/` foi promovido e aberto (ver secao "Local skills gate" acima). `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` continuam REJEITADOS. Reavaliar subdir restante apenas com 3 dores concretas documentadas em `EVIDENCE-LOG.md` onde ausencia de scaffold local causou retrabalho real.
-
-### C4 — Memoria operacional durable layer
-
-- Trigger: `EVIDENCE-LOG.md` acumula >=10 entradas cujos insights destilem para <=8 frases load-bearing.
-- Nao trigger: <10 entradas ou entradas redundantes.
-- Decisao candidata: secao `## Durable insights` em `AGENTS.md`, cap de 8 linhas.
-- Risco: inflar AGENTS.md e reintroduzir memoria especulativa.
-- Rollback: deletar secao.
-
-Criterio negativo global: se ate 2026-05-23 nenhum stub for alcancado, reavaliar se Bloco C inteiro deve ser abandonado em vez de implementado.
+- C1 Evaluator-optimizer via subagent: exige rubrica rodada >=8 vezes e estavel.
+- C2 Skill local: exige procedure `operational`, aprovacao humana e evidencia de reducao de retrabalho.
+- C3 Runtime agentico: exige 3 evidencias reais, privacy plan sem PHI, eval e rollback.
 
 Coautoria: Lucas + GPT-5.4 (Codex)

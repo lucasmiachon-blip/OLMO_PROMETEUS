@@ -103,6 +103,13 @@ if ((Split-Path -Leaf $Root) -ne "OLMO_PROMETEUS") {
   Write-Ok "repo root is OLMO_PROMETEUS"
 }
 
+$legacyWorkspaceRoot = Join-Path (Split-Path -Parent $Root.Path) ("OLMO" + "_ROADMAP")
+if (Test-Path -LiteralPath $legacyWorkspaceRoot) {
+  Write-Fail "legacy workspace root exists and can attract stale sessions: $legacyWorkspaceRoot"
+} else {
+  Write-Ok "legacy workspace root absent"
+}
+
 $requiredFiles = @(
   "AGENTS.md",
   "CLAUDE.md",
@@ -114,9 +121,14 @@ $requiredFiles = @(
   "shadow/AGENT-MODULES.md",
   "shadow/HYGIENE.md",
   "shadow/SOTA-DECISIONS.md",
+  "shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md",
   "shadow/INCORPORATION-LOG.md",
   "scripts/maturity.ps1",
   "scripts/evolve.ps1",
+  "scripts/guard-olmo-write-hook.ps1",
+  "scripts/test-olmo-boundary-guard.ps1",
+  "scripts/test-orchestration-e2e.ps1",
+  "scripts/test-antifragile-learning.ps1",
   "internal/evolution/backlog.json",
   "internal/evolution/risk-register.json",
   "internal/evolution/review.json",
@@ -148,6 +160,60 @@ $requiredFiles = @(
 
 foreach ($file in $requiredFiles) {
   Require-File $file
+}
+
+$boundaryGuardScript = "scripts/guard-olmo-write-hook.ps1"
+$localClaudeSettings = ".claude/settings.local.json"
+if (Test-Path -LiteralPath $localClaudeSettings -PathType Leaf) {
+  try {
+    $localSettings = Get-Content -LiteralPath $localClaudeSettings -Raw | ConvertFrom-Json
+    $preToolUse = @($localSettings.hooks.PreToolUse)
+    $guardHook = $preToolUse | Where-Object {
+      $commands = @($_.hooks) | ForEach-Object { ([string]$_.command).Replace("\", "/") }
+      $_.matcher -match "Write" -and
+      (($commands | Where-Object { $_ -match [regex]::Escape($boundaryGuardScript) }).Count -gt 0)
+    }
+
+    if (@($guardHook).Count -gt 0) {
+      Write-Ok "Claude PreToolUse OLMO boundary guard is configured"
+    } else {
+      Write-Fail "Claude PreToolUse OLMO boundary guard missing from $localClaudeSettings"
+    }
+  } catch {
+    Write-Fail "invalid Claude local settings JSON: $localClaudeSettings"
+  }
+} else {
+  Write-Warn "Claude local OLMO boundary guard not active: missing $localClaudeSettings"
+}
+
+$boundaryGuardTest = "scripts/test-olmo-boundary-guard.ps1"
+if (Test-Path -LiteralPath $boundaryGuardTest -PathType Leaf) {
+  & powershell -NoProfile -ExecutionPolicy Bypass -File $boundaryGuardTest
+  if ($LASTEXITCODE -eq 0) {
+    Write-Ok "OLMO boundary guard tests pass"
+  } else {
+    Write-Fail "OLMO boundary guard tests failed"
+  }
+}
+
+$orchestrationE2ETest = "scripts/test-orchestration-e2e.ps1"
+if (Test-Path -LiteralPath $orchestrationE2ETest -PathType Leaf) {
+  & powershell -NoProfile -ExecutionPolicy Bypass -File $orchestrationE2ETest -DryRun
+  if ($LASTEXITCODE -eq 0) {
+    Write-Ok "orchestration/harness/antifragile E2E dry-run passes"
+  } else {
+    Write-Fail "orchestration/harness/antifragile E2E dry-run failed"
+  }
+}
+
+$antifragileLearningTest = "scripts/test-antifragile-learning.ps1"
+if (Test-Path -LiteralPath $antifragileLearningTest -PathType Leaf) {
+  & powershell -NoProfile -ExecutionPolicy Bypass -File $antifragileLearningTest -DryRun -Scenario All -Seed 42
+  if ($LASTEXITCODE -eq 0) {
+    Write-Ok "antifragile learning-loop dry-run passes"
+  } else {
+    Write-Fail "antifragile learning-loop dry-run failed"
+  }
 }
 
 $boundaryFiles = @(
@@ -392,6 +458,7 @@ $procedureContracts = @{
   "shadow/STUDY-TRACK-DONE.md" = @("## Trigger", "## Saida padrao", "## Workflow", "## Rubric", "## Mini-evals")
   "shadow/WORK-LANES.md" = @("## Trigger", "## Promotion gate", "## Decisao", "## Transicao candidate -> operational", "## Mini-evals")
   "shadow/SOTA-DECISIONS.md" = @("## SOTA research gate", "## Agent module frontier", "## Padrao SOTA para procedimentos", "## Big Three scan", "## Claude Code e GEMINI.md adapters", "## Applied when", "## Blocked ate evidencia")
+  "shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md" = @("## Trigger", "## SOTA Comparison", "## Decisions", "## E2E Gate", "## Mini-evals")
   "shadow/AGENT-USAGE.md" = @("## Purpose", "## SOTA agent contract", "## Guardrails", "## Non-triggers")
   "shadow/EVIDENCE-LOG.md" = @("## Schema", "## Entradas")
 }
