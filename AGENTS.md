@@ -7,7 +7,7 @@
 `open OLMO_PROMETEUS` e um laboratorio paralelo, pequeno e de baixo risco.
 
 - Pode editar arquivos dentro deste repositorio.
-- Nao deve editar `C:\Dev\Projetos\OLMO` nem `C:\Dev\Projetos\OLMO_COWORK` sem autorizacao humana explicita.
+- Nao deve escrever em `C:\Dev\Projetos\OLMO`, `C:\Dev\Projetos\OLMO_COWORK`, typos como `OLMO_COWOR` ou qualquer sibling `OLMO*`; leitura externa exige permissao humana explicita na conversa.
 - O foco e validar fluxo, digest, estudo, wiki operacional e gates de promocao.
 
 ## Fundamental Boundary
@@ -16,9 +16,9 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 
 - Nao editar, mover, deletar, criar, arquivar, sincronizar ou gerar artefatos fora deste repo.
 - Nao executar automacao, hook, script ou ferramenta que faca write externo.
-- Nao tocar `C:\Dev\Projetos\OLMO`, `C:\Dev\Projetos\OLMO_COWORK` ou outros siblings.
-- Se uma tarefa exigir write fora daqui, parar e pedir autorizacao explicita na conversa.
-- Se a sessao iniciar em workspace legado ROADMAP ou cwd diferente, corrigir para `C:\Dev\Projetos\OLMO_PROMETEUS` antes de qualquer edit; se a ferramenta de patch estiver presa fora daqui, parar e relatar.
+- Nao escrever em `C:\Dev\Projetos\OLMO`, `C:\Dev\Projetos\OLMO_COWORK` ou outros siblings; nao ler siblings sem perguntar primeiro.
+- Se uma tarefa exigir write fora daqui, parar: write externo e bloqueado. Se exigir read fora daqui, pedir autorizacao explicita antes de ler.
+- Se a sessao iniciar em workspace legado ROADMAP, `OLMO_COWORK`, typo `OLMO_COWOR` ou cwd diferente, corrigir para `C:\Dev\Projetos\OLMO_PROMETEUS` antes de qualquer edit; se a ferramenta de patch estiver presa fora daqui, parar e relatar.
 - A autorizacao precisa citar o caminho externo e a acao exata.
 
 ## Operating Principles

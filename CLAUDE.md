@@ -17,8 +17,8 @@ Laboratorio paralelo solo, baixo risco. Valida fluxo, digest, estudo, wiki e gat
 
 ### Things that will bite you
 
-- Write externo nao autorizado: qualquer edit fora de `C:\Dev\Projetos\OLMO_PROMETEUS` e proibido. Se a tarefa exigir, pare e peca autorizacao citando caminho e acao exata.
-- Workspace stale: se a sessao apontar para ROADMAP legado, `OLMO_COWORK`, typo `OLMO_COWOR` ou cwd diferente, corrija para `C:\Dev\Projetos\OLMO_PROMETEUS` antes de editar; o hook deve bloquear paths/workdir para siblings `OLMO*` nao canonicos.
+- Write externo nao autorizado: qualquer edit fora de `C:\Dev\Projetos\OLMO_PROMETEUS` e proibido e deve ser bloqueado. Read externo de sibling/legado exige pergunta previa citando caminho e motivo exatos.
+- Workspace stale: se a sessao apontar para ROADMAP legado, `OLMO_COWORK`, typo `OLMO_COWOR` ou cwd diferente, corrija para `C:\Dev\Projetos\OLMO_PROMETEUS` antes de editar; o hook deve aplicar write=block e read=ask para siblings `OLMO*` nao canonicos.
 - Runtime scaffolds proibidos sem gate: `.claude/agents/`, `.claude/hooks/`, `.claude/commands/`, `agents/`, `subagents/`, `skills/`, `hooks/`, `playground/`.
 - `.claude/skills/` e aceito desde 2026-04-23 como casa de skills reais promovidas de procedures `operational` (ver `shadow/AGENT-USAGE.md > Local skills contract`). Cada subdir precisa de `SKILL.md` valido.
 - `.claude/settings.local.json`: aceito como state local do harness; fica em `.gitignore` e `.claudeignore`, nunca versionado.

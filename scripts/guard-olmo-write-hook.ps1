@@ -2,16 +2,29 @@ param()
 
 $ErrorActionPreference = "Stop"
 
-function New-BlockResponse {
-  param([string]$Reason)
+function New-PermissionResponse {
+  param(
+    [string]$Decision,
+    [string]$Reason
+  )
 
   @{
     hookSpecificOutput = @{
       hookEventName = "PreToolUse"
-      permissionDecision = "block"
+      permissionDecision = $Decision
       permissionDecisionReason = $Reason
     }
   } | ConvertTo-Json -Compress
+}
+
+function New-BlockResponse {
+  param([string]$Reason)
+  New-PermissionResponse -Decision "deny" -Reason $Reason
+}
+
+function New-AskResponse {
+  param([string]$Reason)
+  New-PermissionResponse -Decision "ask" -Reason $Reason
 }
 
 function Add-ScanText {
@@ -55,6 +68,54 @@ function Add-ScanText {
   $Sink.Add([string]$Value) | Out-Null
 }
 
+function Get-ToolName {
+  param([object]$Payload)
+
+  foreach ($name in @($Payload.tool_name, $Payload.toolName, $Payload.name)) {
+    if (-not [string]::IsNullOrWhiteSpace([string]$name)) {
+      return [string]$name
+    }
+  }
+
+  return ""
+}
+
+function Test-WriteIntent {
+  param(
+    [object]$Payload,
+    [System.Collections.Generic.List[string]]$Texts
+  )
+
+  $toolName = Get-ToolName -Payload $Payload
+  if ($toolName -match "(?i)^(Write|Edit|MultiEdit|NotebookEdit)$") {
+    return $true
+  }
+
+  $writePattern = "(?i)(\b(Set-Content|Add-Content|Out-File|Remove-Item|Move-Item|Copy-Item|New-Item|Rename-Item|Clear-Content)\b|\b(git\s+(add|commit|push|checkout|reset|clean|mv|rm))\b|\b(mkdir|ni|rm|del|erase|rmdir|rd|move|copy)\b|>>|(?<![<])>)"
+  foreach ($text in $Texts) {
+    if ($text -match $writePattern) {
+      return $true
+    }
+  }
+
+  return $false
+}
+
+function New-ExternalOlmoResponse {
+  param(
+    [bool]$IsWrite,
+    [string]$CanonicalRoot,
+    [string]$MatchedName
+  )
+
+  if ($IsWrite) {
+    New-BlockResponse "OLMO boundary guard: bloqueado. Write externo para sibling OLMO detectado ($MatchedName); use apenas $CanonicalRoot."
+    return
+  }
+
+  New-AskResponse "OLMO boundary guard: leitura externa de sibling/legado OLMO detectada ($MatchedName). Peça permissao explicita do Lucas antes de ler; write continua bloqueado."
+}
+
 $inputJson = [Console]::In.ReadToEnd()
 if ([string]::IsNullOrWhiteSpace($inputJson)) {
   exit 0
@@ -69,12 +130,11 @@ try {
 
 $scanTexts = [System.Collections.Generic.List[string]]::new()
 Add-ScanText -Value $payload -Sink $scanTexts
+$isWrite = Test-WriteIntent -Payload $payload -Texts $scanTexts
 
-# Proibido: qualquer ferramenta que mencione OLMO ou siblings OLMO*, exceto o workspace canonico.
-# Permitido: OLMO_PROMETEUS, que e o workspace deste projeto.
+# Politica: no workspace canonico, permitir. Em siblings OLMO*, write = block; read = ask.
 $canonicalName = "OLMO_PROMETEUS"
 $canonicalRoot = "C:\Dev\Projetos\$canonicalName"
-$legacyName = "OLMO" + "_ROADMAP"
 $olmoFamilyRootPattern = "(?i)C:\\Dev\\Projetos\\OLMO[A-Za-z0-9_-]*"
 $relativeOlmoFamilyPattern = "(?i)(^|[\s`"'])\.\.[\\/]+(OLMO[A-Za-z0-9_-]*)"
 
@@ -87,12 +147,8 @@ foreach ($text in $scanTexts) {
       continue
     }
 
-    if ((Split-Path -Leaf $matchedRoot) -ieq $legacyName) {
-      New-BlockResponse "OLMO boundary guard: bloqueado. Workspace legado/stale detectado; use apenas $canonicalRoot."
-      exit 0
-    }
-
-    New-BlockResponse "OLMO boundary guard: bloqueado. Este agente nao pode tocar sibling OLMO externo; use apenas $canonicalRoot."
+    $matchedName = Split-Path -Leaf $matchedRoot
+    New-ExternalOlmoResponse -IsWrite $isWrite -CanonicalRoot $canonicalRoot -MatchedName $matchedName
     exit 0
   }
 
@@ -102,12 +158,7 @@ foreach ($text in $scanTexts) {
       continue
     }
 
-    if ($matchedName -ieq $legacyName) {
-      New-BlockResponse "OLMO boundary guard: bloqueado. Workspace legado/stale detectado; use apenas $canonicalRoot."
-      exit 0
-    }
-
-    New-BlockResponse "OLMO boundary guard: bloqueado. Este agente nao pode tocar sibling OLMO externo; use apenas $canonicalRoot."
+    New-ExternalOlmoResponse -IsWrite $isWrite -CanonicalRoot $canonicalRoot -MatchedName $matchedName
     exit 0
   }
 }

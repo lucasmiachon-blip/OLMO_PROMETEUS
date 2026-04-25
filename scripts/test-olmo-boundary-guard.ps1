@@ -22,28 +22,47 @@ function Invoke-Guard {
   return [string]($json | powershell -NoProfile -ExecutionPolicy Bypass -File $GuardScript)
 }
 
-function Assert-Blocked {
+function Assert-Decision {
   param(
     [string]$Name,
-    [object]$Payload
+    [object]$Payload,
+    [string]$ExpectedDecision
   )
 
   $output = Invoke-Guard -Payload $Payload
   if ([string]::IsNullOrWhiteSpace($output)) {
-    Add-Failure "$Name expected block output, got empty output"
+    Add-Failure "$Name expected $ExpectedDecision output, got empty output"
     return
   }
 
   try {
     $parsed = $output | ConvertFrom-Json
   } catch {
-    Add-Failure "$Name expected valid JSON block output, got: $output"
+    Add-Failure "$Name expected valid JSON output, got: $output"
     return
   }
 
-  if ($parsed.hookSpecificOutput.permissionDecision -ne "block") {
-    Add-Failure "$Name expected permissionDecision=block, got: $($parsed.hookSpecificOutput.permissionDecision)"
+  if ($parsed.hookSpecificOutput.permissionDecision -ne $ExpectedDecision) {
+    Add-Failure "$Name expected permissionDecision=$ExpectedDecision, got: $($parsed.hookSpecificOutput.permissionDecision)"
   }
+}
+
+function Assert-Blocked {
+  param(
+    [string]$Name,
+    [object]$Payload
+  )
+
+  Assert-Decision -Name $Name -Payload $Payload -ExpectedDecision "deny"
+}
+
+function Assert-Asked {
+  param(
+    [string]$Name,
+    [object]$Payload
+  )
+
+  Assert-Decision -Name $Name -Payload $Payload -ExpectedDecision "ask"
 }
 
 function Assert-Allowed {
@@ -58,29 +77,44 @@ function Assert-Allowed {
   }
 }
 
-# Caminhos OLMO e workspace legado abaixo sao casos proibidos de teste; nao sao alvo de escrita.
-Assert-Blocked "absolute OLMO path" @{
+# Caminhos OLMO e workspace legado abaixo sao casos proibidos/de-permissao de teste; nao sao alvo de escrita.
+Assert-Blocked "absolute OLMO write path" @{
   tool_name = "Write"
   tool_input = @{
     file_path = "C:\Dev\Projetos\OLMO\HANDOFF.md"
   }
 }
 
-Assert-Blocked "relative sibling OLMO path" @{
+# read externo de sibling OLMO deve virar ask/permissao, nao leitura automatica.
+Assert-Asked "absolute OLMO read path" @{
+  tool_name = "Read"
+  tool_input = @{
+    file_path = "C:\Dev\Projetos\OLMO\README.md"
+  }
+}
+
+Assert-Blocked "relative sibling OLMO write path" @{
   tool_name = "PowerShell"
   tool_input = @{
     command = "Set-Content ..\OLMO\probe.txt test"
   }
 }
 
-Assert-Blocked "forward slash OLMO path" @{
+Assert-Asked "relative sibling OLMO read path" @{
+  tool_name = "PowerShell"
+  tool_input = @{
+    command = "Get-Content ..\OLMO\README.md"
+  }
+}
+
+Assert-Blocked "forward slash OLMO write path" @{
   tool_name = "Write"
   tool_input = @{
     file_path = "C:/Dev/Projetos/OLMO/HANDOFF.md"
   }
 }
 
-Assert-Blocked "case-insensitive OLMO path" @{
+Assert-Blocked "case-insensitive OLMO write path" @{
   tool_name = "Write"
   tool_input = @{
     file_path = ("c:\dev\projetos\" + "olmo" + "\HANDOFF.md")
@@ -89,21 +123,21 @@ Assert-Blocked "case-insensitive OLMO path" @{
 
 $CoworkWorkspace = "C:\Dev\Projetos\" + "OLMO" + "_COWORK"
 
-Assert-Blocked "absolute OLMO sibling cowork path" @{
+Assert-Blocked "absolute OLMO sibling cowork write path" @{
   tool_name = "Write"
   tool_input = @{
     file_path = (Join-Path $CoworkWorkspace "README.md")
   }
 }
 
-Assert-Blocked "relative OLMO sibling cowork path" @{
+Assert-Blocked "relative OLMO sibling cowork write path" @{
   tool_name = "PowerShell"
   tool_input = @{
     command = ("Set-Content ..\OLMO" + "_COWORK\probe.txt test")
   }
 }
 
-Assert-Blocked "workdir OLMO sibling cowork path" @{
+Assert-Asked "workdir OLMO sibling cowork read path" @{
   tool_name = "PowerShell"
   tool_input = @{
     command = "Get-Content .\HANDOFF.md"
@@ -111,24 +145,47 @@ Assert-Blocked "workdir OLMO sibling cowork path" @{
   }
 }
 
+Assert-Blocked "workdir OLMO sibling cowork write path" @{
+  tool_name = "PowerShell"
+  tool_input = @{
+    command = "Set-Content .\probe.txt test"
+    workdir = $CoworkWorkspace
+  }
+}
+
 $CoworkTypoWorkspace = "C:\Dev\Projetos\" + "OLMO" + "_COWOR"
 
-Assert-Blocked "absolute OLMO sibling cowork typo path" @{
+Assert-Asked "absolute OLMO sibling cowork typo read path" @{
+  tool_name = "Read"
+  tool_input = @{
+    file_path = (Join-Path $CoworkTypoWorkspace "README.md")
+  }
+}
+
+Assert-Blocked "absolute OLMO sibling cowork typo write path" @{
   tool_name = "Write"
   tool_input = @{
     file_path = (Join-Path $CoworkTypoWorkspace "README.md")
   }
 }
+
 $LegacyWorkspace = "C:\Dev\Projetos\" + "OLMO" + "_ROADMAP"
 
-Assert-Blocked "absolute legacy workspace path" @{
+Assert-Asked "absolute legacy workspace read path" @{
+  tool_name = "Read"
+  tool_input = @{
+    file_path = (Join-Path $LegacyWorkspace "README.md")
+  }
+}
+
+Assert-Blocked "absolute legacy workspace write path" @{
   tool_name = "Write"
   tool_input = @{
     file_path = (Join-Path $LegacyWorkspace "README.md")
   }
 }
 
-Assert-Blocked "relative legacy workspace path" @{
+Assert-Blocked "relative legacy workspace write path" @{
   tool_name = "PowerShell"
   tool_input = @{
     command = ("Set-Content ..\OLMO" + "_ROADMAP\probe.txt test")

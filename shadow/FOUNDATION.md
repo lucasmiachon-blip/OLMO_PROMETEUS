@@ -25,7 +25,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 - `lab/wiki-graph-lab/` para a camada visual reversivel que le o vault sem duplicar a fonte de verdade.
 - `private-learning/` para interface e material pessoal.
 - `scripts/check.ps1` como harness local.
-- `scripts/guard-olmo-write-hook.ps1` como guard local do Claude PreToolUse contra `OLMO`, `OLMO_COWORK`, typo `OLMO_COWOR`, workspace legado ROADMAP e qualquer sibling `OLMO*` nao canonico.
+- `scripts/guard-olmo-write-hook.ps1` como guard local do Claude PreToolUse: write externo para `OLMO`, `OLMO_COWORK`, typo `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico vira `deny` (block); read externo vira `ask`.
 - `scripts/test-olmo-boundary-guard.ps1` como teste automatizado da trava OLMO.
 - `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` como gate E2E para orquestracao, harness e claims antifragile.
 - `scripts/test-orchestration-e2e.ps1 -DryRun` como teste E2E sem side effects desse gate.
@@ -33,7 +33,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 
 Nao existe sincronizacao automatica com `C:\Dev\Projetos\OLMO`.
 
-Excecao aprovada em 2026-04-25: `.claude/settings.local.json` pode acionar um unico `PreToolUse` local que chama `scripts/guard-olmo-write-hook.ps1` e bloqueia qualquer payload de ferramenta que mencione `C:\Dev\Projetos\OLMO` ou o workspace legado ROADMAP. Isso nao cria `.claude/hooks/`, nao escreve fora do repo e existe apenas para tornar a boundary fail-closed. O harness roda teste positivo/negativo desse guard e falha se o workspace legado reaparecer.
+Excecao aprovada em 2026-04-25: `.claude/settings.local.json` pode acionar um unico `PreToolUse` local que chama `scripts/guard-olmo-write-hook.ps1` e bloqueia writes externos e pede permissao para reads externos quando o payload menciona `C:\Dev\Projetos\OLMO`, `OLMO_COWORK`, typos como `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico. Isso nao cria `.claude/hooks/`, nao escreve fora do repo e existe apenas para tornar a boundary fail-closed. O harness roda teste positivo/negativo desse guard e falha se o workspace legado reaparecer.
 
 Arquivos privados ou gerados devem ficar fora de Git e fora do contexto de agentes. Manter `.gitignore` e `.claudeignore` em paridade para `private-learning/`, buffers do Obsidian, workspace local, caches, plugins, `node_modules/` e `.venv/`.
 

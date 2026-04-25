@@ -85,8 +85,8 @@ function Assert-GuardBlocks {
     return
   }
 
-  if ($parsed.hookSpecificOutput.permissionDecision -ne "block") {
-    Add-Failure "$Name expected permissionDecision=block, got: $($parsed.hookSpecificOutput.permissionDecision)"
+  if ($parsed.hookSpecificOutput.permissionDecision -ne "deny") {
+    Add-Failure "$Name expected permissionDecision=deny, got: $($parsed.hookSpecificOutput.permissionDecision)"
   }
 
   $reason = [string]$parsed.hookSpecificOutput.permissionDecisionReason
@@ -177,14 +177,14 @@ function Invoke-FaultScenario {
       Assert-GuardBlocks "detect protected repo write injection" @{
         tool_name = "Write"
         tool_input = @{ file_path = $protectedRepoPath }
-      } "sibling OLMO externo|nao pode tocar"
+      } "Write externo|sibling OLMO externo|nao pode tocar"
     }
     "LegacyWorkspaceWrite" {
       $legacyWorkspacePath = "C:\Dev\Projetos\" + "OLMO" + "_ROADMAP\README.md"
       Assert-GuardBlocks "detect stale workspace write injection" @{
         tool_name = "Write"
         tool_input = @{ file_path = $legacyWorkspacePath }
-      } "Workspace legado|stale"
+      } "Write externo|Workspace legado|stale"
     }
     "InvalidHookJson" {
       Assert-GuardBlocks "detect invalid hook JSON injection" "{not-json" "JSON invalido|fail-closed"
@@ -205,7 +205,7 @@ function Invoke-FaultScenario {
     }
     "MissingRegressionCase" {
       Require-Text "scripts/check.ps1" "legacyWorkspaceRoot" "future stale workspace detector"
-      Require-Text "scripts/test-olmo-boundary-guard.ps1" "absolute legacy workspace path" "regression case for stale workspace"
+      Require-Text "scripts/test-olmo-boundary-guard.ps1" "absolute legacy workspace read path" "regression case for stale workspace"
       Require-Text "scripts/test-antifragile-learning.ps1" "ScenarioCatalog" "fault catalog regression case"
       Require-Text "scripts/test-antifragile-learning.ps1" "CASE_edges" "edge-case catalog regression case"
     }
@@ -219,26 +219,26 @@ function Invoke-FaultScenario {
       Assert-GuardBlocks "detect forward slash protected repo path" @{
         tool_name = "Write"
         tool_input = @{ file_path = "C:/Dev/Projetos/OLMO/HANDOFF.md" }
-      } "sibling OLMO externo|nao pode tocar"
+      } "Write externo|sibling OLMO externo|nao pode tocar"
     }
     "CaseInsensitiveProtectedRepo" {
       Assert-GuardBlocks "detect case-insensitive protected repo path" @{
         tool_name = "Write"
         tool_input = @{ file_path = "c:\dev\projetos\olmo\HANDOFF.md" }
-      } "sibling OLMO externo|nao pode tocar"
+      } "Write externo|sibling OLMO externo|nao pode tocar"
     }
     "SiblingCoworkWrite" {
       $coworkPath = "C:\Dev\Projetos\" + "OLMO" + "_COWORK\README.md"
       Assert-GuardBlocks "detect sibling cowork write" @{
         tool_name = "Write"
         tool_input = @{ file_path = $coworkPath }
-      } "sibling OLMO externo"
+      } "Write externo|sibling OLMO"
     }
     "RelativeSiblingCoworkWrite" {
       Assert-GuardBlocks "detect relative sibling cowork write" @{
         tool_name = "PowerShell"
         tool_input = @{ command = ("Set-Content ..\OLMO" + "_COWORK\probe.txt test") }
-      } "sibling OLMO externo"
+      } "Write externo|sibling OLMO"
     }
     "CASE_edges" {
       foreach ($edgeScenario in $EdgeScenarioCatalog) {
