@@ -133,32 +133,69 @@ Add-ScanText -Value $payload -Sink $scanTexts
 $isWrite = Test-WriteIntent -Payload $payload -Texts $scanTexts
 
 # Politica: no workspace canonico, permitir. Em siblings OLMO*, write = block; read = ask.
+function Convert-ComparablePath {
+  param([string]$Path)
+
+  return $Path.TrimEnd("\", "/").Replace("\", "/").ToLowerInvariant()
+}
+
+function Test-IsCanonicalRoot {
+  param([string]$Path)
+
+  return $canonicalComparableRoots -contains (Convert-ComparablePath $Path)
+}
+
 $canonicalName = "OLMO_PROMETEUS"
-$canonicalRoot = "C:\Dev\Projetos\$canonicalName"
-$olmoFamilyRootPattern = "(?i)C:\\Dev\\Projetos\\OLMO[A-Za-z0-9_-]*"
-$relativeOlmoFamilyPattern = "(?i)(^|[\s`"'])\.\.[\\/]+(OLMO[A-Za-z0-9_-]*)"
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+$canonicalRoots = @(
+  "C:\Dev\Projetos\$canonicalName",
+  $repoRoot
+)
+$canonicalComparableRoots = @($canonicalRoots | ForEach-Object { Convert-ComparablePath $_ })
+$windowsOlmoFamilyRootPattern = "(?i)" + [regex]::Escape("C:\Dev\Projetos\") + "OLMO[A-Za-z0-9_-]*"
+$repoParent = Split-Path -Parent $repoRoot
+$linuxOlmoFamilyRootPattern = $null
+if (-not [string]::IsNullOrWhiteSpace($repoParent)) {
+  $linuxParent = $repoParent.Replace("\", "/").TrimEnd("/")
+  $linuxOlmoFamilyRootPattern = "(?i)" + [regex]::Escape($linuxParent) + "/OLMO[A-Za-z0-9_-]*"
+}
+$relativeOlmoFamilyPattern = '(?i)(^|[\s`"''])\.\.[\\/]+(OLMO[A-Za-z0-9_-]*)'
 
 foreach ($text in $scanTexts) {
-  $normalized = $text.Replace("/", "\")
+  $normalizedWindows = $text.Replace("/", "\")
+  $normalizedUnix = $text.Replace("\", "/")
 
-  foreach ($match in [regex]::Matches($normalized, $olmoFamilyRootPattern)) {
+  foreach ($match in [regex]::Matches($normalizedWindows, $windowsOlmoFamilyRootPattern)) {
     $matchedRoot = $match.Value
-    if ($matchedRoot -ieq $canonicalRoot) {
+    if (Test-IsCanonicalRoot $matchedRoot) {
       continue
     }
 
     $matchedName = Split-Path -Leaf $matchedRoot
-    New-ExternalOlmoResponse -IsWrite $isWrite -CanonicalRoot $canonicalRoot -MatchedName $matchedName
+    New-ExternalOlmoResponse -IsWrite $isWrite -CanonicalRoot $repoRoot -MatchedName $matchedName
     exit 0
   }
 
-  foreach ($match in [regex]::Matches($normalized, $relativeOlmoFamilyPattern)) {
+  if (-not [string]::IsNullOrWhiteSpace($linuxOlmoFamilyRootPattern)) {
+    foreach ($match in [regex]::Matches($normalizedUnix, $linuxOlmoFamilyRootPattern)) {
+      $matchedRoot = $match.Value
+      if (Test-IsCanonicalRoot $matchedRoot) {
+        continue
+      }
+
+      $matchedName = Split-Path -Leaf $matchedRoot
+      New-ExternalOlmoResponse -IsWrite $isWrite -CanonicalRoot $repoRoot -MatchedName $matchedName
+      exit 0
+    }
+  }
+
+  foreach ($match in [regex]::Matches($normalizedWindows, $relativeOlmoFamilyPattern)) {
     $matchedName = $match.Groups[2].Value
     if ($matchedName -ieq $canonicalName) {
       continue
     }
 
-    New-ExternalOlmoResponse -IsWrite $isWrite -CanonicalRoot $canonicalRoot -MatchedName $matchedName
+    New-ExternalOlmoResponse -IsWrite $isWrite -CanonicalRoot $repoRoot -MatchedName $matchedName
     exit 0
   }
 }

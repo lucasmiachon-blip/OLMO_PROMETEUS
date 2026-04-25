@@ -9,6 +9,8 @@ $ErrorActionPreference = "Stop"
 $Root = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $Root
 
+. (Join-Path $PSScriptRoot "lib/powershell-runner.ps1")
+
 $Failures = New-Object System.Collections.Generic.List[string]
 $Warnings = New-Object System.Collections.Generic.List[string]
 
@@ -58,7 +60,7 @@ function Invoke-MaturityJson {
   }
 
   try {
-    $jsonText = & powershell -NoProfile -ExecutionPolicy Bypass -File $maturityScript -Mode json | Out-String
+    $jsonText = Invoke-RepoPowerShell -File $maturityScript -Arguments @("-Mode", "json") | Out-String
     if ($LASTEXITCODE -ne 0) {
       Add-Failure "scripts/maturity.ps1 -Mode json failed"
       return $null

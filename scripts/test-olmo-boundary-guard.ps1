@@ -5,6 +5,8 @@ $ErrorActionPreference = "Stop"
 $GuardScript = Join-Path $PSScriptRoot "guard-olmo-write-hook.ps1"
 $Failures = [System.Collections.Generic.List[string]]::new()
 
+. (Join-Path $PSScriptRoot "lib/powershell-runner.ps1")
+
 function Add-Failure {
   param([string]$Message)
   $Failures.Add($Message) | Out-Null
@@ -19,7 +21,7 @@ function Invoke-Guard {
     $json = $Payload | ConvertTo-Json -Depth 10
   }
 
-  return [string]($json | powershell -NoProfile -ExecutionPolicy Bypass -File $GuardScript)
+  return [string](Invoke-RepoPowerShell -File $GuardScript -InputText $json)
 }
 
 function Assert-Decision {
@@ -126,7 +128,7 @@ $CoworkWorkspace = "C:\Dev\Projetos\" + "OLMO" + "_COWORK"
 Assert-Blocked "absolute OLMO sibling cowork write path" @{
   tool_name = "Write"
   tool_input = @{
-    file_path = (Join-Path $CoworkWorkspace "README.md")
+    file_path = ($CoworkWorkspace + "\README.md")
   }
 }
 
@@ -158,14 +160,14 @@ $CoworkTypoWorkspace = "C:\Dev\Projetos\" + "OLMO" + "_COWOR"
 Assert-Asked "absolute OLMO sibling cowork typo read path" @{
   tool_name = "Read"
   tool_input = @{
-    file_path = (Join-Path $CoworkTypoWorkspace "README.md")
+    file_path = ($CoworkTypoWorkspace + "\README.md")
   }
 }
 
 Assert-Blocked "absolute OLMO sibling cowork typo write path" @{
   tool_name = "Write"
   tool_input = @{
-    file_path = (Join-Path $CoworkTypoWorkspace "README.md")
+    file_path = ($CoworkTypoWorkspace + "\README.md")
   }
 }
 
@@ -174,14 +176,14 @@ $LegacyWorkspace = "C:\Dev\Projetos\" + "OLMO" + "_ROADMAP"
 Assert-Asked "absolute legacy workspace read path" @{
   tool_name = "Read"
   tool_input = @{
-    file_path = (Join-Path $LegacyWorkspace "README.md")
+    file_path = ($LegacyWorkspace + "\README.md")
   }
 }
 
 Assert-Blocked "absolute legacy workspace write path" @{
   tool_name = "Write"
   tool_input = @{
-    file_path = (Join-Path $LegacyWorkspace "README.md")
+    file_path = ($LegacyWorkspace + "\README.md")
   }
 }
 
@@ -212,6 +214,31 @@ Assert-Allowed "forward slash OLMO_PROMETEUS path" @{
   tool_name = "Write"
   tool_input = @{
     file_path = "C:/Dev/Projetos/OLMO_PROMETEUS/README.md"
+  }
+}
+
+$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+$LinuxSiblingRoot = (Join-Path (Split-Path -Parent $RepoRoot) "OLMO").Replace("\", "/")
+$LinuxPrometeusRoot = $RepoRoot.Replace("\", "/")
+
+Assert-Asked "absolute Linux sibling OLMO read path" @{
+  tool_name = "Read"
+  tool_input = @{
+    file_path = ($LinuxSiblingRoot + "/README.md")
+  }
+}
+
+Assert-Blocked "absolute Linux sibling OLMO write path" @{
+  tool_name = "Write"
+  tool_input = @{
+    file_path = ($LinuxSiblingRoot + "/HANDOFF.md")
+  }
+}
+
+Assert-Allowed "absolute Linux OLMO_PROMETEUS path" @{
+  tool_name = "Write"
+  tool_input = @{
+    file_path = ($LinuxPrometeusRoot + "/README.md")
   }
 }
 

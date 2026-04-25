@@ -25,13 +25,16 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 - `lab/wiki-graph-lab/` para a camada visual reversivel que le o vault sem duplicar a fonte de verdade.
 - `private-learning/` para interface e material pessoal.
 - `scripts/check.ps1` como harness local.
-- `scripts/guard-olmo-write-hook.ps1` como guard local do Claude PreToolUse: write externo para `OLMO`, `OLMO_COWORK`, typo `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico vira `deny` (block); read externo vira `ask`.
+- `scripts/lib/powershell-runner.ps1` como helper cross-platform: scripts aninhados rodam pelo PowerShell atual (`powershell` no Windows, `pwsh` no Ubuntu) sem hardcode de executavel.
+- `scripts/guard-olmo-write-hook.ps1` como guard local do Claude PreToolUse: write externo para `OLMO`, `OLMO_COWORK`, typo `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico vira `deny` (block); read externo vira `ask`. A regra cobre `C:\Dev\Projetos\OLMO*`, paths relativos `../OLMO*` e siblings absolutos no clone Ubuntu.
 - `scripts/test-olmo-boundary-guard.ps1` como teste automatizado da trava OLMO.
 - `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` como gate E2E para orquestracao, harness e claims antifragile.
 - `scripts/test-orchestration-e2e.ps1 -DryRun` como teste E2E sem side effects desse gate.
 - `scripts/test-antifragile-learning.ps1 -DryRun -Scenario All -Seed 42` como teste de aprendizado: injeta erro sintetico de catalogo, exige deteccao, evidencia e regressao; `-Scenario CASE_edges` cobre bordas do contrato; `-Scenario Random -Seed N` reproduz um caso pseudoaleatorio.
 
 Nao existe sincronizacao automatica com `C:\Dev\Projetos\OLMO`.
+
+Runtime Ubuntu/WSL aprovado para migracao do laboratorio: `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`. O Windows continua permitido durante a transicao; a troca so vale depois do harness passar nos dois ambientes.
 
 Excecao aprovada em 2026-04-25: `.claude/settings.local.json` pode acionar um unico `PreToolUse` local que chama `scripts/guard-olmo-write-hook.ps1` e bloqueia writes externos e pede permissao para reads externos quando o payload menciona `C:\Dev\Projetos\OLMO`, `OLMO_COWORK`, typos como `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico. Isso nao cria `.claude/hooks/`, nao escreve fora do repo e existe apenas para tornar a boundary fail-closed. O harness roda teste positivo/negativo desse guard e falha se o workspace legado reaparecer.
 
@@ -94,7 +97,7 @@ Ele valida:
 - ausencia de referencias antigas;
 - ausencia de tokens/segredos obvios;
 - caminhos privados e gerados continuam ignorados por Git e pelo contexto de agentes;
-- checks de ignore aceitam LF e CRLF para o workflow `windows-latest`;
+- checks de ignore aceitam LF e CRLF para os workflows `ubuntu-latest` e `windows-latest`;
 - checks textuais pulam arquivos ignorados e redigem linhas em achados de segredo;
 - ausencia de scaffolds fantasmas na raiz;
 - Git status legivel.

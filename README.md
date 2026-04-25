@@ -80,11 +80,21 @@ Para agentes/skills globais do Claude Code (ex: `Explore`, `Plan`, `/dream`, `/s
 
 ## Harness local
 
+Windows/PowerShell:
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1
 ```
 
-Use antes de commit quando a sessao mexer em docs, wiki, shadow ou scripts.
+Ubuntu/WSL:
+
+```bash
+cd /home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS
+pwsh -NoLogo -NoProfile -File ./scripts/check.ps1
+pwsh -NoLogo -NoProfile -File ./scripts/evolve.ps1 -Mode next
+```
+
+Use antes de commit quando a sessao mexer em docs, wiki, shadow ou scripts. O workflow remoto valida `ubuntu-latest` e `windows-latest`.
 
 ## Obsidian
 
@@ -92,6 +102,12 @@ Abra no Obsidian esta pasta:
 
 ```text
 C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus
+```
+
+No clone Ubuntu/WSL, o vault fica em:
+
+```text
+/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS/Prometeus
 ```
 
 Use `Prometeus/README.md` ou `Prometeus/wiki/Home.md` como entrada. Assim o nome do vault aparece como `Prometeus`, enquanto o repo continua isolado em `OLMO_PROMETEUS`. A wiki segue a ideia bottom-up do Kepano e o minimalismo do Karpathy: notas pequenas, links claros, escopo limitado e harness simples. Captura crua, diaria ou privada fica ignorada pelo Git em `Prometeus/wiki/Clippings/`, `Prometeus/wiki/Daily/` e `Prometeus/wiki/Attachments/`.

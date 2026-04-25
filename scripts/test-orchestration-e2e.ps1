@@ -5,6 +5,8 @@ $ErrorActionPreference = "Stop"
 $Root = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $Root
 
+. (Join-Path $PSScriptRoot "lib/powershell-runner.ps1")
+
 $Failures = [System.Collections.Generic.List[string]]::new()
 
 function Add-Failure {
@@ -130,7 +132,7 @@ Assert-GateCase "accept local guarded workflow" @{
   rollback = "delete artifact"
 } "pass"
 
-& powershell -NoProfile -ExecutionPolicy Bypass -File ".\scripts\test-olmo-boundary-guard.ps1"
+Invoke-RepoPowerShell -File "./scripts/test-olmo-boundary-guard.ps1"
 if ($LASTEXITCODE -ne 0) {
   Add-Failure "OLMO boundary guard e2e dependency failed"
 }

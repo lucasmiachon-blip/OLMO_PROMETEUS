@@ -7,6 +7,8 @@ $ErrorActionPreference = "Stop"
 $Root = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $Root
 
+. (Join-Path $PSScriptRoot "lib/powershell-runner.ps1")
+
 $Failures = New-Object System.Collections.Generic.List[string]
 $Warnings = New-Object System.Collections.Generic.List[string]
 
@@ -189,7 +191,7 @@ if (Test-Path -LiteralPath $localClaudeSettings -PathType Leaf) {
 
 $boundaryGuardTest = "scripts/test-olmo-boundary-guard.ps1"
 if (Test-Path -LiteralPath $boundaryGuardTest -PathType Leaf) {
-  & powershell -NoProfile -ExecutionPolicy Bypass -File $boundaryGuardTest
+  Invoke-RepoPowerShell -File $boundaryGuardTest
   if ($LASTEXITCODE -eq 0) {
     Write-Ok "OLMO boundary guard tests pass"
   } else {
@@ -199,7 +201,7 @@ if (Test-Path -LiteralPath $boundaryGuardTest -PathType Leaf) {
 
 $orchestrationE2ETest = "scripts/test-orchestration-e2e.ps1"
 if (Test-Path -LiteralPath $orchestrationE2ETest -PathType Leaf) {
-  & powershell -NoProfile -ExecutionPolicy Bypass -File $orchestrationE2ETest -DryRun
+  Invoke-RepoPowerShell -File $orchestrationE2ETest -Arguments @("-DryRun")
   if ($LASTEXITCODE -eq 0) {
     Write-Ok "orchestration/harness/antifragile E2E dry-run passes"
   } else {
@@ -209,7 +211,7 @@ if (Test-Path -LiteralPath $orchestrationE2ETest -PathType Leaf) {
 
 $antifragileLearningTest = "scripts/test-antifragile-learning.ps1"
 if (Test-Path -LiteralPath $antifragileLearningTest -PathType Leaf) {
-  & powershell -NoProfile -ExecutionPolicy Bypass -File $antifragileLearningTest -DryRun -Scenario All -Seed 42
+  Invoke-RepoPowerShell -File $antifragileLearningTest -Arguments @("-DryRun", "-Scenario", "All", "-Seed", "42")
   if ($LASTEXITCODE -eq 0) {
     Write-Ok "antifragile learning-loop dry-run passes"
   } else {
@@ -479,7 +481,7 @@ foreach ($entry in $procedureContracts.GetEnumerator()) {
 
 $maturityScript = "scripts/maturity.ps1"
 if (Test-Path -LiteralPath $maturityScript -PathType Leaf) {
-  & powershell -NoProfile -ExecutionPolicy Bypass -File $maturityScript -Mode check
+  Invoke-RepoPowerShell -File $maturityScript -Arguments @("-Mode", "check")
   if ($LASTEXITCODE -eq 0) {
     Write-Ok "maturity executable passes"
   } else {
@@ -490,7 +492,7 @@ if (Test-Path -LiteralPath $maturityScript -PathType Leaf) {
 $obsidianJsonFiles = Get-ChildItem -LiteralPath "Prometeus/.obsidian" -Filter "*.json"
 $evolveScript = "scripts/evolve.ps1"
 if (Test-Path -LiteralPath $evolveScript -PathType Leaf) {
-  & powershell -NoProfile -ExecutionPolicy Bypass -File $evolveScript -Mode check
+  Invoke-RepoPowerShell -File $evolveScript -Arguments @("-Mode", "check")
   if ($LASTEXITCODE -eq 0) {
     Write-Ok "self-evolution executable passes"
   } else {

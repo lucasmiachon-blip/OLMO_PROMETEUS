@@ -136,7 +136,7 @@ Se o erro indicar sandbox, permissao ou rede e o comando for essencial, repetir 
 - Se editar docs ou HTML, cheque nomes, titulos e links locais.
 - Se editar base, memoria, harness ou orquestracao, atualize `shadow/FOUNDATION.md`.
 - Se editar a wiki, preserve links Obsidian e a separacao entre conhecimento duravel e captura privada.
-- Quando houver mudanca persistente, rode `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`.
+- Quando houver mudanca persistente, rode `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1` no Windows ou `pwsh -NoLogo -NoProfile -File ./scripts/check.ps1` no Ubuntu/WSL.
 - Se um artefato virar `candidate`, atualize `shadow/WORK-LANES.md`.
 - Se a sessao criar varios artefatos, confira `shadow/HYGIENE.md`.
 - Se rodou um procedimento (`email-digest-4p`, `study-track-done`, `sota-research-gate`) em uso real, registre linha em `shadow/EVIDENCE-LOG.md`.

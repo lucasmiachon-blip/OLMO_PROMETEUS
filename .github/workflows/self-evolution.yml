@@ -16,15 +16,19 @@ permissions:
 
 jobs:
   check:
-    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Harness
         shell: pwsh
-        run: .\scripts\check.ps1
+        run: ./scripts/check.ps1
 
       - name: Next evolution batch
         shell: pwsh
-        run: .\scripts\evolve.ps1 -Mode next
+        run: ./scripts/evolve.ps1 -Mode next

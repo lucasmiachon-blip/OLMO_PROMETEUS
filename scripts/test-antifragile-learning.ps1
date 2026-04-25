@@ -10,6 +10,8 @@ $ErrorActionPreference = "Stop"
 $Root = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $Root
 
+. (Join-Path $PSScriptRoot "lib/powershell-runner.ps1")
+
 $Failures = [System.Collections.Generic.List[string]]::new()
 $EdgeScenarioCatalog = @(
   "PrometeusLookalikeAllowed",
@@ -62,7 +64,7 @@ function Invoke-Guard {
     $json = $Payload | ConvertTo-Json -Depth 10
   }
 
-  return [string]($json | powershell -NoProfile -ExecutionPolicy Bypass -File $guardScript)
+  return [string](Invoke-RepoPowerShell -File $guardScript -InputText $json)
 }
 
 function Assert-GuardBlocks {
@@ -113,7 +115,7 @@ function Assert-CommandPasses {
     [string[]]$CommandArgs
   )
 
-  & powershell @CommandArgs
+  Invoke-CurrentPowerShell -Arguments $CommandArgs
   if ($LASTEXITCODE -ne 0) {
     Add-Failure "$Name failed with exit code $LASTEXITCODE"
   }
