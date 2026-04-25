@@ -76,7 +76,7 @@ Se nao passar nessa barra, consolidar ou deletar.
 - Vault canonico: `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
 - Nao ha diretorio irmao de roadmap no filesystem.
 - Remote Git configurado e push para `origin/main` funciona.
-- GitHub Actions `Self Evolution` existe, mas falhou duas vezes no passo `Harness`; log detalhado via `gh run view --log-failed` retornou HTTP 403 por falta de admin.
+- GitHub Actions `Self Evolution` existe, mas falha de forma recorrente no passo `Harness`; log detalhado via `gh run view --log-failed` retornou HTTP 403 por falta de admin.
 2026-04-24:
 
 - Workspace canonico confirmado em `C:\Dev\Projetos\OLMO_PROMETEUS`.

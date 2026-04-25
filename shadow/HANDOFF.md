@@ -27,7 +27,7 @@ Validar se a fatia Prometeus realmente merece promocao futura:
 | --- | --- | --- | --- |
 | P0 | Objetivo ainda nao tem metricas de valor para medico solo dev | `scripts/maturity.ps1` area `Produto e valor` | definir 3 a 5 outcomes mensais antes de promover fluxo |
 | P0 | PHI/dado sensivel continua risco critico aberto | `../internal/evolution/risk-register.json` id `R-PHI` | executar `EV-B3`: data classification, PHI checklist, threat model, incident log |
-| P0 | CI remoto falha no passo `Harness` | GitHub run `24940721189` e `24938611376` | executar `EV-B2`: obter log/admin ou reproduzir ambiente `windows-latest` |
+| P0 | CI remoto falha no passo `Harness` | runs conhecidas: `24938611376`, `24940721189`, `24941043684` | executar `EV-B2`: obter log/admin ou reproduzir ambiente `windows-latest` |
 | P1 | Digest e study ainda nao provaram 3 usos reais | `EVIDENCE-LOG.md` e `WORK-LANES.md` | rodar em ciclos reais e registrar output |
 | P1 | Foundation, wiki e antifragile gate ainda estao em `experiment` | `WORK-LANES.md` | escolher 1 fluxo para virar `candidate`, nao varios |
 | P1 | Arquitetura ainda depende de TREE + contexto humano | `../internal/evolution/backlog.json` id `EV-B4` | criar nota curta de arquitetura so depois de `EV-B2` |
@@ -38,7 +38,7 @@ Sequencia obrigatoria:
 
 1. Confirmar `git status --short --branch`.
 2. Rodar `powershell -ExecutionPolicy Bypass -File .\scripts\evolve.ps1 -Mode next`.
-3. Atacar `EV-B2`: workflow remoto falha no passo `Harness`; `gh run view --log-failed` retornou HTTP 403 por falta de admin.
+3. Atacar `EV-B2`: workflow remoto falha de forma recorrente no passo `Harness`; `gh run view --log-failed` retornou HTTP 403 por falta de admin.
 4. Se o log remoto continuar bloqueado, documentar bloqueio e reproduzir o mais perto possivel com `pwsh` local.
 5. Nao aplicar branch protection ate haver workflow verde ou bloqueio documentado.
 6. Depois de `EV-B2`, atacar `EV-B3` porque `R-PHI` e critico e aberto.
