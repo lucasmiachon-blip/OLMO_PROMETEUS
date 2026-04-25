@@ -21,6 +21,7 @@ Rodar higiene quando:
 - `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`: rodar harness local.
 - `rg --hidden --files -g "!private-learning/**" -g "!.git/**"`: ver sprawl fora da area privada.
 - Checar se novos arquivos estao em uma casa clara: `shadow/`, `Prometeus/wiki/`, `private-learning/` local ignorado ou `scripts/`.
+- Checar se `shadow/HANDOFF.md` continua enxuto e aponta para fontes canonicas em vez de duplicar docs.
 - Checar `TREE.md` quando a raiz, hooks, skills ou agentes mudarem.
 - Checar se instrucoes de abertura do Obsidian apontam para `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
 - Checar se o harness valida `[[wikilinks]]`, aliases e referencias de Canvas antes de commit.
@@ -74,7 +75,8 @@ Se nao passar nessa barra, consolidar ou deletar.
 - Survivor unico confirmado: `C:\Dev\Projetos\OLMO_PROMETEUS`.
 - Vault canonico: `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
 - Nao ha diretorio irmao de roadmap no filesystem.
-- Push segue bloqueado ate configurar um remote Git.
+- Remote Git configurado e push para `origin/main` funciona.
+- GitHub Actions `Self Evolution` existe, mas falhou duas vezes no passo `Harness`; log detalhado via `gh run view --log-failed` retornou HTTP 403 por falta de admin.
 2026-04-24:
 
 - Workspace canonico confirmado em `C:\Dev\Projetos\OLMO_PROMETEUS`.

@@ -118,6 +118,7 @@ $requiredFiles = @(
   "README.md",
   "TREE.md",
   "shadow/FOUNDATION.md",
+  "shadow/HANDOFF.md",
   "shadow/AGENT-MODULES.md",
   "shadow/HYGIENE.md",
   "shadow/SOTA-DECISIONS.md",
@@ -242,6 +243,7 @@ $sizeThresholds = @{
   "shadow/SOTA-DECISIONS.md" = 16000
   "shadow/AGENT-MODULES.md" = 12000
   "shadow/FOUNDATION.md" = 10000
+  "shadow/HANDOFF.md" = 8000
   "shadow/WORK-LANES.md" = 10000
   "shadow/INCORPORATION-LOG.md" = 8000
   "shadow/HYGIENE.md" = 6000
@@ -458,6 +460,7 @@ $procedureContracts = @{
   "shadow/STUDY-TRACK-DONE.md" = @("## Trigger", "## Saida padrao", "## Workflow", "## Rubric", "## Mini-evals")
   "shadow/WORK-LANES.md" = @("## Trigger", "## Promotion gate", "## Decisao", "## Transicao candidate -> operational", "## Mini-evals")
   "shadow/SOTA-DECISIONS.md" = @("## SOTA research gate", "## Agent module frontier", "## Padrao SOTA para procedimentos", "## Big Three scan", "## Claude Code e GEMINI.md adapters", "## Applied when", "## Blocked ate evidencia")
+  "shadow/HANDOFF.md" = @("## Read First", "## Current Objective", "## Top Gaps", "## Next Session", "## Cross References", "## Stop Conditions")
   "shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md" = @("## Trigger", "## SOTA Comparison", "## Decisions", "## E2E Gate", "## Mini-evals")
   "shadow/AGENT-USAGE.md" = @("## Purpose", "## SOTA agent contract", "## Guardrails", "## Non-triggers")
   "shadow/EVIDENCE-LOG.md" = @("## Schema", "## Entradas")

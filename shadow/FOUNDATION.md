@@ -60,6 +60,7 @@ Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo
 - limites do projeto: `PROJECT_CONTRACT.md`;
 - decisoes SOTA: `shadow/SOTA-DECISIONS.md`;
 - lanes e promotion gate: `shadow/WORK-LANES.md`;
+- handoff de janela hidratada: `shadow/HANDOFF.md`;
 - transicoes aplicadas: `shadow/INCORPORATION-LOG.md`;
 - evidencia de uso real: `shadow/EVIDENCE-LOG.md`;
 - plans de rodada estrutural: `shadow/PLAN-*.md`;

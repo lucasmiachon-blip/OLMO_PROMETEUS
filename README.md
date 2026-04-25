@@ -17,6 +17,7 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 - `TREE.md`: mapa profissional da arvore e politica de incorporacao segura
 - `PROJECT_CONTRACT.md`: limites, faixas e criterio de promocao
 - `shadow/`: regras operacionais, gates, evidencia e pesquisa aplicada
+- `shadow/HANDOFF.md`: entrada curta para hidratar nova janela sem reler docs longos
 - `shadow/WORK-LANES.md`: fonte unica dos 6 estados (private, experiment, candidate, operational, retired, blocked) e promotion gate
 - `shadow/INCORPORATION-LOG.md`: log de transicoes de estado aplicadas
 - `shadow/EVIDENCE-LOG.md`: registro de uso real dos procedimentos (gate para `operational`)
@@ -50,6 +51,7 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 
 ## Fluxo diario recomendado
 
+0. em janela nova, abrir `shadow/HANDOFF.md` e seguir os cross refs canônicos;
 1. capturar materia-prima em `private-learning/`;
 2. transformar com um procedimento pequeno documentado em `shadow/` ou na wiki;
 3. registrar o uso real em `shadow/EVIDENCE-LOG.md` (gate para `operational`);

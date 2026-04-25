@@ -68,6 +68,7 @@ Vault Obsidian graph-first.
 Memoria operacional, nao deposito de pesquisa longa.
 
 - `FOUNDATION.md`: infra, hooks, memoria, harness e orquestracao.
+- `HANDOFF.md`: entrada enxuta para hidratar nova janela com objetivo, gaps e cross refs.
 - `WORK-LANES.md`: fonte unica dos estados (`private`, `experiment`, `candidate`, `operational`, `retired`, `blocked`) e promotion gate.
 - `INCORPORATION-LOG.md`: log de transicoes de estado aplicadas (nao redefine estados).
 - `EVIDENCE-LOG.md`: registro de uso real dos procedimentos; gate para `operational`.
