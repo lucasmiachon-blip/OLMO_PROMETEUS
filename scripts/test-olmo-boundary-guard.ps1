@@ -103,6 +103,22 @@ Assert-Blocked "relative OLMO sibling cowork path" @{
   }
 }
 
+Assert-Blocked "workdir OLMO sibling cowork path" @{
+  tool_name = "PowerShell"
+  tool_input = @{
+    command = "Get-Content .\HANDOFF.md"
+    workdir = $CoworkWorkspace
+  }
+}
+
+$CoworkTypoWorkspace = "C:\Dev\Projetos\" + "OLMO" + "_COWOR"
+
+Assert-Blocked "absolute OLMO sibling cowork typo path" @{
+  tool_name = "Write"
+  tool_input = @{
+    file_path = (Join-Path $CoworkTypoWorkspace "README.md")
+  }
+}
 $LegacyWorkspace = "C:\Dev\Projetos\" + "OLMO" + "_ROADMAP"
 
 Assert-Blocked "absolute legacy workspace path" @{

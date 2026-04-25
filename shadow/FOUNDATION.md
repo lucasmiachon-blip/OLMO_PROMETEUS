@@ -25,7 +25,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 - `lab/wiki-graph-lab/` para a camada visual reversivel que le o vault sem duplicar a fonte de verdade.
 - `private-learning/` para interface e material pessoal.
 - `scripts/check.ps1` como harness local.
-- `scripts/guard-olmo-write-hook.ps1` como guard local do Claude PreToolUse contra o caminho proibido e workspace legado ROADMAP.
+- `scripts/guard-olmo-write-hook.ps1` como guard local do Claude PreToolUse contra `OLMO`, `OLMO_COWORK`, typo `OLMO_COWOR`, workspace legado ROADMAP e qualquer sibling `OLMO*` nao canonico.
 - `scripts/test-olmo-boundary-guard.ps1` como teste automatizado da trava OLMO.
 - `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` como gate E2E para orquestracao, harness e claims antifragile.
 - `scripts/test-orchestration-e2e.ps1 -DryRun` como teste E2E sem side effects desse gate.
