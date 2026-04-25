@@ -15,6 +15,7 @@ Toda vez que um procedimento em `shadow/` rodar em uso real, registrar uma linha
 
 | Data | Procedure | Input | Output | Observacao | Proximo |
 | --- | --- | --- | --- | --- | --- |
+| 2026-04-25 | project-hygiene | Consolidacao final do workspace Prometeus | vault `Prometeus`, lab `lab/wiki-graph-lab/`, diretorio legado ausente | Estado final confirmou survivor unico; remoto Git ainda nao configurado | Configurar remote antes do proximo pedido de push |
 
 ## Entradas
 
@@ -33,4 +34,5 @@ Toda vez que um procedimento em `shadow/` rodar em uso real, registrar uma linha
 Em 4 semanas, se este arquivo tiver <3 entradas por procedure ativo, considerar que o procedimento nao esta em uso real. Acao: reclassificar o procedimento para `experiment` e simplificar/deletar rubrica associada.
 
 Coautoria: Lucas + Claude Opus 4.7 (1M)
+
 

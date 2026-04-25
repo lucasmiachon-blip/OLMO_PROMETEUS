@@ -67,12 +67,18 @@ Se nao passar nessa barra, consolidar ou deletar.
 
 ## Snapshot atual
 
+2026-04-25:
+
+- Survivor unico confirmado: `C:\Dev\Projetos\OLMO_PROMETEUS`.
+- Vault canonico: `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
+- Nao ha diretorio irmao de roadmap no filesystem.
+- Push segue bloqueado ate configurar um remote Git.
 2026-04-24:
 
 - Workspace canonico confirmado em `C:\Dev\Projetos\OLMO_PROMETEUS`.
 - Vault canonico confirmado em `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
 - Companion visual versionado em `lab/wiki-graph-lab/`, lendo apenas `Prometeus/wiki/`.
-- Diretorio legado restante foi esvaziado; remocao fisica depende do lock externo do Windows cair.
+- Diretorio legado restante foi removido; o survivor unico e `C:\Dev\Projetos\OLMO_PROMETEUS`.
 - Harness passou e Git ficou limpo apos a consolidacao documental.
 2026-04-23:
 
@@ -83,4 +89,5 @@ Se nao passar nessa barra, consolidar ou deletar.
 - Frame adversarial aplicado: contexto de agente e Git precisam ignorar as mesmas areas privadas/geradas.
 
 Coautoria: Lucas + GPT-5.4 (Codex)
+
 
