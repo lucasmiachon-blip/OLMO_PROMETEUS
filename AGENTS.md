@@ -41,6 +41,17 @@ Antes de mudar arquitetura, agentes, skills, hooks, MCP, memoria ou orquestracao
 
 Se a pesquisa nao justificar a mudanca, nao implementar. Sem bajulacao, sem arquitetura aspiracional e sem copiar moda.
 
+## Solo Doctor Dev Standard
+
+Este repo deve operar como laboratorio de um medico solo dev: alta utilidade, baixo atrito e risco clinico controlado.
+
+- Nao colocar dados de paciente, PHI ou dados pessoais sensiveis em arquivos versionados, prompts externos, automacoes ou agentes, salvo workflow privado aprovado explicitamente.
+- Usar exemplos sinteticos, anonimizados ou minimizados por padrao; quando pesquisa externa envolver saude, citar fonte e separar fato, inferencia e decisao.
+- Agentes e automacoes podem preparar, auditar e resumir; decisao clinica, legal, financeira ou de privacidade fica humana.
+- Preferir procedimento manual + harness + evidencia antes de framework de orquestracao.
+- Runtime agentico novo so entra apos >=3 evidencias de retrabalho real em `shadow/EVIDENCE-LOG.md`, trigger claro, rollback e aprovacao humana.
+- O padrao de ouro e: auditavel, reversivel, sem dados sensiveis, humano-no-loop e proporcional ao tamanho real do projeto.
+
 ## Daily Loop
 
 1. Capture materia-prima em `private-learning/` ou em uma nota temporaria.
@@ -78,6 +89,20 @@ Regra: agentes que precisarem de criterio detalhado seguem o link acima. Duplica
 ## Memoria
 
 Este projeto nao usa a memoria automatica do Claude Code. `C:\Users\lucas\.claude\projects\C--Dev-Projetos-OLMO-PROMETEUS\memory\` e intencionalmente vazio. A memoria do projeto vive em `AGENTS.md`, `shadow/` e `Prometeus/wiki/`. Memoria global do usuario fica em `~/.claude/CLAUDE.md` e e read-only por este repo.
+
+## Error Reports and Self-Improvement
+
+Quando ocorrer erro material (tool, shell, path, permissao, teste, pesquisa ou suposicao quebrada), parar antes de trocar a estrategia e reportar:
+
+- Erro: o que falhou, comando/ferramenta e mensagem principal.
+- Por que: hipotese tecnica mais provavel, sem inventar certeza.
+- O que mudou: qual plano mudou por causa do erro.
+- Impacto: o que ficou incompleto, arriscado ou sem validacao.
+- O que um profissional faria: acao profissional para diagnosticar ou corrigir.
+- Vamos fazer?: sim ou nao, com justificativa proporcional ao risco, custo e escopo.
+- Regra nova: aprendizado pratico para evitar repeticao.
+
+Se o erro indicar sandbox, permissao ou rede e o comando for essencial, repetir o mesmo comando com aprovacao conforme politica antes de mudar rota. A memoria desse aprendizado so entra no repo quando muda comportamento futuro.
 
 ## Do
 

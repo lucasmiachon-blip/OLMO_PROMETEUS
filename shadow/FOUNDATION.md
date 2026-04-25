@@ -66,6 +66,8 @@ Memoria automatica do Claude Code em `C:\Users\lucas\.claude\projects\...\memory
 
 Regra: se uma memoria nao muda comportamento futuro, ela nao entra no repo.
 
+Erros materiais tambem sao memoria operacional quando mudam comportamento futuro. O protocolo vive em `AGENTS.md > Error Reports and Self-Improvement`: reportar erro, causa provavel, mudanca de plano, impacto, acao profissional, decisao `vamos fazer?` com justificativa e regra nova. Usar o protocolo para corrigir rota; nao transformar falhas pequenas em ritual.
+
 ## 4. Harness
 
 O harness local e:
@@ -107,6 +109,8 @@ Delegacao:
 - Gemini entra para pesquisa longa/multimodal somente com objetivo, trigger, artefato, custo e risco.
 
 Sem fan-out automatico e sem registry local de agentes neste repo. Todo uso real de subagent ou procedure registrado em `shadow/EVIDENCE-LOG.md`.
+
+Para o perfil de medico solo dev, orquestracao deve permanecer primeiro como procedimento auditavel em `shadow/`: estado claro, humano-no-loop, evidencias, custo e rollback. Frameworks externos de agentes so entram quando o procedimento manual provar retrabalho repetido sem expor dados sensiveis.
 
 ## 6. SOTA research gate
 

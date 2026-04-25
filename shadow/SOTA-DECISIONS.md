@@ -141,6 +141,36 @@ Fontes: Claude Code Skills docs (`https://code.claude.com/docs/en/skills`), Anth
 
 Harness: `.claude/skills/` removido de `forbiddenClaudeSubdirs`; novo check exige `SKILL.md` em cada subdir de `.claude/skills/`. Contrato de SKILL.md (name, description, trigger, non-trigger) vive em `shadow/AGENT-USAGE.md > Local skills contract`.
 
+## Error report memory protocol (2026-04-25)
+
+Decisao: persistir em `AGENTS.md` um protocolo curto para erros materiais: erro, causa provavel, mudanca de plano, impacto, acao profissional, decisao `vamos fazer?` com justificativa e regra nova.
+
+Auditoria local: `AGENTS.md` ja define memoria do projeto; `shadow/FOUNDATION.md` diz que memoria so entra no repo quando muda comportamento futuro. O pedido do usuario transforma o padrao de reporte em comportamento futuro.
+
+Fontes: OpenAI Codex best practices (`https://developers.openai.com/codex/learn/best-practices`), AGENTS.md docs (`https://developers.openai.com/codex/guides/agents-md`) e GPT-5.5 guidance sobre outcome-first e criterios de sucesso (`https://developers.openai.com/api/docs/guides/latest-model`).
+
+- Trigger: erro material que muda plano, confianca, validacao ou rota de execucao.
+- Nao-trigger: typo, detalhe cosmetico ou falha ja corrigida sem impacto no plano.
+- Risco: burocracia e relatorios maiores que a correcao.
+- Custo: 30-90 segundos por erro material.
+- Rollback: remover a secao de `AGENTS.md` e esta decisao.
+- Criterio negativo: se em 30 dias o reporte nao reduzir repeticao de erro ou virar ruido, comprimir para uma linha em `AGENTS.md`.
+
+## Solo medico agent/orchestration refresh (2026-04-25)
+
+Decisao: incorporar padroes de agent engineering, nao runtimes. Manter AGENTS/CLAUDE fino, procedures em `shadow/`, subagents read-only sob demanda, skills apenas quando procedure for operational. Nao instalar LangGraph, CrewAI, Paperclip ou OpenAI Agents SDK agora.
+
+Auditoria local: repo pequeno, sem app agentico, sem workflow repetido com estado duravel, sem dado medico versionado; `AGENT-USAGE.md` ja evita scaffold local.
+
+Fontes: Anthropic Claude memory/skills/subagents/agent teams/hooks (`https://code.claude.com/docs/en/memory`, `https://code.claude.com/docs/en/skills`, `https://code.claude.com/docs/en/sub-agents`, `https://code.claude.com/docs/en/agent-teams`, `https://code.claude.com/docs/en/hooks`); OpenAI Agents SDK/guardrails (`https://github.com/openai/openai-agents-python`, `https://openai.github.io/openai-agents-python/guardrails/`); LangGraph (`https://docs.langchain.com/oss/python/langgraph/overview`); CrewAI (`https://docs.crewai.com/en/introduction`); Paperclip (`https://github.com/paperclipai/paperclip`); HHS/ANPD privacidade (`https://www.hhs.gov/hipaa/for-professionals/privacy/laws-regulations/index.html`, `https://www.gov.br/anpd/pt-br/canais_atendimento/agente-de-tratamento/perguntas-frequentes-anpd`).
+
+- Trigger: >=3 evidencias reais de retrabalho por falta de estado/HITL/tracing/coordenacao; plano de privacidade sem PHI; rollback e harness.
+- Nao-trigger: curiosidade SOTA, single-user notes, demo, workflow ainda manualmente simples.
+- Risco: sprawl, vazamento de dado sensivel, custo de tokens, autonomia excessiva.
+- Custo: dependencia nova, manutencao, observabilidade, politicas de permissao.
+- Rollback: remover overlay de `AGENT-USAGE.md`; manter procedures em `shadow/`.
+- Criterio negativo: se ate 2026-05-25 nao houver 3 evidencias, continuar sem runtime agentico.
+
 ## Applied when
 
 Registro de quando cada decisao acima foi aplicada a uma mudanca real. Uma entrada por aplicacao, com data, artefato e commit quando disponivel. Se uma decisao ficar >30 dias sem aplicacao registrada, e candidata a remocao (museu).
@@ -155,6 +185,8 @@ Registro de quando cada decisao acima foi aplicada a uma mudanca real. Uma entra
 | 2026-04-23 | Local skills gate (C2 -> promocao parcial) | Abertura condicional de `.claude/skills/`; harness, docs e AGENT-USAGE atualizados | (esta rodada) |
 | 2026-04-24 | SOTA research gate | Auditoria adversarial pos-PLAN-2026-04-23: rebaixamento de 4 labels aspiracionais, consolidacao de 3 tabelas de lanes em WORK-LANES.md, FAIL de EVIDENCE-LOG stale em `-Strict` | commits 1ea1dea, 0e6177d, b3bbdb4; primeira entrada real em `shadow/EVIDENCE-LOG.md` |
 | 2026-04-24 | SOTA research gate | Rodada II: clarificacao de linguagem no local skills gate (A3), skill sprawl check no harness (pre-mortem #2), coautoria padronizada (B1) | commits 51d59a7, cf78eec, 9ee66dd |
+| 2026-04-25 | Error report memory protocol | Protocolo de erro material e self-improvement persistido em memoria do projeto | `AGENTS.md`, `shadow/FOUNDATION.md` |
+| 2026-04-25 | Solo medico agent/orchestration refresh | Overlay de solo dev medico: privacidade, HITL, auditoria, sem runtime agentico novo | `AGENTS.md`, `shadow/AGENT-USAGE.md`, `shadow/FOUNDATION.md` |
 
 ## Claude Code e GEMINI.md adapters
 

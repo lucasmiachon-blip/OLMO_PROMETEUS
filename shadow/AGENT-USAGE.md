@@ -63,6 +63,26 @@ Este projeto nao mantem memoria propria do Claude Code (`.claude/projects/.../me
 ### Tool minimalism
 Cada subagent recebe apenas as ferramentas que precisa. `Explore` ja e read-only; `Plan` ja e read-only. Subagent que precise editar deve ter justificativa no prompt, e preferencialmente usar worktree isolation.
 
+## Solo medico SOTA overlay (2026-04-25)
+
+Pesquisa atual em Anthropic Claude Code, OpenAI Agents SDK, LangGraph, CrewAI e Paperclip confirma: o melhor ganho agora e contrato operacional, nao runtime novo.
+
+### Incorporar agora
+
+- `AGENTS.md` continua fonte portavel; `CLAUDE.md` fica adaptador fino. `.claude/rules/` so entra se houver regra path-specific repetida que esteja inflando contexto global.
+- Subagents entram explicitamente, read-only por padrao, para pesquisa/review/debug com escopo fechado. Agent teams experimentais so para pesquisa/review paralela, nunca para tocar dados sensiveis ou rodar sem supervisao.
+- Skills continuam procedure-first: so promover procedure operacional, com trigger/non-trigger fortes. Skills com side effect ou risco medico devem ser manual-trigger quando a ferramenta suportar.
+- Orquestracao copia os padroes, nao os frameworks: estado, ticket, budget, audit log, humano-no-loop, rollback e criterio negativo.
+- Para qualquer fluxo medico: sem PHI/dados sensiveis em prompt, repo ou automacao; usar dado sintetico/de-identificado; registrar fontes e limites.
+
+### Nao incorporar ainda
+
+- LangGraph, CrewAI, Paperclip ou OpenAI Agents SDK como dependencia/runtime local.
+- `.claude/agents/`, hooks ou agent teams persistentes.
+- Agentes 24/7, heartbeats ou autonomia de negocio sobre dados medicos.
+
+Trigger futuro: >=3 ciclos reais em `EVIDENCE-LOG.md` mostram que um procedimento manual falha por falta de estado duravel, HITL formal, tracing ou coordenacao multi-agente. Sem esse trigger, o custo operacional e o risco de privacidade superam o ganho.
+
 ## Local skills contract
 
 Aberto em 2026-04-23 por decisao em `shadow/SOTA-DECISIONS.md > Local skills gate`. `.claude/skills/` agora e casa valida para skills promovidas. `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` permanecem proibidos.
