@@ -263,6 +263,33 @@ Rollback: `git restore AGENTS.md shadow/SOTA-DECISIONS.md shadow/INCORPORATION-L
 
 Criterio negativo: se grep mostrar que `email-digest-4p` ou `study-track-done` sao citados como pratica central em outro doc operacional, esse doc tambem precisa de alinhamento.
 
+## Triadic stack debate consolidation (2026-04-26)
+
+Decisao: o output do exercicio triadico de hoje (Claude Opus 4.7 + Gemini base + Gemini 3.1 Pro Deep Think) entra neste arquivo como entry curta, nao como PLAN/MATRIX longo (727L combinado, descartados). Frame adversarial pos-debate: para um lab solo, ceremony bloat e anti-pattern explicito; decisao curta vence relatorio longo conforme `AGENTS.md > Operating Principles`.
+
+Sintese:
+
+- D04 (renormalize CRLF + `core.filemode false` local): aplicado hoje em commit `50979f9`. Pre-condicao tecnica antes de qualquer edit semantico futuro; trabalha junto com `.gitattributes` ja correto (`* text=auto eol=lf`).
+- D01 (canonical Linux home): essencialmente completo nos commits `f24644d`, `c274a81`, `ed1a4ee`; residuo unico de drift (`lab/wiki-graph-lab/graph-data.js`, output gerado) movido para `.gitignore` em `50979f9`.
+- D09 (Gemini 3.1 Pro Preview = 1M input tokens, 64k output): confirmado em fonte primaria Google `ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview` (atualizado 2026-04-23). Substitui qualquer referencia historica a 2M.
+- C01-C13 (Bash, Ubuntu 24.04, `uv`/`ruff`/`biome` quando houver projeto, sem runtime agentico, sem MCP proprio, sem hooks alem do guard): status quo, nao geram decisao formal — registro aqui apenas como confirmacao de que o exercicio triadico nao alterou nada.
+- D02 (skills locais agora) e D06 (GPT-5.5 como 4o adversario): rejeitados; mantem bloqueios existentes via `shadow/AGENT-USAGE.md > Local skills contract` e `## Time minimo` deste arquivo.
+- D05/D07/D08/D10 (`private-learning/` triage; verificar Codex landlock+seccomp; pricing GPT-5.5 vs Opus 4.7; existencia de `gemini-3.1-pro-preview-customtools`): deferidos para sessao dedicada quando houver impacto real, nao reflexo.
+
+Trigger: SOTA gate executado pelos 3 raws (CL/GB/GD) + auditoria adversarial humana hoje.
+
+Nao-trigger: nao gera runtime/agent/skill novo; nao adiciona governance; nao expande shadow/.
+
+Risco: perda de detalhe argumentativo dos raws — mitigado pelo git history e pelos `SOTA-STACK-*-2026-04-26.md` ja comitados em `9e32ebe` (CONSOLIDATED-DIAGNOSIS, CLAUDE-RESPONSE, GEMINI-3.1-PRO-DIAGNOSIS, ARMS-PROMPT).
+
+Custo: zero arquivos novos; ~25 linhas nesta entry; -727L deletados (PLAN+MATRIX).
+
+Rollback: `git revert` desta entrada e re-criar PLAN/MATRIX a partir de chats salvos. Aceitavel: o conteudo essencial fica aqui.
+
+Criterio negativo: se em 30 dias um topico do PLAN descartado for citado e nao houver registro suficiente nos raws comitados, reintroduzir aquele topico especifico como nota curta — uma por topico, sem PLAN longo retroativo.
+
+Fontes externas (todas verificadas 2026-04-26 via WebSearch): git docs / GitHub / Edward Thomson (renormalize line endings; `.gitattributes` precede `core.autocrlf`); Microsoft WSL docs + vxlabs benchmarks (9P bridge ~5x slowdown `/mnt/c` vs ext4 nativo); Anthropic Claude Code docs 2026 + ofox.ai (hooks deterministicos / skills probabilisticas; minimum viable para solo dev); Google Gemini docs `gemini-3.1-pro-preview` (1M input / 64k output, atualizado 2026-04-23); DevOps.com + Apatero blog (ceremony bloat anti-pattern em solo project).
+
 ## Applied when
 
 | Data | Decisao | Aplicada em | Artefato/commit |
@@ -282,6 +309,7 @@ Criterio negativo: se grep mostrar que `email-digest-4p` ou `study-track-done` s
 | 2026-04-26 | Privacy guard minimum | Controles minimos de dado sensivel/PHI exigidos pelo harness | `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`, `scripts/check.sh` |
 | 2026-04-26 | Bash-first WSL2 harness | Runtime antigo sai do gate principal; workflow passa para Bash | `scripts/check.sh`, `scripts/evolve.sh`, `.github/workflows/self-evolution.yml` |
 | 2026-04-26 | Remove legacy scripts | Guard e harness portados para Bash; scripts antigos removidos do repo | `scripts/guard-olmo-write-hook.sh`, `scripts/test-olmo-boundary-guard.sh`, `scripts/check.sh` |
+| 2026-04-26 | Triadic stack debate consolidation | D04 aplicado + entry curta substitui PLAN+MATRIX (727L → 25L); D01/D09 confirmados; D05/D07/D08/D10 deferidos | commit `50979f9`, `shadow/SOTA-DECISIONS.md`, `shadow/INCORPORATION-LOG.md`, `shadow/EVIDENCE-LOG.md` |
 
 ## Claude Code, Codex e GEMINI.md adapters
 
