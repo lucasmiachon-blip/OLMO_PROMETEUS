@@ -67,6 +67,7 @@ Perfil do operador: medico solo dev. Padrao de ouro: auditavel, reversivel, huma
 | `guard-olmo-write-hook.sh` | PreToolUse | `Write\|Edit\|MultiEdit\|NotebookEdit\|Bash` | Boundary: bloqueia write para sibling fora do canonical; ask em read externo. Scaneia campos path-only de `tool_input` (file_path/command/workdir/cwd/directory). |
 | `guard-read-secrets.sh` | PreToolUse | `Read\|Grep\|Glob` | Bloqueia `.env`/`.pem`/`.key`/`credentials.json`/`id_rsa` + Grep credential patterns + paths PHI (`paciente_*`, `patient_*`, `phi_*`, `clinical_*`). |
 | `guard-secrets.sh` | PreToolUse | `Bash` | Bloqueia `git commit/add` com staged blob contendo OpenAI/Anthropic/AWS/GitHub/Notion/Google/Slack/Stripe/postgres keys ou symlink. |
+| `ask-bash-write.sh` | PreToolUse | `Bash` | Pede confirmacao humana (permissionDecision=ask) antes de comandos com write-intent (mkdir/rm/mv/cp/git add/commit/push/etc; `>` redirecao; sudo). Reads (ls/cat/grep/git status) sao allow direto. NUNCA bloqueia. |
 | `trace-edits.sh` | PostToolUse | `Edit\|Write\|MultiEdit` | Imprime header + diff/stat em **stderr (visivel ao user em tempo real)** e `additionalContext` (visivel ao modelo). 60 li max; trunca com aviso. |
 | `pre-compact-checkpoint.sh` | PreCompact | `*` | Snapshot em `.claude/.last-checkpoint` com `git log -5` + `git status` + recently modified + HANDOFF top 30. |
 | `session-start.sh` | SessionStart | `*` | Cola HANDOFF top 60 + `git log -5` + `git status` no inicio de cada sessao. |
@@ -119,6 +120,8 @@ Commits (em ordem):
 - `04dad2f` — docs: update HANDOFF + EVIDENCE-LOG (3 entries novas).
 - `03369ef` — ops: trace-edits hook also prints to stderr (visible to user em tempo real).
 - `ab574b3` — ops: guard-olmo-write-hook scans path/command fields only (corrige false positive onde HANDOFF mencionava sibling em content).
+- `8ed7a4b` — docs: rewrite HANDOFF.md as single dense hydration source (-35L net; 11 secoes numeradas, sem duplicatas).
+- (este commit) — ops: incorporate ask-bash-write hook (user-pedido: ask antes de Bash com write-intent).
 
 Smoke-test 5 hooks: 5/5 passam. Push `origin/main` executado.
 
@@ -134,9 +137,7 @@ Sessao anterior (2026-04-26 PM, ja arquivada via git history) deixou: D04 aplica
 
 2. **Promover ou aposentar `email-digest-4p` + `study-track-done`**: 0 entries em EVIDENCE-LOG ha 14+ dias. Ou rodar 3x ciclos reais e registrar, ou simplificar/aposentar antes do PR 2.
 
-3. **Avaliar OLMO ask-style hook**: user mencionou "so falta ask para continuar como existe no OLMO original". Definir qual hook OLMO especificamente (provavelmente confirmation-before-continue), aplicar SOTA gate (trigger, risco, rollback), incorporar so se houver evidencia de retrabalho real.
-
-4. **Inventarios bloqueados** (precisam Bash com `!` prefix do user OU regra `Bash(read:...)` em `.claude/settings.local.json`):
+3. **Inventarios bloqueados** (precisam Bash com `!` prefix do user OU regra `Bash(read:...)` em `.claude/settings.local.json`):
    - `legacy/2026-04-26/dev/olmo-migration/` (snapshot Linux, paths sob `/home/lucasmiachon/`)
    - `Aulas_core` (CUIDADO: estado virgem com erros — NAO importar bulk; path em `/mnt/c/Dev/Projetos/`)
    - `aulas-magnas-gemini-20260305.zip` (extrair em `/tmp`; path em `/mnt/c/Dev/Projetos/`)
