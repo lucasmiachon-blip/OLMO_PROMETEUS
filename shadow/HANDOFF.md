@@ -1,53 +1,110 @@
 # Handoff
 
 Status: active
-Updated: 2026-04-26 (PM, pos auditoria adversarial)
-Scope: janela hidratada para retomar `OLMO_PROMETEUS` sem reler docs longos.
+Updated: 2026-04-26 (PM, pos legacy mining + 5 hooks wired)
+Scope: janela hidratada para retomar `OLMO_PROMETEUS` apos `/clear`.
 
-## Next Session — Structural Cleanup (priority P0)
+## Quick Hydration (cole no inicio da nova sessao)
 
-Auditoria adversarial 2026-04-26 PM concluiu que a estrutura atual e ceremony bloat para um lab solo (37 .md / 4383L; 30 arquivos em `shadow/`; 10 `SOTA-STACK-*-2026-04-26.md` para 1 exercicio). Restructure aprovada em principio, executada em 3 PRs pequenos e reversiveis.
+Sessao 2026-04-26 PM trabalhou em paralelo: (a) higiene tecnica + consolidacao adversarial do stack debate; (b) inventario read-only de archives legacy (devmentor, archived OLMO_PROMETEUS, OLMO live); (c) inicio da estrutura profissional (docs/adr + procedures); (d) wire de 5 hooks selecionados de OLMO (excessivos no original; cherry-pick aqui).
 
-**Sessao de hoje (2026-04-26) entregou:**
+OLMO e intocavel: leitura autorizada, sem write. Aulas_core era estado virgem (muitos erros), tomar cuidado.
 
-- commit `50979f9` — D04 aplicado (renormalize CRLF + `core.filemode false` local + `lab/wiki-graph-lab/graph-data.js` movido para `.gitignore`).
-- commit `a908770` — consolidacao adversarial: 727L de governance proposta (PLAN+MATRIX) substituidas por entry de ~25L em `shadow/SOTA-DECISIONS.md > Triadic stack debate consolidation (2026-04-26)`.
-- harness `./scripts/check.sh --strict` passa com 0 warnings.
-- `git push origin main` ainda nao executado (10 commits ahead).
+## DONE neste turno (2026-04-26 PM)
 
-**Proxima sessao — sequencia estrita (cada PR e reversivel via `git revert`):**
+Commits (em ordem):
 
-1. **PR 1 — Compress raws** (~30min, baixo risco):
-   - Consolidar 10 `shadow/SOTA-STACK-*-2026-04-26.md` (1746L) em 1 ADR `docs/adr/0006-triadic-stack-debate.md` (~50L com link para git history `9e32ebe`).
-   - Consolidar 2 `shadow/LEGACY-*-2026-04-26.md` (109L) em 1 ADR ou na commit message ja existente.
-   - Criar `docs/adr/` folder + `docs/adr/template.md` (MADR format: context/decision/consequences/status).
-   - Criar `docs/adr/README.md` com indice.
+1. `50979f9` — chore: untrack derived graph artifact and normalize line endings post NTFS->ext4 migration. Renormalize 12 arquivos (CRLF->LF) + `lab/wiki-graph-lab/graph-data.js` -> `.gitignore` + `core.filemode false` local. **D04 aplicado**.
+2. `a908770` — docs: consolidate 2026-04-26 triadic debate into single SOTA entry. 727L (PLAN+MATRIX rascunhos) -> ~25L em `shadow/SOTA-DECISIONS.md > Triadic stack debate consolidation (2026-04-26)`. Frame adversarial: ceremony bloat anti-pattern.
+3. `70d8dbb` — docs: add structural cleanup roadmap to HANDOFF.md. Roadmap inicial 3-PR (este arquivo).
+4. `6fcc233` — docs: add docs/adr and procedures professional structure skeleton. **PR 1 partial**: `docs/adr/{README,template,0001-canonical-linux-workspace}.md` + `procedures/{README,decision-protocol}.md`.
+5. (commit em progresso) — feat: incorporate 5 selected hooks from OLMO + update settings.local.json + this HANDOFF.
 
-2. **PR 2 — Privacy + governance consolidation** (~45min, risco medio):
-   - Mesclar `shadow/DATA-CLASSIFICATION.md` + `PHI-CHECKLIST.md` + `THREAT-MODEL.md` + `INCIDENT-LOG.md` em `docs/threat-model.md` (1 file).
-   - Quebrar `shadow/SOTA-DECISIONS.md` (354L monolito com ~15 secoes) em ~10 ADRs numerados em `docs/adr/0001-` a `0010-`, status `accepted`.
-   - Mover `shadow/EMAIL-DIGEST-4P.md` + `shadow/STUDY-TRACK-DONE.md` para `procedures/`.
-   - Atualizar `scripts/check.sh` para ler novos paths.
+Tools instalados (user-space, sem sudo):
 
-3. **PR 3 — AGENTS.md SOTA + retire scaffolds** (~1h, alto impacto):
-   - Reescrever `AGENTS.md` para ~80L max aplicando Toolchain First principle (omitir tudo que harness/CI ja enforca; source: agents.md spec 2026, Gloaguen et al. 2026 mostra que context files inflados reduzem task success em 3% e custam 20% mais).
-   - Mesclar essencia de `shadow/FOUNDATION.md` + `PROJECT_CONTRACT.md` + `shadow/AGENT-USAGE.md` + `shadow/AGENT-MODULES.md` + `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` em `docs/runbook.md` (operacional) e referenciar de `AGENTS.md`.
-   - Eliminar adapters `CLAUDE.md`/`CODEX.md`/`GEMINI.md` (AGENTS.md spec atual e universal) ou reduzir cada para <=10L de pitfall especifico.
-   - Retire `shadow/WORK-LANES.md` (5L em AGENTS.md), `shadow/INCORPORATION-LOG.md` (substituir por `git log`), `shadow/HANDOFF.md` (este arquivo: vira `docs/runbook.md`), `shadow/HYGIENE.md`, `shadow/PLAN-2026-04-23.md` (arquivar como ADR historico).
-   - Eliminar `shadow/` folder; estrutura final: `docs/`, `procedures/`, `internal/evolution/`, `scripts/`, `Prometeus/`, `lab/`, `private-learning/`.
+- `uv` 0.11.7 (Astral Python pkg manager) -> `~/.local/bin/uv`
+- `ruff` 0.15.12 -> `~/.local/bin/ruff`
+- `biome` 2.4.13 -> `~/.npm-global/bin/biome`
+- `pnpm` 10.33.2 -> `~/.npm-global/bin/pnpm`
+- `rg` (ripgrep) 14.1.1 -> `~/.local/bin/rg` (resolve harness gap; era shell-function CLAUDE_CODE_EXECPATH wrapper invisivel)
+- **bun pendente**: precisa `sudo apt install unzip`. Defer (marcado como experimento, sem projeto TS hoje).
 
-**AGENTS.md SOTA delta (proxima sessao):**
+Hooks SAFE incorporados em `scripts/` + wired em `.claude/settings.local.json` (local, gitignored):
 
-Manter (cabe em ~80L): boundary fundamental, intent (lab solo medico), operating principles, daily loop, error reports protocol, do/don't, sources base. Cortar (vai para `docs/runbook.md` ou ADRs): SOTA research gate detalhado, agent module frontier, padrao SOTA para procedimentos, big three scan, table de decisoes aplicadas, time minimo (vira ADR 0004). Resultado: AGENTS.md vira context file high-signal, alinhado com pesquisa ETH 2026.
+- `guard-olmo-write-hook.sh` (existente) — PreToolUse Write|Edit|MultiEdit|NotebookEdit|Bash: boundary OLMO sibling.
+- `guard-read-secrets.sh` (NOVO, adapted from OLMO `.claude/hooks/`) — PreToolUse Read|Grep|Glob: bloqueia .env/.pem/.key/credentials.json/id_rsa + Grep credential patterns + paths PHI (paciente_*, patient_*, phi_*, clinical_*).
+- `guard-secrets.sh` (NOVO, adapted) — PreToolUse Bash: bloqueia git commit/add com staged blobs contendo OpenAI/Anthropic/AWS/GitHub/Notion/Google/Slack/Stripe/postgres keys.
+- `trace-edits.sh` (NOVO) — PostToolUse Edit|Write|MultiEdit: emite `additionalContext` com diff resumido (transparencia user-pedida).
+- `pre-compact-checkpoint.sh` (NOVO, adapted) — PreCompact: snapshot em `.claude/.last-checkpoint` (gitignored) com git log + status + recently modified.
+- `session-start.sh` (NOVO, adapted) — SessionStart: hidrata sessao com HANDOFF top 60 li + git log -5 + status.
 
-**Hooks: sem necessidade de adicionar.** Atual `PreToolUse > guard-olmo-write-hook.sh` cumpre SOTA Anthropic 2026 (hook deterministico para regra 100%). Refino opcional (split deny vs ask) so se Task #6 false positive voltar.
+Hooks **NAO** incorporados (avaliados, descartados):
 
-**Stop conditions (proxima sessao):**
+- `guard-bash-write.sh` — overlap com boundary guard atual. Reavaliar PR3.
+- `lint-on-edit.sh` — especifico OLMO `content/aulas/<aula>/slides/*.html`. Esperar projeto TS/aula real.
+- `loop-guard.sh` — tied a `/debug-team` flow. Complexidade > valor solo.
+- 24+ outros hooks OLMO (chaos-inject, momentum-brake, ambient-pulse, apl-cache-refresh, etc): ceremony bloat para solo (32 hook registrations no OLMO).
+
+Inventarios read-only feitos:
+
+- **devmentor** (`/home/lucasmiachon/legacy/2026-04-26/devmentor/`): 11 incorporar / 8 nao incorporar / 4 avaliar. Highlights: 4 wiki notes (cli-vs-mcp, karpathy-pattern, anti-pollution, skills-vs-mcp), 4 skills (ingest/graduate/lint-wiki/session-log), 1 setup-second-brain.sh, 2 raw articles (Scalekit + Karpathy).
+- **archived OLMO_PROMETEUS** (`/mnt/c/Dev/Projetos/_archive/OLMO_PROMETEUS-archived-20260426-142912/`): SEM perda significativa. 91 arquivos archive vs 96 canonical: 73 identicos / 14 divergentes (todos GREW no canonical, sem shrinkage) / 4 ausentes (todos `private-learning/` UI .gitignored ou workspace.json) / 9 novos no canonical.
+- **OLMO live Windows** (`/mnt/c/Dev/Projetos/OLMO/`): apenas via `/mnt/c` ls + Read de `docs/ARCHITECTURE.md`. **9 subagents + 18 skills + 30 scripts/32 hook registrations + L1-L7 antifragile + APL**. Read mais profundo do Bash bloqueado pelo hook de sibling OLMO em alguns paths.
+
+Inventario consolidado em chat — **NAO comitado** (defer ate ter tempo de organizar em `shadow/RECOVERED-2026-04-26/` ou `docs/recovered/`).
+
+## PENDING para proxima sessao (priorizado)
+
+### P0 — High value, low risk
+
+1. **Verificar funcionamento dos 5 novos hooks**: SessionStart deve surface HANDOFF; PostToolUse trace-edits deve mostrar diff; guard-read-secrets/secrets devem bloquear smoke tests. Se algum quebrar, `git revert` do commit + restaurar `.claude/settings.local.json` simples.
+
+2. **Inventarios bloqueados** (precisam workaround do hook OLMO sibling — opcoes: Bash com `!` prefix do user, OU regra Bash read em `.claude/settings.local.json`):
+   - `/home/lucasmiachon/legacy/2026-04-26/dev/olmo-migration/OLMO/` (snapshot Linux)
+   - `/mnt/c/Dev/Projetos/Aulas_core/` (CUIDADO: estado virgem, muitos erros — NAO importar bulk)
+   - `/mnt/c/Dev/Projetos/aulas-magnas-gemini-20260305.zip` (precisa extrair em /tmp)
+   - `/mnt/c/Dev/Projetos/OLMO_GENESIS/`, `/OLMO_COWORK/`, `/Projeto_olmo_main/` (snapshots paralelos)
+   - `/mnt/c/Dev/Projetos/cowork-command-center-workspace/`, `/orquestrador-context/`, `/Conversores/` (aux)
+
+3. **PR 1 — Compress raws** (continuar): consolidar 10 `shadow/SOTA-STACK-*-2026-04-26.md` (1746L) em 1 ADR `docs/adr/0006-triadic-stack-debate.md` (~50L). Consolidar 2 `shadow/LEGACY-*-2026-04-26.md` (109L). Adicionar mais ADRs (executor rule, sampling, privacy, Codex xhigh, exclusivity).
+
+### P1 — Medium
+
+4. **PR 2 — Privacy + governance consolidation**: mesclar `shadow/DATA-CLASSIFICATION.md` + `PHI-CHECKLIST.md` + `THREAT-MODEL.md` + `INCIDENT-LOG.md` em `docs/threat-model.md`. Quebrar `shadow/SOTA-DECISIONS.md` em ADRs numerados. Mover procedures (email-digest-4p, study-track-done) para `procedures/`.
+
+5. **Incorporar material devmentor**: 4 wiki notes (cli-vs-mcp, karpathy-pattern, anti-pollution, skills-vs-mcp) -> `Prometeus/wiki/References/` ou `docs/wiki/`. Skills devmentor: avaliar caso a caso (user disse skip skills/agents/subagents do OLMO; devmentor diferente).
+
+### P2 — Future
+
+6. **PR 3 — AGENTS.md SOTA + retire scaffolds**: AGENTS.md ~80L (Toolchain First); mesclar FOUNDATION/PROJECT_CONTRACT/AGENT-USAGE/AGENT-MODULES/ORCHESTRATION-* em `docs/runbook.md`; retire `shadow/` folder.
+
+7. **`shared-v2/` design system de OLMO**: defer ate primeiro projeto aula real no Prometeus.
+
+8. **`bun` install**: precisa `sudo apt install unzip`. Defer.
+
+9. **`git push origin main`**: 10+ commits ahead. NAO push autonomamente; user decide.
+
+## Cross-references
+
+- **Plano original**: `/home/lucasmiachon/.claude/plans/fuzzy-hatching-harbor.md` (saida read-only do plan mode 2026-04-26 PM)
+- **Decisoes consolidadas**: `shadow/SOTA-DECISIONS.md > Triadic stack debate consolidation (2026-04-26)`
+- **ADRs novos**: `docs/adr/0001-canonical-linux-workspace.md` + `docs/adr/template.md` + `docs/adr/README.md`
+- **Procedures novos**: `procedures/decision-protocol.md` (adapted de OLMO `content/aulas/shared/`)
+- **Evidencia**: `shadow/EVIDENCE-LOG.md` ultima entry 2026-04-26 sota-research-gate
+- **Transicoes lane**: `shadow/INCORPORATION-LOG.md` ultimas 3 entries 2026-04-26
+- **Matriz legacy original**: `shadow/LEGACY-INCORPORATION-2026-04-26.md` (de antes desta sessao)
+- **OLMO ARCHITECTURE source**: `/mnt/c/Dev/Projetos/OLMO/docs/ARCHITECTURE.md` (read-only, autorizado)
+- **devmentor source**: `/home/lucasmiachon/legacy/2026-04-26/devmentor/` (autorizado)
+- **archived OLMO_PROMETEUS**: `/mnt/c/Dev/Projetos/_archive/OLMO_PROMETEUS-archived-20260426-142912/`
+
+## Stop conditions (proxima sessao)
 
 - Cada PR deve passar `./scripts/check.sh --strict` antes do commit.
-- Se PR 1 ou PR 2 quebrarem wikilinks Obsidian ou referencias do harness, abortar e investigar.
-- Nao tocar `Prometeus/wiki/` (vault e dominio separado).
-- `private-learning/` continua gitignored e fora deste escopo.
+- Se hook novo (trace, guard-secrets, guard-read-secrets, pre-compact, session-start) bloquear ou quebrar workflow, `git revert` + restaurar `.claude/settings.local.json` minimal (so guard-olmo-write).
+- NAO tocar `/mnt/c/Dev/Projetos/OLMO/` (read-only authorized — copiar com melhoras para canonical).
+- NAO bulk-import de Aulas_core (estado virgem, muitos erros conhecidos pelo user).
+- `Prometeus/wiki/` continua dominio separado (vault Obsidian).
+- `private-learning/` continua gitignored.
 - Stop ao fim de cada PR; nao encadear PR 1+2+3 num so commit.
 
 ---
