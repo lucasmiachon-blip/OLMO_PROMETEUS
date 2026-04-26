@@ -127,9 +127,9 @@ Criterio negativo: se `xhigh` causar atrito recorrente, custo injustificado ou n
 
 Fonte primaria: OpenAI Models docs indicam que GPT-5.2-Codex e GPT-5.3-Codex suportam `low`, `medium`, `high` e `xhigh`; a referencia da API tambem lista `xhigh` como valor de `reasoning_effort` para modelos suportados.
 
-## Ubuntu/WSL fast path (2026-04-26)
+## Canonical Windows workspace with WSL runner (2026-04-26)
 
-Decisao: o caminho operacional padrao deste branch passa a ser Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, com `bash`, `rg` e `jq`.
+Decisao: o workspace canonico permanece `C:\Dev\Projetos\OLMO_PROMETEUS`. Quando a execucao ocorrer no WSL, usar o mesmo workspace via `/mnt/c/Dev/Projetos/OLMO_PROMETEUS`, com `bash`, `rg` e `jq`.
 
 Trigger: trabalho local de Codex, harness, maturidade, self-evolution, docs e scripts neste laboratorio.
 

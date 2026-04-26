@@ -17,7 +17,7 @@ Scope: janela hidratada para retomar `OLMO_PROMETEUS` sem reler docs longos.
 Validar se a fatia Prometeus realmente merece promocao futura:
 
 - Branch atual de compatibilidade: `codex/ubuntu-runtime-prometeus`.
-- Runtime padrao para velocidade: Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`; Bash e o gate principal.
+- Workspace canonico: `C:\Dev\Projetos\OLMO_PROMETEUS`; no WSL, usar `/mnt/c/Dev/Projetos/OLMO_PROMETEUS`. Bash e o gate principal continuam padrao.
 - `Prometeus/` precisa funcionar como vault e wiki operacional, nao deposito.
 - `shadow/EMAIL-DIGEST-4P.md` e `shadow/STUDY-TRACK-DONE.md` precisam de uso real registrado em `EVIDENCE-LOG.md`.
 - `scripts/check.sh` e `scripts/evolve.sh` precisam passar localmente e, depois, no GitHub Actions.

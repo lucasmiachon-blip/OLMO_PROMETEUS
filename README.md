@@ -81,10 +81,10 @@ Para agentes/skills globais do Claude Code (ex: `Explore`, `Plan`, `/dream`, `/s
 
 ## Harness local
 
-Ubuntu/WSL rapido (padrao):
+Ubuntu/WSL rapido sobre o workspace canonico:
 
 ```bash
-cd /home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS
+cd /mnt/c/Dev/Projetos/OLMO_PROMETEUS
 ./scripts/check.sh
 ./scripts/evolve.sh next
 ```
@@ -99,10 +99,10 @@ Abra no Obsidian esta pasta:
 C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus
 ```
 
-No clone Ubuntu/WSL, o vault fica em:
+No WSL, o mesmo vault fica em:
 
 ```text
-/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS/Prometeus
+/mnt/c/Dev/Projetos/OLMO_PROMETEUS/Prometeus
 ```
 
 Use `Prometeus/README.md` ou `Prometeus/wiki/Home.md` como entrada. Assim o nome do vault aparece como `Prometeus`, enquanto o repo continua isolado em `OLMO_PROMETEUS`. A wiki segue a ideia bottom-up do Kepano e o minimalismo do Karpathy: notas pequenas, links claros, escopo limitado e harness simples. Captura crua, diaria ou privada fica ignorada pelo Git em `Prometeus/wiki/Clippings/`, `Prometeus/wiki/Daily/` e `Prometeus/wiki/Attachments/`.

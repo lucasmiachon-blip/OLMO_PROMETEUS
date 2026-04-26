@@ -9,7 +9,7 @@
 - Pode editar arquivos dentro deste repositorio.
 - Nao deve escrever em `C:\Dev\Projetos\OLMO`, `C:\Dev\Projetos\OLMO_COWORK`, typos como `OLMO_COWOR` ou qualquer sibling `OLMO*`; leitura externa exige permissao humana explicita na conversa.
 - O foco e validar fluxo, digest, estudo, wiki operacional e gates de promocao.
-- Runtime preferido para velocidade: Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, com `bash`, `rg` e `jq`.
+- Workspace canonico: `C:\Dev\Projetos\OLMO_PROMETEUS`. No WSL, usar o mesmo workspace via `/mnt/c/Dev/Projetos/OLMO_PROMETEUS`, com `bash`, `rg` e `jq`.
 
 ## Fundamental Boundary
 

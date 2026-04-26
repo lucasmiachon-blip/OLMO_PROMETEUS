@@ -32,7 +32,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 
 Nao existe sincronizacao automatica com `C:\Dev\Projetos\OLMO`.
 
-Runtime Ubuntu/WSL aprovado e preferido para velocidade: `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, dentro do filesystem Linux. Bash e o caminho operacional padrao.
+Workspace canonico aprovado: `C:\Dev\Projetos\OLMO_PROMETEUS`. No WSL, usar o mesmo workspace em `/mnt/c/Dev/Projetos/OLMO_PROMETEUS`; Bash e o gate principal continuam o caminho operacional padrao.
 
 Excecao aprovada em 2026-04-25 e portada para Bash em 2026-04-26: `.claude/settings.local.json` pode acionar um unico `PreToolUse` local que chama `scripts/guard-olmo-write-hook.sh` e bloqueia writes externos e pede permissao para reads externos quando o payload menciona `C:\Dev\Projetos\OLMO`, `OLMO_COWORK`, typos como `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico. Isso nao cria `.claude/hooks/`, nao escreve fora do repo e existe apenas para tornar a boundary fail-closed. O harness roda teste positivo/negativo desse guard e falha se o workspace legado reaparecer.
 
