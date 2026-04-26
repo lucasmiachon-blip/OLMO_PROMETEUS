@@ -83,6 +83,7 @@ Regra: agentes que precisarem de criterio detalhado seguem o link acima. Duplica
   - `shadow/AGENT-USAGE.md`: mapa de agentes/skills globais usados sem scaffold local.
   - `shadow/INCORPORATION-LOG.md`: log de transicoes de estado aplicadas.
   - `shadow/PLAN-*.md`: plans operacionais de mudancas estruturais (um por rodada).
+  - `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`: guardas minimos para privacidade, PHI e incidentes sem conteudo sensivel.
 - `TREE.md`: mapa da arvore raiz, casas dos artefatos e politica de incorporacao do `OLMO`.
 - `Prometeus/README.md`: entrada documental do vault Obsidian.
 - `Prometeus/.obsidian/`: configuracao do vault Obsidian `Prometeus`.

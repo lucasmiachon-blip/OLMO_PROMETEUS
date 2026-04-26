@@ -145,6 +145,24 @@ Criterio negativo: se Ubuntu/WSL gerar incompatibilidade recorrente, falha no wo
 
 Fonte primaria: Microsoft WSL docs recomendam manter arquivos do projeto no filesystem WSL para melhor performance quando se trabalha pela linha de comando Linux; o clone atual ja esta em `/home/...`, nao em `/mnt/c`.
 
+## Privacy guard minimum (2026-04-26)
+
+Decisao: criar controles minimos e versionados para dado sensivel antes de qualquer fluxo clinico: classificacao de dados, checklist PHI, threat model e incident log sem conteudo sensivel.
+
+Trigger: qualquer pedido envolvendo saude, dado pessoal, paciente, PDF clinico, email real, agenda, imagem, audio ou export externo.
+
+Nao-trigger: exemplos sinteticos, docs oficiais, harness sem dado real ou procedimento abstrato.
+
+Risco: virar checklist sem uso; mitigacao: `scripts/check.ps1` exige os arquivos e `EVIDENCE-LOG.md` registra uso real.
+
+Custo: quatro arquivos pequenos em `shadow/`, sem runtime novo.
+
+Rollback: remover os quatro arquivos e suas entradas no harness se ficarem sem uso e o projeto continuar sem dados sensiveis.
+
+Criterio negativo: se o fluxo exigir dado real de paciente, manter `blocked` ate haver ambiente privado aprovado, sem prompt externo e com retencao/rollback explicitos.
+
+Fonte primaria: HHS HIPAA Minimum Necessary Requirement e NIST SP 800-61 Rev. 3.
+
 ## Applied when
 
 | Data | Decisao | Aplicada em | Artefato/commit |
@@ -159,6 +177,7 @@ Fonte primaria: Microsoft WSL docs recomendam manter arquivos do projeto no file
 | 2026-04-25 | Orchestration/harness/antifragile gate | Gate E2E e fault injection seedado | `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`, `scripts/check.ps1` |
 | 2026-04-26 | Codex xhigh default | Preferencia de reasoning effort para Codex | `AGENTS.md`, `shadow/SOTA-DECISIONS.md`, `shadow/FOUNDATION.md` |
 | 2026-04-26 | Ubuntu/WSL fast path | Comandos Ubuntu/WSL como padrao de velocidade, Windows como compatibilidade | `AGENTS.md`, `README.md`, `CLAUDE.md`, `TREE.md`, `shadow/FOUNDATION.md`, `shadow/HYGIENE.md`, `shadow/HANDOFF.md` |
+| 2026-04-26 | Privacy guard minimum | Controles minimos de dado sensivel/PHI exigidos pelo harness | `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`, `scripts/check.ps1` |
 
 ## Claude Code e GEMINI.md adapters
 

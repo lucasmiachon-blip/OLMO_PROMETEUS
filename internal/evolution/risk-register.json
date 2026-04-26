@@ -14,9 +14,9 @@
       "id": "R-PHI",
       "severity": "critical",
       "risk": "Dado sensivel, PHI ou informacao de paciente entrar em repo, prompt, artifact ou automation.",
-      "control": "Solo Doctor Dev Standard bloqueia dados sensiveis; Batch 3 cria classificacao e checklist operacional.",
+      "control": "Solo Doctor Dev Standard bloqueia dados sensiveis; DATA-CLASSIFICATION, PHI-CHECKLIST, THREAT-MODEL e INCIDENT-LOG sao exigidos pelo harness.",
       "owner": "Lucas",
-      "status": "open"
+      "status": "controlled"
     },
     {
       "id": "R-BACKLOG-THEATER",
@@ -30,7 +30,7 @@
       "id": "R-CI-DRIFT",
       "severity": "medium",
       "risk": "GitHub Actions Windows divergir do ambiente local e gerar falso bloqueio.",
-      "control": "Workflow primeiro e read-only; branch protection so apos uma execucao verde ou bloqueio documentado.",
+      "control": "Workflow primeiro e read-only; branch protection so apos uma execucao verde ou bloqueio documentado. Em 2026-04-26, validacao remota ficou bloqueada por gh sem auth e credential manager Windows quebrado no WSL.",
       "owner": "Lucas",
       "status": "open"
     },

@@ -73,6 +73,7 @@ Memoria operacional, nao deposito de pesquisa longa.
 - `INCORPORATION-LOG.md`: log de transicoes de estado aplicadas (nao redefine estados).
 - `EVIDENCE-LOG.md`: registro de uso real dos procedimentos; gate para `operational`.
 - `SOTA-DECISIONS.md`: decisoes curtas apos SOTA research gate; secao `Applied when` e stubs `Blocked ate evidencia`.
+- `DATA-CLASSIFICATION.md`, `PHI-CHECKLIST.md`, `THREAT-MODEL.md`, `INCIDENT-LOG.md`: controles minimos de privacidade e incidente; nao guardam dado sensivel.
 - `AGENT-MODULES.md`: contrato experimental para agentes como modulos; eixo tecnico ortogonal a WORK-LANES.
 - `AGENT-USAGE.md`: mapa de agentes/skills globais usados sem scaffold local + SOTA agent contract.
 - `HYGIENE.md`: checklist anti-sprawl.

@@ -37,12 +37,12 @@
       "risk": "CI Windows divergir do ambiente local ou bloquear push sem ganho.",
       "rollback": "Desabilitar workflow ou remover branch protection; checks locais continuam.",
       "negative_criterion": "Se o workflow falhar por ambiente por 2 ciclos sem bug real, documentar bloqueio e manter apenas check local.",
-      "next_action": "Confirmar no GitHub se o workflow rodou e decidir branch protection."
+      "next_action": "Bloqueado por auth/rede: autenticar gh com permissao read-only; repetir gh run list e decidir branch protection ou bloqueio documentado."
     },
     {
       "id": "EV-B3",
       "batch": 3,
-      "status": "planned",
+      "status": "applied",
       "area": "Seguranca e privacidade medica",
       "problem": "Ha regra de nao usar dados sensiveis, mas falta classificacao operacional de dados.",
       "trigger": "Antes de qualquer fluxo com saude, dado pessoal, paciente, PDF clinico ou export externo.",
@@ -56,7 +56,7 @@
       "risk": "Privacidade virar texto sem controle operacional.",
       "rollback": "Manter regra atual de bloqueio total de dado sensivel e retirar artefatos extras.",
       "negative_criterion": "Se nenhum fluxo tocar saude ou dado sensivel, manter checklist minimo.",
-      "next_action": "Criar data-classification executavel ou checklist validado pelo harness."
+      "next_action": "Usar checklist antes de qualquer fluxo com saude/dado pessoal; se aparecer incidente, registrar metadado sem conteudo sensivel."
     },
     {
       "id": "EV-B4",

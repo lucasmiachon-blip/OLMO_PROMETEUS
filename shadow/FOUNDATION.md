@@ -66,6 +66,7 @@ Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo
 - handoff de janela hidratada: `shadow/HANDOFF.md`;
 - transicoes aplicadas: `shadow/INCORPORATION-LOG.md`;
 - evidencia de uso real: `shadow/EVIDENCE-LOG.md`;
+- classificacao e privacidade: `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`;
 - plans de rodada estrutural: `shadow/PLAN-*.md`;
 - mapa de agentes/skills globais: `shadow/AGENT-USAGE.md`;
 - maturidade e gaps profissionais executaveis: `scripts/maturity.ps1`;
