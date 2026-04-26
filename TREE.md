@@ -21,7 +21,7 @@ README.md             # entrada humana rapida
 TREE.md               # mapa profissional da arvore do repo
 scripts/check.sh      # harness local Bash-first, sem writes externos
 scripts/evolve.sh     # executor self-evolving Bash-first read-only
-scripts/*.ps1         # legado temporario durante retirada de PowerShell
+scripts/guard-olmo-write-hook.sh # guard Bash para boundary OLMO
 internal/evolution/   # backlog, risk register e review cadence do loop interno
 shadow/               # decisoes, gates, memoria operacional, evidencia e agent usage
 Prometeus/            # vault Obsidian versionado

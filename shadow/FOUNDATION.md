@@ -26,14 +26,15 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 - `private-learning/` para interface e material pessoal.
 - `scripts/check.sh` como harness local Bash-first.
 - `scripts/evolve.sh` como executor self-evolving Bash-first.
-- Scripts `.ps1` como legado temporario durante a retirada de PowerShell; nao sao o gate principal.
+- `scripts/guard-olmo-write-hook.sh` como guard Bash do Claude PreToolUse: write externo para `OLMO`, `OLMO_COWORK`, typo `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico vira `deny` (block); read externo vira `ask`.
+- `scripts/test-olmo-boundary-guard.sh` como teste automatizado da trava OLMO.
 - `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` como gate E2E para orquestracao, harness e claims antifragile.
 
 Nao existe sincronizacao automatica com `C:\Dev\Projetos\OLMO`.
 
-Runtime Ubuntu/WSL aprovado e preferido para velocidade: `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, dentro do filesystem Linux. Bash e o caminho operacional padrao; PowerShell fica legado temporario.
+Runtime Ubuntu/WSL aprovado e preferido para velocidade: `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, dentro do filesystem Linux. Bash e o caminho operacional padrao.
 
-Excecao aprovada em 2026-04-25: `.claude/settings.local.json` pode acionar um unico `PreToolUse` local que chama `scripts/guard-olmo-write-hook.ps1` e bloqueia writes externos e pede permissao para reads externos quando o payload menciona `C:\Dev\Projetos\OLMO`, `OLMO_COWORK`, typos como `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico. Isso nao cria `.claude/hooks/`, nao escreve fora do repo e existe apenas para tornar a boundary fail-closed. O harness roda teste positivo/negativo desse guard e falha se o workspace legado reaparecer.
+Excecao aprovada em 2026-04-25 e portada para Bash em 2026-04-26: `.claude/settings.local.json` pode acionar um unico `PreToolUse` local que chama `scripts/guard-olmo-write-hook.sh` e bloqueia writes externos e pede permissao para reads externos quando o payload menciona `C:\Dev\Projetos\OLMO`, `OLMO_COWORK`, typos como `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico. Isso nao cria `.claude/hooks/`, nao escreve fora do repo e existe apenas para tornar a boundary fail-closed. O harness roda teste positivo/negativo desse guard e falha se o workspace legado reaparecer.
 
 Arquivos privados ou gerados devem ficar fora de Git e fora do contexto de agentes. Manter `.gitignore` e `.claudeignore` em paridade para `private-learning/`, buffers do Obsidian, workspace local, caches, plugins, `node_modules/` e `.venv/`.
 
@@ -67,7 +68,6 @@ Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo
 - plans de rodada estrutural: `shadow/PLAN-*.md`;
 - mapa de agentes/skills globais: `shadow/AGENT-USAGE.md`;
 - maturidade e gaps profissionais executaveis: `scripts/evolve.sh` + `internal/evolution/`;
-- legado PowerShell: `scripts/*.ps1`;
 - higiene: `shadow/HYGIENE.md`;
 - entrada do vault: `Prometeus/README.md`;
 - wiki navegavel: `Prometeus/wiki/Home.md`;

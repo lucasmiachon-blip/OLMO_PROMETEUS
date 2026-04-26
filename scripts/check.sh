@@ -39,7 +39,7 @@ legacy_root="$(dirname "$root")/OLMO_ROADMAP"
 required_files=(
   AGENTS.md CLAUDE.md GEMINI.md PROJECT_CONTRACT.md README.md TREE.md
   .gitignore .claudeignore .github/workflows/self-evolution.yml
-  scripts/check.sh scripts/evolve.sh
+  scripts/check.sh scripts/evolve.sh scripts/guard-olmo-write-hook.sh scripts/test-olmo-boundary-guard.sh
   shadow/FOUNDATION.md shadow/HANDOFF.md shadow/AGENT-MODULES.md shadow/HYGIENE.md
   shadow/SOTA-DECISIONS.md shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md
   shadow/DATA-CLASSIFICATION.md shadow/PHI-CHECKLIST.md shadow/THREAT-MODEL.md shadow/INCIDENT-LOG.md
@@ -73,6 +73,9 @@ fi
 
 "${root}/scripts/evolve.sh" check
 [[ $? -eq 0 ]] && ok "self-evolution executable passes" || fail "self-evolution executable failed"
+
+"${root}/scripts/test-olmo-boundary-guard.sh"
+[[ $? -eq 0 ]] && ok "OLMO boundary guard tests pass" || fail "OLMO boundary guard tests failed"
 
 for file in internal/evolution/backlog.json internal/evolution/risk-register.json internal/evolution/review.json Prometeus/.obsidian/app.json Prometeus/.obsidian/appearance.json Prometeus/.obsidian/core-plugins.json Prometeus/.obsidian/daily-notes.json Prometeus/.obsidian/graph.json Prometeus/.obsidian/templates.json Prometeus/wiki/Maps/Prometeus.canvas; do
   if [[ -f "$file" ]]; then

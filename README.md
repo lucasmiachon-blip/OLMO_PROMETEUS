@@ -23,7 +23,6 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 - `shadow/EVIDENCE-LOG.md`: registro de uso real dos procedimentos (gate para `operational`)
 - `scripts/check.sh`: harness local Bash-first de regressao leve
 - `scripts/evolve.sh`: executor self-evolving Bash-first; valida backlog interno, riscos, review cadence e workflow read-only
-- `scripts/*.ps1`: legado temporario de compatibilidade durante a retirada de PowerShell
 - `internal/evolution/`: estrutura interna versionada do self-evolution loop (backlog, risk register, review)
 - `shadow/SOTA-DECISIONS.md`: decisoes SOTA curtas + `Applied when` + stubs `Blocked ate evidencia`
 - `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`: guardas minimos contra PHI, dado sensivel e incidente sem conteudo sensivel
@@ -33,7 +32,6 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 - `shadow/FOUNDATION.md`: base de infra, memoria, harness e orquestracao
 - `shadow/HYGIENE.md`: checklist de higiene para evitar sprawl
 - `shadow/EMAIL-DIGEST-4P.md`, `shadow/STUDY-TRACK-DONE.md`: procedures com rubric e mini-evals
-- `scripts/check.ps1`: harness legado, nao caminho principal
 - `.github/workflows/self-evolution.yml`: watchdog read-only para rodar checks sem pedido manual
 - `Prometeus/.obsidian/`: configuracao do Obsidian para abrir o vault `Prometeus`
 - `Prometeus/wiki/`: wiki operacional versionada do projeto

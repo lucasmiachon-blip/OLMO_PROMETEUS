@@ -129,11 +129,11 @@ Fonte primaria: OpenAI Models docs indicam que GPT-5.2-Codex e GPT-5.3-Codex sup
 
 ## Ubuntu/WSL fast path (2026-04-26)
 
-Decisao: o caminho operacional padrao deste branch passa a ser Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, com `bash`, `rg` e `jq`. PowerShell fica legado temporario ate remocao segura.
+Decisao: o caminho operacional padrao deste branch passa a ser Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, com `bash`, `rg` e `jq`.
 
 Trigger: trabalho local de Codex, harness, maturidade, self-evolution, docs e scripts neste laboratorio.
 
-Nao-trigger: abrir o vault no Obsidian pelo Windows, validar compatibilidade Windows ou reproduzir problema especifico de PowerShell Desktop.
+Nao-trigger: abrir o vault no Obsidian pelo Windows ou validar interface grafica fora do WSL.
 
 Risco: drift entre comandos Ubuntu e Windows; risco menor porque o harness remoto ainda cobre `ubuntu-latest` e `windows-latest`.
 
@@ -178,7 +178,8 @@ Fonte primaria: HHS HIPAA Minimum Necessary Requirement e NIST SP 800-61 Rev. 3.
 | 2026-04-26 | Codex xhigh default | Preferencia de reasoning effort para Codex | `AGENTS.md`, `shadow/SOTA-DECISIONS.md`, `shadow/FOUNDATION.md` |
 | 2026-04-26 | Ubuntu/WSL fast path | Comandos Ubuntu/WSL como padrao de velocidade, Windows como compatibilidade | `AGENTS.md`, `README.md`, `CLAUDE.md`, `TREE.md`, `shadow/FOUNDATION.md`, `shadow/HYGIENE.md`, `shadow/HANDOFF.md` |
 | 2026-04-26 | Privacy guard minimum | Controles minimos de dado sensivel/PHI exigidos pelo harness | `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`, `scripts/check.sh` |
-| 2026-04-26 | Bash-first WSL2 harness | PowerShell sai do gate principal; workflow passa para Bash | `scripts/check.sh`, `scripts/evolve.sh`, `.github/workflows/self-evolution.yml` |
+| 2026-04-26 | Bash-first WSL2 harness | Runtime antigo sai do gate principal; workflow passa para Bash | `scripts/check.sh`, `scripts/evolve.sh`, `.github/workflows/self-evolution.yml` |
+| 2026-04-26 | Remove legacy scripts | Guard e harness portados para Bash; scripts antigos removidos do repo | `scripts/guard-olmo-write-hook.sh`, `scripts/test-olmo-boundary-guard.sh`, `scripts/check.sh` |
 
 ## Claude Code e GEMINI.md adapters
 

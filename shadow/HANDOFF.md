@@ -17,7 +17,7 @@ Scope: janela hidratada para retomar `OLMO_PROMETEUS` sem reler docs longos.
 Validar se a fatia Prometeus realmente merece promocao futura:
 
 - Branch atual de compatibilidade: `codex/ubuntu-runtime-prometeus`.
-- Runtime padrao para velocidade: Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`; Bash substitui PowerShell como gate principal.
+- Runtime padrao para velocidade: Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`; Bash e o gate principal.
 - `Prometeus/` precisa funcionar como vault e wiki operacional, nao deposito.
 - `shadow/EMAIL-DIGEST-4P.md` e `shadow/STUDY-TRACK-DONE.md` precisam de uso real registrado em `EVIDENCE-LOG.md`.
 - `scripts/check.sh` e `scripts/evolve.sh` precisam passar localmente e, depois, no GitHub Actions.
@@ -32,7 +32,7 @@ O que ja esta pronto:
 - repo confirmado no filesystem Linux do WSL, nao em `/mnt/c`;
 - harness local passa via Bash no Ubuntu/WSL;
 - comandos documentados como Ubuntu/WSL-first;
-- Windows/PowerShell mantido como compatibilidade, nao removido;
+- runtime antigo removido do caminho operacional versionado;
 - decisao SOTA registrada para `xhigh` e fast path Ubuntu/WSL.
 - controles minimos de privacidade/PHI criados e exigidos pelo harness: `DATA-CLASSIFICATION.md`, `PHI-CHECKLIST.md`, `THREAT-MODEL.md`, `INCIDENT-LOG.md`.
 

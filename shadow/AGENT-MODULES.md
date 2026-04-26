@@ -106,7 +106,7 @@ Um modulo candidato passa no minimo por:
 4. **Context check**: nao importa arvore grande por padrao.
 5. **Output check**: entrega artefato persistente ou decisao clara.
 6. **Rollback check**: pode ser removido sem quebrar o repo.
-7. **Harness check**: `scripts/check.ps1` passa.
+7. **Harness check**: `scripts/check.sh` passa.
 
 Para virar agente real, precisa ainda:
 
@@ -126,7 +126,7 @@ Estado ortogonal (lane) vive em `shadow/WORK-LANES.md`; eixo tecnico abaixo.
 | `study-track-done` | `shadow/STUDY-TRACK-DONE.md` | procedimento | `experiment` |
 | `promotion-gate` | `shadow/WORK-LANES.md` | procedimento | `candidate` |
 | `sota-research-gate` | `AGENTS.md` + `shadow/SOTA-DECISIONS.md` | procedimento + harness deterministico | `candidate` |
-| `obsidian-crossref-check` | `scripts/check.ps1` | harness deterministico | `candidate` |
+| `obsidian-crossref-check` | `scripts/check.sh` | harness deterministico | `candidate` |
 | `evidence-log` | `shadow/EVIDENCE-LOG.md` | procedimento | `experiment` |
 
 ## Antipadroes
@@ -160,4 +160,3 @@ Estado ortogonal (lane) vive em `shadow/WORK-LANES.md`; eixo tecnico abaixo.
 - Google ADK evaluation: `https://adk.dev/evaluate/`
 
 Coautoria: Lucas + GPT-5.4 (Codex)
-
