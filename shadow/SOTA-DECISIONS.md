@@ -163,6 +163,22 @@ Criterio negativo: se o fluxo exigir dado real de paciente, manter `blocked` ate
 
 Fonte primaria: HHS HIPAA Minimum Necessary Requirement e NIST SP 800-61 Rev. 3.
 
+## PreToolUse hook port to bash (2026-04-26)
+
+Decisao: `.claude/settings.local.json > hooks.PreToolUse.command` migra de `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\guard-olmo-write-hook.ps1` para `bash ./scripts/guard-olmo-write-hook.sh`. Preserva contrato (deny de write fora do canonical, allow interno) e troca apenas o shell de invocacao para bater com o canonical Linux/WSL atual. O `.ps1` nao existe mais no repo (foi removido em commit anterior) — o hook estava silenciosamente quebrado.
+
+Trigger: settings.local.json apontava para PowerShell mas FOUNDATION.md ja assumia bash-first; canonical migrou para `/home/lucasmiachon/projects/OLMO_PROMETEUS` onde PowerShell nao roda.
+
+Nao-trigger: nenhuma mudanca de contrato do guard ou de matcher; apenas troca de invocador.
+
+Risco: Claude Code rejeitar a nova shape do hook ou hook silenciosamente nao firar. Mitigacao: `scripts/test-olmo-boundary-guard.sh` valida deny+allow neste stage.
+
+Custo: 1 string trocada em settings.local.json (em .gitignore).
+
+Rollback: stash de `.claude/settings.local.json` antes do edit; restaurar do stash. Como o arquivo nao e versionado, `git restore` nao se aplica.
+
+Criterio negativo: se test-olmo-boundary-guard.sh nao mostrar 1 deny + 1 allow, parar e diagnosticar antes de aceitar a mudanca.
+
 ## AGENTS.md state alignment (2026-04-26)
 
 Decisao: alinhar `AGENTS.md > Do` ao estado real registrado em `shadow/INCORPORATION-LOG.md` entries 28-30 (2026-04-24): `email-digest-4p` e `study-track-done` foram rebaixados a `experiment` por EVIDENCE-LOG vazio; `obsidian-crossref-check` foi rebatido a `candidate` por nao cumprir gate formal. AGENTS.md ainda os tratava como praticas centrais.
