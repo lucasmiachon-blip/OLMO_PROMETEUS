@@ -8,19 +8,19 @@ Scope: janela hidratada para retomar `OLMO_PROMETEUS` sem reler docs longos.
 
 1. Este repo e `OLMO_PROMETEUS`, nao `OLMO`: ver `../PROJECT_CONTRACT.md`.
 2. A regra fundamental e nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`: ver `../AGENTS.md` e `FOUNDATION.md`.
-3. O objetivo atual e validar laboratorio paralelo de baixo risco para vault, digest, study flow, wiki operacional e gates: ver `../README.md` e `WORK-LANES.md`.
-4. O proximo batch oficial vem de `../internal/evolution/backlog.json`; nao inventar fila paralela.
-5. Riscos vivos vem de `../internal/evolution/risk-register.json`; nao esconder warning critico.
+3. O workspace canonico e `C:\Dev\Projetos\OLMO_PROMETEUS`; no WSL, usar `/mnt/c/Dev/Projetos/OLMO_PROMETEUS`.
+4. O objetivo atual e validar laboratorio paralelo de baixo risco para vault, digest, study flow, wiki operacional e gates: ver `../README.md` e `WORK-LANES.md`.
+5. O proximo batch oficial vem de `../internal/evolution/backlog.json`; nao inventar fila paralela.
+6. Riscos vivos vem de `../internal/evolution/risk-register.json`; nao esconder warning critico.
 
 ## Current Objective
 
 Validar se a fatia Prometeus realmente merece promocao futura:
 
-- Branch atual de compatibilidade: `codex/ubuntu-runtime-prometeus`.
-- Workspace canonico: `C:\Dev\Projetos\OLMO_PROMETEUS`; no WSL, usar `/mnt/c/Dev/Projetos/OLMO_PROMETEUS`. Bash e o gate principal continuam padrao.
+- Branch ativo: `main` local alinhado com `origin/main`.
 - `Prometeus/` precisa funcionar como vault e wiki operacional, nao deposito.
 - `shadow/EMAIL-DIGEST-4P.md` e `shadow/STUDY-TRACK-DONE.md` precisam de uso real registrado em `EVIDENCE-LOG.md`.
-- `scripts/check.sh` e `scripts/evolve.sh` precisam passar localmente e, depois, no GitHub Actions.
+- `scripts/check.sh` e `scripts/evolve.sh` sao o gate operacional local.
 - Qualquer conversa sobre `OLMO` exige evidencia, rollback e aprovacao humana explicita.
 
 ## Migration Readiness
@@ -29,27 +29,27 @@ Ainda nao migrar para `OLMO` como padrao operacional.
 
 O que ja esta pronto:
 
-- repo confirmado no filesystem Linux do WSL, nao em `/mnt/c`;
-- harness local passa via Bash no Ubuntu/WSL;
-- comandos documentados como Ubuntu/WSL-first;
+- repo canonico consolidado em `C:\Dev\Projetos\OLMO_PROMETEUS`;
+- `main` publicado no GitHub e alinhado com `origin/main`;
+- harness local passa via Bash;
 - runtime antigo removido do caminho operacional versionado;
-- decisao SOTA registrada para `xhigh` e fast path Ubuntu/WSL.
+- decisao SOTA registrada para `xhigh` e workspace Windows canonico com runner WSL;
 - controles minimos de privacidade/PHI criados e exigidos pelo harness: `DATA-CLASSIFICATION.md`, `PHI-CHECKLIST.md`, `THREAT-MODEL.md`, `INCIDENT-LOG.md`.
 
-O que falta antes de merge/promocao:
+O que falta antes de promocao:
 
-- `EV-B2`: confirmar workflow remoto; hoje esta bloqueado por `gh` sem login e credential manager Windows quebrado no WSL;
+- confirmar workflow remoto apos o push em `main`;
 - aplicar `PHI-CHECKLIST.md` no primeiro fluxo real com saude ou dado pessoal;
 - registrar pelo menos 3 usos reais de digest/study/wiki/harness em `EVIDENCE-LOG.md` antes de promover procedimento para `candidate` ou `operational`;
 - escolher explicitamente quais artefatos sao migraveis, com trigger, risco, custo e rollback;
-- manter rollback simples: merge revertivel, sem sync automatico, hook ativo, MCP sensivel ou write externo.
+- manter rollback simples: revert de commit, sem sync automatico, hook ativo, MCP sensivel ou write externo.
 
 ## Top Gaps
 
 | Rank | Gap | Source | Next |
 | --- | --- | --- | --- |
 | P0 | Objetivo ainda nao tem metricas de valor para medico solo dev | `internal/evolution/backlog.json` e `scripts/evolve.sh` | definir 3 a 5 outcomes mensais antes de promover fluxo |
-| P0 | CI remoto falha ou nao e validavel sem auth | `../internal/evolution/backlog.json` id `EV-B2`; `INCIDENT-LOG.md`; runs conhecidas `24938611376`, `24940721189`, `24941043684` | autenticar `gh` com permissao read-only; repetir `gh run list` e decidir branch protection |
+| P0 | CI remoto precisa ser confirmado depois do push em `main` | `../internal/evolution/backlog.json` id `EV-B2`; `INCIDENT-LOG.md` | rodar `gh run list`/`gh run view` e documentar resultado |
 | P1 | PHI/dado sensivel tem controle minimo, mas precisa uso real | `../internal/evolution/risk-register.json` id `R-PHI`; `DATA-CLASSIFICATION.md` | aplicar checklist no primeiro fluxo com saude/dado pessoal |
 | P1 | Digest e study ainda nao provaram 3 usos reais | `EVIDENCE-LOG.md` e `WORK-LANES.md` | rodar em ciclos reais e registrar output |
 | P1 | Foundation, wiki e antifragile gate ainda estao em `experiment` | `WORK-LANES.md` | escolher 1 fluxo para virar `candidate`, nao varios |
@@ -59,10 +59,10 @@ O que falta antes de merge/promocao:
 
 Sequencia obrigatoria:
 
-1. Confirmar `git status --short --branch`.
-2. Rodar `./scripts/evolve.sh next`.
-3. Atacar `EV-B2`: workflow remoto falha de forma recorrente no passo `Harness`; `gh run view --log-failed` retornou HTTP 403 por falta de admin.
-4. Para publicar o branch, seguir `GITHUB-REMOTE-WSL.md` e usar SSH nativo do WSL.
+1. Confirmar `git status --short --branch` em `C:\Dev\Projetos\OLMO_PROMETEUS`.
+2. Rodar `./scripts/check.sh`.
+3. Rodar `./scripts/evolve.sh next`.
+4. Atacar `EV-B2`: confirmar workflow remoto do `main` com `gh run list` e, se falhar, `gh run view --log-failed`.
 5. Se o log remoto continuar bloqueado, documentar bloqueio e reproduzir o mais perto possivel com Bash local.
 6. Nao aplicar branch protection ate haver workflow verde ou bloqueio documentado.
 7. `EV-B3` ja tem controle minimo aplicado; antes de qualquer fluxo clinico/dado pessoal, usar `PHI-CHECKLIST.md`.
@@ -74,6 +74,7 @@ Sequencia obrigatoria:
 - Evolucao: `../internal/evolution/backlog.json`, `../internal/evolution/review.json`, `../internal/evolution/risk-register.json`
 - Orquestracao, antifragile e `CASE_edges`: `ORCHESTRATION-HARNESS-ANTIFRAGILE.md`
 - SOTA compacto: `SOTA-DECISIONS.md`, `AGENT-MODULES.md`, `AGENT-USAGE.md`
+- GitHub remoto: `GITHUB-REMOTE-WSL.md`
 - Mapa da arvore: `../TREE.md`
 
 ## Stop Conditions

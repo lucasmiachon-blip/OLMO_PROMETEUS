@@ -40,9 +40,9 @@ Como transformar as notas do `Prometeus/wiki/` em uma interface mais bonita e na
 
 ## Como usar
 
-```powershell
-python .\build_graph_data.py
-start .\index.html
+```bash
+python3 build_graph_data.py
+cmd.exe /c start "" "index.html"
 ```
 
 Se o dataset mudar, rode o script de novo.

@@ -72,7 +72,7 @@ Se o Graph abrir cinza, confira `Groups`. O Obsidian pode regravar `graph.json` 
 2. Se for mudanca estrutural, passar por [[SOTA Research Gate]].
 3. Sintetizar em artefato.
 4. Linkar a um sistema ou conceito.
-5. Rodar `scripts/check.ps1`.
+5. Rodar `./scripts/check.sh`.
 6. Decidir se fica private, experiment ou candidate.
 
 Coautoria: Lucas + GPT-5.4 (Codex)

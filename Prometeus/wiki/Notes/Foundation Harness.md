@@ -12,8 +12,8 @@ O harness e a camada minima de regressao local.
 
 Comando:
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1
+```bash
+./scripts/check.sh
 ```
 
 Ele valida:

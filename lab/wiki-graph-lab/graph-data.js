@@ -1,6 +1,6 @@
 window.WIKI_GRAPH_DATA = {
-  "generatedAt": "2026-04-24T00:06:38",
-  "projectRoot": "C:/Dev/Projetos/OLMO_PROMETEUS/Prometeus",
+  "generatedAt": "2026-04-26T01:19:38",
+  "projectRoot": "/mnt/c/Dev/Projetos/OLMO_PROMETEUS/Prometeus",
   "nodeCount": 35,
   "linkCount": 157,
   "nodes": [
@@ -339,7 +339,7 @@ window.WIKI_GRAPH_DATA = {
       "pathLinks": [],
       "summary": "Este vault Obsidian se chama `Prometeus` e mora dentro do repo isolado `OLMO_PROMETEUS`. A wiki operacional mora em `wiki/` e usa uma abordagem bottom-up: notas pequenas primeiro, organizacao depois.",
       "teaser": "Este vault Obsidian se chama `Prometeus` e mora dentro do repo isolado `OLMO_PROMETEUS`. A wiki operacional mora em `wiki/` e usa uma abordagem bottom-up: notas pequenas primeiro, organizacao depois. Direcao atual: second brain graph-first. O Graph View deve ser grande e vivo; Canvas e mapa curado opcional.",
-      "markdown": "# Prometeus Wiki\n\nEste vault Obsidian se chama `Prometeus` e mora dentro do repo isolado `OLMO_PROMETEUS`. A wiki operacional mora em `wiki/` e usa uma abordagem bottom-up: notas pequenas primeiro, organizacao depois.\n\nDirecao atual: second brain graph-first. O Graph View deve ser grande e vivo; Canvas e mapa curado opcional.\n\nComece por:\n\n- [[Prometeus Vault]]\n- [[Second Brain Atlas]]\n- [[Graph Operating System]]\n- [[Knowledge Lifecycle]]\n- [[SOTA Research Gate]]\n- [[Agent Module Encapsulation]]\n- [[Prometeus.canvas|Mapa visual em Canvas]]\n- [[Prometeus Wiki]]\n- [[Foundation Harness]]\n- [[Workspace Boundary]]\n- [[Email Digest System]]\n- [[Email Triage]]\n- [[Study Track System]]\n- [[Promotion Gate]]\n- [[Kepano and Karpathy Principles]]\n\n## Regra de uso\n\n- Captura crua e pessoal fica em `private-learning/` no repo, fora da wiki versionada.\n- `wiki/Clippings/` e `wiki/Daily/` sao buffers locais ignorados pelo Git.\n- Uma nota so entra no wiki quando muda comportamento futuro.\n- Qualquer coisa migravel passa por [[Promotion Gate]].\n- Nunca escrever fora de `C:\\Dev\\Projetos\\OLMO_PROMETEUS`.\n\n## Abrir\n\nNo Obsidian, abra `C:\\Dev\\Projetos\\OLMO_PROMETEUS\\Prometeus`.\n\nNao abra a raiz `OLMO_PROMETEUS` como vault, senao o nome e a arvore ficam errados.\n\n## Graph View\n\nUse o Graph View como interface principal do second brain. O filtro padrao deve ser:\n\n```text\npath:wiki\n```\n\n- `Atlas`: dourado.\n- `Home`: dourado.\n- `Categories`: laranja.\n- `Notes`: verde-azulado.\n- `References`: azul.\n- `Templates`: cinza.\n- `Buffers`: amarelo.\n\n## Canvas\n\nUse [[Prometeus.canvas|Prometeus Canvas]] como vitrine curada. Ele e manual e bonito, mas nao substitui o grafo.\n\nSe o Graph abrir cinza, confira `Groups`. O Obsidian pode regravar `graph.json` enquanto o Graph esta aberto; nesse caso, reabra o vault e aplique o preset de [[Graph Operating System]].\n\n## Proximo ciclo\n\n1. Capturar entrada.\n2. Se for mudanca estrutural, passar por [[SOTA Research Gate]].\n3. Sintetizar em artefato.\n4. Linkar a um sistema ou conceito.\n5. Rodar `scripts/check.ps1`.\n6. Decidir se fica private, experiment ou candidate.\n\nCoautoria: Lucas + GPT-5.4 (Codex)",
+      "markdown": "# Prometeus Wiki\n\nEste vault Obsidian se chama `Prometeus` e mora dentro do repo isolado `OLMO_PROMETEUS`. A wiki operacional mora em `wiki/` e usa uma abordagem bottom-up: notas pequenas primeiro, organizacao depois.\n\nDirecao atual: second brain graph-first. O Graph View deve ser grande e vivo; Canvas e mapa curado opcional.\n\nComece por:\n\n- [[Prometeus Vault]]\n- [[Second Brain Atlas]]\n- [[Graph Operating System]]\n- [[Knowledge Lifecycle]]\n- [[SOTA Research Gate]]\n- [[Agent Module Encapsulation]]\n- [[Prometeus.canvas|Mapa visual em Canvas]]\n- [[Prometeus Wiki]]\n- [[Foundation Harness]]\n- [[Workspace Boundary]]\n- [[Email Digest System]]\n- [[Email Triage]]\n- [[Study Track System]]\n- [[Promotion Gate]]\n- [[Kepano and Karpathy Principles]]\n\n## Regra de uso\n\n- Captura crua e pessoal fica em `private-learning/` no repo, fora da wiki versionada.\n- `wiki/Clippings/` e `wiki/Daily/` sao buffers locais ignorados pelo Git.\n- Uma nota so entra no wiki quando muda comportamento futuro.\n- Qualquer coisa migravel passa por [[Promotion Gate]].\n- Nunca escrever fora de `C:\\Dev\\Projetos\\OLMO_PROMETEUS`.\n\n## Abrir\n\nNo Obsidian, abra `C:\\Dev\\Projetos\\OLMO_PROMETEUS\\Prometeus`.\n\nNao abra a raiz `OLMO_PROMETEUS` como vault, senao o nome e a arvore ficam errados.\n\n## Graph View\n\nUse o Graph View como interface principal do second brain. O filtro padrao deve ser:\n\n```text\npath:wiki\n```\n\n- `Atlas`: dourado.\n- `Home`: dourado.\n- `Categories`: laranja.\n- `Notes`: verde-azulado.\n- `References`: azul.\n- `Templates`: cinza.\n- `Buffers`: amarelo.\n\n## Canvas\n\nUse [[Prometeus.canvas|Prometeus Canvas]] como vitrine curada. Ele e manual e bonito, mas nao substitui o grafo.\n\nSe o Graph abrir cinza, confira `Groups`. O Obsidian pode regravar `graph.json` enquanto o Graph esta aberto; nesse caso, reabra o vault e aplique o preset de [[Graph Operating System]].\n\n## Proximo ciclo\n\n1. Capturar entrada.\n2. Se for mudanca estrutural, passar por [[SOTA Research Gate]].\n3. Sintetizar em artefato.\n4. Linkar a um sistema ou conceito.\n5. Rodar `./scripts/check.sh`.\n6. Decidir se fica private, experiment ou candidate.\n\nCoautoria: Lucas + GPT-5.4 (Codex)",
       "outgoing": 13,
       "incoming": 0,
       "degree": 13
@@ -717,7 +717,7 @@ window.WIKI_GRAPH_DATA = {
       "pathLinks": [],
       "summary": "O harness e a camada minima de regressao local.",
       "teaser": "O harness e a camada minima de regressao local. Comando:",
-      "markdown": "# Foundation Harness\n\nO harness e a camada minima de regressao local.\n\nComando:\n\n```powershell\npowershell -ExecutionPolicy Bypass -File .\\scripts\\check.ps1\n```\n\nEle valida:\n\n- boundary fundamental;\n- arquivos essenciais;\n- Obsidian vault basico nomeado `Prometeus`;\n- adaptadores `CLAUDE.md` e `GEMINI.md`;\n- ausencia de scaffolds fantasmas;\n- contratos de procedimentos e SOTA gate;\n- wikilinks e aliases do Obsidian;\n- referencias de arquivos no Canvas;\n- ausencia de referencias antigas;\n- ausencia de segredos obvios;\n- paridade entre `.gitignore` e `.claudeignore`;\n- ignores privados e gerados;\n- checks textuais pulam arquivos ignorados e redigem linhas de segredo;\n- estado Git.\n\nNao substitui julgamento. Evita regressao boba.\n\nLinks:\n\n- [[Workspace Boundary]]\n- [[SOTA Research Gate]]\n- [[Agent Module Encapsulation]]\n- [[Artifact]]",
+      "markdown": "# Foundation Harness\n\nO harness e a camada minima de regressao local.\n\nComando:\n\n```bash\n./scripts/check.sh\n```\n\nEle valida:\n\n- boundary fundamental;\n- arquivos essenciais;\n- Obsidian vault basico nomeado `Prometeus`;\n- adaptadores `CLAUDE.md` e `GEMINI.md`;\n- ausencia de scaffolds fantasmas;\n- contratos de procedimentos e SOTA gate;\n- wikilinks e aliases do Obsidian;\n- referencias de arquivos no Canvas;\n- ausencia de referencias antigas;\n- ausencia de segredos obvios;\n- paridade entre `.gitignore` e `.claudeignore`;\n- ignores privados e gerados;\n- checks textuais pulam arquivos ignorados e redigem linhas de segredo;\n- estado Git.\n\nNao substitui julgamento. Evita regressao boba.\n\nLinks:\n\n- [[Workspace Boundary]]\n- [[SOTA Research Gate]]\n- [[Agent Module Encapsulation]]\n- [[Artifact]]",
       "outgoing": 4,
       "incoming": 10,
       "degree": 14
@@ -1784,21 +1784,6 @@ window.WIKI_GRAPH_DATA = {
       "type": "wikilink"
     },
     {
-      "source": "wiki-notes-signal-vs-noise",
-      "target": "wiki-notes-email-triage",
-      "type": "wikilink"
-    },
-    {
-      "source": "wiki-notes-signal-vs-noise",
-      "target": "wiki-notes-action-vs-fyi",
-      "type": "wikilink"
-    },
-    {
-      "source": "wiki-notes-signal-vs-noise",
-      "target": "wiki-notes-subscription-drift",
-      "type": "wikilink"
-    },
-    {
       "source": "wiki-notes-sota-dev-solo",
       "target": "wiki-notes-foundation-harness",
       "type": "wikilink"
@@ -1856,6 +1841,21 @@ window.WIKI_GRAPH_DATA = {
     {
       "source": "wiki-notes-sota-research-gate",
       "target": "wiki-notes-project-log",
+      "type": "wikilink"
+    },
+    {
+      "source": "wiki-notes-signal-vs-noise",
+      "target": "wiki-notes-email-triage",
+      "type": "wikilink"
+    },
+    {
+      "source": "wiki-notes-signal-vs-noise",
+      "target": "wiki-notes-action-vs-fyi",
+      "type": "wikilink"
+    },
+    {
+      "source": "wiki-notes-signal-vs-noise",
+      "target": "wiki-notes-subscription-drift",
       "type": "wikilink"
     },
     {
