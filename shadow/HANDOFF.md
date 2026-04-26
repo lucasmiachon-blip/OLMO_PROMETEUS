@@ -1,8 +1,58 @@
 # Handoff
 
 Status: active
-Updated: 2026-04-26
+Updated: 2026-04-26 (PM, pos auditoria adversarial)
 Scope: janela hidratada para retomar `OLMO_PROMETEUS` sem reler docs longos.
+
+## Next Session — Structural Cleanup (priority P0)
+
+Auditoria adversarial 2026-04-26 PM concluiu que a estrutura atual e ceremony bloat para um lab solo (37 .md / 4383L; 30 arquivos em `shadow/`; 10 `SOTA-STACK-*-2026-04-26.md` para 1 exercicio). Restructure aprovada em principio, executada em 3 PRs pequenos e reversiveis.
+
+**Sessao de hoje (2026-04-26) entregou:**
+
+- commit `50979f9` — D04 aplicado (renormalize CRLF + `core.filemode false` local + `lab/wiki-graph-lab/graph-data.js` movido para `.gitignore`).
+- commit `a908770` — consolidacao adversarial: 727L de governance proposta (PLAN+MATRIX) substituidas por entry de ~25L em `shadow/SOTA-DECISIONS.md > Triadic stack debate consolidation (2026-04-26)`.
+- harness `./scripts/check.sh --strict` passa com 0 warnings.
+- `git push origin main` ainda nao executado (10 commits ahead).
+
+**Proxima sessao — sequencia estrita (cada PR e reversivel via `git revert`):**
+
+1. **PR 1 — Compress raws** (~30min, baixo risco):
+   - Consolidar 10 `shadow/SOTA-STACK-*-2026-04-26.md` (1746L) em 1 ADR `docs/adr/0006-triadic-stack-debate.md` (~50L com link para git history `9e32ebe`).
+   - Consolidar 2 `shadow/LEGACY-*-2026-04-26.md` (109L) em 1 ADR ou na commit message ja existente.
+   - Criar `docs/adr/` folder + `docs/adr/template.md` (MADR format: context/decision/consequences/status).
+   - Criar `docs/adr/README.md` com indice.
+
+2. **PR 2 — Privacy + governance consolidation** (~45min, risco medio):
+   - Mesclar `shadow/DATA-CLASSIFICATION.md` + `PHI-CHECKLIST.md` + `THREAT-MODEL.md` + `INCIDENT-LOG.md` em `docs/threat-model.md` (1 file).
+   - Quebrar `shadow/SOTA-DECISIONS.md` (354L monolito com ~15 secoes) em ~10 ADRs numerados em `docs/adr/0001-` a `0010-`, status `accepted`.
+   - Mover `shadow/EMAIL-DIGEST-4P.md` + `shadow/STUDY-TRACK-DONE.md` para `procedures/`.
+   - Atualizar `scripts/check.sh` para ler novos paths.
+
+3. **PR 3 — AGENTS.md SOTA + retire scaffolds** (~1h, alto impacto):
+   - Reescrever `AGENTS.md` para ~80L max aplicando Toolchain First principle (omitir tudo que harness/CI ja enforca; source: agents.md spec 2026, Gloaguen et al. 2026 mostra que context files inflados reduzem task success em 3% e custam 20% mais).
+   - Mesclar essencia de `shadow/FOUNDATION.md` + `PROJECT_CONTRACT.md` + `shadow/AGENT-USAGE.md` + `shadow/AGENT-MODULES.md` + `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` em `docs/runbook.md` (operacional) e referenciar de `AGENTS.md`.
+   - Eliminar adapters `CLAUDE.md`/`CODEX.md`/`GEMINI.md` (AGENTS.md spec atual e universal) ou reduzir cada para <=10L de pitfall especifico.
+   - Retire `shadow/WORK-LANES.md` (5L em AGENTS.md), `shadow/INCORPORATION-LOG.md` (substituir por `git log`), `shadow/HANDOFF.md` (este arquivo: vira `docs/runbook.md`), `shadow/HYGIENE.md`, `shadow/PLAN-2026-04-23.md` (arquivar como ADR historico).
+   - Eliminar `shadow/` folder; estrutura final: `docs/`, `procedures/`, `internal/evolution/`, `scripts/`, `Prometeus/`, `lab/`, `private-learning/`.
+
+**AGENTS.md SOTA delta (proxima sessao):**
+
+Manter (cabe em ~80L): boundary fundamental, intent (lab solo medico), operating principles, daily loop, error reports protocol, do/don't, sources base. Cortar (vai para `docs/runbook.md` ou ADRs): SOTA research gate detalhado, agent module frontier, padrao SOTA para procedimentos, big three scan, table de decisoes aplicadas, time minimo (vira ADR 0004). Resultado: AGENTS.md vira context file high-signal, alinhado com pesquisa ETH 2026.
+
+**Hooks: sem necessidade de adicionar.** Atual `PreToolUse > guard-olmo-write-hook.sh` cumpre SOTA Anthropic 2026 (hook deterministico para regra 100%). Refino opcional (split deny vs ask) so se Task #6 false positive voltar.
+
+**Stop conditions (proxima sessao):**
+
+- Cada PR deve passar `./scripts/check.sh --strict` antes do commit.
+- Se PR 1 ou PR 2 quebrarem wikilinks Obsidian ou referencias do harness, abortar e investigar.
+- Nao tocar `Prometeus/wiki/` (vault e dominio separado).
+- `private-learning/` continua gitignored e fora deste escopo.
+- Stop ao fim de cada PR; nao encadear PR 1+2+3 num so commit.
+
+---
+
+## Read First (legado, sera retirado no PR 3)
 
 ## Read First
 
