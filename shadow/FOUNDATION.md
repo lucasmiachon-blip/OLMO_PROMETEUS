@@ -24,17 +24,14 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 - `Prometeus/wiki/` para notas Obsidian e conhecimento duravel.
 - `lab/wiki-graph-lab/` para a camada visual reversivel que le o vault sem duplicar a fonte de verdade.
 - `private-learning/` para interface e material pessoal.
-- `scripts/check.ps1` como harness local.
-- `scripts/lib/powershell-runner.ps1` como helper cross-platform: scripts aninhados rodam pelo PowerShell atual (`powershell` no Windows, `pwsh` no Ubuntu) sem hardcode de executavel.
-- `scripts/guard-olmo-write-hook.ps1` como guard local do Claude PreToolUse: write externo para `OLMO`, `OLMO_COWORK`, typo `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico vira `deny` (block); read externo vira `ask`. A regra cobre `C:\Dev\Projetos\OLMO*`, paths relativos `../OLMO*` e siblings absolutos no clone Ubuntu.
-- `scripts/test-olmo-boundary-guard.ps1` como teste automatizado da trava OLMO.
+- `scripts/check.sh` como harness local Bash-first.
+- `scripts/evolve.sh` como executor self-evolving Bash-first.
+- Scripts `.ps1` como legado temporario durante a retirada de PowerShell; nao sao o gate principal.
 - `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` como gate E2E para orquestracao, harness e claims antifragile.
-- `scripts/test-orchestration-e2e.ps1 -DryRun` como teste E2E sem side effects desse gate.
-- `scripts/test-antifragile-learning.ps1 -DryRun -Scenario All -Seed 42` como teste de aprendizado: injeta erro sintetico de catalogo, exige deteccao, evidencia e regressao; `-Scenario CASE_edges` cobre bordas do contrato; `-Scenario Random -Seed N` reproduz um caso pseudoaleatorio.
 
 Nao existe sincronizacao automatica com `C:\Dev\Projetos\OLMO`.
 
-Runtime Ubuntu/WSL aprovado e preferido para velocidade: `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, dentro do filesystem Linux. Windows/PowerShell continua permitido como compatibilidade, mas nao e mais o caminho operacional padrao.
+Runtime Ubuntu/WSL aprovado e preferido para velocidade: `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, dentro do filesystem Linux. Bash e o caminho operacional padrao; PowerShell fica legado temporario.
 
 Excecao aprovada em 2026-04-25: `.claude/settings.local.json` pode acionar um unico `PreToolUse` local que chama `scripts/guard-olmo-write-hook.ps1` e bloqueia writes externos e pede permissao para reads externos quando o payload menciona `C:\Dev\Projetos\OLMO`, `OLMO_COWORK`, typos como `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico. Isso nao cria `.claude/hooks/`, nao escreve fora do repo e existe apenas para tornar a boundary fail-closed. O harness roda teste positivo/negativo desse guard e falha se o workspace legado reaparecer.
 
@@ -69,8 +66,8 @@ Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo
 - classificacao e privacidade: `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`;
 - plans de rodada estrutural: `shadow/PLAN-*.md`;
 - mapa de agentes/skills globais: `shadow/AGENT-USAGE.md`;
-- maturidade e gaps profissionais executaveis: `scripts/maturity.ps1`;
-- self-evolution interno: `scripts/evolve.ps1` + `internal/evolution/`;
+- maturidade e gaps profissionais executaveis: `scripts/evolve.sh` + `internal/evolution/`;
+- legado PowerShell: `scripts/*.ps1`;
 - higiene: `shadow/HYGIENE.md`;
 - entrada do vault: `Prometeus/README.md`;
 - wiki navegavel: `Prometeus/wiki/Home.md`;
@@ -87,10 +84,8 @@ Erros materiais tambem sao memoria operacional quando mudam comportamento futuro
 O harness local padrao e Ubuntu/WSL:
 
 ```bash
-pwsh -NoLogo -NoProfile -File ./scripts/check.ps1
+./scripts/check.sh
 ```
-
-No Windows/PowerShell, usar somente como compatibilidade: `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`.
 
 Ele valida:
 
@@ -129,7 +124,7 @@ Sem fan-out automatico e sem registry local de agentes neste repo. Todo uso real
 
 Para o perfil de medico solo dev, orquestracao deve permanecer primeiro como procedimento auditavel em `shadow/`: estado claro, humano-no-loop, evidencias, custo e rollback. Frameworks externos de agentes so entram quando o procedimento manual provar retrabalho repetido sem expor dados sensiveis.
 O gate `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` e a fonte para decidir quando subir de procedimento para workflow, architect/editor, fanout ou runtime.
-Self-evolution: `scripts/evolve.ps1` le `internal/evolution/`, alinha com `scripts/maturity.ps1`, valida riscos e declara o proximo batch. O workflow `.github/workflows/self-evolution.yml` roda sem pedido manual, mas e read-only; ele pode falhar e informar, nao escrever ou decidir sozinho.
+Self-evolution: `scripts/evolve.sh` le `internal/evolution/`, valida riscos e declara o proximo batch. O workflow `.github/workflows/self-evolution.yml` roda sem pedido manual, mas e read-only; ele pode falhar e informar, nao escrever ou decidir sozinho.
 
 
 ## 6. SOTA research gate

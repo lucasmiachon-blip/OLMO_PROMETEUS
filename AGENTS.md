@@ -9,7 +9,7 @@
 - Pode editar arquivos dentro deste repositorio.
 - Nao deve escrever em `C:\Dev\Projetos\OLMO`, `C:\Dev\Projetos\OLMO_COWORK`, typos como `OLMO_COWOR` ou qualquer sibling `OLMO*`; leitura externa exige permissao humana explicita na conversa.
 - O foco e validar fluxo, digest, estudo, wiki operacional e gates de promocao.
-- Runtime preferido para velocidade: Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, com `bash`, `rg` e `pwsh`. Windows/PowerShell fica como compatibilidade.
+- Runtime preferido para velocidade: Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, com `bash`, `rg` e `jq`. PowerShell fica legado temporario, nao caminho principal.
 
 ## Fundamental Boundary
 
@@ -89,7 +89,7 @@ Regra: agentes que precisarem de criterio detalhado seguem o link acima. Duplica
 - `Prometeus/.obsidian/`: configuracao do vault Obsidian `Prometeus`.
 - `Prometeus/wiki/`: conhecimento duravel e navegavel via graph view. Complementa `shadow/`, nao substitui.
   - `Prometeus/wiki/Notes/`: notas conceituais com no minimo 2 wikilinks para outras notas. Notas com <2 wikilinks sao espelhos de `shadow/` e viram candidatas a delete em HYGIENE.
-- `scripts/`: harness local pequeno, maturidade (`scripts/maturity.ps1`) e self-evolution (`scripts/evolve.ps1`).
+- `scripts/`: harness local Bash-first (`scripts/check.sh`, `scripts/evolve.sh`); scripts `.ps1` ficam legado temporario ate remocao segura.
 
 ## Memoria
 
@@ -138,7 +138,7 @@ Se o erro indicar sandbox, permissao ou rede e o comando for essencial, repetir 
 - Se editar docs ou HTML, cheque nomes, titulos e links locais.
 - Se editar base, memoria, harness ou orquestracao, atualize `shadow/FOUNDATION.md`.
 - Se editar a wiki, preserve links Obsidian e a separacao entre conhecimento duravel e captura privada.
-- Quando houver mudanca persistente, rode `pwsh -NoLogo -NoProfile -File ./scripts/check.ps1` no Ubuntu/WSL. No Windows, use `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`.
+- Quando houver mudanca persistente, rode `./scripts/check.sh` no Ubuntu/WSL. PowerShell nao e gate principal.
 - Se um artefato virar `candidate`, atualize `shadow/WORK-LANES.md`.
 - Se a sessao criar varios artefatos, confira `shadow/HYGIENE.md`.
 - Se rodou um procedimento (`email-digest-4p`, `study-track-done`, `sota-research-gate`) em uso real, registre linha em `shadow/EVIDENCE-LOG.md`.

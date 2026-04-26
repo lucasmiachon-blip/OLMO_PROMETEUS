@@ -19,9 +19,9 @@ GEMINI.md             # adaptador fino para Gemini CLI, importa AGENTS.md
 PROJECT_CONTRACT.md   # limites, lanes e criterio de promocao
 README.md             # entrada humana rapida
 TREE.md               # mapa profissional da arvore do repo
-scripts/check.ps1     # harness local, sem writes externos
-scripts/maturity.ps1  # camada executavel de maturidade CMMI adaptada
-scripts/evolve.ps1    # executor self-evolving read-only
+scripts/check.sh      # harness local Bash-first, sem writes externos
+scripts/evolve.sh     # executor self-evolving Bash-first read-only
+scripts/*.ps1         # legado temporario durante retirada de PowerShell
 internal/evolution/   # backlog, risk register e review cadence do loop interno
 shadow/               # decisoes, gates, memoria operacional, evidencia e agent usage
 Prometeus/            # vault Obsidian versionado
@@ -47,7 +47,7 @@ Companions visuais reversiveis.
 
 ### `.github/workflows/`
 
-Automacao read-only. `self-evolution.yml` roda harness e `scripts/evolve.ps1` em push, PR, schedule semanal e workflow manual. Nao pode escrever, commitar, fazer push, abrir issue ou tocar dado sensivel.
+Automacao read-only. `self-evolution.yml` roda `scripts/check.sh` e `scripts/evolve.sh` em push, PR, schedule semanal e workflow manual. Nao pode escrever, commitar, fazer push, abrir issue ou tocar dado sensivel.
 
 ### `internal/evolution/`
 
@@ -144,10 +144,8 @@ Copiar/adaptar somente quando houver:
 ## Gate Antes de Commit
 
 ```bash
-pwsh -NoLogo -NoProfile -File ./scripts/check.ps1 -Strict
+./scripts/check.sh --strict
 ```
-
-Windows/PowerShell continua aceito como compatibilidade: `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1 -Strict`.
 
 Se o working tree ja tiver mudanca do Obsidian ou do usuario, nao esconder isso. Separar commits pequenos e nao misturar alteracoes geradas com edicoes manuais sem motivo.
 

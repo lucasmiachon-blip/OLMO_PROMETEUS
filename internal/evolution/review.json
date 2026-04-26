@@ -5,8 +5,8 @@
   "last_review": "2026-04-25",
   "next_review": "2026-05-02",
   "triggers": [
-    "scripts/check.ps1",
-    "scripts/evolve.ps1 -Mode check",
+    "scripts/check.sh",
+    "scripts/evolve.sh check",
     "GitHub scheduled self-evolution workflow",
     "antes de mudanca estrutural"
   ],
@@ -21,8 +21,8 @@
   ],
   "definition_of_done": [
     "artefato persistente criado ou atualizado",
-    "scripts/evolve.ps1 -Mode check passa",
-    "scripts/check.ps1 passa",
+    "scripts/evolve.sh check passa",
+    "scripts/check.sh passa",
     "EVIDENCE-LOG registra uso ou mudanca de comportamento",
     "proximo batch continua declarado"
   ]

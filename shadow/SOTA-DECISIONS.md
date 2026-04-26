@@ -14,7 +14,7 @@ Manter:
 - `CLAUDE.md` e `GEMINI.md` como adaptadores finos.
 - `shadow/` para decisoes, procedures e gates.
 - `Prometeus/wiki/` para conhecimento navegavel.
-- `scripts/check.ps1` como harness antes de commit.
+- `scripts/check.sh` como harness antes de commit.
 - Boundary absoluta: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 
 Nao incorporar por reflexo:
@@ -129,7 +129,7 @@ Fonte primaria: OpenAI Models docs indicam que GPT-5.2-Codex e GPT-5.3-Codex sup
 
 ## Ubuntu/WSL fast path (2026-04-26)
 
-Decisao: o caminho operacional padrao deste branch passa a ser Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, com `bash`, `rg` e `pwsh`. Windows/PowerShell continua compatibilidade.
+Decisao: o caminho operacional padrao deste branch passa a ser Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, com `bash`, `rg` e `jq`. PowerShell fica legado temporario ate remocao segura.
 
 Trigger: trabalho local de Codex, harness, maturidade, self-evolution, docs e scripts neste laboratorio.
 
@@ -153,7 +153,7 @@ Trigger: qualquer pedido envolvendo saude, dado pessoal, paciente, PDF clinico, 
 
 Nao-trigger: exemplos sinteticos, docs oficiais, harness sem dado real ou procedimento abstrato.
 
-Risco: virar checklist sem uso; mitigacao: `scripts/check.ps1` exige os arquivos e `EVIDENCE-LOG.md` registra uso real.
+Risco: virar checklist sem uso; mitigacao: `scripts/check.sh` exige os arquivos e `EVIDENCE-LOG.md` registra uso real.
 
 Custo: quatro arquivos pequenos em `shadow/`, sem runtime novo.
 
@@ -174,10 +174,11 @@ Fonte primaria: HHS HIPAA Minimum Necessary Requirement e NIST SP 800-61 Rev. 3.
 | 2026-04-24 | Auditoria adversarial | Rebaixamento de labels aspiracionais e lanes | commits 1ea1dea, 0e6177d, b3bbdb4 |
 | 2026-04-25 | Error report memory protocol | Protocolo de erro material | `AGENTS.md`, `shadow/FOUNDATION.md` |
 | 2026-04-25 | Solo medico refresh | Overlay sem runtime novo | `AGENTS.md`, `shadow/AGENT-USAGE.md`, `shadow/FOUNDATION.md` |
-| 2026-04-25 | Orchestration/harness/antifragile gate | Gate E2E e fault injection seedado | `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`, `scripts/check.ps1` |
+| 2026-04-25 | Orchestration/harness/antifragile gate | Gate E2E e fault injection seedado | `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`, `scripts/check.sh` |
 | 2026-04-26 | Codex xhigh default | Preferencia de reasoning effort para Codex | `AGENTS.md`, `shadow/SOTA-DECISIONS.md`, `shadow/FOUNDATION.md` |
 | 2026-04-26 | Ubuntu/WSL fast path | Comandos Ubuntu/WSL como padrao de velocidade, Windows como compatibilidade | `AGENTS.md`, `README.md`, `CLAUDE.md`, `TREE.md`, `shadow/FOUNDATION.md`, `shadow/HYGIENE.md`, `shadow/HANDOFF.md` |
-| 2026-04-26 | Privacy guard minimum | Controles minimos de dado sensivel/PHI exigidos pelo harness | `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`, `scripts/check.ps1` |
+| 2026-04-26 | Privacy guard minimum | Controles minimos de dado sensivel/PHI exigidos pelo harness | `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`, `scripts/check.sh` |
+| 2026-04-26 | Bash-first WSL2 harness | PowerShell sai do gate principal; workflow passa para Bash | `scripts/check.sh`, `scripts/evolve.sh`, `.github/workflows/self-evolution.yml` |
 
 ## Claude Code e GEMINI.md adapters
 

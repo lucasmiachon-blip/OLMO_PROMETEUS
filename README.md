@@ -21,8 +21,9 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 - `shadow/WORK-LANES.md`: fonte unica dos 6 estados (private, experiment, candidate, operational, retired, blocked) e promotion gate
 - `shadow/INCORPORATION-LOG.md`: log de transicoes de estado aplicadas
 - `shadow/EVIDENCE-LOG.md`: registro de uso real dos procedimentos (gate para `operational`)
-- `scripts/maturity.ps1`: camada executavel de maturidade CMMI adaptada; roda gaps, batches e checks
-- `scripts/evolve.ps1`: executor self-evolving; valida backlog interno, riscos, review cadence e workflow read-only
+- `scripts/check.sh`: harness local Bash-first de regressao leve
+- `scripts/evolve.sh`: executor self-evolving Bash-first; valida backlog interno, riscos, review cadence e workflow read-only
+- `scripts/*.ps1`: legado temporario de compatibilidade durante a retirada de PowerShell
 - `internal/evolution/`: estrutura interna versionada do self-evolution loop (backlog, risk register, review)
 - `shadow/SOTA-DECISIONS.md`: decisoes SOTA curtas + `Applied when` + stubs `Blocked ate evidencia`
 - `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`: guardas minimos contra PHI, dado sensivel e incidente sem conteudo sensivel
@@ -32,7 +33,7 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 - `shadow/FOUNDATION.md`: base de infra, memoria, harness e orquestracao
 - `shadow/HYGIENE.md`: checklist de higiene para evitar sprawl
 - `shadow/EMAIL-DIGEST-4P.md`, `shadow/STUDY-TRACK-DONE.md`: procedures com rubric e mini-evals
-- `scripts/check.ps1`: harness local de regressao leve
+- `scripts/check.ps1`: harness legado, nao caminho principal
 - `.github/workflows/self-evolution.yml`: watchdog read-only para rodar checks sem pedido manual
 - `Prometeus/.obsidian/`: configuracao do Obsidian para abrir o vault `Prometeus`
 - `Prometeus/wiki/`: wiki operacional versionada do projeto
@@ -59,7 +60,7 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 4. classificar o artefato em `private`, `experiment`, `candidate`, `operational`, `retired` ou `blocked` (ver `shadow/WORK-LANES.md`);
 5. se o procedimento tem `## Rubric`, rodar a rubrica e anotar score na observacao da linha do EVIDENCE-LOG;
 6. so discutir migracao para `OLMO` depois do gate humano.
-7. antes de nova mudanca estrutural, rodar `pwsh -NoLogo -NoProfile -File ./scripts/evolve.ps1 -Mode next` no Ubuntu/WSL.
+7. antes de nova mudanca estrutural, rodar `./scripts/evolve.sh next` no Ubuntu/WSL.
 
 ## Higiene do projeto
 
@@ -85,17 +86,11 @@ Ubuntu/WSL rapido (padrao):
 
 ```bash
 cd /home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS
-pwsh -NoLogo -NoProfile -File ./scripts/check.ps1
-pwsh -NoLogo -NoProfile -File ./scripts/evolve.ps1 -Mode next
+./scripts/check.sh
+./scripts/evolve.sh next
 ```
 
-Windows/PowerShell (compatibilidade):
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1
-```
-
-Use antes de commit quando a sessao mexer em docs, wiki, shadow ou scripts. O workflow remoto valida `ubuntu-latest` e `windows-latest`.
+Use antes de commit quando a sessao mexer em docs, wiki, shadow ou scripts. O workflow remoto roda Bash em `ubuntu-latest` e `windows-latest`.
 
 ## Obsidian
 
@@ -120,4 +115,3 @@ O Canvas `Prometeus/wiki/Maps/Prometeus.canvas` continua como vitrine curada. El
 ## Origem da primeira fatia
 
 A base inicial veio de um laboratorio anterior que nao oferecia isolamento Git real. Este repo existe para manter a separacao segura em `OLMO_PROMETEUS`.
-

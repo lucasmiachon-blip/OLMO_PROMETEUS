@@ -26,9 +26,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Harness
-        shell: pwsh
-        run: ./scripts/check.ps1
+        shell: bash
+        run: ./scripts/check.sh
 
       - name: Next evolution batch
-        shell: pwsh
-        run: ./scripts/evolve.ps1 -Mode next
+        shell: bash
+        run: ./scripts/evolve.sh next

@@ -7,10 +7,9 @@ Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 ### Commands
 
 ```
-pwsh -NoLogo -NoProfile -File ./scripts/check.ps1                       # Ubuntu/WSL harness local rapido
-pwsh -NoLogo -NoProfile -File ./scripts/check.ps1 -Strict               # Ubuntu/WSL harness + working tree limpo
-powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1           # Windows compatibilidade
-powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1 -Strict   # Windows compatibilidade + working tree limpo
+./scripts/check.sh                 # Ubuntu/WSL harness local rapido
+./scripts/check.sh --strict        # Ubuntu/WSL harness + working tree limpo
+./scripts/evolve.sh next           # proximo batch
 ```
 
 ### What this is

@@ -18,7 +18,7 @@ Rodar higiene quando:
 ## Checklist rapido
 
 - `git status --short`: entender o que mudou.
-- `pwsh -NoLogo -NoProfile -File ./scripts/check.ps1`: rodar harness local no Ubuntu/WSL rapido.
+- `./scripts/check.sh`: rodar harness local no Ubuntu/WSL rapido.
 - `rg --hidden --files -g "!private-learning/**" -g "!.git/**"`: ver sprawl fora da area privada.
 - Checar se novos arquivos estao em uma casa clara: `shadow/`, `Prometeus/wiki/`, `private-learning/` local ignorado ou `scripts/`.
 - Checar se `shadow/HANDOFF.md` continua enxuto e aponta para fontes canonicas em vez de duplicar docs.
@@ -27,8 +27,7 @@ Rodar higiene quando:
 - Checar se o harness valida `[[wikilinks]]`, aliases e referencias de Canvas antes de commit.
 - Checar se notas wiki duraveis estao em `Prometeus/wiki/Notes`, `Prometeus/wiki/Categories` ou `Prometeus/wiki/References`.
 - Checar se notas em `Prometeus/wiki/Notes` tem >=2 wikilinks (warn do harness); notas com <2 links sao espelhos de `shadow/` e viram candidatas a delete.
-- Rodar `pwsh -NoLogo -NoProfile -File ./scripts/maturity.ps1 -Mode check`; maturidade deve falhar como codigo se virar documento aspiracional.
-- Rodar `pwsh -NoLogo -NoProfile -File ./scripts/evolve.ps1 -Mode check`; self-evolution deve ter exatamente um proximo batch e workflow read-only.
+- Rodar `./scripts/evolve.sh check`; self-evolution deve ter exatamente um proximo batch e workflow read-only.
 - Checar se capturas cruas continuam ignoradas em `Prometeus/wiki/Clippings`, `Prometeus/wiki/Daily` e `Prometeus/wiki/Attachments`.
 - Checar se `.claude/`, `private-learning/`, buffers do Obsidian, workspace local, caches, plugins, `node_modules/` e `.venv/` continuam em `.gitignore` e `.claudeignore`.
 - Checar que `.agents/`, `.codex/`, `agents/`, `subagents/`, `skills/`, `hooks/`, `playground/` e `.claude/agents|skills|hooks|commands/` nao reapareceram na raiz sem gate.
@@ -93,4 +92,3 @@ Se nao passar nessa barra, consolidar ou deletar.
 - Frame adversarial aplicado: contexto de agente e Git precisam ignorar as mesmas areas privadas/geradas.
 
 Coautoria: Lucas + GPT-5.4 (Codex)
-
