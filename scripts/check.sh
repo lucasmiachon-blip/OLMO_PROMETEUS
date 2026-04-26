@@ -39,9 +39,10 @@ legacy_root="$(dirname "$root")/OLMO_ROADMAP"
 required_files=(
   AGENTS.md CLAUDE.md GEMINI.md PROJECT_CONTRACT.md README.md TREE.md
   .gitignore .claudeignore .github/workflows/self-evolution.yml
-  scripts/check.sh scripts/evolve.sh scripts/guard-olmo-write-hook.sh scripts/test-olmo-boundary-guard.sh
+  scripts/check.sh scripts/evolve.sh scripts/guard-olmo-write-hook.sh scripts/test-olmo-boundary-guard.sh scripts/doctor-github-remote.sh
   shadow/FOUNDATION.md shadow/HANDOFF.md shadow/AGENT-MODULES.md shadow/HYGIENE.md
   shadow/SOTA-DECISIONS.md shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md
+  shadow/GITHUB-REMOTE-WSL.md
   shadow/DATA-CLASSIFICATION.md shadow/PHI-CHECKLIST.md shadow/THREAT-MODEL.md shadow/INCIDENT-LOG.md
   shadow/INCORPORATION-LOG.md shadow/WORK-LANES.md shadow/EMAIL-DIGEST-4P.md shadow/STUDY-TRACK-DONE.md
   shadow/EVIDENCE-LOG.md shadow/AGENT-USAGE.md
@@ -102,6 +103,7 @@ require_text shadow/DATA-CLASSIFICATION.md '^## Classes$' 'data classification c
 require_text shadow/PHI-CHECKLIST.md '^## Stop checklist$' 'PHI stop checklist'
 require_text shadow/THREAT-MODEL.md '^## Ameacas$' 'threat model threats'
 require_text shadow/INCIDENT-LOG.md '^## Entradas$' 'incident log entries'
+require_text shadow/GITHUB-REMOTE-WSL.md '^## Procedimento$' 'GitHub WSL remote procedure'
 
 if rg -n --hidden --glob '!.git/**' --glob '!scripts/check.sh' --glob '!private-learning/**' --glob '!Prometeus/wiki/Clippings/**' --glob '!Prometeus/wiki/Daily/**' --glob '!Prometeus/wiki/Attachments/**' 'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|BEGIN RSA PRIVATE KEY' . >/tmp/prometeus-secret-scan.txt; then
   fail "no obvious secret strings found: $(wc -l </tmp/prometeus-secret-scan.txt) finding(s)"

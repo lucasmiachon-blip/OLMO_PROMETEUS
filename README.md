@@ -26,6 +26,7 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 - `internal/evolution/`: estrutura interna versionada do self-evolution loop (backlog, risk register, review)
 - `shadow/SOTA-DECISIONS.md`: decisoes SOTA curtas + `Applied when` + stubs `Blocked ate evidencia`
 - `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`: guardas minimos contra PHI, dado sensivel e incidente sem conteudo sensivel
+- `shadow/GITHUB-REMOTE-WSL.md`: procedimento para publicar o branch via SSH nativo do WSL
 - `shadow/AGENT-MODULES.md`: contrato experimental para agentes; eixo tecnico ortogonal a WORK-LANES
 - `shadow/AGENT-USAGE.md`: mapa de agentes/skills globais usados sem scaffold local + SOTA agent contract
 - `shadow/PLAN-*.md`: plan por rodada estrutural (ex: `PLAN-2026-04-23.md` para Bloco A+B+C-prep)

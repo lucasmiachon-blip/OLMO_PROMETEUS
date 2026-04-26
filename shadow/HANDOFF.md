@@ -62,9 +62,10 @@ Sequencia obrigatoria:
 1. Confirmar `git status --short --branch`.
 2. Rodar `./scripts/evolve.sh next`.
 3. Atacar `EV-B2`: workflow remoto falha de forma recorrente no passo `Harness`; `gh run view --log-failed` retornou HTTP 403 por falta de admin.
-4. Se o log remoto continuar bloqueado, documentar bloqueio e reproduzir o mais perto possivel com Bash local.
-5. Nao aplicar branch protection ate haver workflow verde ou bloqueio documentado.
-6. `EV-B3` ja tem controle minimo aplicado; antes de qualquer fluxo clinico/dado pessoal, usar `PHI-CHECKLIST.md`.
+4. Para publicar o branch, seguir `GITHUB-REMOTE-WSL.md` e usar SSH nativo do WSL.
+5. Se o log remoto continuar bloqueado, documentar bloqueio e reproduzir o mais perto possivel com Bash local.
+6. Nao aplicar branch protection ate haver workflow verde ou bloqueio documentado.
+7. `EV-B3` ja tem controle minimo aplicado; antes de qualquer fluxo clinico/dado pessoal, usar `PHI-CHECKLIST.md`.
 
 ## Cross References
 
