@@ -111,11 +111,11 @@ Se o erro indicar sandbox, permissao ou rede e o comando for essencial, repetir 
 
 ## Do
 
-- produzir digest em 4 paragrafos;
-- manter trilha de estudo com criterio de `done`;
 - atualizar gates de promocao e risco;
 - explicitar o que e experimento e o que e candidato;
 - citar fontes quando a resposta depender de pesquisa externa.
+
+Procedures em `experiment` (sem evidencia em `shadow/EVIDENCE-LOG.md`, ver `shadow/INCORPORATION-LOG.md` 2026-04-24): `email-digest-4p` (digest em 4 paragrafos), `study-track-done` (trilha de estudo com criterio de `done`), `obsidian-crossref-check` (harness roda, falta uso citado). Rodar e registrar em EVIDENCE-LOG antes de tratar como pratica central.
 
 ## Do Not
 

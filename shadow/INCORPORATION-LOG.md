@@ -30,6 +30,7 @@ Este arquivo nao redefine estados nem criterios: a fonte unica esta em `shadow/W
 | 2026-04-24 | `obsidian-crossref-check` | operational | candidate | Harness roda, mas nao cumpre gate formal: nao citado em `AGENTS.md > Do`, sem rubric associada, sem entradas em EVIDENCE-LOG | `shadow/AGENT-MODULES.md` | Uso real do harness ja existe; rebaixar e honestidade de estado, nao desligamento | Citar em AGENTS.md e registrar uso em EVIDENCE-LOG ao longo de 14 dias |
 | 2026-04-24 | `.claude/settings.local.json` lane | operational | experiment | Transicao de 2026-04-23 foi mesmo dia da criacao do gate, sem entries em EVIDENCE-LOG | `shadow/INCORPORATION-LOG.md:22` | State local continua valido; apenas o rotulo de lane foi corrigido | Reavaliar apos harness rodar em 3 sessoes distintas |
 | 2026-04-25 | Orchestration/harness/antifragile gate | — | experiment | Leitura read-only do OLMO protegido + pesquisa SOTA externa pedida pelo usuario | `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`, `scripts/check.sh` | Virar relatorio solto ou copiar hooks/agents do OLMO | Usar como gate nas proximas 3 mudancas estruturais |
+| 2026-04-26 | AGENTS.md > Do procedure references | drift textual | alinhado a INCORPORATION-LOG 28-30 | Auditoria de coerencia entre `AGENTS.md` e estado real das lanes | `AGENTS.md`, `shadow/SOTA-DECISIONS.md` | Texto pode reverter via copy-paste de sessao antiga | Greppar nomes de procedimento em PRs futuros |
 
 Coautoria: Lucas + Claude Opus 4.7 (1M, audit mode)
 

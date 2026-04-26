@@ -163,6 +163,22 @@ Criterio negativo: se o fluxo exigir dado real de paciente, manter `blocked` ate
 
 Fonte primaria: HHS HIPAA Minimum Necessary Requirement e NIST SP 800-61 Rev. 3.
 
+## AGENTS.md state alignment (2026-04-26)
+
+Decisao: alinhar `AGENTS.md > Do` ao estado real registrado em `shadow/INCORPORATION-LOG.md` entries 28-30 (2026-04-24): `email-digest-4p` e `study-track-done` foram rebaixados a `experiment` por EVIDENCE-LOG vazio; `obsidian-crossref-check` foi rebatido a `candidate` por nao cumprir gate formal. AGENTS.md ainda os tratava como praticas centrais.
+
+Trigger: drift textual entre contrato (`AGENTS.md`) e estado de lanes (`INCORPORATION-LOG.md`) detectado em auditoria de hoje.
+
+Nao-trigger: nenhuma mudanca arquitetural ou de procedimento; apenas remocao de declaracao operacional sem evidencia.
+
+Risco: virar pretexto para reescrever AGENTS.md alem do necessario.
+
+Custo: edicao cirurgica em 1 secao do AGENTS.md (`## Do`).
+
+Rollback: `git restore AGENTS.md shadow/SOTA-DECISIONS.md shadow/INCORPORATION-LOG.md`.
+
+Criterio negativo: se grep mostrar que `email-digest-4p` ou `study-track-done` sao citados como pratica central em outro doc operacional, esse doc tambem precisa de alinhamento.
+
 ## Applied when
 
 | Data | Decisao | Aplicada em | Artefato/commit |
