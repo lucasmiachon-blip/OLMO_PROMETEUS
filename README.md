@@ -2,6 +2,8 @@
 
 Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki operacional sem qualquer contaminacao do repo principal.
 
+Be terse: docs curtos, uma fonte de verdade, sem duplicar politica em adaptadores.
+
 ## Regra principal
 
 - Este repositorio nao e o `OLMO`.
@@ -13,6 +15,7 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 
 - `AGENTS.md`: contrato operacional do laboratorio
 - `CLAUDE.md`: adaptador Boris-style para Claude Code, importando `AGENTS.md`
+- `CODEX.md`: adaptador para Codex, importando `AGENTS.md`
 - `GEMINI.md`: adaptador para Gemini CLI, importando `AGENTS.md`
 - `TREE.md`: mapa profissional da arvore e politica de incorporacao segura
 - `PROJECT_CONTRACT.md`: limites, faixas e criterio de promocao
@@ -43,7 +46,7 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 ## Nucleo enxuto
 
 - Sem diretórios locais de agents, subagents, skills ou hooks.
-- `CLAUDE.md` e `GEMINI.md` sao pontes de contexto, nao novas fontes de verdade.
+- `CLAUDE.md`, `CODEX.md` e `GEMINI.md` sao pontes de contexto, nao novas fontes de verdade.
 - Procedimentos duraveis ficam em `shadow/` ou em notas do `Prometeus/wiki/`.
 - `private-learning/` fica local e ignorado, sem entrar no contexto versionado.
 - Qualquer nova automacao ou agente precisa passar por trigger, evidencia, custo, risco e rollback.
@@ -81,10 +84,10 @@ Para agentes/skills globais do Claude Code (ex: `Explore`, `Plan`, `/dream`, `/s
 
 ## Harness local
 
-Ubuntu/WSL rapido sobre o workspace canonico:
+Ubuntu/WSL rapido sobre o workspace canonico Linux:
 
 ```bash
-cd /mnt/c/Dev/Projetos/OLMO_PROMETEUS
+cd /home/lucasmiachon/projects/OLMO_PROMETEUS
 ./scripts/check.sh
 ./scripts/evolve.sh next
 ```
@@ -93,16 +96,16 @@ Use antes de commit quando a sessao mexer em docs, wiki, shadow ou scripts. O wo
 
 ## Obsidian
 
-Abra no Obsidian esta pasta:
+Abra no Obsidian esta pasta via WSL network path quando estiver no Windows:
 
 ```text
-C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus
+\\wsl.localhost\Ubuntu\home\lucasmiachon\projects\OLMO_PROMETEUS\Prometeus
 ```
 
-No WSL, o mesmo vault fica em:
+No Linux/WSL, o vault fica em:
 
 ```text
-/mnt/c/Dev/Projetos/OLMO_PROMETEUS/Prometeus
+/home/lucasmiachon/projects/OLMO_PROMETEUS/Prometeus
 ```
 
 Use `Prometeus/README.md` ou `Prometeus/wiki/Home.md` como entrada. Assim o nome do vault aparece como `Prometeus`, enquanto o repo continua isolado em `OLMO_PROMETEUS`. A wiki segue a ideia bottom-up do Kepano e o minimalismo do Karpathy: notas pequenas, links claros, escopo limitado e harness simples. Captura crua, diaria ou privada fica ignorada pelo Git em `Prometeus/wiki/Clippings/`, `Prometeus/wiki/Daily/` e `Prometeus/wiki/Attachments/`.

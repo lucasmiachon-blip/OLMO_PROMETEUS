@@ -37,7 +37,7 @@ legacy_root="$(dirname "$root")/OLMO_ROADMAP"
 [[ -e "$legacy_root" ]] && fail "legacy workspace root exists and can attract stale sessions: $legacy_root" || ok "legacy workspace root absent"
 
 required_files=(
-  AGENTS.md CLAUDE.md GEMINI.md PROJECT_CONTRACT.md README.md TREE.md
+  AGENTS.md CLAUDE.md CODEX.md GEMINI.md PROJECT_CONTRACT.md README.md TREE.md
   .gitignore .claudeignore .github/workflows/self-evolution.yml
   scripts/check.sh scripts/evolve.sh scripts/guard-olmo-write-hook.sh scripts/test-olmo-boundary-guard.sh scripts/doctor-github-remote.sh
   shadow/FOUNDATION.md shadow/HANDOFF.md shadow/AGENT-MODULES.md shadow/HYGIENE.md
@@ -97,7 +97,8 @@ require_text AGENTS.md '^## SOTA Research Gate$' 'AGENTS.md SOTA gate'
 require_text AGENTS.md '^## Memoria$' 'AGENTS.md memory'
 require_text shadow/HANDOFF.md '^## Migration Readiness$' 'handoff migration readiness'
 require_text shadow/WORK-LANES.md '^## Promotion gate$' 'work lanes promotion gate'
-require_text shadow/SOTA-DECISIONS.md '^## Canonical Windows workspace with WSL runner \(2026-04-26\)$' 'canonical Windows workspace with WSL runner'
+require_text shadow/SOTA-DECISIONS.md '^## Canonical Linux workspace with Windows UI fallback \(2026-04-26\)$' 'canonical Linux workspace with Windows UI fallback'
+require_text shadow/SOTA-DECISIONS.md '^## Exclusive executor rule \(2026-04-26\)$' 'exclusive executor rule'
 require_text shadow/SOTA-DECISIONS.md '^## Privacy guard minimum \(2026-04-26\)$' 'SOTA privacy guard'
 require_text shadow/DATA-CLASSIFICATION.md '^## Classes$' 'data classification classes'
 require_text shadow/PHI-CHECKLIST.md '^## Stop checklist$' 'PHI stop checklist'

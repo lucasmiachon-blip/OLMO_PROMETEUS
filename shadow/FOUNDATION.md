@@ -4,9 +4,11 @@ Objetivo: fortalecer a base do open OLMO_PROMETEUS sem criar infraestrutura fals
 
 Esta base cobre quatro camadas: infra, memoria, harness e orquestracao.
 
+Be terse: decisoes curtas, sem duplicar politica que ja vive em `AGENTS.md`.
+
 ## Regra fundamental
 
-Nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+Nunca escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
 
 Isso inclui scripts, hooks, automacoes, conectores, agentes, shell commands e edicoes manuais. Se uma tarefa exigir write externo, parar e pedir autorizacao explicita com caminho e acao exata.
 
@@ -16,7 +18,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 
 - Git local limpo e commits pequenos.
 - `AGENTS.md` como contrato operacional.
-- `CLAUDE.md` e `GEMINI.md` como adaptadores de ferramenta que importam `AGENTS.md`.
+- `CLAUDE.md`, `CODEX.md` e `GEMINI.md` como adaptadores de ferramenta que importam `AGENTS.md`.
 - `PROJECT_CONTRACT.md` como limite de risco.
 - `TREE.md` como mapa profissional da arvore e da politica de incorporacao segura.
 - `shadow/` para decisoes, gates e memoria operacional.
@@ -32,7 +34,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 
 Nao existe sincronizacao automatica com `C:\Dev\Projetos\OLMO`.
 
-Workspace canonico aprovado: `C:\Dev\Projetos\OLMO_PROMETEUS`. No WSL, usar o mesmo workspace em `/mnt/c/Dev/Projetos/OLMO_PROMETEUS`; Bash e o gate principal continuam o caminho operacional padrao.
+Workspace canonico aprovado: `/home/lucasmiachon/projects/OLMO_PROMETEUS` em Linux/WSL ext4. Caminhos Windows e `/mnt/c` sao referencia historica, archive ou UI humana; nao sao fonte operacional.
 
 Excecao aprovada em 2026-04-25 e portada para Bash em 2026-04-26: `.claude/settings.local.json` pode acionar um unico `PreToolUse` local que chama `scripts/guard-olmo-write-hook.sh` e bloqueia writes externos e pede permissao para reads externos quando o payload menciona `C:\Dev\Projetos\OLMO`, `OLMO_COWORK`, typos como `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico. Isso nao cria `.claude/hooks/`, nao escreve fora do repo e existe apenas para tornar a boundary fail-closed. O harness roda teste positivo/negativo desse guard e falha se o workspace legado reaparecer.
 
@@ -57,7 +59,7 @@ Regra: nenhum hook pode tocar `C:\Dev\Projetos\OLMO`, arquivar email, mover arqu
 Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo:
 
 - contrato vivo: `AGENTS.md`;
-- adaptadores de ferramenta: `CLAUDE.md` e `GEMINI.md`;
+- adaptadores de ferramenta: `CLAUDE.md`, `CODEX.md` e `GEMINI.md`;
 - limites do projeto: `PROJECT_CONTRACT.md`;
 - decisoes SOTA: `shadow/SOTA-DECISIONS.md`;
 - lanes e promotion gate: `shadow/WORK-LANES.md`;
@@ -73,7 +75,7 @@ Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo
 - wiki navegavel: `Prometeus/wiki/Home.md`;
 - material pessoal local e ignorado: `private-learning/`.
 
-Memoria automatica do Claude Code em `C:\Users\lucas\.claude\projects\...\memory\` e intencionalmente vazia para este projeto. Memoria global do usuario (`~/.claude/CLAUDE.md`) e read-only por este repo.
+Memorias automaticas ou globais de ferramentas ficam fora do repo e sao read-only para este projeto. A memoria operacional versionada fica em `AGENTS.md`, `shadow/` e `Prometeus/wiki/`.
 
 Regra: se uma memoria nao muda comportamento futuro, ela nao entra no repo.
 
@@ -81,7 +83,7 @@ Erros materiais tambem sao memoria operacional quando mudam comportamento futuro
 
 ## 4. Harness
 
-O harness local padrao e Ubuntu/WSL:
+O harness local padrao e Linux/WSL Ubuntu 24.04:
 
 ```bash
 ./scripts/check.sh
@@ -115,10 +117,24 @@ Loop padrao:
 
 Delegacao:
 
-- Codex orquestra e edita com `reasoning_effort=xhigh` quando a ferramenta/modelo suportar; se nao suportar, usar o maior esforco disponivel e registrar a limitacao.
-- Claude Code usa subagentes globais (`Explore`, `Plan`, `general-purpose`) conforme mapa em `shadow/AGENT-USAGE.md`; sem scaffold local.
+- Executor e exclusivo por tarefa: escolher Codex ou Claude Code para editar/orquestrar uma rodada; nunca os dois como executores simultaneos no mesmo escopo.
+- Codex executa com `reasoning_effort=xhigh` quando a ferramenta/modelo suportar; se nao suportar, usar o maior esforco disponivel e registrar a limitacao.
+- Claude Code pode ser o executor escolhido e usar subagentes globais (`Explore`, `Plan`, `general-purpose`) conforme mapa em `shadow/AGENT-USAGE.md`; sem scaffold local.
 - Leituras auxiliares podem ser feitas por subagentes apenas quando a conversa justificar (ver padroes SOTA em `shadow/AGENT-USAGE.md`).
-- Gemini entra para pesquisa longa/multimodal somente com objetivo, trigger, artefato, custo e risco.
+- Gemini entra para pesquisa longa/multimodal somente com objetivo, trigger, artefato, custo e risco; nao executa writes neste repo.
+
+Shell e linguagens:
+
+- Bash e o contrato versionado para scripts, harness e agentes.
+- Markdown, JSON e Bash sao o core atual.
+- Python entra com `uv` + `ruff` quando houver projeto Python real.
+- TypeScript/JavaScript entram por projeto com `pnpm` + `vite` + `biome`; `bun` fica experimento por projeto.
+
+Sampling:
+
+- Gemini 3/API: default `temperature=1.0`; pode ser criativo em pesquisa.
+- Claude API: default/alta temperatura para exploracao; se for executor de codigo, priorizar revisao e harness.
+- Codex/OpenAI reasoning: controlar por `reasoning_effort` e verbosity; temperature nao e o knob principal em `xhigh`.
 
 Sem fan-out automatico e sem registry local de agentes neste repo. Todo uso real de subagent ou procedure registrado em `shadow/EVIDENCE-LOG.md`.
 
@@ -151,4 +167,4 @@ Algo so sobe de nivel quando tem:
 - harness passando;
 - aprovacao humana antes de qualquer conversa sobre OLMO.
 
-Coautoria: Lucas + GPT-5.4 xhigh (Codex)
+Coautoria: Lucas + GPT-5.x-Codex (xhigh)

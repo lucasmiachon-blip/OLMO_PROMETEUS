@@ -6,7 +6,7 @@ Validar um laboratorio paralelo, guiado por orquestracao de baixo risco, para va
 
 ## Limites
 
-- Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+- Regra fundamental: nunca escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
 - Nao escrever em `C:\Dev\Projetos\OLMO` a partir daqui.
 - Nao editar, mover, deletar, criar, arquivar ou sincronizar nada em repositorios siblings; leitura de sibling/legado so com permissao humana explicita na conversa.
 - Qualquer write externo e bloqueado por padrao. Qualquer read externo exige pergunta previa, com caminho e motivo exatos.
@@ -17,6 +17,8 @@ Validar um laboratorio paralelo, guiado por orquestracao de baixo risco, para va
 - Nao criar sincronizacao automatica com o repo principal.
 - Nao promover artefatos sem trigger, evidencia e rollback.
 - Nao mudar arquitetura, agentes, skills, hooks, MCP, memoria ou orquestracao sem SOTA research gate previo.
+- Be terse: politica entra uma vez na fonte certa; adaptadores so apontam.
+- Incorporacao de legado exige ler antes de mover, tabela `incorporar/nao incorporar`, justificativa e destino claro. Bulk copy e proibido.
 
 ## SOTA research gate
 
@@ -49,7 +51,7 @@ Um artefato daqui so entra em conversa de migracao quando:
 ## Estrutura minima racional
 
 - `AGENTS.md` define o contrato do repo.
-- `CLAUDE.md` e `GEMINI.md` sao adaptadores finos que importam `AGENTS.md`.
+- `CLAUDE.md`, `CODEX.md` e `GEMINI.md` sao adaptadores finos que importam `AGENTS.md`.
 - `TREE.md` define a arvore profissional, casas dos artefatos e politica de incorporacao segura.
 - `shadow/WORK-LANES.md` define os estados e promotion gate.
 - `shadow/INCORPORATION-LOG.md` registra as transicoes aplicadas.
@@ -68,3 +70,12 @@ Um artefato daqui so entra em conversa de migracao quando:
 - `Prometeus/wiki/` guarda a wiki Obsidian versionada.
 - `private-learning/` e local e ignorado; nao e fonte versionada.
 - `.claude/` e local e ignorado; nao e fonte versionada nem runtime ativo.
+
+## Stack operacional
+
+- Workspace unico: `/home/lucasmiachon/projects/OLMO_PROMETEUS` em Linux/WSL ext4.
+- Shell versionado: Bash.
+- Core atual: Markdown, JSON e Bash.
+- Python: `uv` + `ruff` quando houver projeto Python real.
+- TypeScript/JavaScript: `pnpm` + `vite` + `biome` por projeto; `bun` apenas experimento.
+- Agentes: Codex e Claude Code sao executores possiveis, mas nunca juntos na mesma tarefa/rodada de edicao. Gemini e pesquisa/contraponto sem write. Sem runtime persistente sem gate.

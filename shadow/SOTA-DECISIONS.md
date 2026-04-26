@@ -11,11 +11,11 @@ Prometeus deve continuar pequeno, verificavel e reversivel.
 Manter:
 
 - `AGENTS.md` como contrato central.
-- `CLAUDE.md` e `GEMINI.md` como adaptadores finos.
+- `CLAUDE.md`, `CODEX.md` e `GEMINI.md` como adaptadores finos.
 - `shadow/` para decisoes, procedures e gates.
 - `Prometeus/wiki/` para conhecimento navegavel.
 - `scripts/check.sh` como harness antes de commit.
-- Boundary absoluta: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+- Boundary absoluta: nunca escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
 
 Nao incorporar por reflexo:
 
@@ -32,6 +32,7 @@ Nao incorporar por reflexo:
 3. Qualquer coisa migravel passa por `private -> experiment -> candidate`.
 4. Nada toca `C:\Dev\Projetos\OLMO` sem autorizacao humana explicita.
 5. Toda mudanca estrutural precisa de trigger, risco, custo, rollback e criterio negativo.
+6. Be terse: consolidar, nao multiplicar documentos.
 
 ## SOTA research gate
 
@@ -127,23 +128,53 @@ Criterio negativo: se `xhigh` causar atrito recorrente, custo injustificado ou n
 
 Fonte primaria: OpenAI Models docs indicam que GPT-5.2-Codex e GPT-5.3-Codex suportam `low`, `medium`, `high` e `xhigh`; a referencia da API tambem lista `xhigh` como valor de `reasoning_effort` para modelos suportados.
 
-## Canonical Windows workspace with WSL runner (2026-04-26)
+## Canonical Linux workspace with Windows UI fallback (2026-04-26)
 
-Decisao: o workspace canonico permanece `C:\Dev\Projetos\OLMO_PROMETEUS`. Quando a execucao ocorrer no WSL, usar o mesmo workspace via `/mnt/c/Dev/Projetos/OLMO_PROMETEUS`, com `bash`, `rg` e `jq`.
+Decisao: o workspace canonico unico e `/home/lucasmiachon/projects/OLMO_PROMETEUS` em Linux/WSL ext4, com `bash`, `rg` e `jq`. Caminhos Windows e `/mnt/c` ficam como referencia historica, archive, fallback ou UI humana, nao como fonte operacional.
 
-Trigger: trabalho local de Codex, harness, maturidade, self-evolution, docs e scripts neste laboratorio.
+Trigger: trabalho local de Codex, Claude, Gemini, harness, maturidade, self-evolution, docs e scripts neste laboratorio.
 
-Nao-trigger: abrir o vault no Obsidian pelo Windows ou validar interface grafica fora do WSL.
+Nao-trigger: abrir o vault no Obsidian pelo Windows via `\\wsl.localhost\...` ou validar interface grafica fora do WSL.
 
-Risco: drift entre comandos Ubuntu e Windows; risco menor porque o harness remoto ainda cobre `ubuntu-latest` e `windows-latest`.
+Risco: drift entre Obsidian/Windows e filesystem Linux; paths antigos em docs; confusao de agentes se `C:\Dev` e `/home` coexistirem.
 
-Custo: manter comandos duplicados apenas nos pontos de entrada; evitar duplicacao extensa nos docs.
+Custo: atualizar contratos e docs de entrada; manter Windows apenas como UI/fallback documentado.
 
-Rollback: voltar o `README.md`, `AGENTS.md`, `TREE.md`, `CLAUDE.md`, `shadow/FOUNDATION.md`, `shadow/HYGIENE.md` e `shadow/HANDOFF.md` para Windows-first.
+Rollback: voltar `README.md`, `AGENTS.md`, `TREE.md`, `CLAUDE.md`, `CODEX.md`, `GEMINI.md`, `PROJECT_CONTRACT.md`, `shadow/FOUNDATION.md`, `shadow/HANDOFF.md` e `scripts/check.sh` para Windows-first se Obsidian/Windows ou workflow remoto bloquearem o uso.
 
-Criterio negativo: se Ubuntu/WSL gerar incompatibilidade recorrente, falha no workflow Windows ou bloquear uso do vault, voltar para cross-platform neutro.
+Criterio negativo: se `\\wsl.localhost` quebrar o vault, se WSL/ext4 bloquear uso real, ou se workflow remoto/local falhar por path sem correcao simples, voltar para cross-platform neutro ou Windows-first.
 
 Fonte primaria: Microsoft WSL docs recomendam manter arquivos do projeto no filesystem WSL para melhor performance quando se trabalha pela linha de comando Linux; o clone atual ja esta em `/home/...`, nao em `/mnt/c`.
+
+## Exclusive executor rule (2026-04-26)
+
+Decisao: Codex e Claude Code sao os dois executores autorizados para edicao/orquestracao, mas nunca juntos no mesmo escopo de tarefa. Em cada rodada, escolher um executor; o outro pode ser usado apenas como review/adversario em rodada separada. Gemini fica como pesquisa/contraponto e nao executa writes.
+
+Trigger: reduzir drift, autoria ambigua e edicoes concorrentes entre ferramentas.
+
+Nao-trigger: pesquisa read-only, comparacao SOTA ou review sem write.
+
+Risco: escolher o executor errado para uma tarefa especifica; mitigacao: manter rollback por commit pequeno e harness passando.
+
+Custo: menos paralelismo de edicao.
+
+Rollback: voltar a permitir coexecucao apenas se houver evidencia de que exclusao mutua bloqueia trabalho real.
+
+Criterio negativo: se duas ferramentas editarem o mesmo escopo na mesma rodada, parar, auditar diff e escolher uma fonte de verdade antes de continuar.
+
+## Sampling policy (2026-04-26)
+
+Decisao: Gemini pode ser menos terse e usar default `temperature=1.0` para pesquisa criativa/divergente; Claude API pode usar temperatura alta/default em exploracao; Codex/OpenAI reasoning em `xhigh` e governado por reasoning effort/verbosity, nao por temperature.
+
+Trigger: chamadas API ou prompts manuais onde sampling e configuravel.
+
+Nao-trigger: Codex/Claude Code CLI quando a ferramenta nao expõe temperature.
+
+Risco: criatividade excessiva virar arquitetura. Mitigacao: toda saida vira decisao curta antes de editar.
+
+Criterio negativo: se sampling alto gerar claims sem fonte, marcar `[NAO VERIFICADO]` e nao implementar.
+
+Fontes: Google Gemini text generation docs recomendam manter Gemini 3 no default `temperature=1.0`; Anthropic Messages API documenta `temperature` como randomness opcional; OpenAI GPT-5.2 docs indicam que `temperature` so e suportado com `reasoning.effort=none`, enquanto `xhigh` usa reasoning effort/verbosity.
 
 ## Privacy guard minimum (2026-04-26)
 
@@ -245,14 +276,16 @@ Criterio negativo: se grep mostrar que `email-digest-4p` ou `study-track-done` s
 | 2026-04-25 | Solo medico refresh | Overlay sem runtime novo | `AGENTS.md`, `shadow/AGENT-USAGE.md`, `shadow/FOUNDATION.md` |
 | 2026-04-25 | Orchestration/harness/antifragile gate | Gate E2E e fault injection seedado | `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`, `scripts/check.sh` |
 | 2026-04-26 | Codex xhigh default | Preferencia de reasoning effort para Codex | `AGENTS.md`, `shadow/SOTA-DECISIONS.md`, `shadow/FOUNDATION.md` |
-| 2026-04-26 | Ubuntu/WSL fast path | Comandos Ubuntu/WSL como padrao de velocidade, Windows como compatibilidade | `AGENTS.md`, `README.md`, `CLAUDE.md`, `TREE.md`, `shadow/FOUNDATION.md`, `shadow/HYGIENE.md`, `shadow/HANDOFF.md` |
+| 2026-04-26 | Linux canonical workspace | `/home/lucasmiachon/projects/OLMO_PROMETEUS` como fonte operacional; Windows apenas UI/fallback | `AGENTS.md`, `README.md`, `CLAUDE.md`, `CODEX.md`, `GEMINI.md`, `TREE.md`, `PROJECT_CONTRACT.md`, `shadow/FOUNDATION.md`, `shadow/HANDOFF.md`, `scripts/check.sh` |
+| 2026-04-26 | Exclusive executor rule | Codex ou Claude Code executa por rodada; Gemini pesquisa sem write | `AGENTS.md`, `PROJECT_CONTRACT.md`, `shadow/FOUNDATION.md`, `shadow/SOTA-DECISIONS.md` |
+| 2026-04-26 | Sampling policy | Gemini criativo com temperature 1; Codex por reasoning effort | `AGENTS.md`, `GEMINI.md`, `shadow/FOUNDATION.md`, `shadow/SOTA-DECISIONS.md` |
 | 2026-04-26 | Privacy guard minimum | Controles minimos de dado sensivel/PHI exigidos pelo harness | `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`, `scripts/check.sh` |
 | 2026-04-26 | Bash-first WSL2 harness | Runtime antigo sai do gate principal; workflow passa para Bash | `scripts/check.sh`, `scripts/evolve.sh`, `.github/workflows/self-evolution.yml` |
 | 2026-04-26 | Remove legacy scripts | Guard e harness portados para Bash; scripts antigos removidos do repo | `scripts/guard-olmo-write-hook.sh`, `scripts/test-olmo-boundary-guard.sh`, `scripts/check.sh` |
 
-## Claude Code e GEMINI.md adapters
+## Claude Code, Codex e GEMINI.md adapters
 
-`AGENTS.md` e fonte de verdade. `CLAUDE.md` e `GEMINI.md` so importam contexto e repetem riscos que mordem na ferramenta.
+`AGENTS.md` e fonte de verdade. `CLAUDE.md`, `CODEX.md` e `GEMINI.md` so importam contexto e repetem riscos que mordem na ferramenta.
 
 Contrato:
 
@@ -264,8 +297,8 @@ Contrato:
 
 | Papel | Ferramenta | Uso | Controle |
 | --- | --- | --- | --- |
-| Orquestrador | Codex | integrar, editar, verificar | nao delegar por reflexo |
-| Pesquisa longa | Gemini/manual | PDFs, multimodal e sintese externa | artefato curto em `shadow/` |
+| Executor | Codex ou Claude Code | integrar, editar, verificar | escolher um por rodada; nunca ambos editando o mesmo escopo |
+| Pesquisa longa | Gemini/manual | PDFs, multimodal e sintese externa | artefato curto em `shadow/`; sem write |
 
 ## Fontes base
 

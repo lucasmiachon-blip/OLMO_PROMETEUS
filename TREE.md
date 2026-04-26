@@ -4,9 +4,11 @@ Mapa operacional do `OLMO_PROMETEUS`.
 
 Este arquivo existe para deixar claro o que mora na raiz, o que e fonte de verdade e o que nao deve virar infraestrutura ativa sem gate.
 
+Regra de escrita: be terse. Politica vive uma vez; adaptadores nao duplicam.
+
 ## Regra fundamental
 
-Nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+Nunca escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
 
 `C:\Dev\Projetos\OLMO` pode ser lido para auditoria e inspiracao, mas nao pode receber edicoes, arquivos, hooks, configs, caches ou automacoes a partir deste repo.
 
@@ -15,6 +17,7 @@ Nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
 ```text
 AGENTS.md             # contrato operacional para agentes neste repo
 CLAUDE.md             # adaptador fino Boris-style para Claude Code, importa AGENTS.md
+CODEX.md              # adaptador fino para Codex, importa AGENTS.md
 GEMINI.md             # adaptador fino para Gemini CLI, importa AGENTS.md
 PROJECT_CONTRACT.md   # limites, lanes e criterio de promocao
 README.md             # entrada humana rapida
@@ -33,9 +36,9 @@ private-learning/     # area local ignorada; nao entra no contexto versionado
 
 ## Adaptadores de Ferramenta
 
-`CLAUDE.md` e `GEMINI.md` existem porque Claude Code e Gemini CLI procuram arquivos de contexto proprios.
+`CLAUDE.md`, `CODEX.md` e `GEMINI.md` existem porque ferramentas diferentes procuram arquivos de contexto proprios.
 
-Regra: eles importam `AGENTS.md`, nao duplicam politica e nao autorizam criar `.claude/`, `.gemini/`, hooks, MCP, agents ou skills ativos.
+Regra: eles importam `AGENTS.md`, nao duplicam politica e nao autorizam criar `.claude/`, `.gemini/`, `.codex/`, hooks, MCP, agents ou skills ativos.
 
 ## Areas Vivas
 
@@ -73,6 +76,7 @@ Memoria operacional, nao deposito de pesquisa longa.
 - `INCORPORATION-LOG.md`: log de transicoes de estado aplicadas (nao redefine estados).
 - `EVIDENCE-LOG.md`: registro de uso real dos procedimentos; gate para `operational`.
 - `SOTA-DECISIONS.md`: decisoes curtas apos SOTA research gate; secao `Applied when` e stubs `Blocked ate evidencia`.
+- `LEGACY-INCORPORATION-*.md`: matriz profissional de legado; guarda decisao `incorporar/nao incorporar` e parking lot com trigger de reabertura.
 - `DATA-CLASSIFICATION.md`, `PHI-CHECKLIST.md`, `THREAT-MODEL.md`, `INCIDENT-LOG.md`: controles minimos de privacidade e incidente; nao guardam dado sensivel.
 - `AGENT-MODULES.md`: contrato experimental para agentes como modulos; eixo tecnico ortogonal a WORK-LANES.
 - `AGENT-USAGE.md`: mapa de agentes/skills globais usados sem scaffold local + SOTA agent contract.
@@ -149,4 +153,4 @@ Copiar/adaptar somente quando houver:
 
 Se o working tree ja tiver mudanca do Obsidian ou do usuario, nao esconder isso. Separar commits pequenos e nao misturar alteracoes geradas com edicoes manuais sem motivo.
 
-Coautoria: Lucas + GPT-5.4 xhigh (Codex)
+Coautoria: Lucas + GPT-5.x-Codex (xhigh)

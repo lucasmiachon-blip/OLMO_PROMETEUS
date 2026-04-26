@@ -1,31 +1,33 @@
 # AGENTS.md - open OLMO_PROMETEUS
 
-> Consumer: Codex app/CLI e outros agentes que trabalhem neste repo isolado.
+> Consumer: Codex app/CLI, Claude Code, Gemini CLI e outros agentes que trabalhem neste repo isolado.
 
 ## Intent
 
 `open OLMO_PROMETEUS` e um laboratorio paralelo, pequeno e de baixo risco.
 
 - Pode editar arquivos dentro deste repositorio.
-- Nao deve escrever em `C:\Dev\Projetos\OLMO`, `C:\Dev\Projetos\OLMO_COWORK`, typos como `OLMO_COWOR` ou qualquer sibling `OLMO*`; leitura externa exige permissao humana explicita na conversa.
+- Nao deve escrever em `C:\Dev\Projetos\OLMO`, `C:\Dev\Projetos\OLMO_COWORK`, typos como `OLMO_COWOR`, `/mnt/c/Dev/Projetos/OLMO*` ou qualquer sibling `OLMO*`; leitura externa exige permissao humana explicita na conversa.
 - O foco e validar fluxo, digest, estudo, wiki operacional e gates de promocao.
-- Workspace canonico: `C:\Dev\Projetos\OLMO_PROMETEUS`. No WSL, usar o mesmo workspace via `/mnt/c/Dev/Projetos/OLMO_PROMETEUS`, com `bash`, `rg` e `jq`.
+- Workspace canonico unico: `/home/lucasmiachon/projects/OLMO_PROMETEUS` em Linux/WSL ext4, com `bash`, `rg` e `jq`. Caminhos Windows/`/mnt/c` sao referencia historica, archive ou UI humana; nao sao fonte operacional.
 
 ## Fundamental Boundary
 
-Regra fundamental: nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+Regra fundamental: nunca escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
 
 - Nao editar, mover, deletar, criar, arquivar, sincronizar ou gerar artefatos fora deste repo.
 - Nao executar automacao, hook, script ou ferramenta que faca write externo.
-- Nao escrever em `C:\Dev\Projetos\OLMO`, `C:\Dev\Projetos\OLMO_COWORK` ou outros siblings; nao ler siblings sem perguntar primeiro.
+- Nao escrever em `C:\Dev\Projetos\OLMO`, `C:\Dev\Projetos\OLMO_COWORK`, `/mnt/c/Dev/Projetos/OLMO*` ou outros siblings; nao ler siblings sem perguntar primeiro.
 - Se uma tarefa exigir write fora daqui, parar: write externo e bloqueado. Se exigir read fora daqui, pedir autorizacao explicita antes de ler.
-- Se a sessao iniciar em workspace legado ROADMAP, `OLMO_COWORK`, typo `OLMO_COWOR` ou cwd diferente, corrigir para `C:\Dev\Projetos\OLMO_PROMETEUS` antes de qualquer edit; se a ferramenta de patch estiver presa fora daqui, parar e relatar.
+- Se a sessao iniciar em workspace legado ROADMAP, `OLMO_COWORK`, typo `OLMO_COWOR`, `/mnt/c/Dev/Projetos/OLMO_PROMETEUS` ou cwd diferente, corrigir para `/home/lucasmiachon/projects/OLMO_PROMETEUS` antes de qualquer edit; se a ferramenta de patch estiver presa fora daqui, parar e relatar.
 - A autorizacao precisa citar o caminho externo e a acao exata.
 
 ## Operating Principles
 
 - Prefira artefatos reversiveis: Markdown, HTML simples, JSON e scripts pequenos.
 - Mantenha o blast radius baixo: faca a menor mudanca util.
+- Be terse: escreva o minimo claro; decisao curta vence relatorio longo. Excecao: Gemini pode ser mais criativo/exploratorio quando usado explicitamente para pesquisa ou divergencia.
+- Legacy/incorporacao: sempre ler antes de mover; incorporar seletivamente com justificativa `incorporar` ou `nao incorporar`; sem bulk copy, sem sincofancia, sem mover antes da reflexao.
 - Use pesquisa e docs para reduzir incerteza antes de aumentar estrutura.
 - Consolide antes de criar documento novo; pesquisa vira decisao curta.
 - Trate migracao para `OLMO` como evento humano, nao como reflexo.
@@ -73,6 +75,7 @@ Regra: agentes que precisarem de criterio detalhado seguem o link acima. Duplica
 
 - `private-learning/`: cockpit visual e material pessoal local, ignorado pelo Git e pelo contexto.
 - `CLAUDE.md`: adaptador fino para Claude Code; importa `AGENTS.md`.
+- `CODEX.md`: adaptador fino para Codex; importa `AGENTS.md`.
 - `GEMINI.md`: adaptador fino para Gemini CLI; importa `AGENTS.md`.
 - `.github/workflows/self-evolution.yml`: watchdog read-only que roda harness/evolucao sem write automatico.
 - `internal/evolution/`: backlog, risk register e review cadence do loop self-evolving; nao guarda dado sensivel.
@@ -93,7 +96,16 @@ Regra: agentes que precisarem de criterio detalhado seguem o link acima. Duplica
 
 ## Memoria
 
-Este projeto nao usa a memoria automatica do Claude Code. `C:\Users\lucas\.claude\projects\C--Dev-Projetos-OLMO-PROMETEUS\memory\` e intencionalmente vazio. A memoria do projeto vive em `AGENTS.md`, `shadow/` e `Prometeus/wiki/`. Memoria global do usuario fica em `~/.claude/CLAUDE.md` e e read-only por este repo.
+Este projeto nao usa memoria automatica como fonte operacional. A memoria do projeto vive em `AGENTS.md`, `shadow/` e `Prometeus/wiki/`. Memorias globais de ferramentas ficam fora do repo e sao read-only para este projeto.
+
+## Stack Baseline
+
+- Modelos/agentes: Codex e Claude Code sao os executores possiveis, mas nunca juntos na mesma tarefa/rodada de edicao. Escolha um executor por vez: Codex para auditoria/edicao rigorosa com maior reasoning disponivel (`xhigh` quando suportado); Claude Code para autoria/arquitetura quando for o executor escolhido. Gemini entra para pesquisa longa, multimodalidade e contraponto, nao como executor de write. ChatGPT/API entra manualmente quando Lucas pedir. Nenhum deles vira runtime persistente sem gate.
+- Sampling: Gemini 3/API fica no default `temperature=1.0` para pesquisa criativa; Claude API pode usar temperatura alta/default `1.0` para geracao e arquitetura exploratoria; Codex/GPT reasoning usa `reasoning_effort`/verbosity, nao temperature, quando `xhigh` estiver ativo.
+- Adaptadores: `AGENTS.md` e a fonte unica. `CLAUDE.md`, `CODEX.md` e `GEMINI.md` sao adaptadores finos; nao duplicam politica.
+- Shell: `bash` e o contrato de scripts, harness e agentes. `zsh`, `fish` e `nushell` podem ser conforto humano local, nunca requisito versionado.
+- Linguagens: Markdown/JSON/Bash sao o core atual. Python entra com `uv` + `ruff` quando houver projeto Python real. TypeScript/JavaScript entram por projeto com `pnpm` + `vite` + `biome`; `bun` fica experimento por projeto; `esbuild` direto so para scripts/libs simples.
+- Sistema: Linux/WSL Ubuntu 24.04 LTS em ext4 e o runtime operacional. Windows e Obsidian continuam UI humana quando util; o vault pode ser aberto via `\\wsl.localhost\Ubuntu\home\lucasmiachon\projects\OLMO_PROMETEUS\Prometeus`. Ubuntu 26.04, Fedora ou Linux nativo fora do WSL ficam bloqueados ate trigger, metrica e rollback.
 
 ## Error Reports and Self-Improvement
 
@@ -120,7 +132,7 @@ Procedures em `experiment` (sem evidencia em `shadow/EVIDENCE-LOG.md`, ver `shad
 ## Do Not
 
 - tocar o repo principal por reflexo;
-- escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`;
+- escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`;
 - copiar hooks, MCP ou infraestrutura sensivel do `OLMO`;
 - ativar hook sem trigger, evidencia, rollback e aprovacao humana explicita;
 - permitir self-evolution com write, commit, push, issue, PR ou dado sensivel sem aprovacao humana explicita;
@@ -147,5 +159,5 @@ Procedures em `experiment` (sem evidencia em `shadow/EVIDENCE-LOG.md`, ver `shad
 ## Coauthorship
 
 - Codex: usar `reasoning_effort=xhigh` quando a ferramenta/modelo suportar. Se `xhigh` nao estiver disponivel, usar o maior esforco suportado e registrar a limitacao na resposta.
-- Codex: `Coautoria: Lucas + GPT-5.4 xhigh (Codex)`
+- Codex: `Coautoria: Lucas + GPT-5.x-Codex (xhigh)`
 - Outros modelos: registrar papel, trigger, artefato, custo e risco antes de adotar no fluxo.
