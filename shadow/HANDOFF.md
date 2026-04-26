@@ -80,6 +80,7 @@ Sequencia obrigatoria:
 - SOTA compacto: `SOTA-DECISIONS.md`, `AGENT-MODULES.md`, `AGENT-USAGE.md`
 - GitHub remoto: `GITHUB-REMOTE-WSL.md`
 - SOTA stack 2026-04-26: `SOTA-STACK-2026-04-26.md`
+- CLI prompt set 2026-04-27: `SOTA-STACK-CLI-PROMPTS-2026-04-27.md`
 - Gemini prompt SOTA: `SOTA-STACK-GEMINI-PROMPT-2026-04-26.md`
 - Gemini response SOTA: `SOTA-STACK-GEMINI-RESPONSE-2026-04-26.md`
 - Mapa da arvore: `../TREE.md`
