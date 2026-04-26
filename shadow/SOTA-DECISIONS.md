@@ -163,6 +163,43 @@ Criterio negativo: se o fluxo exigir dado real de paciente, manter `blocked` ate
 
 Fonte primaria: HHS HIPAA Minimum Necessary Requirement e NIST SP 800-61 Rev. 3.
 
+## Triadic SOTA stack diagnosis (2026-04-26)
+
+Decisao: consolidar o output do exercicio triadico (Claude Code Opus + Gemini 3.1 Pro Deep Think + arms prompt comum) em uma decisao unica; raws ficam em `shadow/SOTA-STACK-*-2026-04-26.md` como evidencia.
+
+Sintese (convergencia Claude+Gemini, sem dissensao significativa):
+
+- Canonical workspace: `/home/lucasmiachon/projects/OLMO_PROMETEUS` (Linux ext4); copia Windows em `_archive/OLMO_PROMETEUS-archived-20260426-142912/` como referencia, nao fonte. (Operacionalizado em Stage 4 do plano de drift correction.)
+- Git index staleness (CRLF/LF): 13 arquivos modificados em working tree (`CLAUDE.md`, `GEMINI.md`, `Prometeus/wiki/*`, `internal/evolution/*.json`) sao artefatos CRLF→LF cross-OS (NTFS→ext4), nao edits reais. Solucao SOTA: `git add --renormalize .` + `git config core.filemode false`. **Decisao separada, fora do escopo deste stage** — registrada aqui para tratamento posterior.
+- `private-learning/` nao migrou; permanece em `_archive/`. Risco PHI baixo enquanto nao for usado; copiar manualmente quando precisar.
+- Stack confirmado: Claude Code (autoria diaria), Codex CLI (integrador, `xhigh`), Gemini 3.1 Pro Deep Think (pesquisa SOTA + parse multimodal).
+- Toolchain: `uv`+`ruff` (Python), `pnpm`+`biome` (TS), `bun` apenas como experimento.
+- OS: Ubuntu 24.04 LTS confirmado; bloquear upgrade 26.04 por 8 semanas.
+- Shell: bash no WSL como contrato para agentes/scripts; zsh/fish/nushell so como preferencia humana.
+
+Trigger: pesquisa SOTA externa solicitada para validar stack pos-migracao Windows→Linux.
+
+Nao-trigger: nao gera runtime/agent/skill novo; apenas alinha decisoes existentes a evidencia atual.
+
+Risco: dossier virar relatorio inerte se nao citado em decisoes futuras.
+
+Custo: 4 arquivos `SOTA-STACK-*-2026-04-26.md` adicionados (`ARMS-PROMPT`, `CLAUDE-RESPONSE`, `GEMINI-3.1-PRO-DIAGNOSIS`, `CONSOLIDATED-DIAGNOSIS`); ~660 linhas em raws.
+
+Rollback: `git rm --cached shadow/SOTA-STACK-*-2026-04-26.md` se a sintese for revogada.
+
+Criterio negativo: se as proximas 3 mudancas estruturais nao citarem este bloco como evidencia, considerar SOTA exercicio como ritual sem uso e simplificar.
+
+Indice de evidencia (raws sob `shadow/`):
+
+- `SOTA-STACK-2026-04-26.md` (ja tracked, commit 661e8e3) — overview inicial.
+- `SOTA-STACK-GEMINI-PROMPT-2026-04-26.md` (ja tracked) — prompt Gemini.
+- `SOTA-STACK-GEMINI-RESPONSE-2026-04-26.md` (ja tracked) — resposta Gemini inicial.
+- `SOTA-STACK-CLI-PROMPTS-2026-04-27.md` (ja tracked, commit 450c997) — playbook para sessoes CLI; data 04-27 e proposital (sessao futura), nao premature.
+- `SOTA-STACK-ARMS-PROMPT-2026-04-26.md` (este stage) — prompt unico triadico distribuido.
+- `SOTA-STACK-CLAUDE-RESPONSE-2026-04-26.md` (este stage) — resposta Claude Opus.
+- `SOTA-STACK-GEMINI-3.1-PRO-DIAGNOSIS-2026-04-26.md` (este stage) — Gemini 3.1 Pro Deep Think.
+- `SOTA-STACK-CONSOLIDATED-DIAGNOSIS-2026-04-26.md` (este stage) — sintese final pelo Gemini.
+
 ## PreToolUse hook port to bash (2026-04-26)
 
 Decisao: `.claude/settings.local.json > hooks.PreToolUse.command` migra de `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\guard-olmo-write-hook.ps1` para `bash ./scripts/guard-olmo-write-hook.sh`. Preserva contrato (deny de write fora do canonical, allow interno) e troca apenas o shell de invocacao para bater com o canonical Linux/WSL atual. O `.ps1` nao existe mais no repo (foi removido em commit anterior) — o hook estava silenciosamente quebrado.
