@@ -62,10 +62,14 @@ Sequencia obrigatoria:
 1. Confirmar `git status --short --branch` em `C:\Dev\Projetos\OLMO_PROMETEUS`.
 2. Rodar `./scripts/check.sh`.
 3. Rodar `./scripts/evolve.sh next`.
-4. Atacar `EV-B2`: confirmar workflow remoto do `main` com `gh run list` e, se falhar, `gh run view --log-failed`.
-5. Se o log remoto continuar bloqueado, documentar bloqueio e reproduzir o mais perto possivel com Bash local.
-6. Nao aplicar branch protection ate haver workflow verde ou bloqueio documentado.
-7. `EV-B3` ja tem controle minimo aplicado; antes de qualquer fluxo clinico/dado pessoal, usar `PHI-CHECKLIST.md`.
+4. Abrir `SOTA-STACK-2026-04-26.md` como dossie central.
+5. Confrontar as tres pernas: relatorio Opus do usuario, pesquisa independente Codex/ChatGPT 5.5, e resposta Gemini em `SOTA-STACK-GEMINI-RESPONSE-2026-04-26.md`.
+6. Julgamento: Lucas + Codex/ChatGPT 5.5 decidem o caminho profissional, sem concordancia automatica com Opus, Gemini ou Codex.
+7. Decidir explicitamente Ubuntu 24.04 vs Fedora vs esperar Ubuntu 26.04.1, e workspace `C:\Dev` vs experimento ext4 WSL. Nenhuma migracao sem plano, metrica, rollback e criterio negativo.
+8. Atacar `EV-B2`: confirmar workflow remoto do `main` com `gh run list` e, se falhar, `gh run view --log-failed`.
+9. Se o log remoto continuar bloqueado, documentar bloqueio e reproduzir o mais perto possivel com Bash local.
+10. Nao aplicar branch protection ate haver workflow verde ou bloqueio documentado.
+11. `EV-B3` ja tem controle minimo aplicado; antes de qualquer fluxo clinico/dado pessoal, usar `PHI-CHECKLIST.md`.
 
 ## Cross References
 
@@ -75,6 +79,9 @@ Sequencia obrigatoria:
 - Orquestracao, antifragile e `CASE_edges`: `ORCHESTRATION-HARNESS-ANTIFRAGILE.md`
 - SOTA compacto: `SOTA-DECISIONS.md`, `AGENT-MODULES.md`, `AGENT-USAGE.md`
 - GitHub remoto: `GITHUB-REMOTE-WSL.md`
+- SOTA stack 2026-04-26: `SOTA-STACK-2026-04-26.md`
+- Gemini prompt SOTA: `SOTA-STACK-GEMINI-PROMPT-2026-04-26.md`
+- Gemini response SOTA: `SOTA-STACK-GEMINI-RESPONSE-2026-04-26.md`
 - Mapa da arvore: `../TREE.md`
 
 ## Stop Conditions
