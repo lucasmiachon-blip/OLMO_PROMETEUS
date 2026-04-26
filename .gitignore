@@ -12,3 +12,4 @@ Prometeus/wiki/Attachments/*
 !Prometeus/wiki/Attachments/README.md
 node_modules/
 .venv/
+lab/wiki-graph-lab/graph-data.js
