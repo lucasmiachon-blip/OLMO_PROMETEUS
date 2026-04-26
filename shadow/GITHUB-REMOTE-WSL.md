@@ -29,7 +29,7 @@ Motivo: SSH no WSL evita dependencia de GUI, browser, helper Windows e path `/mn
 2. Criar chave SSH no WSL, se ainda nao existir:
 
 ```bash
-ssh-keygen -t ed25519 -C "lucasmiachon87@gmail.com"
+ssh-keygen -t ed25519 -C "lucas.miachon@fm.usp.br"
 ```
 
 3. Adicionar a chave publica no GitHub:

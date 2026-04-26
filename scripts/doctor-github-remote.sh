@@ -84,7 +84,7 @@ cat <<'EOF'
 Robust WSL GitHub path:
 
 1. Create or reuse an SSH key inside WSL:
-   ssh-keygen -t ed25519 -C "lucasmiachon87@gmail.com"
+   ssh-keygen -t ed25519 -C "lucas.miachon@fm.usp.br"
 
 2. Add the public key to GitHub:
    cat ~/.ssh/id_ed25519.pub
