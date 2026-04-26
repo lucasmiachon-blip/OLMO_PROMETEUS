@@ -92,6 +92,18 @@ texts = []
 add_text(payload, texts)
 write = is_write_intent(payload, texts)
 
+# Path-only scan: avoid false positive when doc content references sibling
+# paths legitimately (e.g., HANDOFF.md listando inventarios bloqueados).
+# Fallback para scan completo se nao houver campo path/command (defensivo).
+paths = []
+tool_input = payload.get("tool_input", {})
+if isinstance(tool_input, dict):
+    for key in ("file_path", "path", "notebook_path", "command", "workdir", "cwd", "directory"):
+        value = tool_input.get(key)
+        if isinstance(value, str):
+            paths.append(value)
+scan_targets = paths if paths else texts
+
 canonical_name = "OLMO_PROMETEUS"
 repo_root = os.path.realpath(sys.argv[1])
 canonical_roots = {
@@ -104,7 +116,7 @@ linux_parent = os.path.dirname(repo_root).replace("\\", "/").rstrip("/")
 linux_re = re.compile(r"(?i)" + re.escape(linux_parent) + r"/OLMO[A-Za-z0-9_-]*")
 relative_re = re.compile(r"(?i)(^|[\s`\"'])\.\.[\\/]+(OLMO[A-Za-z0-9_-]*)")
 
-for text in texts:
+for text in scan_targets:
     normalized_windows = text.replace("/", "\\")
     normalized_unix = text.replace("\\", "/")
 
