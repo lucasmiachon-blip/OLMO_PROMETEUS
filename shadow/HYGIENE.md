@@ -23,7 +23,7 @@ Rodar higiene quando:
 - Checar se novos arquivos estao em uma casa clara: `shadow/`, `Prometeus/wiki/`, `private-learning/` local ignorado ou `scripts/`.
 - Checar se `shadow/HANDOFF.md` continua enxuto e aponta para fontes canonicas em vez de duplicar docs.
 - Checar `TREE.md` quando a raiz, hooks, skills ou agentes mudarem.
-- Checar se instrucoes de abertura do Obsidian apontam para `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
+- Checar se instrucoes de abertura do Obsidian apontam para `\\wsl.localhost\Ubuntu\home\lucasmiachon\projects\OLMO_PROMETEUS\Prometeus` quando usadas no Windows.
 - Checar se o harness valida `[[wikilinks]]`, aliases e referencias de Canvas antes de commit.
 - Checar se notas wiki duraveis estao em `Prometeus/wiki/Notes`, `Prometeus/wiki/Categories` ou `Prometeus/wiki/References`.
 - Checar se notas em `Prometeus/wiki/Notes` tem >=2 wikilinks (warn do harness); notas com <2 links sao espelhos de `shadow/` e viram candidatas a delete.
@@ -37,7 +37,7 @@ Rodar higiene quando:
 - Checar se procedures em `candidate` ou `operational` tem secao `## Rubric` e `## Mini-evals`.
 - Checar se docs SOTA antigos foram referenciados ou consolidados.
 - Checar se `C:\Dev\Projetos\OLMO` aparece apenas como destino protegido, nunca como alvo de edicao.
-- Checar se a regra "nunca escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`" continua presente.
+- Checar se a regra "nunca escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`" continua presente.
 
 ## Limites
 
@@ -69,13 +69,20 @@ Se nao passar nessa barra, consolidar ou deletar.
 
 ## Snapshot atual
 
-2026-04-25:
+2026-04-26:
 
-- Survivor unico confirmado: `C:\Dev\Projetos\OLMO_PROMETEUS`.
-- Vault canonico: `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
+- Survivor unico confirmado: `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
+- Vault canonico: `/home/lucasmiachon/projects/OLMO_PROMETEUS/Prometeus`.
+- Windows fica como UI humana via `\\wsl.localhost\Ubuntu\home\lucasmiachon\projects\OLMO_PROMETEUS\Prometeus`, nao fonte operacional.
+- Contrato de executores: Codex ou Claude Code por rodada; Gemini pesquisa sem write.
+- Legado registrado em `shadow/LEGACY-ROOTS-2026-04-26.md` e `shadow/LEGACY-INCORPORATION-2026-04-26.md`; parking lot preserva potenciais sem copiar scaffold.
+- Commits granulares recentes: `df2fa9b`, `e1691b6`, `6e7cadd`.
 - Nao ha diretorio irmao de roadmap no filesystem.
 - Remote Git configurado e push para `origin/main` funciona.
 - GitHub Actions `Self Evolution` existe, mas falha de forma recorrente no passo `Harness`; log detalhado via `gh run view --log-failed` retornou HTTP 403 por falta de admin.
+2026-04-25:
+
+- Snapshot Windows-first ficou historico; a fonte operacional foi migrada para Linux/WSL ext4 em 2026-04-26.
 2026-04-24:
 
 - Workspace canonico confirmado em `C:\Dev\Projetos\OLMO_PROMETEUS`.

@@ -34,6 +34,9 @@ O que ja esta pronto:
 - harness local passa via Bash;
 - runtime antigo removido do caminho operacional versionado;
 - decisao SOTA registrada para `xhigh` e workspace Linux/WSL ext4 canonico;
+- contrato de executores consolidado: Codex ou Claude Code por rodada, nunca ambos no mesmo escopo; Gemini e pesquisa/contraponto sem write;
+- proposta/comparacao SOTA da rodada salva em `SOTA-STACK-CODEX-PROPOSAL-2026-04-26.md` e `SOTA-STACK-COMPARISON-2026-04-26.md`;
+- legado lido e registrado em `LEGACY-INCORPORATION-2026-04-26.md`, com parking lot profissional para itens nao incorporados agora;
 - controles minimos de privacidade/PHI criados e exigidos pelo harness: `DATA-CLASSIFICATION.md`, `PHI-CHECKLIST.md`, `THREAT-MODEL.md`, `INCIDENT-LOG.md`.
 
 O que falta antes de promocao:
@@ -79,13 +82,14 @@ Sequencia obrigatoria:
 2. Rodar `./scripts/check.sh`.
 3. Rodar `./scripts/evolve.sh next`.
 4. Abrir `SOTA-STACK-2026-04-26.md` como dossie central.
-5. Confrontar as tres pernas: relatorio Opus do usuario, pesquisa independente Codex/ChatGPT 5.5, e resposta Gemini em `SOTA-STACK-GEMINI-RESPONSE-2026-04-26.md`.
-6. Julgamento: Lucas + Codex/ChatGPT 5.5 decidem o caminho profissional, sem concordancia automatica com Opus, Gemini ou Codex.
+5. Ler `SOTA-STACK-COMPARISON-2026-04-26.md` como decisao consolidada da stack; nao reabrir debate sem claim novo.
+6. Ler `LEGACY-INCORPORATION-2026-04-26.md` antes de tocar qualquer legado; itens em parking lot so reabrem com trigger/evidencia.
 7. Manter Ubuntu 24.04 e workspace Linux/WSL ext4; qualquer Fedora, Ubuntu 26.04 ou mudanca de OS exige novo trigger, metrica, rollback e criterio negativo.
 8. Atacar `EV-B2`: confirmar workflow remoto do `main` com `gh run list` e, se falhar, `gh run view --log-failed`.
 9. Se o log remoto continuar bloqueado, documentar bloqueio e reproduzir o mais perto possivel com Bash local.
 10. Nao aplicar branch protection ate haver workflow verde ou bloqueio documentado.
 11. `EV-B3` ja tem controle minimo aplicado; antes de qualquer fluxo clinico/dado pessoal, usar `PHI-CHECKLIST.md`.
+12. Nao mover mais caminhos legados sem leitura previa e matriz `incorporar/nao incorporar`.
 
 ## Cross References
 
@@ -96,6 +100,9 @@ Sequencia obrigatoria:
 - SOTA compacto: `SOTA-DECISIONS.md`, `AGENT-MODULES.md`, `AGENT-USAGE.md`
 - GitHub remoto: `GITHUB-REMOTE-WSL.md`
 - SOTA stack 2026-04-26: `SOTA-STACK-2026-04-26.md`
+- Proposta Codex SOTA: `SOTA-STACK-CODEX-PROPOSAL-2026-04-26.md`
+- Comparacao SOTA consolidada: `SOTA-STACK-COMPARISON-2026-04-26.md`
+- Legado e parking lot: `LEGACY-ROOTS-2026-04-26.md`, `LEGACY-INCORPORATION-2026-04-26.md`
 - CLI prompt set 2026-04-27: `SOTA-STACK-CLI-PROMPTS-2026-04-27.md`
 - Gemini prompt SOTA: `SOTA-STACK-GEMINI-PROMPT-2026-04-26.md`
 - Gemini response SOTA: `SOTA-STACK-GEMINI-RESPONSE-2026-04-26.md`
