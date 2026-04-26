@@ -220,16 +220,14 @@ Rollback: `git rm --cached shadow/SOTA-STACK-*-2026-04-26.md` se a sintese for r
 
 Criterio negativo: se as proximas 3 mudancas estruturais nao citarem este bloco como evidencia, considerar SOTA exercicio como ritual sem uso e simplificar.
 
-Indice de evidencia (raws sob `shadow/`):
+Evidencia consolidada (raws deletados em commit posterior a `a908770`; recuperaveis via git history):
 
-- `SOTA-STACK-2026-04-26.md` (ja tracked, commit 661e8e3) — overview inicial.
-- `SOTA-STACK-GEMINI-PROMPT-2026-04-26.md` (ja tracked) — prompt Gemini.
-- `SOTA-STACK-GEMINI-RESPONSE-2026-04-26.md` (ja tracked) — resposta Gemini inicial.
-- `SOTA-STACK-CLI-PROMPTS-2026-04-27.md` (ja tracked, commit 450c997) — playbook para sessoes CLI; data 04-27 e proposital (sessao futura), nao premature.
-- `SOTA-STACK-ARMS-PROMPT-2026-04-26.md` (este stage) — prompt unico triadico distribuido.
-- `SOTA-STACK-CLAUDE-RESPONSE-2026-04-26.md` (este stage) — resposta Claude Opus.
-- `SOTA-STACK-GEMINI-3.1-PRO-DIAGNOSIS-2026-04-26.md` (este stage) — Gemini 3.1 Pro Deep Think.
-- `SOTA-STACK-CONSOLIDATED-DIAGNOSIS-2026-04-26.md` (este stage) — sintese final pelo Gemini.
+- `docs/adr/0006-triadic-stack-debate.md` — ADR consolidado.
+- Commit `9e32ebe` — track inicial dos 4 raws principais (CLAUDE-RESPONSE, GEMINI-3.1-PRO-DIAGNOSIS, ARMS-PROMPT, CONSOLIDATED-DIAGNOSIS).
+- Commit `a908770` — consolidacao da entry curta substituindo PLAN+MATRIX (727L -> 25L).
+- Commit `50979f9` — D04 aplicado (renormalize CRLF + `core.filemode false` local).
+
+Para auditar argumentacao detalhada de qualquer raw deletado: `git show 9e32ebe^:shadow/SOTA-STACK-<NOME>-2026-04-26.md` ou similar.
 
 ## PreToolUse hook port to bash (2026-04-26)
 

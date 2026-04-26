@@ -75,7 +75,7 @@ Se nao passar nessa barra, consolidar ou deletar.
 - Vault canonico: `/home/lucasmiachon/projects/OLMO_PROMETEUS/Prometeus`.
 - Windows fica como UI humana via `\\wsl.localhost\Ubuntu\home\lucasmiachon\projects\OLMO_PROMETEUS\Prometeus`, nao fonte operacional.
 - Contrato de executores: Codex ou Claude Code por rodada; Gemini pesquisa sem write.
-- Legado registrado em `shadow/LEGACY-ROOTS-2026-04-26.md` e `shadow/LEGACY-INCORPORATION-2026-04-26.md`; parking lot preserva potenciais sem copiar scaffold.
+- Legado consolidado em `shadow/INCORPORATION-LOG.md` (raws originais deletados em PR 1; recuperaveis via git history pre-ADR-0006).
 - Commits granulares recentes: `df2fa9b`, `e1691b6`, `6e7cadd`.
 - Nao ha diretorio irmao de roadmap no filesystem.
 - Remote Git configurado e push para `origin/main` funciona.

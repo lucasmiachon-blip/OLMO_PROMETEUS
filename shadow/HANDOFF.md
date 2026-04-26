@@ -92,7 +92,7 @@ Inventario consolidado em chat — **NAO comitado** (defer ate ter tempo de orga
 - **Procedures novos**: `procedures/decision-protocol.md` (adapted de OLMO `content/aulas/shared/`)
 - **Evidencia**: `shadow/EVIDENCE-LOG.md` ultima entry 2026-04-26 sota-research-gate
 - **Transicoes lane**: `shadow/INCORPORATION-LOG.md` ultimas 3 entries 2026-04-26
-- **Matriz legacy original**: `shadow/LEGACY-INCORPORATION-2026-04-26.md` (de antes desta sessao)
+- **Matriz legacy original**: deletada em PR 1 (compress raws); conteudo essencial em `shadow/INCORPORATION-LOG.md` + git history pre-ADR-0006
 - **OLMO ARCHITECTURE source**: `/mnt/c/Dev/Projetos/OLMO/docs/ARCHITECTURE.md` (read-only, autorizado)
 - **devmentor source**: `/home/lucasmiachon/legacy/2026-04-26/devmentor/` (autorizado)
 - **archived OLMO_PROMETEUS**: `/mnt/c/Dev/Projetos/_archive/OLMO_PROMETEUS-archived-20260426-142912/`
@@ -143,8 +143,8 @@ O que ja esta pronto:
 - runtime antigo removido do caminho operacional versionado;
 - decisao SOTA registrada para `xhigh` e workspace Linux/WSL ext4 canonico;
 - contrato de executores consolidado: Codex ou Claude Code por rodada, nunca ambos no mesmo escopo; Gemini e pesquisa/contraponto sem write;
-- proposta/comparacao SOTA da rodada salva em `SOTA-STACK-CODEX-PROPOSAL-2026-04-26.md` e `SOTA-STACK-COMPARISON-2026-04-26.md`;
-- legado lido e registrado em `LEGACY-INCORPORATION-2026-04-26.md`, com parking lot profissional para itens nao incorporados agora;
+- proposta/comparacao SOTA da rodada consolidada em `../docs/adr/0006-triadic-stack-debate.md`;
+- legado lido e consolidado em `INCORPORATION-LOG.md`; raws originais deletados em PR 1, recuperaveis via git history pre-ADR-0006;
 - controles minimos de privacidade/PHI criados e exigidos pelo harness: `DATA-CLASSIFICATION.md`, `PHI-CHECKLIST.md`, `THREAT-MODEL.md`, `INCIDENT-LOG.md`.
 
 O que falta antes de promocao:
@@ -189,9 +189,9 @@ Sequencia obrigatoria:
 1. Confirmar `git status --short --branch` em `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
 2. Rodar `./scripts/check.sh`.
 3. Rodar `./scripts/evolve.sh next`.
-4. Abrir `SOTA-STACK-2026-04-26.md` como dossie central.
-5. Ler `SOTA-STACK-COMPARISON-2026-04-26.md` como decisao consolidada da stack; nao reabrir debate sem claim novo.
-6. Ler `LEGACY-INCORPORATION-2026-04-26.md` antes de tocar qualquer legado; itens em parking lot so reabrem com trigger/evidencia.
+4. Abrir `../docs/adr/0006-triadic-stack-debate.md` como decisao consolidada da stack; nao reabrir debate sem claim novo.
+5. Ler `INCORPORATION-LOG.md` antes de tocar qualquer legado; itens em parking lot so reabrem com trigger/evidencia.
+6. (slot disponivel — sequencia renumerada apos PR 1).
 7. Manter Ubuntu 24.04 e workspace Linux/WSL ext4; qualquer Fedora, Ubuntu 26.04 ou mudanca de OS exige novo trigger, metrica, rollback e criterio negativo.
 8. Atacar `EV-B2`: confirmar workflow remoto do `main` com `gh run list` e, se falhar, `gh run view --log-failed`.
 9. Se o log remoto continuar bloqueado, documentar bloqueio e reproduzir o mais perto possivel com Bash local.
@@ -207,13 +207,7 @@ Sequencia obrigatoria:
 - Orquestracao, antifragile e `CASE_edges`: `ORCHESTRATION-HARNESS-ANTIFRAGILE.md`
 - SOTA compacto: `SOTA-DECISIONS.md`, `AGENT-MODULES.md`, `AGENT-USAGE.md`
 - GitHub remoto: `GITHUB-REMOTE-WSL.md`
-- SOTA stack 2026-04-26: `SOTA-STACK-2026-04-26.md`
-- Proposta Codex SOTA: `SOTA-STACK-CODEX-PROPOSAL-2026-04-26.md`
-- Comparacao SOTA consolidada: `SOTA-STACK-COMPARISON-2026-04-26.md`
-- Legado e parking lot: `LEGACY-ROOTS-2026-04-26.md`, `LEGACY-INCORPORATION-2026-04-26.md`
-- CLI prompt set 2026-04-27: `SOTA-STACK-CLI-PROMPTS-2026-04-27.md`
-- Gemini prompt SOTA: `SOTA-STACK-GEMINI-PROMPT-2026-04-26.md`
-- Gemini response SOTA: `SOTA-STACK-GEMINI-RESPONSE-2026-04-26.md`
+- SOTA stack debate triadico 2026-04-26: `../docs/adr/0006-triadic-stack-debate.md` (raws originais deletados; recuperaveis via git history pre-commit ADR 0006)
 - Mapa da arvore: `../TREE.md`
 
 ## Stop Conditions

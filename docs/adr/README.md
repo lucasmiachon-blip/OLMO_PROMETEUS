@@ -16,6 +16,7 @@
 | # | Titulo | Status | Data |
 |---|---|---|---|
 | 0001 | [Canonical Linux workspace](0001-canonical-linux-workspace.md) | accepted | 2026-04-26 |
+| 0006 | [Triadic SOTA stack debate](0006-triadic-stack-debate.md) | accepted | 2026-04-26 |
 
 ## Template
 
