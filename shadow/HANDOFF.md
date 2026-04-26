@@ -12,6 +12,7 @@ Scope: janela hidratada para retomar `OLMO_PROMETEUS` sem reler docs longos.
 4. O objetivo atual e validar laboratorio paralelo de baixo risco para vault, digest, study flow, wiki operacional e gates: ver `../README.md` e `WORK-LANES.md`.
 5. O proximo batch oficial vem de `../internal/evolution/backlog.json`; nao inventar fila paralela.
 6. Riscos vivos vem de `../internal/evolution/risk-register.json`; nao esconder warning critico.
+7. Claude global state em `~/.claude/projects/-home-lucasmiachon-devmentor` e legado, nao fonte de hidratacao deste repo.
 
 ## Current Objective
 

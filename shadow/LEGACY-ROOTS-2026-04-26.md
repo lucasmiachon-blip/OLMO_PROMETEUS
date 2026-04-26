@@ -25,6 +25,13 @@ Purpose: registrar raizes antigas antes de arquivar fora do workspace canonico.
 | `/home/lucasmiachon/.claude` | Global Claude state/cache/projects. |
 | `/home/lucasmiachon/.gemini` | Global Gemini state/history/tmp. |
 
+## Claude Global State
+
+| Path | Status | Decision |
+| --- | --- | --- |
+| `/home/lucasmiachon/.claude/projects/-home-lucasmiachon-projects-OLMO-PROMETEUS` | Claude Code transcript/subagent state for the canonical repo | Keep as global tool state; not source of project truth. |
+| `/home/lucasmiachon/.claude/projects/-home-lucasmiachon-devmentor` | Stale Claude Code project state for archived `devmentor`, including memory files | Treat as legacy global state; do not hydrate Prometeus from it; do not move/delete without explicit human approval. |
+
 ## Incorporation Rule
 
 Legacy roots are not sources of truth. If something is needed later, copy only a small, non-sensitive, reviewed artifact into the correct house in this repo.
