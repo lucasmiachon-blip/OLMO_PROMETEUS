@@ -58,7 +58,7 @@ Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki op
 4. classificar o artefato em `private`, `experiment`, `candidate`, `operational`, `retired` ou `blocked` (ver `shadow/WORK-LANES.md`);
 5. se o procedimento tem `## Rubric`, rodar a rubrica e anotar score na observacao da linha do EVIDENCE-LOG;
 6. so discutir migracao para `OLMO` depois do gate humano.
-7. antes de nova mudanca estrutural, rodar `powershell -ExecutionPolicy Bypass -File .\scripts\evolve.ps1 -Mode next`.
+7. antes de nova mudanca estrutural, rodar `pwsh -NoLogo -NoProfile -File ./scripts/evolve.ps1 -Mode next` no Ubuntu/WSL.
 
 ## Higiene do projeto
 
@@ -80,18 +80,18 @@ Para agentes/skills globais do Claude Code (ex: `Explore`, `Plan`, `/dream`, `/s
 
 ## Harness local
 
-Windows/PowerShell:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1
-```
-
-Ubuntu/WSL:
+Ubuntu/WSL rapido (padrao):
 
 ```bash
 cd /home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS
 pwsh -NoLogo -NoProfile -File ./scripts/check.ps1
 pwsh -NoLogo -NoProfile -File ./scripts/evolve.ps1 -Mode next
+```
+
+Windows/PowerShell (compatibilidade):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1
 ```
 
 Use antes de commit quando a sessao mexer em docs, wiki, shadow ou scripts. O workflow remoto valida `ubuntu-latest` e `windows-latest`.
@@ -119,6 +119,5 @@ O Canvas `Prometeus/wiki/Maps/Prometeus.canvas` continua como vitrine curada. El
 ## Origem da primeira fatia
 
 A base inicial veio de um laboratorio anterior que nao oferecia isolamento Git real. Este repo existe para manter a separacao segura em `OLMO_PROMETEUS`.
-
 
 

@@ -142,11 +142,12 @@ Copiar/adaptar somente quando houver:
 
 ## Gate Antes de Commit
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1 -Strict
+```bash
+pwsh -NoLogo -NoProfile -File ./scripts/check.ps1 -Strict
 ```
+
+Windows/PowerShell continua aceito como compatibilidade: `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1 -Strict`.
 
 Se o working tree ja tiver mudanca do Obsidian ou do usuario, nao esconder isso. Separar commits pequenos e nao misturar alteracoes geradas com edicoes manuais sem motivo.
 
-Coautoria: Lucas + GPT-5.4 (Codex)
-
+Coautoria: Lucas + GPT-5.4 xhigh (Codex)

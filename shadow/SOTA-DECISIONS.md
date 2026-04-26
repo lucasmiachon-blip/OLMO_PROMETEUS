@@ -109,6 +109,42 @@ Trigger para runtime: >=3 evidencias reais de retrabalho por falta de estado, HI
 
 Nao-trigger: curiosidade SOTA, demo, single-user notes ou workflow manual simples.
 
+## Codex xhigh default (2026-04-26)
+
+Decisao: neste repo, Codex deve usar `reasoning_effort=xhigh` quando a ferramenta/modelo suportar, sem criar scaffold local, hook, skill ou registry.
+
+Trigger: tarefas de edicao, revisao, gate, harness, boundary ou decisao operacional dentro do `OLMO_PROMETEUS`.
+
+Nao-trigger: tarefas triviais onde a ferramenta ativa nao expõe `xhigh`, ou chamadas a outros modelos/ferramentas que nao suportam esse parametro.
+
+Risco: maior latencia e custo por mais tokens de raciocinio; pode ser desproporcional para tarefas pequenas.
+
+Custo: aceitar respostas mais lentas do Codex neste laboratorio em troca de mais rigor em boundary, validacao e edicao.
+
+Rollback: remover a regra de `AGENTS.md` e voltar ao maior esforco padrao da ferramenta.
+
+Criterio negativo: se `xhigh` causar atrito recorrente, custo injustificado ou nao melhorar erros reais registrados, rebaixar para `high` ou padrao da ferramenta.
+
+Fonte primaria: OpenAI Models docs indicam que GPT-5.2-Codex e GPT-5.3-Codex suportam `low`, `medium`, `high` e `xhigh`; a referencia da API tambem lista `xhigh` como valor de `reasoning_effort` para modelos suportados.
+
+## Ubuntu/WSL fast path (2026-04-26)
+
+Decisao: o caminho operacional padrao deste branch passa a ser Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, com `bash`, `rg` e `pwsh`. Windows/PowerShell continua compatibilidade.
+
+Trigger: trabalho local de Codex, harness, maturidade, self-evolution, docs e scripts neste laboratorio.
+
+Nao-trigger: abrir o vault no Obsidian pelo Windows, validar compatibilidade Windows ou reproduzir problema especifico de PowerShell Desktop.
+
+Risco: drift entre comandos Ubuntu e Windows; risco menor porque o harness remoto ainda cobre `ubuntu-latest` e `windows-latest`.
+
+Custo: manter comandos duplicados apenas nos pontos de entrada; evitar duplicacao extensa nos docs.
+
+Rollback: voltar o `README.md`, `AGENTS.md`, `TREE.md`, `CLAUDE.md`, `shadow/FOUNDATION.md`, `shadow/HYGIENE.md` e `shadow/HANDOFF.md` para Windows-first.
+
+Criterio negativo: se Ubuntu/WSL gerar incompatibilidade recorrente, falha no workflow Windows ou bloquear uso do vault, voltar para cross-platform neutro.
+
+Fonte primaria: Microsoft WSL docs recomendam manter arquivos do projeto no filesystem WSL para melhor performance quando se trabalha pela linha de comando Linux; o clone atual ja esta em `/home/...`, nao em `/mnt/c`.
+
 ## Applied when
 
 | Data | Decisao | Aplicada em | Artefato/commit |
@@ -121,6 +157,8 @@ Nao-trigger: curiosidade SOTA, demo, single-user notes ou workflow manual simple
 | 2026-04-25 | Error report memory protocol | Protocolo de erro material | `AGENTS.md`, `shadow/FOUNDATION.md` |
 | 2026-04-25 | Solo medico refresh | Overlay sem runtime novo | `AGENTS.md`, `shadow/AGENT-USAGE.md`, `shadow/FOUNDATION.md` |
 | 2026-04-25 | Orchestration/harness/antifragile gate | Gate E2E e fault injection seedado | `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`, `scripts/check.ps1` |
+| 2026-04-26 | Codex xhigh default | Preferencia de reasoning effort para Codex | `AGENTS.md`, `shadow/SOTA-DECISIONS.md`, `shadow/FOUNDATION.md` |
+| 2026-04-26 | Ubuntu/WSL fast path | Comandos Ubuntu/WSL como padrao de velocidade, Windows como compatibilidade | `AGENTS.md`, `README.md`, `CLAUDE.md`, `TREE.md`, `shadow/FOUNDATION.md`, `shadow/HYGIENE.md`, `shadow/HANDOFF.md` |
 
 ## Claude Code e GEMINI.md adapters
 
@@ -162,4 +200,4 @@ Rascunhos aguardam evidencia em `shadow/EVIDENCE-LOG.md` antes de implementacao.
 - C2 Skill local: exige procedure `operational`, aprovacao humana e evidencia de reducao de retrabalho.
 - C3 Runtime agentico: exige 3 evidencias reais, privacy plan sem PHI, eval e rollback.
 
-Coautoria: Lucas + GPT-5.4 (Codex)
+Coautoria: Lucas + GPT-5.4 xhigh (Codex)

@@ -9,6 +9,7 @@
 - Pode editar arquivos dentro deste repositorio.
 - Nao deve escrever em `C:\Dev\Projetos\OLMO`, `C:\Dev\Projetos\OLMO_COWORK`, typos como `OLMO_COWOR` ou qualquer sibling `OLMO*`; leitura externa exige permissao humana explicita na conversa.
 - O foco e validar fluxo, digest, estudo, wiki operacional e gates de promocao.
+- Runtime preferido para velocidade: Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, com `bash`, `rg` e `pwsh`. Windows/PowerShell fica como compatibilidade.
 
 ## Fundamental Boundary
 
@@ -136,7 +137,7 @@ Se o erro indicar sandbox, permissao ou rede e o comando for essencial, repetir 
 - Se editar docs ou HTML, cheque nomes, titulos e links locais.
 - Se editar base, memoria, harness ou orquestracao, atualize `shadow/FOUNDATION.md`.
 - Se editar a wiki, preserve links Obsidian e a separacao entre conhecimento duravel e captura privada.
-- Quando houver mudanca persistente, rode `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1` no Windows ou `pwsh -NoLogo -NoProfile -File ./scripts/check.ps1` no Ubuntu/WSL.
+- Quando houver mudanca persistente, rode `pwsh -NoLogo -NoProfile -File ./scripts/check.ps1` no Ubuntu/WSL. No Windows, use `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`.
 - Se um artefato virar `candidate`, atualize `shadow/WORK-LANES.md`.
 - Se a sessao criar varios artefatos, confira `shadow/HYGIENE.md`.
 - Se rodou um procedimento (`email-digest-4p`, `study-track-done`, `sota-research-gate`) em uso real, registre linha em `shadow/EVIDENCE-LOG.md`.
@@ -144,6 +145,6 @@ Se o erro indicar sandbox, permissao ou rede e o comando for essencial, repetir 
 
 ## Coauthorship
 
-- Codex: `Coautoria: Lucas + GPT-5.4 (Codex)`
+- Codex: usar `reasoning_effort=xhigh` quando a ferramenta/modelo suportar. Se `xhigh` nao estiver disponivel, usar o maior esforco suportado e registrar a limitacao na resposta.
+- Codex: `Coautoria: Lucas + GPT-5.4 xhigh (Codex)`
 - Outros modelos: registrar papel, trigger, artefato, custo e risco antes de adotar no fluxo.
-

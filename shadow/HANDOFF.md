@@ -1,7 +1,7 @@
 # Handoff
 
 Status: active
-Updated: 2026-04-25
+Updated: 2026-04-26
 Scope: janela hidratada para retomar `OLMO_PROMETEUS` sem reler docs longos.
 
 ## Read First
@@ -16,10 +16,32 @@ Scope: janela hidratada para retomar `OLMO_PROMETEUS` sem reler docs longos.
 
 Validar se a fatia Prometeus realmente merece promocao futura:
 
+- Branch atual de compatibilidade: `codex/ubuntu-runtime-prometeus`.
+- Runtime padrao para velocidade: Ubuntu/WSL em `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`; Windows/PowerShell fica compatibilidade.
 - `Prometeus/` precisa funcionar como vault e wiki operacional, nao deposito.
 - `shadow/EMAIL-DIGEST-4P.md` e `shadow/STUDY-TRACK-DONE.md` precisam de uso real registrado em `EVIDENCE-LOG.md`.
 - `scripts/check.ps1`, `scripts/maturity.ps1` e `scripts/evolve.ps1` precisam passar localmente e, depois, no GitHub Actions.
 - Qualquer conversa sobre `OLMO` exige evidencia, rollback e aprovacao humana explicita.
+
+## Migration Readiness
+
+Ainda nao migrar para `OLMO` como padrao operacional.
+
+O que ja esta pronto:
+
+- repo confirmado no filesystem Linux do WSL, nao em `/mnt/c`;
+- harness local passa via `pwsh` no Ubuntu/WSL;
+- comandos documentados como Ubuntu/WSL-first;
+- Windows/PowerShell mantido como compatibilidade, nao removido;
+- decisao SOTA registrada para `xhigh` e fast path Ubuntu/WSL.
+
+O que falta antes de merge/promocao:
+
+- `EV-B2`: confirmar workflow remoto ou documentar bloqueio de CI/branch protection;
+- `EV-B3`: fechar risco critico `R-PHI` com classificacao de dados, checklist PHI, threat model e incident log antes de qualquer fluxo clinico ou dado sensivel;
+- registrar pelo menos 3 usos reais de digest/study/wiki/harness em `EVIDENCE-LOG.md` antes de promover procedimento para `candidate` ou `operational`;
+- escolher explicitamente quais artefatos sao migraveis, com trigger, risco, custo e rollback;
+- manter rollback simples: merge revertivel, sem sync automatico, hook ativo, MCP sensivel ou write externo.
 
 ## Top Gaps
 
@@ -37,7 +59,7 @@ Validar se a fatia Prometeus realmente merece promocao futura:
 Sequencia obrigatoria:
 
 1. Confirmar `git status --short --branch`.
-2. Rodar `powershell -ExecutionPolicy Bypass -File .\scripts\evolve.ps1 -Mode next`.
+2. Rodar `pwsh -NoLogo -NoProfile -File ./scripts/evolve.ps1 -Mode next`.
 3. Atacar `EV-B2`: workflow remoto falha de forma recorrente no passo `Harness`; `gh run view --log-failed` retornou HTTP 403 por falta de admin.
 4. Se o log remoto continuar bloqueado, documentar bloqueio e reproduzir o mais perto possivel com `pwsh` local.
 5. Nao aplicar branch protection ate haver workflow verde ou bloqueio documentado.
@@ -58,4 +80,3 @@ Sequencia obrigatoria:
 - Se a tarefa exigir write em `C:\Dev\Projetos\OLMO`, parar e pedir autorizacao explicita.
 - Se a mudanca estrutural nao tiver trigger, aceite, risco e rollback, manter em `experiment`.
 - Se a correcao do CI exigir permissao admin, registrar bloqueio em vez de contornar com automacao insegura.
-

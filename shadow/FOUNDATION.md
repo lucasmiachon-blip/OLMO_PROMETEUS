@@ -34,7 +34,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 
 Nao existe sincronizacao automatica com `C:\Dev\Projetos\OLMO`.
 
-Runtime Ubuntu/WSL aprovado para migracao do laboratorio: `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`. O Windows continua permitido durante a transicao; a troca so vale depois do harness passar nos dois ambientes.
+Runtime Ubuntu/WSL aprovado e preferido para velocidade: `/home/lucasmiachon/dev/olmo-migration/OLMO_PROMETEUS`, dentro do filesystem Linux. Windows/PowerShell continua permitido como compatibilidade, mas nao e mais o caminho operacional padrao.
 
 Excecao aprovada em 2026-04-25: `.claude/settings.local.json` pode acionar um unico `PreToolUse` local que chama `scripts/guard-olmo-write-hook.ps1` e bloqueia writes externos e pede permissao para reads externos quando o payload menciona `C:\Dev\Projetos\OLMO`, `OLMO_COWORK`, typos como `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico. Isso nao cria `.claude/hooks/`, nao escreve fora do repo e existe apenas para tornar a boundary fail-closed. O harness roda teste positivo/negativo desse guard e falha se o workspace legado reaparecer.
 
@@ -44,7 +44,7 @@ Arquivos privados ou gerados devem ficar fora de Git e fora do contexto de agent
 
 Diretorios locais de agents, subagents, skills, hooks, `.claude/`, `.gemini/` e playground ficam fora do core.
 
-Motivo: no nosso ambiente Windows e neste repo pequeno, scaffolds sem runtime real confundem memoria, contexto e decisao.
+Motivo: neste repo pequeno, scaffolds sem runtime real confundem memoria, contexto e decisao.
 
 O caminho seguro e:
 
@@ -83,11 +83,13 @@ Erros materiais tambem sao memoria operacional quando mudam comportamento futuro
 
 ## 4. Harness
 
-O harness local e:
+O harness local padrao e Ubuntu/WSL:
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1
+```bash
+pwsh -NoLogo -NoProfile -File ./scripts/check.ps1
 ```
+
+No Windows/PowerShell, usar somente como compatibilidade: `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`.
 
 Ele valida:
 
@@ -117,7 +119,7 @@ Loop padrao:
 
 Delegacao:
 
-- Codex orquestra e edita.
+- Codex orquestra e edita com `reasoning_effort=xhigh` quando a ferramenta/modelo suportar; se nao suportar, usar o maior esforco disponivel e registrar a limitacao.
 - Claude Code usa subagentes globais (`Explore`, `Plan`, `general-purpose`) conforme mapa em `shadow/AGENT-USAGE.md`; sem scaffold local.
 - Leituras auxiliares podem ser feitas por subagentes apenas quando a conversa justificar (ver padroes SOTA em `shadow/AGENT-USAGE.md`).
 - Gemini entra para pesquisa longa/multimodal somente com objetivo, trigger, artefato, custo e risco.
@@ -153,4 +155,4 @@ Algo so sobe de nivel quando tem:
 - harness passando;
 - aprovacao humana antes de qualquer conversa sobre OLMO.
 
-Coautoria: Lucas + GPT-5.4 (Codex)
+Coautoria: Lucas + GPT-5.4 xhigh (Codex)
