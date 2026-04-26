@@ -41,14 +41,23 @@ Fontes:
 Fatos:
 
 - A doc oficial do Gemini CLI descreve a ferramenta como agente open-source de terminal, com free tier de 60 requests/min e 1.000 requests/day, Gemini 2.5 Pro, 1M context, tools embutidas, Google Search grounding, file ops, shell, web fetching, MCP e Apache 2.0.
-- A doc do Gemini API lista `gemini-3-pro-preview`, nao `gemini-3.1-pro-preview`, com input token limit de 1.048.576 e output de 65.536.
-- A doc do Gemini API lista `gemini-2.5-pro` como stable, multimodal, com 1.048.576 tokens de input.
+- A doc oficial do Gemini API lista `gemini-3.1-pro-preview` como preview atual, com input token limit de 1.048.576 e output de 65.536.
+- A doc oficial do Gemini API ainda lista `gemini-2.5-pro` como modelo avancado para tarefas complexas, deep reasoning e coding.
 - Preview/experimental em Gemini tem politica de estabilidade menor; a doc recomenda atenção aos padroes de versionamento.
+
+Baseline de modelos ajustado em 2026-04-26:
+
+| Uso | Modelo alvo | Status | Motivo |
+|---|---|---|---|
+| melhor Gemini para avaliacao SOTA/multimodal/agentic coding | `gemini-3.1-pro-preview` | preview oficial | melhor Gemini publico para inteligencia, software engineering e agentic workflows |
+| baseline Gemini mais conservador para pesquisa/codigo | `gemini-2.5-pro` | modelo avancado 2.5 | usar se preview 3.1 estiver instavel, caro ou indisponivel |
+| custo/latencia/testes exploratorios | `gemini-2.5-flash` ou alias atual do CLI | stable/CLI default conforme conta | bom para volume; nao usar como juiz final de arquitetura |
+| endpoint agentico especializado | `gemini-3.1-pro-preview-customtools` | preview oficial | opcao para workflows com bash e custom tools; nao usar sem teste real |
 
 Inferencia:
 
-- Gemini e o melhor stakeholder para multimodal e contexto longo, mas a versao citada pelo relatorio Opus (`gemini-3.1-pro`, 2M context) nao foi confirmada nas fontes oficiais usadas aqui.
-- O modelo alvo verificavel para API hoje e `gemini-3-pro-preview` ou `gemini-2.5-pro`, nao `gemini-3.1-pro`.
+- Gemini e o melhor stakeholder para multimodal, agentic workflows e contexto longo; a versao `gemini-3.1-pro-preview` foi confirmada em fonte oficial, mas o claim de 2M context nao foi confirmado.
+- O modelo alvo verificavel para API hoje e `gemini-3.1-pro-preview`; `gemini-2.5-pro` fica como baseline alternativo mais conservador.
 
 Fontes:
 
@@ -61,16 +70,31 @@ Fontes:
 
 Fatos:
 
+- A doc oficial de modelos da Anthropic lista Claude Opus 4.7 como modelo mais capaz, com API alias `claude-opus-4-7`; Claude Sonnet 4.6 como melhor combinacao de velocidade e inteligencia, com API alias `claude-sonnet-4-6`; e Claude Haiku 4.5 como modelo rapido near-frontier, com API alias `claude-haiku-4-5`.
+- A doc de configuracao do Claude Code recomenda aliases em vez de pins quando o objetivo e seguir o melhor modelo disponivel: `best` equivale ao mais capaz disponivel, atualmente `opus`; `opus` usa o ultimo Opus para raciocinio complexo; `sonnet` usa o ultimo Sonnet para coding diario; `haiku` usa o Haiku rapido; `opusplan` usa Opus no plano e Sonnet na execucao quando disponivel.
 - Claude Code subagents oficiais usam arquivos Markdown com frontmatter e podem ter ferramentas limitadas; docs recentes tambem descrevem `skills` preloaded e memoria persistente por subagent.
 - Hooks oficiais incluem `PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `Stop`, `SessionStart`, `SessionEnd`, e rodam com input JSON.
+
+Baseline de modelos ajustado em 2026-04-26:
+
+| Uso | Modelo/alias alvo | Snapshot/API quando precisar pin | Motivo |
+|---|---|---|---|
+| melhor Claude para decisao, arquitetura e bugs profundos | `best` ou `opus` no Claude Code | `claude-opus-4-7` | Opus 4.7 e o mais capaz nas docs oficiais |
+| default profissional para execucao diaria | `sonnet` | `claude-sonnet-4-6` | melhor equilibrio capacidade/custo/latencia para coding |
+| plano forte + execucao eficiente | `opusplan` quando disponivel | Opus no plano, Sonnet na execucao | reduz custo sem perder qualidade na decisao |
+| tarefas pequenas/background | `haiku` | `claude-haiku-4-5` | rapido e barato; nao usar como juiz de arquitetura |
+| contexto muito longo | `sonnet[1m]` quando conta/API suportar | full model name com sufixo `[1m]` | usar so quando o ganho de contexto superar custo |
 
 Inferencia:
 
 - A estrategia atual do Prometeus esta correta: usar recursos globais/externos quando necessario, mas nao criar `.claude/agents/`, `.claude/hooks/` ou skills locais antes de evidencia.
 - Memoria persistente de subagent e poderosa, mas aumenta risco de sprawl e deve permanecer bloqueada neste repo ate haver trigger repetido.
+- Para amanha, promptar Claude com `opus`/`best` para julgamento e, se houver execucao longa, preferir `opusplan` ou `sonnet` conforme custo/risco. Evitar hardcode de versoes no fluxo humano; usar snapshot apenas quando reproducibilidade de API for requisito.
 
 Fontes:
 
+- Claude models overview: https://docs.anthropic.com/en/docs/about-claude/models/all-models
+- Claude Code model configuration: https://code.claude.com/docs/en/model-config
 - Claude Code subagents: https://docs.anthropic.com/en/docs/claude-code/sub-agents
 - Claude Code subagents advanced docs: https://code.claude.com/docs/en/sub-agents
 - Claude Code hooks: https://docs.anthropic.com/en/docs/claude-code/hooks
@@ -156,13 +180,14 @@ Amanha a decisao deve ser tomada em tres pernas: Lucas como dono do contexto e r
    - TS app: `pnpm` + `vite` + `biome`.
    - Bun: experimento por projeto, nao default global.
    - Shell: Bash para scripts versionados; zsh apenas conforto pessoal.
-6. Gemini API e parte obrigatoria da decisao triadica se o script/key forem apontados explicitamente. Modelo verificavel em fonte oficial: `gemini-3-pro-preview`; `gemini-3.1-pro-preview` fica como claim nao confirmado ate evidencia primaria.
+6. Gemini API e parte obrigatoria da decisao triadica se o script/key forem apontados explicitamente. Modelo verificavel em fonte oficial: `gemini-3.1-pro-preview`; `gemini-3.1-pro-preview-customtools` pode ser testado para bash/custom tools; `gemini-2.5-pro` fica como baseline alternativo.
+7. Claude Code para julgamento deve usar `best`/`opus` quando a conta permitir; para execucao diaria, `sonnet`; para plano+execucao, `opusplan` se disponivel.
 
 ## Perna Gemini API
 
-Status: pending input.
+Status: captured.
 
-Nesta sessao, dentro do repo canonico, nao encontrei script Gemini nem variavel de ambiente Gemini/Google. Como a key nao deve ser impressa nem versionada, a proxima acao correta e Lucas indicar o caminho exato do script/key ou autorizar a leitura externa desse caminho. Sem isso, nao inventar resultado Gemini.
+A resposta Gemini foi capturada em `shadow/SOTA-STACK-GEMINI-RESPONSE-2026-04-26.md` usando o script externo autorizado do OLMO e a key do ambiente Windows, sem imprimir segredo. A resposta entra como evidencia para confronto, nao como decisao.
 
 Prompt recomendado para rodar no Gemini API quando houver chave:
 
@@ -173,10 +198,26 @@ Voce e Gemini como avaliador independente. Data de referencia: 2026-04-26. Avali
 Comando sugerido, se `GEMINI_API_KEY` existir:
 
 ```bash
-curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent?key=$GEMINI_API_KEY" \
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent?key=$GEMINI_API_KEY" \
   -H 'Content-Type: application/json' \
   -d @/tmp/prometeus-gemini-sota-prompt.json
 ```
+
+
+## Local CLI state
+
+Verificado em 2026-04-26:
+
+| Ferramenta | Versao ativa | Status |
+|---|---|---|
+| Claude Code | `2.1.119` | atualizado; usar `best`/`opus` para julgamento SOTA |
+| Codex CLI | `0.125.0` | atualizado; usar maior reasoning effort suportado |
+| Gemini CLI | `0.39.1` | instalado; usar melhor modelo disponivel, preferindo `gemini-3.1-pro-preview` quando acessivel |
+| Zellij | `0.44.1` | atualizado no PATH em `~/.local/bin/zellij` |
+| WSL | `2.6.3.0` | atualizado pelo `wsl.exe --update` |
+| Ubuntu WSL | `24.04.4 LTS` | atual dentro da linha 24.04; 26.04 fica para decisao com rollback |
+
+Pacotes `apt` pendentes nao foram aplicados porque exigem senha sudo humana.
 
 ## Criterio negativo
 
@@ -209,6 +250,6 @@ Resumo para julgamento amanha:
 - Gemini recomenda `uv` + `ruff` + `bun` + `biome` como candidatos fortes, mas isso ainda precisa passar pelo gate do Prometeus antes de instalacao/adoção.
 - Gemini recomenda Bash como shell entregue aos agentes; `nushell`/zsh podem ser conforto humano, nao contrato versionado.
 - Gemini defende criar Agent Skills locais imediatamente; isso conflita com a regra anti-sprawl atual do Prometeus e deve ser confrontado, nao aceito.
-- Gemini afirma `gemini-3.1-pro-preview` como fato verificado; a pesquisa independente local achou docs oficiais publicas com `gemini-3-pro-preview`, entao esse ponto deve ser adjudicado amanha com fonte primaria/call real.
+- Gemini afirma `gemini-3.1-pro-preview` como fato verificado, e a fonte oficial atual confirma. O ponto que segue bloqueado e o claim de 2M context: a pagina oficial mostra 1.048.576 input tokens.
 
 Decisao: resposta Gemini e perna de avaliacao, nao decisao final. Amanha Lucas + Codex/ChatGPT 5.5 julgam a recomendacao, confrontam conflitos e decidem experimento minimo com rollback.

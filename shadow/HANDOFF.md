@@ -55,6 +55,22 @@ O que falta antes de promocao:
 | P1 | Foundation, wiki e antifragile gate ainda estao em `experiment` | `WORK-LANES.md` | escolher 1 fluxo para virar `candidate`, nao varios |
 | P1 | Arquitetura ainda depende de TREE + contexto humano | `../internal/evolution/backlog.json` id `EV-B4` | criar nota curta de arquitetura so depois de `EV-B2` |
 
+
+## Local Runtime Verified
+
+Verificado em 2026-04-26 no WSL de `C:\Dev\Projetos\OLMO_PROMETEUS`:
+
+| Ferramenta | Estado | Observacao |
+|---|---|---|
+| Claude Code | `2.1.119` | `claude` aponta para `~/.npm-global/bin/claude` via symlink em `~/.local/bin` |
+| Codex CLI | `0.125.0` | versao publicada atual no npm no momento da verificacao |
+| Gemini CLI | `0.39.1` | instalado globalmente via npm |
+| Zellij | `0.44.1` | instalado em `~/.local/bin/zellij`; `/usr/local/bin/zellij` antigo estava em uso |
+| WSL | `2.6.3.0` | `wsl.exe --update` informou que ja era a versao mais recente |
+| Ubuntu WSL | `24.04.4 LTS` | linha LTS atual; upgrade para 26.04 e decisao estrutural, nao update comum |
+
+Pendencia: existem pacotes `apt` atualizaveis, mas exigem senha humana: rodar `sudo apt update && sudo apt upgrade` no terminal.
+
 ## Next Session
 
 Sequencia obrigatoria:

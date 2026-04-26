@@ -11,6 +11,19 @@ Veredito final: Lucas + Codex/ChatGPT 5.5.
 
 As respostas de Opus, Gemini, Codex ou outro CLI sao evidencias, nao autoridade. Se houver claim factual duvidoso, rodar pesquisa adicional com fonte primaria antes de decidir.
 
+## Modelos e CLIs a usar
+
+Use o mesmo prompt em cada CLI, trocando apenas a ferramenta/modelo. Registrar no topo de cada resposta qual CLI, modelo e versao foram usados.
+
+| Perna | CLI/superficie | Melhor modelo alvo | Versao local verificada em 2026-04-26 | Saida sugerida |
+|---|---|---|---|---|
+| Claude | Claude Code | `best`/`opus` para julgamento; `opusplan` se disponivel para plano+execucao | Claude Code `2.1.119` | `shadow/SOTA-STACK-OPUS-CLI-2026-04-27.md` |
+| Gemini | Gemini CLI ou script API | `gemini-3.1-pro-preview`; `gemini-2.5-pro` como baseline conservador | Gemini CLI `0.39.1` | `shadow/SOTA-STACK-GEMINI-CLI-2026-04-27.md` |
+| Codex | Codex CLI | melhor modelo Codex/GPT disponivel na conta, com maior reasoning effort suportado | Codex CLI `0.125.0` | `shadow/SOTA-STACK-CODEX-CLI-2026-04-27.md` |
+| ChatGPT | Web/API | melhor ChatGPT disponivel na conta para julgamento reflexivo | fora do PATH local | resposta manual ou arquivo extra |
+
+Ambiente local auxiliar: Zellij `0.44.1`, WSL `2.6.3.0`, Ubuntu `24.04.4 LTS`. Pacotes `apt` pendentes exigem `sudo apt update && sudo apt upgrade` com senha humana.
+
 ## Arquivos de saida sugeridos
 
 Salvar cada resposta em Markdown:
@@ -26,10 +39,12 @@ Use o quarto arquivo apenas se surgir duvida factual que precise pesquisa extra.
 
 ## Prompt unico
 
-Copiar exatamente este prompt em cada CLI/modelo:
+Copiar exatamente este prompt em cada CLI/modelo, usando o melhor modelo disponivel dessa CLI:
 
 ```text
 Data de referencia: 2026-04-26.
+
+Antes de responder, declare: CLI/superficie usada, modelo efetivo, versao da CLI quando houver, e qualquer limitacao de acesso/contexto.
 
 Voce e uma perna independente de avaliacao SOTA. Contexto: Prometeus e um laboratorio profissional de estado da arte, nao uma trilha iniciante. O objetivo e decidir amanha, com Lucas + Codex/ChatGPT 5.5 como juizes finais, o caminho mais profissional para stack agentico, Linux, shell e toolchain.
 
@@ -83,7 +98,7 @@ Depois de gerar os arquivos:
 
 Validar antes de aceitar:
 
-- `gemini-3.1-pro-preview` versus `gemini-3-pro-preview` em fonte oficial.
+- `gemini-3.1-pro-preview` confirmado versus qualquer alias antigo `gemini-3-pro-preview` em fonte oficial.
 - 1M versus 2M context window.
 - Ubuntu 26.04 no WSL agora versus esperar 26.04.1.
 - Fedora como ganho real versus custo de suporte/WSL.
