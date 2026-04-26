@@ -1,16 +1,62 @@
 # Handoff
 
 Status: active
-Updated: 2026-04-26 (PM, pos legacy mining + 5 hooks wired)
+Updated: 2026-04-26 (PM tarde, pos PR 1 compress + Fase C devmentor wiki notes)
 Scope: janela hidratada para retomar `OLMO_PROMETEUS` apos `/clear`.
 
 ## Quick Hydration (cole no inicio da nova sessao)
 
-Sessao 2026-04-26 PM trabalhou em paralelo: (a) higiene tecnica + consolidacao adversarial do stack debate; (b) inventario read-only de archives legacy (devmentor, archived OLMO_PROMETEUS, OLMO live); (c) inicio da estrutura profissional (docs/adr + procedures); (d) wire de 5 hooks selecionados de OLMO (excessivos no original; cherry-pick aqui).
+Sessao 2026-04-26 PM tarde executou plan `harmonic-waddling-spring`: (a) Fase A — smoke-test 5 hooks instalados pela sessao anterior (5/5 passam); (b) Fase B — PR 1 compress (1845L em 12 raws SOTA-STACK+LEGACY -> 1 ADR de ~50L); (c) Fase C — incorporar 4 SOTA pattern notes do devmentor legacy (CLI vs MCP, Karpathy Wiki Pattern, Vault Anti-Pollution, Skills vs MCP) em `Prometeus/wiki/Notes/`. Push origin main concluido.
 
 OLMO e intocavel: leitura autorizada, sem write. Aulas_core era estado virgem (muitos erros), tomar cuidado.
 
-## DONE neste turno (2026-04-26 PM)
+## DONE nesta sessao (2026-04-26 PM tarde)
+
+Commits novos (em ordem):
+
+- `478bc1d` — docs: compress 12 SOTA-STACK + LEGACY raws into ADR 0006. Net: -1802L. Sintese consolidada em `docs/adr/0006-triadic-stack-debate.md` (~50L); raws recuperaveis via git history pre-este-commit. Cross-refs atualizadas em HANDOFF/HYGIENE/SOTA-DECISIONS; entry em INCORPORATION-LOG.
+- `9c3e2e7` — docs: incorporate 4 SOTA pattern notes from devmentor legacy. 4 arquivos novos em `Prometeus/wiki/Notes/`: `CLI vs MCP`, `Karpathy Wiki Pattern`, `Vault Anti-Pollution`, `Skills vs MCP`. Cada um adaptado para Prometeus context (paths, gates locais), wikilinks reais, frontmatter `source` + `incorporated: 2026-04-26` + `status: experiment`. Entry em INCORPORATION-LOG.
+
+Smoke-test dos 5 hooks (todos passam):
+
+- `session-start.sh` — fired at session start (HANDOFF top 60 + git log -5 + status).
+- `pre-compact-checkpoint.sh` — `.claude/.last-checkpoint` populado (git state + recently modified + HANDOFF top 30).
+- `guard-read-secrets.sh` — bloqueia `.env`/`.env.production`/`credentials.json`/`*.pem`/`id_rsa`/PHI prefix paths/Grep credential patterns; allow paths normais.
+- `guard-secrets.sh` — bash -n OK; allow non-git/non-commit commands; full pattern detection requires actual staged blob to test (deferido).
+- `trace-edits.sh` — fired em todo Edit/Write desta sessao com diff resumido visivel.
+
+Push origin main: executado, 14 commits publicados.
+
+## PENDING para proxima sessao (priorizado)
+
+### P0 — High value, low risk
+
+1. **PR 2 — Privacy + governance consolidation** (~45min, risco medio): mesclar `shadow/DATA-CLASSIFICATION.md` + `PHI-CHECKLIST.md` + `THREAT-MODEL.md` + `INCIDENT-LOG.md` em `docs/threat-model.md`. Quebrar `shadow/SOTA-DECISIONS.md` (354L) em ADRs numerados (0002-0005). Mover procedures (`email-digest-4p`, `study-track-done`) para `procedures/`. Atualizar `scripts/check.sh` para novos paths.
+
+2. **Inventarios bloqueados** (precisam workaround do hook OLMO sibling — opcoes: Bash com `!` prefix do user, OU regra Bash read em `.claude/settings.local.json`):
+   - `/home/lucasmiachon/legacy/2026-04-26/dev/olmo-migration/OLMO/` (snapshot Linux)
+   - `/mnt/c/Dev/Projetos/Aulas_core/` (CUIDADO: estado virgem, muitos erros — NAO importar bulk)
+   - `/mnt/c/Dev/Projetos/aulas-magnas-gemini-20260305.zip` (precisa extrair em /tmp)
+   - `/mnt/c/Dev/Projetos/OLMO_GENESIS/`, `/OLMO_COWORK/`, `/Projeto_olmo_main/` (snapshots paralelos)
+   - `/mnt/c/Dev/Projetos/cowork-command-center-workspace/`, `/orquestrador-context/`, `/Conversores/` (aux)
+
+### P1 — Medium
+
+3. **Promocao das 4 wiki notes incorporadas**: `experiment` -> `active` apos uso real. Em 30d, se nao houver citacao em decisao ou expansao com pensamento autoral proprio, candidato a HYGIENE delete.
+
+4. **Material devmentor restante** (3 nao-wiki avaliar): 4 skills (ingest/graduate/lint-wiki/session-log) — bloqueadas pelo local skills gate ate procedure operational; 1 setup-second-brain.sh — avaliar adequacao; 2 raw articles (Scalekit + Karpathy) — ja referenciados nas wiki notes; arquivar?
+
+5. **PR 3 — AGENTS.md SOTA + retire scaffolds** (~60min, risco alto): AGENTS.md ~80L (Toolchain First); mesclar FOUNDATION/PROJECT_CONTRACT/AGENT-USAGE/AGENT-MODULES/ORCHESTRATION-* em `docs/runbook.md`; retire `shadow/` folder. Defer: mudanca grande, exige decisao humana sobre que partes do `shadow/` morrem ou viram ADR.
+
+### P2 — Future
+
+6. **`shared-v2/` design system de OLMO**: defer ate primeiro projeto aula real no Prometeus.
+
+7. **`bun` install**: precisa `sudo apt install unzip`. Defer (sem projeto TS hoje).
+
+8. **Procedures `email-digest-4p` + `study-track-done`** (>=3 entradas em EVIDENCE-LOG): rodar em ciclo concreto e registrar entry. Sem isso, simplificar/aposentar antes do PR 2.
+
+## Sessao anterior (2026-04-26 PM, ja arquivada)
 
 Commits (em ordem):
 
@@ -86,13 +132,15 @@ Inventario consolidado em chat — **NAO comitado** (defer ate ter tempo de orga
 
 ## Cross-references
 
-- **Plano original**: `/home/lucasmiachon/.claude/plans/fuzzy-hatching-harbor.md` (saida read-only do plan mode 2026-04-26 PM)
+- **Plano desta sessao**: `/home/lucasmiachon/.claude/plans/harmonic-waddling-spring.md` (Fase A+B+C aprovado e executado)
+- **Plano sessao anterior**: `/home/lucasmiachon/.claude/plans/fuzzy-hatching-harbor.md`
 - **Decisoes consolidadas**: `shadow/SOTA-DECISIONS.md > Triadic stack debate consolidation (2026-04-26)`
-- **ADRs novos**: `docs/adr/0001-canonical-linux-workspace.md` + `docs/adr/template.md` + `docs/adr/README.md`
+- **ADRs**: `docs/adr/0001-canonical-linux-workspace.md`, `docs/adr/0006-triadic-stack-debate.md` + `docs/adr/template.md` + `docs/adr/README.md`
+- **Wiki notes novos (4)**: `Prometeus/wiki/Notes/{CLI vs MCP, Karpathy Wiki Pattern, Vault Anti-Pollution, Skills vs MCP}.md` (status: experiment, source devmentor)
 - **Procedures novos**: `procedures/decision-protocol.md` (adapted de OLMO `content/aulas/shared/`)
 - **Evidencia**: `shadow/EVIDENCE-LOG.md` ultima entry 2026-04-26 sota-research-gate
-- **Transicoes lane**: `shadow/INCORPORATION-LOG.md` ultimas 3 entries 2026-04-26
-- **Matriz legacy original**: deletada em PR 1 (compress raws); conteudo essencial em `shadow/INCORPORATION-LOG.md` + git history pre-ADR-0006
+- **Transicoes lane**: `shadow/INCORPORATION-LOG.md` 5 entries de 2026-04-26
+- **Matriz legacy original**: deletada em PR 1 (commit 478bc1d); conteudo essencial em `shadow/INCORPORATION-LOG.md` + git history pre-ADR-0006
 - **OLMO ARCHITECTURE source**: `/mnt/c/Dev/Projetos/OLMO/docs/ARCHITECTURE.md` (read-only, autorizado)
 - **devmentor source**: `/home/lucasmiachon/legacy/2026-04-26/devmentor/` (autorizado)
 - **archived OLMO_PROMETEUS**: `/mnt/c/Dev/Projetos/_archive/OLMO_PROMETEUS-archived-20260426-142912/`
