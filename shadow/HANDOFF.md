@@ -37,6 +37,7 @@ Harness:
 
 - `./scripts/check.sh --strict` passa com `0 warning(s)`.
 - `scripts/integrity.sh` passa e valida contratos vivos: valores, OLMO como piso, EV-B5, producer-consumer, backlog sync, antifragile verificavel, hook targets e ausencia de writes externos.
+- `scripts/simulate-ci.sh` passa no leg Linux/WSL e reproduz localmente o workflow read-only (`check.sh` + `evolve.sh next`); Windows continua leg remoto.
 - `scripts/test-olmo-boundary-guard.sh` passa.
 - `ruff` e `biome` estao wired no harness quando manifestos existem.
 - Git working tree limpo no fechamento desta janela.
@@ -61,7 +62,7 @@ Hooks locais ativos em `.claude/settings.local.json` (gitignored):
 ## 4. Contratos que mandam
 
 - `AGENTS.md`: fonte unica de verdade para agentes.
-- `VALUES.md`: valores, objetivos, `OLMO como piso` e Gap Lens. Mudanca relevante deve declarar valor, dor real, trigger, artefato, consumer, evidencia, custo, risco, rollback e criterio negativo.
+- `VALUES.md`: valores, objetivos, `OLMO como piso` e Gap Lens. Mudanca relevante deve declarar valor, dor real, trigger, artefato, consumer, evidencia, eficacia, viabilidade, risco, rollback e criterio negativo.
 - `shadow/SOTA-DECISIONS.md`: decisoes curtas apos SOTA gate.
 - `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`: gate E2E, matriz producer-consumer e antifragile verificavel.
 - `shadow/WORK-LANES.md`: lanes e promotion gate.
@@ -132,20 +133,21 @@ Nao incorporar sem novo gate:
 1. Rodar `git status --short` e `./scripts/check.sh --strict`.
 2. Se o user quiser push, pedir confirmacao explicita e entao executar `git push`.
 3. Se continuar T6/EV-B5: criar criterio de revisao 2026-05-27 sem adicionar runtime.
-4. Se for PR-2: consolidar privacidade/governance com cuidado, porque toca `shadow/` e harness.
-5. Se for EV-B2: verificar CI remoto (`gh run list`) e documentar bloqueio; branch protection so depois de workflow verde.
+4. Se for PR-2: ADRs 0002-0005 ja existem; proximo passo e decidir se privacy docs viram `docs/threat-model.md` ou ficam em `shadow/`.
+5. Se for EV-B2: rodar `scripts/simulate-ci.sh`; depois verificar CI remoto (`gh run list`) e documentar bloqueio; branch protection so depois de workflow verde.
 6. Se for digest/study: rodar uso real e registrar em `EVIDENCE-LOG.md`; senao aposentar/simplificar.
 
 P0 atual:
 
 - `EV-B2`: CI remoto verde; depende de auth/permissao.
-- `PR-2`: consolidar privacy/governance e reduzir sprawl documental.
+- `PR-2`: ADRs 0002-0005 criados; pendente consolidar privacy/procedures sem quebrar harness.
 - `EV-DIGEST`: promover ou aposentar `email-digest-4p` e `study-track-done`.
 - `LEGACY-MINE`: inventarios legacy bloqueados, sempre caso-a-caso.
 
 P1 atual:
 
-- `EV-B4`: split de `SOTA-DECISIONS.md` em ADR index.
+- `EV-B4`: ADR index 0001-0007 existe; pendente reduzir `SOTA-DECISIONS.md` sem perder historico operacional.
+- `EV-B6`: SOTA alignment triage aplicado; CI local read-only e stale evidence warning entraram, PHI prompt hook/handoff JSON/value commit gate/issues:write ficaram bloqueados ate consumer real.
 - `EV-B5`: concluir T6 na data certa.
 - `WIKI-PROMO`: decidir destino das 4 notas wiki incorporadas apos uso real.
 

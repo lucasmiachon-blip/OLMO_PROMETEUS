@@ -40,7 +40,7 @@ Antes de mudar arquitetura, agentes, skills, hooks, MCP, memoria ou orquestracao
 1. Auditar o estado local primeiro.
 2. Pesquisar fontes primarias e atuais, preferindo docs oficiais.
 3. Registrar uma decisao curta em `shadow/SOTA-DECISIONS.md` ou no arquivo operacional correto.
-4. Explicitar trigger, nao-trigger, risco, custo, rollback e criterio negativo.
+4. Explicitar trigger, nao-trigger, risco, viabilidade, rollback e criterio negativo.
 5. So entao editar.
 
 Se a pesquisa nao justificar a mudanca, nao implementar. Sem bajulacao, sem arquitetura aspiracional e sem copiar moda.
@@ -119,7 +119,7 @@ Quando ocorrer erro material (tool, shell, path, permissao, teste, pesquisa ou s
 - O que mudou: qual plano mudou por causa do erro.
 - Impacto: o que ficou incompleto, arriscado ou sem validacao.
 - O que um profissional faria: acao profissional para diagnosticar ou corrigir.
-- Vamos fazer?: sim ou nao, com justificativa proporcional ao risco, custo e escopo.
+- Vamos fazer?: sim ou nao, com justificativa proporcional ao risco, viabilidade e escopo.
 - Regra nova: aprendizado pratico para evitar repeticao.
 
 Se o erro indicar sandbox, permissao ou rede e o comando for essencial, repetir o mesmo comando com aprovacao conforme politica antes de mudar rota. A memoria desse aprendizado so entra no repo quando muda comportamento futuro.
@@ -163,4 +163,4 @@ Procedures em `experiment` (sem evidencia em `shadow/EVIDENCE-LOG.md`, ver `shad
 
 - Codex: usar `reasoning_effort=xhigh` quando a ferramenta/modelo suportar. Se `xhigh` nao estiver disponivel, usar o maior esforco suportado e registrar a limitacao na resposta.
 - Codex: `Coautoria: Lucas + GPT-5.x-Codex (xhigh)`
-- Outros modelos: registrar papel, trigger, artefato, custo e risco antes de adotar no fluxo.
+- Outros modelos: registrar papel, trigger, artefato, eficacia esperada, viabilidade e risco antes de adotar no fluxo.

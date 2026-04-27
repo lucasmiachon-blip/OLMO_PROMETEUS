@@ -27,7 +27,7 @@ Pesquisa oficial em 2026-04-23:
 | Fonte | Sinal | Adaptacao Prometeus |
 | --- | --- | --- |
 | OpenAI Agents SDK | Agente e composto por instrucoes, modelo e ferramentas; handoffs delegam tarefas; guardrails validam entradas, saidas e ferramentas. | Modulo precisa declarar instrucoes, tools, handoff permitido e guardrails antes de runtime. |
-| OpenAI Codex Subagents | Subagentes sao uteis para paralelismo e contexto separado, mas tem custo e devem ter uso claro. | Delegacao fica por conversa ate haver 3 usos reais. |
+| OpenAI Codex Subagents | Subagentes sao uteis para paralelismo e contexto separado, mas adicionam coordenacao e devem ter uso claro. | Delegacao fica por conversa ate haver 3 usos reais. |
 | Anthropic Claude Code Subagents | Subagentes tem proposito especifico, contexto separado, ferramentas limitadas e prompt proprio. | Encapsular competencia, nao persona. Ferramentas minimas por padrao. |
 | Anthropic Claude Code Best Practices | Explorar primeiro, planejar, verificar trabalho, gerenciar contexto e usar subagentes para investigacao quando poupar contexto. | SOTA research gate antes de mudanca estrutural. |
 | Google ADK Agents | Diferencia agents LLM, workflow agents deterministicos e custom agents. | Preferir workflow documentado e harness antes de agente LLM. |
@@ -53,7 +53,7 @@ Nao usar quando:
 - o problema e falta de clareza humana;
 - um checklist simples resolve;
 - a ideia existe so porque outra ferramenta suporta agentes;
-- a execucao exigiria write fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+- a execucao exigiria write fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
 
 ## Contract
 
@@ -101,7 +101,7 @@ Todo modulo candidato deve preencher:
 Um modulo candidato passa no minimo por:
 
 1. **Contract check**: todos os campos preenchidos.
-2. **Boundary check**: nenhum write fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+2. **Boundary check**: nenhum write fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
 3. **Tool check**: ferramentas minimas, sem MCP sensivel.
 4. **Context check**: nao importa arvore grande por padrao.
 5. **Output check**: entrega artefato persistente ou decisao clara.
@@ -155,6 +155,7 @@ Estado ortogonal (lane) vive em `shadow/WORK-LANES.md`; eixo tecnico abaixo.
 - OpenAI Agents SDK guardrails: `https://openai.github.io/openai-agents-js/guides/guardrails/`
 - OpenAI Codex subagents: `https://developers.openai.com/codex/subagents`
 - Anthropic Claude Code subagents: `https://docs.anthropic.com/en/docs/claude-code/sub-agents`
+- ADR 0004: `docs/adr/0004-procedure-before-agent-runtime.md`
 - Anthropic Claude Code best practices: `https://code.claude.com/docs/en/best-practices`
 - Google ADK agents: `https://adk.dev/agents/`
 - Google ADK evaluation: `https://adk.dev/evaluate/`

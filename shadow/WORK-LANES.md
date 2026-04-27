@@ -35,7 +35,7 @@ Nao usar para promover por entusiasmo. Se a evidencia for fraca, a decisao corre
 | Digest de email em 4 paragrafos | `experiment` | `shadow/` + wiki | ainda nao | funcionar por 3 ciclos uteis seguidos | virar ritual sem acao |
 | Study track com `done` | `experiment` | `shadow/` + wiki | ainda nao | reduzir retrabalho e dar visibilidade de progresso | marcar `done` cedo demais |
 | Dashboard local simples | `private` | `private-learning/` local ignorado | nao, por enquanto | n/a | misturar camada pessoal com runtime |
-| Novos fluxos multimodelo | `experiment` | `shadow/` ou wiki | talvez | declarar objetivo, trigger, artefato, custo e risco | contaminar o repo principal |
+| Novos fluxos multimodelo | `experiment` | `shadow/` ou wiki | talvez | declarar objetivo, trigger, artefato, eficacia, viabilidade e risco | contaminar o repo principal |
 | Foundation + harness local | `experiment` | `shadow/` + `scripts/` | talvez | passar em 3 sessoes reais e reduzir regressao | virar burocracia sem ganho |
 | Obsidian project wiki | `experiment` | `Prometeus/wiki/` | talvez | ser usado em 3 ciclos sem virar deposito | acumular notas sem decisao |
 | Wiki graph lab | `experiment` | `lab/wiki-graph-lab/` + `Prometeus/wiki/` | talvez | ser usado em 3 ciclos lendo apenas `Prometeus/wiki/` | virar UI paralela sem dados canonicos |
@@ -56,7 +56,8 @@ Para classificar qualquer artefato, preencher:
 | `problema` | Que dor real ele resolve melhor que o estado atual? |
 | `trigger` | Quando ele entra sem depender de lembranca do Lucas? |
 | `evidencia` | Em quantos ciclos funcionou e onde esta o resultado? |
-| `custo` | Quanto contexto, manutencao ou tempo adiciona? |
+| `eficacia` | Que baseline humano/procedural/modelo precisa superar? |
+| `viabilidade` | Quanto contexto, manutencao, latencia ou custo adiciona? |
 | `risco` | O que pode contaminar, confundir ou quebrar? |
 | `rollback` | Como desfazer sem tocar no OLMO principal? |
 
@@ -64,7 +65,7 @@ Para classificar qualquer artefato, preencher:
 
 - `private`: depende de contexto pessoal, cockpit local ou dado sensivel.
 - `experiment`: tem potencial, mas faltam ciclos, criterio de sucesso ou rollback.
-- `candidate`: tem artefato, trigger, evidencia repetida, custo aceitavel, risco claro e rollback.
+- `candidate`: tem artefato, trigger, evidencia repetida, eficacia demonstrada, viabilidade aceitavel, risco claro e rollback.
 - `operational`: ja e parte do fluxo diario; citado em `AGENTS.md` como padrao ativo.
 - `retired`: foi util, foi substituido ou abandonado; nao reanimar sem nova evidencia.
 - `blocked`: e util, mas exige write externo, segredo, MCP sensivel, hook ativo ou mudanca no `OLMO`.
@@ -92,7 +93,8 @@ Antes de pensar em migrar algo para `OLMO`, responda:
 - `objetivo`: o que resolve melhor do que o estado atual;
 - `trigger`: quando realmente entra em uso;
 - `artefato`: qual arquivo, fluxo ou output produz;
-- `custo`: limite operacional e de manutencao;
+- `eficacia`: baseline que precisa superar;
+- `viabilidade`: limite operacional, manutencao, latencia e custo;
 - `risco`: o que pode contaminar ou quebrar;
 - `rollback`: como voltar atras sem dano.
 
@@ -100,8 +102,6 @@ Antes de pensar em migrar algo para `OLMO`, responda:
 
 | Caso | Prompt | Esperado |
 | --- | --- | --- |
-| padrao recorrente | "Esse fluxo rodou 3 vezes e reduziu retrabalho; pode migrar?" | avaliar trigger, evidencia, custo, risco e rollback antes de `candidate` |
+| padrao recorrente | "Esse fluxo rodou 3 vezes e reduziu retrabalho; pode migrar?" | avaliar trigger, evidencia, eficacia, viabilidade, risco e rollback antes de `candidate` |
 | scaffold novo | "Vamos recriar `.agents/skills` para isso?" | exigir uso recorrente e bloquear se for so entusiasmo estrutural |
 | material pessoal | "Meu dashboard local esta bom; vira padrao?" | classificar `private` se depender de contexto pessoal ou dado local |
-
-

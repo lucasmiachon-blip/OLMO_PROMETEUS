@@ -30,6 +30,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 - `scripts/check.sh` como harness local Bash-first.
 - `scripts/evolve.sh` como executor self-evolving Bash-first.
 - `scripts/integrity.sh` como gate read-only de integridade/maturidade: sintaxe de scripts, targets de hooks locais, sync backlog JSON/Markdown, evidencia EV-B5, contrato antifragile verificavel e ausencia de comandos contra paths OLMO externos.
+- `scripts/simulate-ci.sh` como simulador local read-only do workflow `Self Evolution` para o leg Linux/WSL; o leg Windows continua validacao remota.
 - `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md > Producer-Consumer Matrix` como contrato T3: gate/hook novo sem produtor, artefato, consumidor, acao de falha, piso OLMO e protecao extra Prometeus fica bloqueado.
 - `scripts/guard-olmo-write-hook.sh` como guard Bash do Claude PreToolUse: write externo para `OLMO`, `OLMO_COWORK`, typo `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico vira `deny` (block); read externo vira `ask`.
 - `scripts/test-olmo-boundary-guard.sh` como teste automatizado da trava OLMO.
@@ -66,6 +67,7 @@ Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo
 - limites do projeto: `PROJECT_CONTRACT.md`;
 - valores, `OLMO` como piso profissional e lente de gaps: `VALUES.md`;
 - decisoes SOTA: `shadow/SOTA-DECISIONS.md`;
+- decisoes arquiteturais aceitas: `docs/adr/`;
 - lanes e promotion gate: `shadow/WORK-LANES.md`;
 - handoff de janela hidratada: `shadow/HANDOFF.md`;
 - transicoes aplicadas: `shadow/INCORPORATION-LOG.md`;
@@ -103,7 +105,7 @@ Ele valida:
 - caminhos privados e gerados continuam ignorados por Git e pelo contexto de agentes;
 - checks de ignore aceitam LF e CRLF para os workflows `ubuntu-latest` e `windows-latest`;
 - checks textuais pulam arquivos ignorados e redigem linhas em achados de segredo;
-- `scripts/integrity.sh` valida contratos vivos que tendem a driftar: scripts Bash, hook targets, backlog view, evidencia EV-B5 e antifragile sem narrativa vazia;
+- `scripts/integrity.sh` valida contratos vivos que tendem a driftar: scripts Bash, hook targets, backlog view, evidencia EV-B5, stale evidence como warning e antifragile sem narrativa vazia;
 - todo gate/hook novo precisa linha producer-consumer antes de entrar no harness ou hook local;
 - ausencia de scaffolds fantasmas na raiz;
 - Git status legivel.
@@ -127,7 +129,7 @@ Delegacao:
 - Codex executa com `reasoning_effort=xhigh` quando a ferramenta/modelo suportar; se nao suportar, usar o maior esforco disponivel e registrar a limitacao.
 - Claude Code pode ser o executor escolhido e usar subagentes globais (`Explore`, `Plan`, `general-purpose`) conforme mapa em `shadow/AGENT-USAGE.md`; sem scaffold local.
 - Leituras auxiliares podem ser feitas por subagentes apenas quando a conversa justificar (ver padroes SOTA em `shadow/AGENT-USAGE.md`).
-- Gemini entra para pesquisa longa/multimodal somente com objetivo, trigger, artefato, custo e risco; nao executa writes neste repo.
+- Gemini entra para pesquisa longa/multimodal somente com objetivo, trigger, artefato, eficacia esperada, viabilidade e risco; nao executa writes neste repo.
 
 Shell e linguagens (wired):
 
@@ -145,8 +147,9 @@ Sampling:
 
 Sem fan-out automatico e sem registry local de agentes neste repo. Todo uso real de subagent ou procedure registrado em `shadow/EVIDENCE-LOG.md`.
 
-Para o perfil de medico solo dev, orquestracao deve permanecer primeiro como procedimento auditavel em `shadow/`: estado claro, humano-no-loop, evidencias, custo e rollback. Frameworks externos de agentes so entram quando o procedimento manual provar retrabalho repetido sem expor dados sensiveis.
+Para o perfil de medico solo dev, orquestracao deve permanecer primeiro como procedimento auditavel em `shadow/`: estado claro, humano-no-loop, evidencia de eficacia, privacidade, viabilidade e rollback. Multimodel e a hipotese operacional preferida para tarefas frontier, mas frameworks externos de agentes so entram quando o procedimento manual provar retrabalho repetido sem expor dados sensiveis.
 O gate `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` e a fonte para decidir quando subir de procedimento para workflow, architect/editor, fanout ou runtime.
+ADR 0004 registra a regra procedure-before-runtime; ADR 0005 registra producer-consumer para gates.
 Self-evolution: `scripts/evolve.sh` le `internal/evolution/`, valida riscos e declara o proximo batch. O workflow `.github/workflows/self-evolution.yml` roda sem pedido manual, mas e read-only; ele pode falhar e informar, nao escrever ou decidir sozinho.
 
 
@@ -157,7 +160,7 @@ Mudancas de arquitetura, agentes, skills, hooks, MCP, memoria ou orquestracao se
 1. Auditar o estado local.
 2. Pesquisar fontes primarias atuais.
 3. Escrever decisao curta, com trigger e nao-trigger.
-4. Registrar risco, custo, rollback e criterio negativo.
+4. Registrar risco, viabilidade, rollback e criterio negativo.
 5. Editar apenas se a pesquisa justificar.
 
 Regra anti-sprawl: se a melhor pratica externa depende de escala, equipe, CI, produto ou runtime que este repo nao tem, nao copiar. Adaptar para procedimento pequeno ou rejeitar.

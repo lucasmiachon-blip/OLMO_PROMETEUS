@@ -31,7 +31,7 @@ Nao incorporar por reflexo:
 2. Pesquisa externa vira decisao curta e teste, nao museu documental.
 3. Qualquer coisa migravel passa por `private -> experiment -> candidate`.
 4. Nada toca `C:\Dev\Projetos\OLMO` sem autorizacao humana explicita.
-5. Toda mudanca estrutural precisa de trigger, risco, custo, rollback e criterio negativo.
+5. Toda mudanca estrutural precisa de trigger, risco, viabilidade, rollback e criterio negativo.
 6. Be terse: consolidar, nao multiplicar documentos.
 
 ## SOTA research gate
@@ -104,7 +104,7 @@ Nao-trigger: typo, falha cosmetica ou erro ja corrigido sem impacto.
 
 ## Solo medico agent/orchestration refresh (2026-04-25)
 
-Incorporar padroes de agent engineering, nao runtimes. Privacidade, humano-no-loop, auditoria, custo e rollback vem antes de qualquer automacao.
+Incorporar padroes de agent engineering, nao runtimes. Eficacia, privacidade, humano-no-loop, auditoria, viabilidade e rollback vem antes de qualquer automacao.
 
 Trigger para runtime: >=3 evidencias reais de retrabalho por falta de estado, HITL, tracing ou coordenacao, sem PHI e com rollback.
 
@@ -252,7 +252,7 @@ Criterio negativo: se o gate novo nao detectar regressao real em 30 dias ou dupl
 
 ## Prometeus values and gap lens (2026-04-27)
 
-Decisao: criar `VALUES.md` local adaptado de `OLMO/VALUES.md` e dos plans ativos/arquivados lidos read-only. Correcao do usuario: OLMO e o primeiro projeto decente e vira piso, nao teto. Prometeus nao tem barra menor; precisa ser maior em rigor verificavel, boundary, evidencia, reversibilidade, maturidade executavel e privacidade. A diferenca e o metodo: escopo experimental, sem contaminar o sistema principal. O objetivo e dar uma lente de gaps antes de T3/T4: toda melhoria deve declarar valor servido, dor real, trigger, artefato, consumer, evidencia, custo, risco, rollback e criterio negativo.
+Decisao: criar `VALUES.md` local adaptado de `OLMO/VALUES.md` e dos plans ativos/arquivados lidos read-only. Correcao do usuario: OLMO e o primeiro projeto decente e vira piso, nao teto. Prometeus nao tem barra menor; precisa ser maior em rigor verificavel, boundary, evidencia, reversibilidade, maturidade executavel e privacidade. A diferenca e o metodo: escopo experimental, sem contaminar o sistema principal. O objetivo e dar uma lente de gaps antes de T3/T4: toda melhoria deve declarar valor servido, dor real, trigger, artefato, consumer, evidencia, eficacia, viabilidade, risco, rollback e criterio negativo.
 
 Trigger: o usuario perguntou se havia valores/objetivos e apontou que eles sao necessarios para identificar gaps.
 
@@ -264,7 +264,27 @@ Custo: um arquivo raiz pequeno + cross-refs.
 
 Rollback: remover `VALUES.md` e voltar a usar apenas `PROJECT_CONTRACT.md` se a lente nao for citada em decisoes/gaps nos proximos 30 dias.
 
-Criterio negativo: se novas tarefas nao referirem V1-V8 ou Gap Lens ate 2026-05-27, simplificar o arquivo para uma secao curta em `PROJECT_CONTRACT.md`.
+Criterio negativo: se novas tarefas nao referirem V1-V9 ou Gap Lens ate 2026-05-27, simplificar o arquivo para uma secao curta em `PROJECT_CONTRACT.md`.
+
+## Frontier orchestration objective (2026-04-27)
+
+Decisao: Prometeus nao mira apenas reconhecimento academico/profissional; mira construir um sistema de LLMs orquestrados para educacao, pesquisa, EBM e auxilio direto que iguale ou supere humanos em tarefas delimitadas. Multimodel e a hipotese operacional preferida: a fronteira de orquestracao ainda esta evoluindo, mas o caminho provavel e combinar modelos/agentes especializados, handoffs, agents-as-tools, workflows, fan-out, critic/evaluator e HITL. Isso entra como V9, mas nao desbloqueia runtime agentico por entusiasmo: cada composicao precisa SOTA atual, baseline, eval local, eficacia, privacidade, HITL, viabilidade, rollback e criterio negativo.
+
+Trigger: design de orquestracao, escolha de modelo, avaliacao de qualidade, educacao, pesquisa, EBM, revisao ou auxilio direto.
+
+Nao-trigger: usar "melhor modelo" por reputacao, leaderboard generico, demo ou novidade sem benchmark local.
+
+Risco: transformar ambicao frontier em arquitetura prematura ou falsa autoridade clinica. Mitigacao: humano-no-loop, sem PHI por padrao, tarefas delimitadas e comparacao contra baseline humano/procedural.
+
+Viabilidade: acrescentar V9 e dois objetivos; nenhuma dependencia, runtime ou permissao nova.
+
+Rollback: remover V9 e os objetivos 7-8 de `VALUES.md` se isso virar justificativa para sprawl sem eval.
+
+Criterio negativo: se ate 2026-05-27 nenhuma decisao ou eval concreto usar V9 para comparar modelo/orquestracao contra baseline, rebaixar V9 para objetivo aspiracional fora da tabela de valores.
+
+Fontes SOTA atuais: OpenAI Agents SDK documenta orquestracao por LLM ou por codigo, com handoffs e agents-as-tools; Anthropic recomenda padroes simples e composaveis antes de frameworks complexos; Google ADK documenta sistemas multiagentes com coordenador, pipeline sequencial, fan-out/gather, generator-critic, refinamento iterativo e HITL.
+
+Modelos: OpenAI, Anthropic, Google e modelos locais sao familias candidatas; a escolha operacional deve ser feita no momento de uso com informacao atual e fonte primaria, nao fixada aqui. Custo nao decide o norte; apenas limita viabilidade quando latencia, manutencao, token budget ou privacidade tornarem uma composicao impraticavel.
 
 ## OLMO plans as maturity floor (2026-04-27)
 
@@ -281,6 +301,46 @@ Custo: um reforco documental e uma checagem textual no integrity gate.
 Rollback: remover a secao `OLMO como piso` e a checagem se ela nao orientar nenhuma tarefa real ate 2026-05-27.
 
 Criterio negativo: se uma pratica do `OLMO` for citada sem trigger, consumer e detector local, classificar como `nao incorporar`.
+
+## Infra improvement research scan (2026-04-27)
+
+Decisao: a proxima melhoria de infra deve priorizar saneamento de drift semantico e CI remoto antes de runtime, skill local ou multi-agent. A auditoria local mostrou harness verde, boundary forte e backlog vivo, mas tambem residuos de path Windows canonico em docs de agentes/modulos e pendencias P0/P1 ja suficientes para trabalhar sem criar estrutura nova.
+
+Trigger: pedido de melhoria de infra, mudanca em harness/orquestracao, ou nova proposta de agente/skill/hook.
+
+Nao-trigger: adicionar runtime agentico, framework externo, MCP proprio, skill local ou fanout permanente sem falha repetida documentada.
+
+Risco: transformar pesquisa SOTA em mais governanca. Mitigacao: aplicar somente em itens ja existentes (`EV-B2`, `EV-DIGEST`, `PR-2`, `EV-B4`/ADR) e manter `scripts/check.sh --strict` como prova.
+
+Custo: uma rodada pequena de documentacao/harness, sem dependencia nova.
+
+Rollback: se a rodada aumentar docs sem reduzir busca/drift ou sem destravar CI/evidencia, reverter para o estado atual e manter apenas a entrada de evidencia.
+
+Criterio negativo: se a melhoria proposta nao tiver consumer, falha observada ou detector local, nao implementar.
+
+Fontes primarias verificadas em 2026-04-27: Anthropic Building Effective Agents; OpenAI Agents SDK guardrails/tracing; Google ADK multi-agent/memory/artifacts; NIST AI RMF/Generative AI Profile; Microsoft WSL filesystem docs.
+
+## SOTA alignment batch 01 triage (2026-04-27)
+
+Decisao: implementar apenas os controles com consumer real agora: simulacao local read-only do CI e stale evidence como warning. Deferir ou rejeitar o restante ate haver produtor, consumidor, falha observada e rollback claro.
+
+Implement now: `scripts/simulate-ci.sh` para reproduzir o leg Linux/WSL do workflow `Self Evolution`; warning em `scripts/integrity.sh` para procedures `candidate`/`operational` sem evidencia recente.
+
+Defer: `handoff_context.json` ate existir script/bootstrap consumidor; `Value-Traceable Commits` ate virar relatorio opcional baseado em backlog/decisoes, nao gate de commit.
+
+Reject as stated: `guard-phi-input.sh` como bloqueio universal de prompt, porque nao impede PHI ja colado no chat externo; `issues: write` no workflow, porque o self-evolution atual e read-only e GH-403 precisa diagnostico antes de permissao extra.
+
+Trigger: proposta de batch SOTA com hooks, CI, handoff e metricas.
+
+Nao-trigger: adicionar runtime, hook ativo, permissao GitHub de escrita, JSON duplicado ou gate hard sem evidencia.
+
+Risco: parecer menos ambicioso por rejeitar automacao vistosa; mitigacao: registrar limites tecnicos e entregar detector verificavel.
+
+Custo: um script Bash pequeno, um warning no integrity gate e atualizacoes de contrato/backlog.
+
+Rollback: remover `scripts/simulate-ci.sh`, a linha de required file em `scripts/check.sh`, a funcao stale-evidence de `scripts/integrity.sh` e as entradas documentais desta decisao.
+
+Criterio negativo: se em 30 dias o simulador nao ajudar a diagnosticar `EV-B2` ou os warnings de stale evidence nao guiarem promocao/aposentadoria, simplificar ou remover.
 
 ## Applied when
 
@@ -305,6 +365,11 @@ Criterio negativo: se uma pratica do `OLMO` for citada sem trigger, consumer e d
 | 2026-04-27 | OLMO/OLMO_GENESIS selective adaptation scan | Leitura read-only autorizada; padroes aproveitaveis separados de runtime/ruido bloqueado | `shadow/SOTA-DECISIONS.md`, `shadow/EVIDENCE-LOG.md`, `internal/evolution/backlog.json`, `shadow/BACKLOG.md` |
 | 2026-04-27 | Prometeus values and gap lens | `OLMO/VALUES.md` adaptado para o laboratorio; valores viram filtro de gaps | `VALUES.md`, `PROJECT_CONTRACT.md`, `AGENTS.md`, `TREE.md`, `shadow/FOUNDATION.md`, `scripts/check.sh`, `scripts/integrity.sh` |
 | 2026-04-27 | OLMO plans as maturity floor | OLMO tratado como piso profissional; Prometeus precisa exceder com boundary, evidencia, privacidade e rollback | `VALUES.md`, `shadow/SOTA-DECISIONS.md`, `scripts/integrity.sh` |
+| 2026-04-27 | Infra improvement research scan | Pesquisa externa confirma foco em simplicidade, guardrails, tracing quando houver agente real e WSL ext4; proxima infra deve atacar drift/CI/evidencia antes de runtime | `shadow/SOTA-DECISIONS.md`, `shadow/EVIDENCE-LOG.md` |
+| 2026-04-27 | ADR sanitation pass | Extraidas decisoes centrais para ADRs 0002-0005 e corrigido drift de path canonico em docs ativos de agentes/orquestracao | `docs/adr/`, `shadow/AGENT-MODULES.md`, `shadow/AGENT-USAGE.md`, `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` |
+| 2026-04-27 | SOTA alignment batch 01 triage | Implementado CI local read-only + stale evidence warning; PHI prompt hook, handoff JSON, value commit gate e issues:write deferidos/rejeitados | `scripts/simulate-ci.sh`, `scripts/check.sh`, `scripts/integrity.sh`, `shadow/BACKLOG.md`, `internal/evolution/backlog.json` |
+| 2026-04-27 | Frontier orchestration objective | V9 adicionado: LLMs orquestrados para educacao, pesquisa, EBM e auxilio direto, com modelos escolhidos por eval local e HITL | `VALUES.md`, `PROJECT_CONTRACT.md`, `shadow/SOTA-DECISIONS.md` |
+| 2026-04-27 | Multimodel SOTA efficacy priority | Multimodel vira hipotese operacional preferida; SOTA e eficacia acima de custo, que vira constraint de viabilidade | `VALUES.md`, `PROJECT_CONTRACT.md`, `docs/adr/0007-multimodel-sota-efficacy.md` |
 
 ## Claude Code, Codex e GEMINI.md adapters
 

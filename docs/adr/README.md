@@ -16,7 +16,12 @@
 | # | Titulo | Status | Data |
 |---|---|---|---|
 | 0001 | [Canonical Linux workspace](0001-canonical-linux-workspace.md) | accepted | 2026-04-26 |
+| 0002 | [Exclusive executor rule](0002-exclusive-executor-rule.md) | accepted | 2026-04-26 |
+| 0003 | [Privacy guard minimum](0003-privacy-guard-minimum.md) | accepted | 2026-04-26 |
+| 0004 | [Procedure before agent runtime](0004-procedure-before-agent-runtime.md) | accepted | 2026-04-25 |
+| 0005 | [Producer-consumer gates](0005-producer-consumer-gates.md) | accepted | 2026-04-27 |
 | 0006 | [Triadic SOTA stack debate](0006-triadic-stack-debate.md) | accepted | 2026-04-26 |
+| 0007 | [Multimodel SOTA efficacy](0007-multimodel-sota-efficacy.md) | accepted | 2026-04-27 |
 
 ## Template
 

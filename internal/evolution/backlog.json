@@ -37,7 +37,7 @@
       "risk": "CI Windows divergir do ambiente local ou bloquear push sem ganho.",
       "rollback": "Desabilitar workflow ou remover branch protection; checks locais continuam.",
       "negative_criterion": "Se o workflow falhar por ambiente por 2 ciclos sem bug real, documentar bloqueio e manter apenas check local.",
-      "next_action": "Bloqueado por auth/rede: autenticar gh com permissao read-only; repetir gh run list e decidir branch protection ou bloqueio documentado."
+      "next_action": "Rodar scripts/simulate-ci.sh no WSL antes de gh run list; se local passar e remoto falhar, autenticar gh com permissao read-only e documentar bloqueio sem elevar workflow para write."
     },
     {
       "id": "EV-B3",
@@ -63,11 +63,11 @@
       "batch": 4,
       "status": "planned",
       "area": "Arquitetura e documentacao",
-      "problem": "SOTA-DECISIONS.md esta grande e arquitetura ainda depende de TREE.md + contexto humano.",
+      "problem": "SOTA-DECISIONS.md esta grande; ADRs 0002-0005 ja extraem decisoes centrais, mas a fonte longa ainda precisa virar indice sem perder historico operacional.",
       "trigger": "Quando SOTA-DECISIONS.md continuar acima do threshold ou nova decisao estrutural for adicionada.",
       "acceptance": [
         "architecture note existe",
-        "ADR index existe",
+        "ADR index existe e lista 0001-0007",
         "SOTA sprawl reduzido ou arquivado",
         "harness continua passando"
       ],
@@ -75,7 +75,7 @@
       "risk": "Criar mais documentos sem reduzir sprawl.",
       "rollback": "Reverter split e manter SOTA-DECISIONS.md como fonte unica ate nova estrategia.",
       "negative_criterion": "Se aumentar arquivo total sem melhorar busca, reverter.",
-      "next_action": "Planejar decomposicao de SOTA-DECISIONS.md somente depois de Batch 2."
+      "next_action": "Usar ADRs 0002-0005 como base; proxima rodada deve reduzir SOTA-DECISIONS.md para indice + decisoes recentes, sem mover privacy docs ainda."
     },
     {
       "id": "EV-B5",
@@ -103,6 +103,25 @@
       "rollback": "Remover o subcomando/gate e manter apenas o harness atual.",
       "negative_criterion": "Se em 30 dias o gate novo nao detectar regressao real ou duplicar checks existentes, simplificar ou remover.",
       "next_action": "Comparar convergencias/divergencias OLMO vs OLMO_GENESIS e adaptar somente os padroes de maturity_audit.py, context_audit.py, tools/integrity.sh e hooks-runtime-S258 como gate pequeno e local."
+    },
+    {
+      "id": "EV-B6",
+      "batch": 6,
+      "status": "planned",
+      "area": "SOTA alignment e metricas",
+      "problem": "Propostas SOTA podem virar automacao teatral quando nao declaram producer, consumer, falha observada e rollback.",
+      "trigger": "Nova proposta de hook, metricas de valor, handoff machine-readable, permissao GitHub de escrita ou guard de privacidade em prompt.",
+      "acceptance": [
+        "scripts/simulate-ci.sh reproduz o leg Linux/WSL read-only do workflow",
+        "scripts/integrity.sh alerta sobre procedures candidate/operational sem evidencia recente",
+        "PHI prompt hook fica rejeitado como bloqueio universal ate existir workflow privado aprovado",
+        "handoff JSON e value trace ficam deferidos ate haver consumidor real"
+      ],
+      "owner": "Lucas + agent",
+      "risk": "Confundir pesquisa ambiciosa com controle real; ou rejeitar cedo demais uma automacao util.",
+      "rollback": "Remover simulate-ci, stale evidence warning e registros EV-B6 se nao reduzirem diagnostico ou retrabalho.",
+      "negative_criterion": "Se em 30 dias nao ajudar EV-B2 nem orientar promocao/aposentadoria de procedures, simplificar ou remover.",
+      "next_action": "Usar scripts/simulate-ci.sh antes do proximo diagnostico GH-403; revisar warnings de stale evidence no proximo PR de hygiene."
     }
   ]
 }

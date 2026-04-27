@@ -13,6 +13,7 @@ warnings=()
 ok() { printf '[OK] %s\n' "$1"; }
 warn() { warnings+=("$1"); printf '[WARN] %s\n' "$1"; }
 fail() { failures+=("$1"); printf '[FAIL] %s\n' "$1"; }
+has_cmd() { command -v "$1" >/dev/null 2>&1; }
 
 require_file() {
   [[ -f "$1" ]] && ok "file exists: $1" || fail "missing file: $1"
@@ -41,7 +42,7 @@ required_files=(
   biome.json
   lab/wiki-graph-lab/pyproject.toml lab/wiki-graph-lab/uv.lock
   .gitignore .claudeignore .github/workflows/self-evolution.yml
-  scripts/check.sh scripts/evolve.sh scripts/integrity.sh scripts/install-stack.sh scripts/guard-olmo-write-hook.sh scripts/test-olmo-boundary-guard.sh scripts/doctor-github-remote.sh
+  scripts/check.sh scripts/evolve.sh scripts/integrity.sh scripts/install-stack.sh scripts/simulate-ci.sh scripts/guard-olmo-write-hook.sh scripts/test-olmo-boundary-guard.sh scripts/doctor-github-remote.sh
   shadow/FOUNDATION.md shadow/HANDOFF.md shadow/AGENT-MODULES.md shadow/HYGIENE.md
   shadow/SOTA-DECISIONS.md shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md
   shadow/GITHUB-REMOTE-WSL.md
@@ -138,13 +139,27 @@ require_text shadow/THREAT-MODEL.md '^## Ameacas$' 'threat model threats'
 require_text shadow/INCIDENT-LOG.md '^## Entradas$' 'incident log entries'
 require_text shadow/GITHUB-REMOTE-WSL.md '^## Procedimento$' 'GitHub WSL remote procedure'
 
-if rg -n --hidden --glob '!.git/**' --glob '!scripts/check.sh' --glob '!private-learning/**' --glob '!Prometeus/wiki/Clippings/**' --glob '!Prometeus/wiki/Daily/**' --glob '!Prometeus/wiki/Attachments/**' 'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|BEGIN RSA PRIVATE KEY' . >/tmp/prometeus-secret-scan.txt; then
+if has_cmd rg; then
+  secret_scan_cmd=(rg -n --hidden --glob '!.git/**' --glob '!scripts/check.sh' --glob '!private-learning/**' --glob '!Prometeus/wiki/Clippings/**' --glob '!Prometeus/wiki/Daily/**' --glob '!Prometeus/wiki/Attachments/**' 'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|BEGIN RSA PRIVATE KEY' .)
+else
+  warn "rg not installed; using grep fallback for secret scan"
+  secret_scan_cmd=(grep -RInE --exclude-dir=.git --exclude=check.sh 'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|BEGIN RSA PRIVATE KEY' .)
+fi
+
+if "${secret_scan_cmd[@]}" >/tmp/prometeus-secret-scan.txt; then
   fail "no obvious secret strings found: $(wc -l </tmp/prometeus-secret-scan.txt) finding(s)"
 else
   ok "no obvious secret strings"
 fi
 
-if rg -n 'C:\\Dev\\Projetos\\OLMO|/mnt/c/Dev/Projetos/OLMO' scripts shadow AGENTS.md README.md TREE.md PROJECT_CONTRACT.md >/tmp/prometeus-olmo-paths.txt; then
+if has_cmd rg; then
+  olmo_path_cmd=(rg -n 'C:\\Dev\\Projetos\\OLMO|/mnt/c/Dev/Projetos/OLMO' scripts shadow AGENTS.md README.md TREE.md PROJECT_CONTRACT.md)
+else
+  warn "rg not installed; using grep fallback for OLMO path scan"
+  olmo_path_cmd=(grep -RInE 'C:\\Dev\\Projetos\\OLMO|/mnt/c/Dev/Projetos/OLMO' scripts shadow AGENTS.md README.md TREE.md PROJECT_CONTRACT.md)
+fi
+
+if "${olmo_path_cmd[@]}" >/tmp/prometeus-olmo-paths.txt; then
   ok "OLMO path references stay documented"
 else
   ok "no protected OLMO path references outside boundary docs"
@@ -152,6 +167,7 @@ fi
 
 if [[ -f Prometeus/wiki/Maps/Prometeus.canvas ]]; then
   while IFS= read -r path; do
+    path="${path//$'\r'/}"
     [[ -z "$path" ]] && continue
     [[ -f "Prometeus/$path" ]] && ok "canvas file reference resolves: $path" || fail "canvas file reference missing: $path"
   done < <(jq -r '.nodes[]? | select(.type == "file") | .file' Prometeus/wiki/Maps/Prometeus.canvas)

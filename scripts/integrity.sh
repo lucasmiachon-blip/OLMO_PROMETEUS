@@ -10,6 +10,7 @@ warnings=()
 ok() { printf '[OK] %s\n' "$1"; }
 warn() { warnings+=("$1"); printf '[WARN] %s\n' "$1"; }
 fail() { failures+=("$1"); printf '[FAIL] %s\n' "$1"; }
+has_cmd() { command -v "$1" >/dev/null 2>&1; }
 
 require_text() {
   local file="$1" pattern="$2" label="$3"
@@ -117,6 +118,19 @@ check_values_contract() {
   require_text AGENTS.md 'VALUES.md' 'agent contract references values'
 }
 
+check_adr_index() {
+  local id
+  require_text docs/adr/README.md '^## Indice$' 'ADR index exists'
+  for id in 0001 0002 0003 0004 0005 0006 0007; do
+    require_text docs/adr/README.md "$id" "ADR index references $id"
+  done
+  require_text docs/adr/0002-exclusive-executor-rule.md '^# 0002' 'ADR 0002 exists'
+  require_text docs/adr/0003-privacy-guard-minimum.md '^# 0003' 'ADR 0003 exists'
+  require_text docs/adr/0004-procedure-before-agent-runtime.md '^# 0004' 'ADR 0004 exists'
+  require_text docs/adr/0005-producer-consumer-gates.md '^# 0005' 'ADR 0005 exists'
+  require_text docs/adr/0007-multimodel-sota-efficacy.md '^# 0007' 'ADR 0007 exists'
+}
+
 check_antifragile_contract() {
   require_text shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md 'erro observado vira detector, regra ou teste de regressao' 'antifragile requires detector/rule/test'
   require_text VALUES.md 'Falha so vira aprendizado quando reduz repeticao via teste, detector, regra ou backlog com criterio negativo' 'values antifragile is verifiable'
@@ -124,8 +138,69 @@ check_antifragile_contract() {
   require_text shadow/EVIDENCE-LOG.md 'producer-consumer-gate.*T3 aplicado|T3 aplicado.*producer-consumer-gate' 'producer-consumer evidence exists'
 }
 
+check_stale_candidate_evidence() {
+  local today_epoch procedure last_date last_epoch age
+
+  if ! today_epoch="$(date -u +%s 2>/dev/null)"; then
+    warn "skip stale evidence check: date unavailable"
+    return
+  fi
+
+  while IFS= read -r procedure; do
+    [[ -z "$procedure" ]] && continue
+    last_date="$(
+      awk -F'|' -v procedure="$procedure" '
+        $0 ~ /^\|[[:space:]]*[0-9]{4}-[0-9]{2}-[0-9]{2}[[:space:]]*\|/ {
+          date=$2
+          proc=$3
+          gsub(/^[[:space:]]+|[[:space:]]+$/, "", date)
+          gsub(/^[[:space:]]+|[[:space:]]+$/, "", proc)
+          if (proc == procedure) {
+            print date
+          }
+        }
+      ' shadow/EVIDENCE-LOG.md | sort | tail -n 1
+    )"
+
+    if [[ -z "$last_date" ]]; then
+      warn "candidate/operational procedure has no evidence entry: $procedure"
+      continue
+    fi
+
+    if ! last_epoch="$(date -u -d "$last_date" +%s 2>/dev/null)"; then
+      warn "skip stale evidence age for $procedure: invalid date $last_date"
+      continue
+    fi
+
+    age=$(( (today_epoch - last_epoch) / 86400 ))
+    if [[ "$age" -gt 21 ]]; then
+      warn "candidate/operational procedure evidence is stale: $procedure last used $last_date (${age}d)"
+    else
+      ok "candidate/operational procedure evidence recent: $procedure ($last_date)"
+    fi
+  done < <(
+    awk -F'|' '
+      $0 ~ /^\| `[^`]+` / && ($5 ~ /`candidate`/ || $5 ~ /`operational`/) {
+        name=$2
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", name)
+        gsub(/`/, "", name)
+        print name
+      }
+    ' shadow/AGENT-MODULES.md | sort -u
+  )
+}
+
 check_no_external_write_targets() {
-  if rg -n '(^|[^A-Za-z0-9_])(cp|mv|rsync|tee|cat|python|node|bash|sh)[^`\n]*(/mnt/c/Dev/Projetos/OLMO|C:\\Dev\\Projetos\\OLMO)' scripts >/tmp/prometeus-integrity-external-write.txt; then
+  local pattern='(^|[^A-Za-z0-9_])(cp|mv|rsync|tee|cat|python|node|bash|sh)[^`\n]*(/mnt/c/Dev/Projetos/OLMO|C:\\Dev\\Projetos\\OLMO)'
+
+  if has_cmd rg; then
+    external_write_cmd=(rg -n "$pattern" scripts)
+  else
+    warn "rg not installed; using grep fallback for external write target scan"
+    external_write_cmd=(grep -RInE "$pattern" scripts)
+  fi
+
+  if "${external_write_cmd[@]}" >/tmp/prometeus-integrity-external-write.txt; then
     fail "script may write or execute against protected OLMO path: $(wc -l </tmp/prometeus-integrity-external-write.txt) finding(s)"
   else
     ok "scripts do not target protected OLMO paths"
@@ -137,7 +212,9 @@ check_hook_targets
 check_backlog_view_sync
 check_ev_b5_contract
 check_values_contract
+check_adr_index
 check_antifragile_contract
+check_stale_candidate_evidence
 check_no_external_write_targets
 
 if ((${#failures[@]} > 0)); then

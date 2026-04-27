@@ -26,9 +26,11 @@ TREE.md               # mapa profissional da arvore do repo
 scripts/check.sh      # harness local Bash-first, sem writes externos
 scripts/evolve.sh     # executor self-evolving Bash-first read-only
 scripts/integrity.sh  # gate read-only de integridade/maturidade local
+scripts/simulate-ci.sh # simulacao local read-only do workflow Self Evolution (Linux leg)
 scripts/install-stack.sh # diagnostico idempotente do stack (sem sudo)
 scripts/guard-olmo-write-hook.sh # guard Bash para boundary OLMO
 biome.json            # config raiz biome (lint+format JSON `internal/` + JS `lab/`)
+docs/adr/             # Architecture Decision Records curtos e aceitos
 lab/wiki-graph-lab/pyproject.toml # primeiro projeto Python real; ruff wired
 lab/wiki-graph-lab/uv.lock        # lockfile reproducible (uv pip compile)
 internal/evolution/   # backlog, risk register, review cadence + failure-registry do loop interno
@@ -53,6 +55,13 @@ Companions visuais reversiveis.
 
 - `lab/wiki-graph-lab/`: grafo HTML/JS que consome `Prometeus/wiki/` e abre notas no Obsidian.
 
+### `docs/adr/`
+
+Architecture Decision Records curtos para decisoes aceitas que outro agente precisa conhecer antes de repetir ou alterar infraestrutura.
+
+- `README.md`: indice 0001-0007.
+- `template.md`: formato MADR simplificado.
+- Criar ADR para boundary, executor rule, privacy guard, runtime/agent gate, hook/gate, MCP, memoria e rollback nao-trivial.
 
 ### `.github/workflows/`
 

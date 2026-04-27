@@ -41,6 +41,10 @@ assert_allowed() {
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 linux_sibling="$(dirname "$repo_root")/OLMO"
+is_windows=0
+case "$(uname -s 2>/dev/null)" in
+  MINGW*|MSYS*|CYGWIN*) is_windows=1 ;;
+esac
 
 assert_blocked "absolute OLMO write path" '{"tool_name":"Write","tool_input":{"file_path":"C:\\Dev\\Projetos\\OLMO\\HANDOFF.md"}}'
 assert_asked "absolute OLMO read path" '{"tool_name":"Read","tool_input":{"file_path":"C:\\Dev\\Projetos\\OLMO\\README.md"}}'
@@ -60,9 +64,11 @@ assert_blocked "relative legacy workspace write path" '{"tool_name":"Shell","too
 assert_blocked "invalid JSON fail-closed" '{not-json'
 assert_allowed "absolute OLMO_PROMETEUS path" '{"tool_name":"Write","tool_input":{"file_path":"C:\\Dev\\Projetos\\OLMO_PROMETEUS\\README.md"}}'
 assert_allowed "forward slash OLMO_PROMETEUS path" '{"tool_name":"Write","tool_input":{"file_path":"C:/Dev/Projetos/OLMO_PROMETEUS/README.md"}}'
-assert_asked "absolute Linux sibling OLMO read path" "{\"tool_name\":\"Read\",\"tool_input\":{\"file_path\":\"${linux_sibling}/README.md\"}}"
-assert_blocked "absolute Linux sibling OLMO write path" "{\"tool_name\":\"Write\",\"tool_input\":{\"file_path\":\"${linux_sibling}/HANDOFF.md\"}}"
-assert_allowed "absolute Linux OLMO_PROMETEUS path" "{\"tool_name\":\"Write\",\"tool_input\":{\"file_path\":\"${repo_root}/README.md\"}}"
+if [[ "$is_windows" -eq 0 ]]; then
+  assert_asked "absolute Linux sibling OLMO read path" "{\"tool_name\":\"Read\",\"tool_input\":{\"file_path\":\"${linux_sibling}/README.md\"}}"
+  assert_blocked "absolute Linux sibling OLMO write path" "{\"tool_name\":\"Write\",\"tool_input\":{\"file_path\":\"${linux_sibling}/HANDOFF.md\"}}"
+  assert_allowed "absolute Linux OLMO_PROMETEUS path" "{\"tool_name\":\"Write\",\"tool_input\":{\"file_path\":\"${repo_root}/README.md\"}}"
+fi
 
 if ((${#failures[@]} > 0)); then
   printf '[FAIL] %s\n' "${failures[@]}"

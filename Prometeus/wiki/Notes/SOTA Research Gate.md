@@ -18,7 +18,7 @@ Antes de mudar arquitetura, agentes, skills, hooks, MCP, memoria ou orquestracao
 1. Auditar o estado local.
 2. Pesquisar fontes primarias atuais.
 3. Registrar decisao curta.
-4. Explicitar trigger, nao-trigger, risco, custo e rollback.
+4. Explicitar trigger, nao-trigger, risco, viabilidade e rollback.
 5. Definir criterio negativo: quando nao aplicar.
 6. Editar apenas se a pesquisa justificar.
 7. Rodar [[Foundation Harness]] antes de commit.
@@ -41,4 +41,3 @@ Se a pratica externa exige escala, equipe, CI, produto, permissao ou runtime que
 - [[Promotion Gate]]
 - [[Workspace Boundary]]
 - [[Project Log]]
-

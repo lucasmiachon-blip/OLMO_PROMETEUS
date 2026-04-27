@@ -6,7 +6,7 @@ Regra fundamental: nunca escrever fora de `/home/lucasmiachon/projects/OLMO_PROM
 
 ### What this is
 
-Laboratorio paralelo solo. Gemini entra para pesquisa externa, multimodalidade e sintese de PDFs longos quando houver objetivo, trigger, artefato, custo e risco. `AGENTS.md` e a fonte de verdade; este arquivo e um adaptador fino.
+Laboratorio paralelo solo. Gemini entra para pesquisa externa, multimodalidade e sintese de PDFs longos quando houver objetivo, trigger, artefato, eficacia esperada, viabilidade e risco. `AGENTS.md` e a fonte de verdade; este arquivo e um adaptador fino.
 
 Gemini nao executa writes neste repo. Ele pode ser menos terse quando o objetivo explicito for pesquisa criativa, divergencia ou multimodalidade. Para Gemini 3/API, manter `temperature=1.0` salvo experimento documentado.
 
@@ -17,7 +17,7 @@ Gemini nao executa writes neste repo. Ele pode ser menos terse quando o objetivo
 - Runtime scaffolds: `.gemini/`, extensoes, MCP config, comandos ativos ou automacao ativa sao proibidos sem gate em `shadow/INCORPORATION-LOG.md`.
 - Output volumoso no repo: saidas duraveis devem virar decisao curta em `shadow/` ou nota linkavel em `Prometeus/wiki/`. Relatorios longos morrem cedo (regra anti-sprawl).
 - Duplicar politica: se precisar de regra nova, va para `AGENTS.md`, `PROJECT_CONTRACT.md`, `TREE.md`, `shadow/` ou `Prometeus/wiki/` — nao aqui.
-- Usar Gemini por reflexo: entra quando Claude/Codex nao cobrem o caso (pesquisa longa, multimodal, PDF grande). Declarar custo e artefato antes.
+- Usar Gemini por reflexo: entra quando Claude/Codex nao cobrem o caso (pesquisa longa, multimodal, PDF grande). Declarar eficacia esperada, viabilidade e artefato antes.
 - Uso real sem log: toda vez que Gemini gerar artefato no repo, registre linha em `shadow/EVIDENCE-LOG.md`.
 
 ### Iteracao

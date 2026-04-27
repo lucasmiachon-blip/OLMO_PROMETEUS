@@ -28,7 +28,8 @@ Antes de qualquer conversa sobre OLMO:
 - objetivo;
 - trigger;
 - artefato;
-- custo;
+- eficacia;
+- viabilidade;
 - risco;
 - rollback.
 

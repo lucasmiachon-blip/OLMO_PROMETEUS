@@ -72,7 +72,7 @@ Pesquisa atual em Anthropic Claude Code, OpenAI Agents SDK, LangGraph, CrewAI e 
 - `AGENTS.md` continua fonte portavel; `CLAUDE.md` fica adaptador fino. `.claude/rules/` so entra se houver regra path-specific repetida que esteja inflando contexto global.
 - Subagents entram explicitamente, read-only por padrao, para pesquisa/review/debug com escopo fechado. Agent teams experimentais so para pesquisa/review paralela, nunca para tocar dados sensiveis ou rodar sem supervisao.
 - Skills continuam procedure-first: so promover procedure operacional, com trigger/non-trigger fortes. Skills com side effect ou risco medico devem ser manual-trigger quando a ferramenta suportar.
-- Orquestracao copia os padroes, nao os frameworks: estado, ticket, budget, audit log, humano-no-loop, rollback e criterio negativo.
+- Orquestracao copia os padroes, nao os frameworks: estado, ticket, eficacia, budget como constraint, audit log, humano-no-loop, rollback e criterio negativo.
 - Para qualquer fluxo medico: sem PHI/dados sensiveis em prompt, repo ou automacao; usar dado sintetico/de-identificado; registrar fontes e limites.
 
 ### Nao incorporar ainda
@@ -81,7 +81,7 @@ Pesquisa atual em Anthropic Claude Code, OpenAI Agents SDK, LangGraph, CrewAI e 
 - `.claude/agents/`, hooks ou agent teams persistentes.
 - Agentes 24/7, heartbeats ou autonomia de negocio sobre dados medicos.
 
-Trigger futuro: >=3 ciclos reais em `EVIDENCE-LOG.md` mostram que um procedimento manual falha por falta de estado duravel, HITL formal, tracing ou coordenacao multi-agente. Sem esse trigger, o custo operacional e o risco de privacidade superam o ganho.
+Trigger futuro: >=3 ciclos reais em `EVIDENCE-LOG.md` mostram que um procedimento manual falha por falta de estado duravel, HITL formal, tracing ou coordenacao multi-agente. Sem esse trigger, a viabilidade operacional e o risco de privacidade superam o ganho.
 
 ## Local skills contract
 
@@ -116,14 +116,14 @@ Corpo: resumo curto + links + mini-evals. Nao duplicar integralmente o procedure
 ### Guardrails de skills locais
 
 - Uma skill por procedure; nao criar skill sem procedure em shadow/.
-- Skill nao pode escrever fora de `C:\Dev\Projetos\OLMO_PROMETEUS`.
+- Skill nao pode escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
 - Cada uso real de skill vira linha em `shadow/EVIDENCE-LOG.md`.
 - Se em 60 dias (ate 2026-06-22) nenhuma skill reduzir retrabalho, reverter e voltar a proibir `.claude/skills/`.
 
 ## Guardrails
 
 - Subagents read-only por default.
-- No write outside `C:\Dev\Projetos\OLMO_PROMETEUS` (Fundamental Boundary vale para subagents tambem).
+- No write outside `/home/lucasmiachon/projects/OLMO_PROMETEUS` (Fundamental Boundary vale para subagents tambem).
 - Cada uso de subagent que gera artefato persistente = linha em `shadow/EVIDENCE-LOG.md`.
 - Cost awareness: subagent = tokens extras. Usar quando economiza contexto principal ou da paralelismo util.
 

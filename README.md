@@ -66,7 +66,7 @@ flowchart TD
     C --> D[3. Escrever decisao curta]
     D --> E{Pesquisa sustenta para este repo pequeno?}
     E -->|nao| R[Rejeitar / adiar]
-    E -->|sim| F[4. Trigger + nao-trigger + risco + custo + rollback + criterio negativo]
+    E -->|sim| F[4. Trigger + nao-trigger + risco + viabilidade + rollback + criterio negativo]
     F --> G[5. Harness pass]
     G --> H[Editar + commit pequeno + EVIDENCE-LOG entry]
 ```

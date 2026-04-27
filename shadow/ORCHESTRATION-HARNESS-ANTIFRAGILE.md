@@ -68,12 +68,12 @@ IGNORE por enquanto:
 Uma mudanca estrutural de orquestracao/harness/antifragile so esta pronta quando cumpre todos:
 
 1. **Baseline:** demonstrar por que prompt/procedure single nao basta, ou declarar que ainda basta.
-2. **Contrato:** trigger, non-trigger, input, output, tools, permissoes, estado, custo e rollback.
+2. **Contrato:** trigger, non-trigger, input, output, tools, permissoes, estado, eficacia esperada, viabilidade e rollback.
 3. **Artefato:** produzir arquivo persistente em `shadow/`, `scripts/` ou `Prometeus/wiki`, nao memoria solta.
 4. **Teste:** harness ou mini-eval cobre pelo menos 1 caso permitido e 1 caso proibido.
 5. **Falha:** erro esperado tem comportamento fail-closed ou fallback claro.
 6. **Observabilidade:** resultado deixa rastro em `EVIDENCE-LOG`, git diff ou log de harness.
-7. **Blast radius:** nenhum write fora de `C:\Dev\Projetos\OLMO_PROMETEUS`; OLMO protegido permanece read-only.
+7. **Blast radius:** nenhum write fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`; OLMO protegido permanece read-only.
 8. **Dry-run:** `scripts/check.sh` passa.
 9. **Learning-loop:** regressao do guard passa em `scripts/test-olmo-boundary-guard.sh`.
 10. **CASE_edges:** casos de sibling, workspace legado, typo e path Linux passam no guard Bash.
@@ -103,11 +103,14 @@ Matriz atual:
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `scripts/check.sh` | agente/humano antes de commit | stdout + exit code | humano, CI read-only, `scripts/evolve.sh` | bloquear commit ate corrigir ou registrar bloqueio | harness como maturidade executavel | boundary + privacy + stack + wiki + integrity no mesmo dry-run local | se virar lento/ruidoso sem detectar regressao, dividir ou simplificar |
 | `scripts/integrity.sh` | `scripts/check.sh` ou chamada manual | stdout + exit code | humano/agent em T3+ | bloquear drift documental/contratual | `tools/integrity.sh` e auditorias de contexto do OLMO | exige `OLMO como piso`, valores, EV-B5, hook targets e ausencia de writes externos | remover checks que nao detectarem regressao real em 30 dias |
+| `scripts/simulate-ci.sh` | humano/agent antes de diagnosticar CI remoto | stdout + exit code | humano/agent; compara com `.github/workflows/self-evolution.yml` | falhar localmente se harness/evolve falhar; documentar Windows como leg remoto | self-evolution read-only do OLMO | simula env minima do Actions sem token, issue, commit, push ou write externo | se divergir do workflow real ou virar placebo, remover e manter `gh run` remoto |
 | `scripts/guard-olmo-write-hook.sh` | Claude PreToolUse local | JSON permissionDecision + stderr | Claude Code/humano | deny para write externo; ask para read externo | hooks como guard deterministico | bloqueio fail-closed de siblings `OLMO*` e workspace legado | se falso positivo recorrente bloquear trabalho legitimo, reduzir matcher e manter teste |
 | `scripts/ask-bash-write.sh` | Claude PreToolUse Bash local | JSON permissionDecision=ask | Claude Code/humano | pedir aprovacao para comandos com write-intent | ask-before-write do OLMO | nao bloqueia reads; deixa decisao humana e auditavel | se ruido superar beneficio, restringir padroes |
 | `.github/workflows/self-evolution.yml` | schedule/push/PR/manual | check remoto read-only | humano/GitHub UI | falhar workflow sem auto-write | self-evolution disciplinado do OLMO | workflow nao escreve, nao cria issue, nao commita, nao toca PHI | se remoto falhar 2 ciclos por ambiente sem bug real, documentar bloqueio |
 
 Regra T3: gate novo sem linha nesta matriz fica bloqueado. Se a linha nao tiver `Producer`, `Consumer`, `Failure action`, `OLMO floor` e `Prometeus extra`, e teatro.
+
+ADR canonico: `docs/adr/0005-producer-consumer-gates.md`.
 
 ## Antifragile Lite
 

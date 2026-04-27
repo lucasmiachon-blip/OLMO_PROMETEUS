@@ -2,9 +2,9 @@
 
 ## Objetivo
 
-Validar um laboratorio paralelo, guiado por orquestracao de baixo risco, para vault, digest e study flow.
+Validar um laboratorio paralelo, guiado por orquestracao de baixo risco, para vault, digest, study flow, educacao, pesquisa, EBM e auxilio direto com LLMs.
 
-Valores e objetivos operacionais vivem em `VALUES.md`. Qualquer gap novo deve declarar qual valor melhora, dor real, trigger, artefato, consumer, evidencia, custo, risco, rollback e criterio negativo.
+Valores e objetivos operacionais vivem em `VALUES.md`. Qualquer gap novo deve declarar qual valor melhora, dor real, trigger, artefato, consumer, evidencia, eficacia, viabilidade, risco, rollback e criterio negativo.
 
 ## Limites
 
@@ -29,7 +29,7 @@ Mudancas estruturais exigem:
 1. auditoria local;
 2. pesquisa SOTA em fonte primaria atual;
 3. decisao curta registrada;
-4. risco, custo, rollback e criterio negativo;
+4. risco, viabilidade, rollback e criterio negativo;
 5. harness passando antes de commit.
 
 Se a pesquisa apontar que a ideia nao e necessaria para este repo pequeno, a acao correta e nao implementar.
@@ -82,3 +82,4 @@ Um artefato daqui so entra em conversa de migracao quando:
 - Python: `uv` + `ruff` wired em `lab/wiki-graph-lab/pyproject.toml` + `uv.lock` (primeiro projeto real); novos projetos seguem o mesmo manifesto.
 - TypeScript/JavaScript: `biome` wired em `biome.json` raiz (lint+format JSON `internal/` + JS `lab/`); `pnpm` + `vite` entram quando houver projeto JS-heavy. `bun` 1.3.13 instalado para experimento por projeto.
 - Agentes: Codex e Claude Code sao executores possiveis, mas nunca juntos na mesma tarefa/rodada de edicao. Gemini e pesquisa/contraponto sem write. Sem runtime persistente sem gate.
+- Modelos: OpenAI, Anthropic, Google e modelos locais podem ser combinados. Multimodel e a hipotese operacional preferida para tarefas frontier, mas so entra em fluxo operacional apos fonte SOTA atual, eval local, eficacia contra baseline, privacidade clara, HITL, viabilidade e rollback.

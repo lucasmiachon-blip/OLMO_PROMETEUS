@@ -44,7 +44,7 @@ Rodar higiene quando:
 - Nao deletar arquivos sem confirmacao humana.
 - Nao mover arquivos se isso puder quebrar referencias sem revisar os links.
 - Nao criar nova skill/agente para cada ideia; exigir uso recorrente.
-- Nao criar diretorio de runtime sem trigger, evidencia, custo, risco e rollback.
+- Nao criar diretorio de runtime sem trigger, evidencia de eficacia, viabilidade, risco e rollback.
 - Nao transformar pesquisa em arquitetura se nao houver trigger real.
 - Nao colocar material privado em `shadow/`.
 - Nao colocar captura crua ou pessoal no vault versionado.
