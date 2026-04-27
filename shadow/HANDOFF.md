@@ -40,23 +40,30 @@ Perfil do operador: medico solo dev. Padrao de ouro: auditavel, reversivel, huma
 ### Harness
 - `./scripts/check.sh --strict` passa com 0 warnings.
 - `scripts/test-olmo-boundary-guard.sh` passa 21/21 casos.
-- 6 scripts em `scripts/` (todos `bash -n` OK): `check.sh`, `evolve.sh`, `doctor-github-remote.sh`, `guard-olmo-write-hook.sh`, `test-olmo-boundary-guard.sh`, + 5 hooks abaixo.
+- Stack gates wired: `ruff check lab/wiki-graph-lab/` + `biome check .` rodam em `check.sh` se manifestos presentes.
+- 7 scripts em `scripts/` (todos `bash -n` OK): `check.sh`, `evolve.sh`, `install-stack.sh`, `doctor-github-remote.sh`, `guard-olmo-write-hook.sh`, `test-olmo-boundary-guard.sh`, + 5 hooks abaixo.
 
-### Tools instaladas (user-space, sem sudo)
-| Ferramenta | Versao | Path |
-|---|---|---|
-| Claude Code | 2.1.119 | `~/.npm-global/bin/claude` |
-| Codex CLI | 0.125.0 | global npm |
-| Gemini CLI | 0.39.1 | global npm |
-| `uv` (Astral Python) | 0.11.7 | `~/.local/bin/uv` |
-| `ruff` | 0.15.12 | `~/.local/bin/ruff` |
-| `biome` | 2.4.13 | `~/.npm-global/bin/biome` |
-| `pnpm` | 10.33.2 | `~/.npm-global/bin/pnpm` |
-| `rg` (ripgrep) | 14.1.1 | `~/.local/bin/rg` |
-| Zellij | 0.44.1 | `~/.local/bin/zellij` |
-| WSL | 2.6.3.0 | host |
-| Ubuntu WSL | 24.04.4 LTS | bloqueado em 24.04 (upgrade exige novo trigger/metrica/rollback) |
-| `bun` | pendente | precisa `sudo apt install unzip`. Defer. |
+### Tools instaladas (13/13 — stack saiu do papel em 2026-04-26)
+| Ferramenta | Versao | Path | Wired-in |
+|---|---|---|---|
+| Claude Code | 2.1.119 | `~/.local/bin/claude` | autoria/arquitetura |
+| Codex CLI | 0.125.0 | `~/.npm-global/bin/codex` | edicao/auditoria (`xhigh`) |
+| Gemini CLI | 0.39.1 | `~/.npm-global/bin/gemini` | pesquisa/contraponto (READ-ONLY) |
+| `uv` (Astral Python) | 0.11.7 | `~/.local/bin/uv` | `lab/wiki-graph-lab/pyproject.toml` + `uv.lock` |
+| `ruff` | 0.15.12 | `~/.local/bin/ruff` | `pyproject.toml [tool.ruff]`; `check.sh` gate |
+| `biome` | 2.4.13 | `~/.npm-global/bin/biome` | `biome.json` raiz; `check.sh` gate |
+| `pnpm` | 10.33.2 | `~/.npm-global/bin/pnpm` | aguarda projeto JS-heavy real |
+| `node` | 20.20.2 | `/usr/bin/node` | runtime npm globals |
+| `bun` | 1.3.13 | `~/.local/bin/bun` | instalado via direct binary + python unzip (bypass `sudo apt install unzip`); experimento por projeto |
+| `rg` (ripgrep) | 14.1.1 | `~/.local/bin/rg` | `check.sh` (secret scan, OLMO refs) |
+| `jq` | 1.7 | `/usr/bin/jq` | `check.sh` (JSON validation) |
+| `gh` | 2.45.0 | `/usr/bin/gh` | `shadow/GITHUB-REMOTE-WSL.md` |
+| `git` | 2.43 | `/usr/bin/git` | system |
+| Zellij | 0.44.1 | `~/.local/bin/zellij` | multi-pane terminal opcional |
+| WSL | 2.6.3.0 | host | runtime |
+| Ubuntu WSL | 24.04.4 LTS | bloqueado em 24.04 (upgrade exige novo trigger/metrica/rollback) | runtime |
+
+Diagnostico: `./scripts/install-stack.sh` (idempotente, sem sudo, reporta versao+path+install hint).
 
 ---
 
@@ -109,23 +116,18 @@ Wiki notes novas (4, status `experiment`, source devmentor): `Prometeus/wiki/Not
 
 ---
 
-## 7. DONE nesta sessao (2026-04-26 PM tarde)
+## 7. DONE nesta sessao (2026-04-26 PM noite — plan `valiant-dreaming-waffle`)
 
-Plan executado: `harmonic-waddling-spring` (Fase A+B+C) seguido por hook fixes + doc cleanup.
+Trigger: user "saiu do papel?" → stack declarada mas zero manifestos no repo.
 
 Commits (em ordem):
 
-- `478bc1d` — docs: compress 12 SOTA-STACK + LEGACY raws into ADR 0006 (-1802L net; sintese em ADR ~50L; raws recuperaveis via git history pre-este-commit).
-- `9c3e2e7` — docs: incorporate 4 SOTA pattern notes from devmentor legacy (`Prometeus/wiki/Notes/`).
-- `04dad2f` — docs: update HANDOFF + EVIDENCE-LOG (3 entries novas).
-- `03369ef` — ops: trace-edits hook also prints to stderr (visible to user em tempo real).
-- `ab574b3` — ops: guard-olmo-write-hook scans path/command fields only (corrige false positive onde HANDOFF mencionava sibling em content).
-- `8ed7a4b` — docs: rewrite HANDOFF.md as single dense hydration source (-35L net; 11 secoes numeradas, sem duplicatas).
-- (este commit) — ops: incorporate ask-bash-write hook (user-pedido: ask antes de Bash com write-intent).
+- `fe8d26d` — ops: add ask-bash-write hook + cross-refs (sessao anterior).
+- (este commit) — `feat(stack): wire uv+ruff+biome manifests, README workflow with mermaid, install bun via direct binary` — stack saiu do papel: 13/13 tools OK; 3 manifestos novos (`biome.json`, `lab/wiki-graph-lab/pyproject.toml`, `lab/wiki-graph-lab/uv.lock`); `scripts/install-stack.sh` idempotente; `scripts/check.sh` agora roda `ruff` + `biome` gates; README reescrito com stack table + 3 Mermaid diagrams (lanes, SOTA gate, executor selection); cross-refs em AGENTS/PROJECT_CONTRACT/TREE/FOUNDATION/HANDOFF passaram de condicional ("quando houver projeto real") para afirmativo (manifestos vivos).
 
-Smoke-test 5 hooks: 5/5 passam. Push `origin/main` executado.
+Bun instalado via direct binary download + python unzip (bypass `sudo apt install unzip`); `~/.local/bin/bun 1.3.13`.
 
-Sessao anterior (2026-04-26 PM, ja arquivada via git history) deixou: D04 aplicado (`50979f9`), consolidacao triadica (`a908770`), skeleton `docs/adr` + `procedures/` (`6fcc233`), 5 hooks instalados (`f21a6b3`).
+Sessao anterior (commit `fe8d26d`) deixou: 7 hooks ativos smoke-tested 5/5; push `origin/main`; HANDOFF reescrito como fonte unica de hidratacao.
 
 ---
 
@@ -157,10 +159,10 @@ Sessao anterior (2026-04-26 PM, ja arquivada via git history) deixou: D04 aplica
 ### P2 — Future (defer ate trigger real)
 
 9. **`shared-v2/` design system de OLMO**: defer ate primeiro projeto aula real no Prometeus.
-10. **`bun` install**: precisa `sudo apt install unzip`. Defer.
-11. **`gh run view --log-failed` HTTP 403**: defer ate ter admin do repo ou simulacao local.
-12. **Branch protection no `main`**: defer ate workflow verde.
-13. **Aplicar `PHI-CHECKLIST.md` em fluxo real**: trigger = primeiro caso clinico/dado pessoal a entrar no fluxo. Nao tocar antes.
+10. **`gh run view --log-failed` HTTP 403**: defer ate ter admin do repo ou simulacao local.
+11. **Branch protection no `main`**: defer ate workflow verde.
+12. **Aplicar `PHI-CHECKLIST.md` em fluxo real**: trigger = primeiro caso clinico/dado pessoal a entrar no fluxo. Nao tocar antes.
+13. **`pnpm` + `vite` wired**: trigger = primeiro projeto JS-heavy real (>=1 `.tsx` ou >=3 `.ts`). Por enquanto `biome` standalone basta.
 
 ---
 

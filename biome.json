@@ -1,0 +1,35 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.13/schema.json",
+  "files": {
+    "includes": [
+      "**/*.json",
+      "**/*.jsonc",
+      "lab/**/*.js",
+      "!Prometeus/.obsidian",
+      "!node_modules",
+      "!lab/**/graph-data.js",
+      "!.venv",
+      "!Prometeus/wiki/Maps/Prometeus.canvas"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "json": {
+    "formatter": {
+      "trailingCommas": "none"
+    },
+    "parser": {
+      "allowComments": true,
+      "allowTrailingCommas": false
+    }
+  }
+}

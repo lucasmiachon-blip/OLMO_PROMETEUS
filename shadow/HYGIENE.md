@@ -76,26 +76,11 @@ Se nao passar nessa barra, consolidar ou deletar.
 - Windows fica como UI humana via `\\wsl.localhost\Ubuntu\home\lucasmiachon\projects\OLMO_PROMETEUS\Prometeus`, nao fonte operacional.
 - Contrato de executores: Codex ou Claude Code por rodada; Gemini pesquisa sem write.
 - Legado consolidado em `shadow/INCORPORATION-LOG.md` (raws originais deletados em PR 1; recuperaveis via git history pre-ADR-0006).
-- Commits granulares recentes: `df2fa9b`, `e1691b6`, `6e7cadd`.
+- Stack saiu do papel: 13/13 tools wired via `biome.json` raiz + `lab/wiki-graph-lab/pyproject.toml` + `uv.lock`. Diagnostico `./scripts/install-stack.sh`.
 - Nao ha diretorio irmao de roadmap no filesystem.
 - Remote Git configurado e push para `origin/main` funciona.
-- GitHub Actions `Self Evolution` existe, mas falha de forma recorrente no passo `Harness`; log detalhado via `gh run view --log-failed` retornou HTTP 403 por falta de admin.
-2026-04-25:
+- GitHub Actions `Self Evolution` existe, mas falha recorrente no passo `Harness`; log detalhado via `gh run view --log-failed` retornou HTTP 403 por falta de admin.
 
-- Snapshot Windows-first ficou historico; a fonte operacional foi migrada para Linux/WSL ext4 em 2026-04-26.
-2026-04-24:
-
-- Workspace canonico confirmado em `C:\Dev\Projetos\OLMO_PROMETEUS`.
-- Vault canonico confirmado em `C:\Dev\Projetos\OLMO_PROMETEUS\Prometeus`.
-- Companion visual versionado em `lab/wiki-graph-lab/`, lendo apenas `Prometeus/wiki/`.
-- Diretorio legado restante foi removido; o survivor unico e `C:\Dev\Projetos\OLMO_PROMETEUS`.
-- Harness passou e Git ficou limpo apos a consolidacao documental.
-2026-04-23:
-
-- Estrutura esta pequena e clara.
-- Principal risco: recriar sprawl SOTA depois da limpeza.
-- Acoes aplicadas: `INCORPORATION-LOG.md`, regra de `Digerido` persistido, este checklist e consolidacao em `SOTA-DECISIONS.md`.
-- Sem edicao autorizada em `C:\Dev\Projetos\OLMO`.
-- Frame adversarial aplicado: contexto de agente e Git precisam ignorar as mesmas areas privadas/geradas.
+Snapshots anteriores (2026-04-23 a 25, Windows-first em `C:\Dev\Projetos\OLMO_PROMETEUS`) foram superseded pela migracao Linux/WSL em 2026-04-26 (ADR `0001-canonical-linux-workspace`); recuperaveis via git history.
 
 Coautoria: Lucas + GPT-5.4 (Codex)

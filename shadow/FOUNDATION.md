@@ -123,12 +123,13 @@ Delegacao:
 - Leituras auxiliares podem ser feitas por subagentes apenas quando a conversa justificar (ver padroes SOTA em `shadow/AGENT-USAGE.md`).
 - Gemini entra para pesquisa longa/multimodal somente com objetivo, trigger, artefato, custo e risco; nao executa writes neste repo.
 
-Shell e linguagens:
+Shell e linguagens (wired):
 
 - Bash e o contrato versionado para scripts, harness e agentes.
-- Markdown, JSON e Bash sao o core atual.
-- Python entra com `uv` + `ruff` quando houver projeto Python real.
-- TypeScript/JavaScript entram por projeto com `pnpm` + `vite` + `biome`; `bun` fica experimento por projeto.
+- Markdown, JSON e Bash sao o core.
+- Python: `uv` + `ruff` wired em `lab/wiki-graph-lab/pyproject.toml` + `uv.lock` (primeiro projeto real). Harness (`scripts/check.sh`) roda `ruff check` se manifesto presente.
+- JS/JSON: `biome` wired em `biome.json` raiz (lint+format `internal/evolution/*.json` + `lab/**/*.js`). Harness roda `biome check` se manifesto presente. `pnpm` + `vite` entram quando houver projeto JS-heavy. `bun` 1.3.13 instalado para experimento por projeto.
+- Diagnostico do stack: `./scripts/install-stack.sh` (idempotente, sem sudo).
 
 Sampling:
 

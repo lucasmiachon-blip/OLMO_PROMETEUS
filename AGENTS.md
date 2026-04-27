@@ -104,7 +104,7 @@ Este projeto nao usa memoria automatica como fonte operacional. A memoria do pro
 - Sampling: Gemini 3/API fica no default `temperature=1.0` para pesquisa criativa; Claude API pode usar temperatura alta/default `1.0` para geracao e arquitetura exploratoria; Codex/GPT reasoning usa `reasoning_effort`/verbosity, nao temperature, quando `xhigh` estiver ativo.
 - Adaptadores: `AGENTS.md` e a fonte unica. `CLAUDE.md`, `CODEX.md` e `GEMINI.md` sao adaptadores finos; nao duplicam politica.
 - Shell: `bash` e o contrato de scripts, harness e agentes. `zsh`, `fish` e `nushell` podem ser conforto humano local, nunca requisito versionado.
-- Linguagens: Markdown/JSON/Bash sao o core atual. Python entra com `uv` + `ruff` quando houver projeto Python real. TypeScript/JavaScript entram por projeto com `pnpm` + `vite` + `biome`; `bun` fica experimento por projeto; `esbuild` direto so para scripts/libs simples.
+- Linguagens: Markdown/JSON/Bash sao o core. Python wired via `uv` + `ruff` em [`lab/wiki-graph-lab/pyproject.toml`](lab/wiki-graph-lab/pyproject.toml) + `uv.lock` (primeiro projeto real). JS/JSON wired via `biome` em [`biome.json`](biome.json) raiz (lint+format `internal/evolution/*.json` + `lab/**/*.js`); `pnpm` + `vite` entram quando houver projeto JS-heavy real. `bun` 1.3.13 instalado para experimento por projeto. Diagnostico: `./scripts/install-stack.sh`.
 - Sistema: Linux/WSL Ubuntu 24.04 LTS em ext4 e o runtime operacional. Windows e Obsidian continuam UI humana quando util; o vault pode ser aberto via `\\wsl.localhost\Ubuntu\home\lucasmiachon\projects\OLMO_PROMETEUS\Prometeus`. Ubuntu 26.04, Fedora ou Linux nativo fora do WSL ficam bloqueados ate trigger, metrica e rollback.
 
 ## Error Reports and Self-Improvement

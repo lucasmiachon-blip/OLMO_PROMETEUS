@@ -1,119 +1,122 @@
 # open OLMO_PROMETEUS
 
-Laboratorio paralelo e independente para validar fluxo, digest, estudo e wiki operacional sem qualquer contaminacao do repo principal.
+Laboratorio paralelo solo, baixo risco, para validar fluxo (digest, study, wiki, gates de promocao) antes de promover qualquer artefato para `OLMO` (repo principal, intocavel sem autorizacao explicita).
 
-Be terse: docs curtos, uma fonte de verdade, sem duplicar politica em adaptadores.
+Be terse: politica vive uma vez em [`AGENTS.md`](AGENTS.md); adaptadores nao duplicam.
 
-## Regra principal
+## Stack
 
-- Este repositorio nao e o `OLMO`.
-- Nada daqui sincroniza automaticamente com `C:\Dev\Projetos\OLMO`.
-- Toda promocao para o repo principal depende de validacao humana explicita.
-- O foco inicial continua sendo a fatia: Prometeus vault + shadow decisions + harness.
+Workspace canonico unico: `/home/lucasmiachon/projects/OLMO_PROMETEUS` em Linux/WSL ext4 (Ubuntu 24.04 LTS).
 
-## Sistema operacional do repo
+| Camada | Tool | Versao | Wired-in |
+|---|---|---|---|
+| Core shell | `bash` 5.2.21 | system | scripts, hooks, harness |
+| VCS | `git` 2.43, `gh` 2.45 | system | `.github/workflows/`, `shadow/GITHUB-REMOTE-WSL.md` |
+| Search | `rg` 14.1.1 | user-space | usado em `scripts/check.sh` |
+| JSON | `jq` 1.7 | system | usado em `scripts/check.sh` para validar `internal/evolution/*.json` |
+| Agent CLI | `claude` 2.1.119 | global | autoria/arquitetura (Opus 4.7 1M) |
+| Agent CLI | `codex` 0.125.0 | global | edicao/auditoria (`reasoning_effort=xhigh`) |
+| Agent CLI | `gemini` 0.39.1 | global | pesquisa/contraponto (READ-ONLY) |
+| Python | `uv` 0.11.7 + `ruff` 0.15.12 | user-space | [`lab/wiki-graph-lab/pyproject.toml`](lab/wiki-graph-lab/pyproject.toml) + `uv.lock` |
+| JS/JSON | `biome` 2.4.13 | global | [`biome.json`](biome.json) raiz (lint+format JSON `internal/`, JS `lab/`) |
+| JS pkg mgr | `pnpm` 10.33.2 + `node` 20.20.2 | global | entra quando houver projeto JS-heavy real |
+| JS runtime | `bun` 1.3.13 | user-space | experimento por projeto |
+| UX | `zellij` 0.44.1 | user-space | multi-pane terminal opcional |
 
-- `AGENTS.md`: contrato operacional do laboratorio
-- `CLAUDE.md`: adaptador Boris-style para Claude Code, importando `AGENTS.md`
-- `CODEX.md`: adaptador para Codex, importando `AGENTS.md`
-- `GEMINI.md`: adaptador para Gemini CLI, importando `AGENTS.md`
-- `TREE.md`: mapa profissional da arvore e politica de incorporacao segura
-- `PROJECT_CONTRACT.md`: limites, faixas e criterio de promocao
-- `shadow/`: regras operacionais, gates, evidencia e pesquisa aplicada
-- `shadow/HANDOFF.md`: entrada curta para hidratar nova janela sem reler docs longos
-- `shadow/WORK-LANES.md`: fonte unica dos 6 estados (private, experiment, candidate, operational, retired, blocked) e promotion gate
-- `shadow/INCORPORATION-LOG.md`: log de transicoes de estado aplicadas
-- `shadow/EVIDENCE-LOG.md`: registro de uso real dos procedimentos (gate para `operational`)
-- `scripts/check.sh`: harness local Bash-first de regressao leve
-- `scripts/evolve.sh`: executor self-evolving Bash-first; valida backlog interno, riscos, review cadence e workflow read-only
-- `internal/evolution/`: estrutura interna versionada do self-evolution loop (backlog, risk register, review)
-- `shadow/SOTA-DECISIONS.md`: decisoes SOTA curtas + `Applied when` + stubs `Blocked ate evidencia`
-- `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`: guardas minimos contra PHI, dado sensivel e incidente sem conteudo sensivel
-- `shadow/GITHUB-REMOTE-WSL.md`: procedimento para publicar o branch via SSH nativo do WSL
-- `shadow/AGENT-MODULES.md`: contrato experimental para agentes; eixo tecnico ortogonal a WORK-LANES
-- `shadow/AGENT-USAGE.md`: mapa de agentes/skills globais usados sem scaffold local + SOTA agent contract
-- `shadow/PLAN-*.md`: plan por rodada estrutural (ex: `PLAN-2026-04-23.md` para Bloco A+B+C-prep)
-- `shadow/FOUNDATION.md`: base de infra, memoria, harness e orquestracao
-- `shadow/HYGIENE.md`: checklist de higiene para evitar sprawl
-- `shadow/EMAIL-DIGEST-4P.md`, `shadow/STUDY-TRACK-DONE.md`: procedures com rubric e mini-evals
-- `.github/workflows/self-evolution.yml`: watchdog read-only para rodar checks sem pedido manual
-- `Prometeus/.obsidian/`: configuracao do Obsidian para abrir o vault `Prometeus`
-- `Prometeus/wiki/`: wiki operacional versionada do projeto
-- `lab/wiki-graph-lab/`: companion visual local para explorar o vault fora do graph cru
-- `private-learning/`: area local ignorada para cockpit e material pessoal
-- `.claude/`: state local do Claude Code (`settings.local.json`); ignorado por Git
+Diagnostico rapido: `./scripts/install-stack.sh` (idempotente, sem sudo, reporta presence + versao + path).
 
-## Nucleo enxuto
-
-- Sem diretórios locais de agents, subagents, skills ou hooks.
-- `CLAUDE.md`, `CODEX.md` e `GEMINI.md` sao pontes de contexto, nao novas fontes de verdade.
-- Procedimentos duraveis ficam em `shadow/` ou em notas do `Prometeus/wiki/`.
-- `private-learning/` fica local e ignorado, sem entrar no contexto versionado.
-- Qualquer nova automacao ou agente precisa passar por trigger, evidencia, custo, risco e rollback.
-- Mudancas estruturais passam pelo SOTA research gate antes de edicao.
-- Agentes so entram como modulos encapsulados depois de procedimento, contrato, eval e uso real.
-
-## Fluxo diario recomendado
-
-0. em janela nova, abrir `shadow/HANDOFF.md` e seguir os cross refs canônicos;
-1. capturar materia-prima em `private-learning/`;
-2. transformar com um procedimento pequeno documentado em `shadow/` ou na wiki;
-3. registrar o uso real em `shadow/EVIDENCE-LOG.md` (gate para `operational`);
-4. classificar o artefato em `private`, `experiment`, `candidate`, `operational`, `retired` ou `blocked` (ver `shadow/WORK-LANES.md`);
-5. se o procedimento tem `## Rubric`, rodar a rubrica e anotar score na observacao da linha do EVIDENCE-LOG;
-6. so discutir migracao para `OLMO` depois do gate humano.
-7. antes de nova mudanca estrutural, rodar `./scripts/evolve.sh next` no Ubuntu/WSL.
-
-## Higiene do projeto
-
-Ao final de sessoes com edicao, conferir `shadow/HYGIENE.md` antes de criar mais estrutura.
-
-## Fronteira atual
-
-O aprendizado atual e tratar agentes como modulos encapsulados:
-
-- contrato antes de runtime;
-- ferramentas minimas;
-- memoria explicita;
-- guardrails e rollback;
-- eval antes de promocao.
-
-O contrato vive em `shadow/AGENT-MODULES.md`; a nota navegavel vive no vault em `Prometeus/wiki/Notes/Agent Module Encapsulation.md`.
-
-Para agentes/skills globais do Claude Code (ex: `Explore`, `Plan`, `/dream`, `/schedule`, `/code-review`), o mapa de uso e o SOTA agent contract vivem em `shadow/AGENT-USAGE.md`. Nenhum scaffold local `.claude/agents|skills|hooks|commands/` e permitido sem gate.
-
-## Harness local
-
-Ubuntu/WSL rapido sobre o workspace canonico Linux:
+## Quick start
 
 ```bash
+git clone <repo> /home/lucasmiachon/projects/OLMO_PROMETEUS
 cd /home/lucasmiachon/projects/OLMO_PROMETEUS
-./scripts/check.sh
-./scripts/evolve.sh next
+./scripts/install-stack.sh         # diagnostico do stack
+./scripts/check.sh --strict        # harness completo (0 warns/fails)
 ```
 
-Use antes de commit quando a sessao mexer em docs, wiki, shadow ou scripts. O workflow remoto roda Bash em `ubuntu-latest` e `windows-latest`.
+## Workflow
+
+### Lanes lifecycle
+
+Estados de artefato. Fonte unica: [`shadow/WORK-LANES.md`](shadow/WORK-LANES.md). Transicoes aplicadas: [`shadow/INCORPORATION-LOG.md`](shadow/INCORPORATION-LOG.md). Evidencia: [`shadow/EVIDENCE-LOG.md`](shadow/EVIDENCE-LOG.md).
+
+```mermaid
+stateDiagram-v2
+    [*] --> private: capture (private-learning/)
+    private --> experiment: convert (procedure)
+    experiment --> candidate: 1+ ciclo + artefato + trigger
+    candidate --> operational: >=3 EVIDENCE-LOG entries + 14d estavel + rubrica >=0.7
+    candidate --> retired: nao usado em 30d ou criterio negativo
+    operational --> retired: substituido / obsoleto
+    experiment --> retired: criterio negativo disparou
+    [*] --> blocked: requer write externo / PHI / sibling
+    blocked --> experiment: gate humano destrava
+```
+
+### SOTA Research Gate
+
+Mudancas de arquitetura, agente, skill, hook, MCP, memoria ou orquestracao passam por este gate. Rubrica em [`AGENTS.md > SOTA Research Gate`](AGENTS.md). Decisoes registradas: [`shadow/SOTA-DECISIONS.md`](shadow/SOTA-DECISIONS.md) e [`docs/adr/`](docs/adr/).
+
+```mermaid
+flowchart TD
+    A[Trigger: arch / agent / skill / hook / MCP / memoria / orquestracao] --> B[1. Auditar estado local]
+    B --> C[2. Pesquisar fontes primarias atuais]
+    C --> D[3. Escrever decisao curta]
+    D --> E{Pesquisa sustenta para este repo pequeno?}
+    E -->|nao| R[Rejeitar / adiar]
+    E -->|sim| F[4. Trigger + nao-trigger + risco + custo + rollback + criterio negativo]
+    F --> G[5. Harness pass]
+    G --> H[Editar + commit pequeno + EVIDENCE-LOG entry]
+```
+
+### Executor selection
+
+Codex e Claude Code sao executores autorizados, mas **nunca juntos no mesmo escopo de tarefa**. Gemini e pesquisa/contraponto sem write. Ver ADR `0006-triadic-stack-debate` e SOTA-DECISIONS `Exclusive executor rule`.
+
+```mermaid
+flowchart LR
+    T[Task] --> Q{Tipo}
+    Q -->|edit / audit / gate / harness / boundary| C[Codex CLI<br/>reasoning_effort=xhigh]
+    Q -->|autoria / arquitetura / multi-step| K[Claude Code<br/>Opus 4.7 1M]
+    Q -->|pesquisa / multimodal / contraponto| G[Gemini 3.1 Pro<br/>READ-ONLY no write]
+    C -.->|review separado em outra rodada| K
+    K -.->|review separado em outra rodada| C
+    G -.->|artefato curto em shadow/| C
+    G -.->|artefato curto em shadow/| K
+```
+
+## Boundaries duras
+
+1. Nunca escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`. Read externo de sibling/legado exige autorizacao humana citando caminho e motivo.
+2. Sibling principal (`OLMO`) e read-only autorizado caso-a-caso. Nunca write; copiar com melhoras para canonical.
+3. Push em `origin/main` exige confirmacao humana explicita por rodada.
+4. Sem `--no-verify`, `--no-gpg-sign` ou skip de hook. Investigar root cause.
+
+Detalhes + lista completa: [`AGENTS.md > Fundamental Boundary`](AGENTS.md) e [`shadow/HANDOFF.md > Boundaries duras`](shadow/HANDOFF.md).
+
+## Entrada por funcao
+
+| Voce quer... | Va para |
+|---|---|
+| hidratar nova sessao apos `/clear` | [`shadow/HANDOFF.md`](shadow/HANDOFF.md) |
+| entender o contrato | [`AGENTS.md`](AGENTS.md) |
+| entender lanes/promocao | [`shadow/WORK-LANES.md`](shadow/WORK-LANES.md) |
+| ver decisoes SOTA + ADRs | [`shadow/SOTA-DECISIONS.md`](shadow/SOTA-DECISIONS.md), [`docs/adr/`](docs/adr/) |
+| navegar wiki conceitual | `Prometeus/wiki/Home.md` (Obsidian) |
+| rodar harness | `./scripts/check.sh --strict` |
+| diagnosticar stack | `./scripts/install-stack.sh` |
+| validar boundary guard | `./scripts/test-olmo-boundary-guard.sh` (21/21 esperados) |
 
 ## Obsidian
 
-Abra no Obsidian esta pasta via WSL network path quando estiver no Windows:
+Vault: `Prometeus/`. Abrir no Obsidian via WSL network path quando estiver no Windows:
 
 ```text
 \\wsl.localhost\Ubuntu\home\lucasmiachon\projects\OLMO_PROMETEUS\Prometeus
 ```
 
-No Linux/WSL, o vault fica em:
+No Linux/WSL, vault em `/home/lucasmiachon/projects/OLMO_PROMETEUS/Prometeus`. Entrada: `Prometeus/wiki/Home.md`. O vault e graph-first; canvas `Prometeus/wiki/Maps/Prometeus.canvas` e vitrine curada. Captura crua/diaria/anexos ficam ignorados (`Prometeus/wiki/{Clippings,Daily,Attachments}/`).
 
-```text
-/home/lucasmiachon/projects/OLMO_PROMETEUS/Prometeus
-```
+## Origem
 
-Use `Prometeus/README.md` ou `Prometeus/wiki/Home.md` como entrada. Assim o nome do vault aparece como `Prometeus`, enquanto o repo continua isolado em `OLMO_PROMETEUS`. A wiki segue a ideia bottom-up do Kepano e o minimalismo do Karpathy: notas pequenas, links claros, escopo limitado e harness simples. Captura crua, diaria ou privada fica ignorada pelo Git em `Prometeus/wiki/Clippings/`, `Prometeus/wiki/Daily/` e `Prometeus/wiki/Attachments/`.
-
-O second brain e Graph-first. No Graph View, use `path:wiki`, tags ligadas e orfaos visiveis. O grafo deve crescer; a qualidade vem de hubs como `Prometeus/wiki/Atlas/Second Brain Atlas.md`, nao de esconder nos.
-
-O Canvas `Prometeus/wiki/Maps/Prometeus.canvas` continua como vitrine curada. Ele mostra uma narrativa bonita; o Graph View mostra o second brain real.
-
-## Origem da primeira fatia
-
-A base inicial veio de um laboratorio anterior que nao oferecia isolamento Git real. Este repo existe para manter a separacao segura em `OLMO_PROMETEUS`.
+Base inicial veio de laboratorio anterior sem isolamento Git real. Este repo existe para manter separacao segura em `OLMO_PROMETEUS` antes de qualquer promocao.

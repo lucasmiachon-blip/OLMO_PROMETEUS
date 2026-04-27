@@ -97,7 +97,7 @@ def summarize_markdown(body: str) -> tuple[str, str]:
                 clean_blocks.append(" ".join(buffer).strip())
                 buffer = []
             continue
-        if stripped.startswith("#") or stripped.startswith("- ") or stripped.startswith("|") or stripped.startswith("```"):
+        if stripped.startswith(("#", "- ", "|", "```")):
             if buffer:
                 clean_blocks.append(" ".join(buffer).strip())
                 buffer = []

@@ -76,6 +76,6 @@ Um artefato daqui so entra em conversa de migracao quando:
 - Workspace unico: `/home/lucasmiachon/projects/OLMO_PROMETEUS` em Linux/WSL ext4.
 - Shell versionado: Bash.
 - Core atual: Markdown, JSON e Bash.
-- Python: `uv` + `ruff` quando houver projeto Python real.
-- TypeScript/JavaScript: `pnpm` + `vite` + `biome` por projeto; `bun` apenas experimento.
+- Python: `uv` + `ruff` wired em `lab/wiki-graph-lab/pyproject.toml` + `uv.lock` (primeiro projeto real); novos projetos seguem o mesmo manifesto.
+- TypeScript/JavaScript: `biome` wired em `biome.json` raiz (lint+format JSON `internal/` + JS `lab/`); `pnpm` + `vite` entram quando houver projeto JS-heavy. `bun` 1.3.13 instalado para experimento por projeto.
 - Agentes: Codex e Claude Code sao executores possiveis, mas nunca juntos na mesma tarefa/rodada de edicao. Gemini e pesquisa/contraponto sem write. Sem runtime persistente sem gate.

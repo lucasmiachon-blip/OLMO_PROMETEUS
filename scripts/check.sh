@@ -38,8 +38,10 @@ legacy_root="$(dirname "$root")/OLMO_ROADMAP"
 
 required_files=(
   AGENTS.md CLAUDE.md CODEX.md GEMINI.md PROJECT_CONTRACT.md README.md TREE.md
+  biome.json
+  lab/wiki-graph-lab/pyproject.toml lab/wiki-graph-lab/uv.lock
   .gitignore .claudeignore .github/workflows/self-evolution.yml
-  scripts/check.sh scripts/evolve.sh scripts/guard-olmo-write-hook.sh scripts/test-olmo-boundary-guard.sh scripts/doctor-github-remote.sh
+  scripts/check.sh scripts/evolve.sh scripts/install-stack.sh scripts/guard-olmo-write-hook.sh scripts/test-olmo-boundary-guard.sh scripts/doctor-github-remote.sh
   shadow/FOUNDATION.md shadow/HANDOFF.md shadow/AGENT-MODULES.md shadow/HYGIENE.md
   shadow/SOTA-DECISIONS.md shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md
   shadow/GITHUB-REMOTE-WSL.md
@@ -77,6 +79,30 @@ fi
 
 "${root}/scripts/test-olmo-boundary-guard.sh"
 [[ $? -eq 0 ]] && ok "OLMO boundary guard tests pass" || fail "OLMO boundary guard tests failed"
+
+if [[ -f lab/wiki-graph-lab/pyproject.toml ]]; then
+  if command -v ruff >/dev/null 2>&1; then
+    if ruff check lab/wiki-graph-lab/ >/tmp/prometeus-ruff.log 2>&1; then
+      ok "ruff lint clean: lab/wiki-graph-lab"
+    else
+      fail "ruff lint failures: lab/wiki-graph-lab (see /tmp/prometeus-ruff.log)"
+    fi
+  else
+    warn "ruff not installed; skipping Python lint"
+  fi
+fi
+
+if [[ -f biome.json ]]; then
+  if command -v biome >/dev/null 2>&1; then
+    if biome check --no-errors-on-unmatched . >/tmp/prometeus-biome.log 2>&1; then
+      ok "biome check clean"
+    else
+      fail "biome check failures (see /tmp/prometeus-biome.log)"
+    fi
+  else
+    warn "biome not installed; skipping JS/JSON lint"
+  fi
+fi
 
 for file in internal/evolution/backlog.json internal/evolution/risk-register.json internal/evolution/review.json Prometeus/.obsidian/app.json Prometeus/.obsidian/appearance.json Prometeus/.obsidian/core-plugins.json Prometeus/.obsidian/daily-notes.json Prometeus/.obsidian/graph.json Prometeus/.obsidian/templates.json Prometeus/wiki/Maps/Prometeus.canvas; do
   if [[ -f "$file" ]]; then

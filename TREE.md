@@ -24,7 +24,11 @@ README.md             # entrada humana rapida
 TREE.md               # mapa profissional da arvore do repo
 scripts/check.sh      # harness local Bash-first, sem writes externos
 scripts/evolve.sh     # executor self-evolving Bash-first read-only
+scripts/install-stack.sh # diagnostico idempotente do stack (sem sudo)
 scripts/guard-olmo-write-hook.sh # guard Bash para boundary OLMO
+biome.json            # config raiz biome (lint+format JSON `internal/` + JS `lab/`)
+lab/wiki-graph-lab/pyproject.toml # primeiro projeto Python real; ruff wired
+lab/wiki-graph-lab/uv.lock        # lockfile reproducible (uv pip compile)
 internal/evolution/   # backlog, risk register e review cadence do loop interno
 shadow/               # decisoes, gates, memoria operacional, evidencia e agent usage
 Prometeus/            # vault Obsidian versionado
