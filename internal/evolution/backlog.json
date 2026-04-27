@@ -76,6 +76,25 @@
       "rollback": "Reverter split e manter SOTA-DECISIONS.md como fonte unica ate nova estrategia.",
       "negative_criterion": "Se aumentar arquivo total sem melhorar busca, reverter.",
       "next_action": "Planejar decomposicao de SOTA-DECISIONS.md somente depois de Batch 2."
+    },
+    {
+      "id": "EV-B5",
+      "batch": 5,
+      "status": "planned",
+      "area": "Integridade e maturidade executavel",
+      "problem": "OLMO e OLMO_GENESIS evoluiram como ramos paralelos; OLMO parece mais maduro operacionalmente, mas GENESIS tambem contem padroes uteis. Ambos contem runtime/estado sujo que nao pode ser copiado para este laboratorio.",
+      "trigger": "Depois do PR-2 ou quando scripts/check.sh precisar provar maturidade alem de existencia de arquivos.",
+      "acceptance": [
+        "um gate deterministico cobre paths locais, wikilinks, hook targets ou cross-refs vivos",
+        "o gate escreve relatorio apenas dentro de OLMO_PROMETEUS ou roda sem write",
+        "nenhum hook/agent/skill/runtime externo e copiado",
+        "scripts/check.sh --strict continua passando"
+      ],
+      "owner": "Lucas + agent",
+      "risk": "Importar ceremony bloat, dados sensiveis, caches ou runtime multiagente com mocks.",
+      "rollback": "Remover o subcomando/gate e manter apenas o harness atual.",
+      "negative_criterion": "Se em 30 dias o gate novo nao detectar regressao real ou duplicar checks existentes, simplificar ou remover.",
+      "next_action": "Comparar convergencias/divergencias OLMO vs OLMO_GENESIS e adaptar somente os padroes de maturity_audit.py, context_audit.py, tools/integrity.sh e hooks-runtime-S258 como gate pequeno e local."
     }
   ]
 }

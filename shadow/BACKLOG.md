@@ -25,7 +25,7 @@ Source canonical: [`internal/evolution/backlog.json`](../internal/evolution/back
 
 Item sem update em >10 sessoes -> auto-rebaixar a Frozen no proximo PR de hygiene. Resgate exige novo trigger.
 
-## Items ativos (sincronizado 2026-04-26)
+## Items ativos (sincronizado 2026-04-27)
 
 ### P0 — high value, low risk
 
@@ -44,6 +44,7 @@ Item sem update em >10 sessoes -> auto-rebaixar a Frozen no proximo PR de hygien
 | `DEVMENTOR-3` | Material devmentor restante (4 skills + 1 setup-script + 2 raw articles) — bloqueado pelo local skills gate | L | med | HANDOFF §8 P1 #6 |
 | `PR-3` | AGENTS.md SOTA + retire scaffolds: ~80li Toolchain First; mesclar FOUNDATION/PROJECT_CONTRACT/AGENT-USAGE em docs/runbook.md; retire shadow/ folder | XL | high | HANDOFF §8 P1 #7 |
 | `EV-B4` | SOTA-DECISIONS split em ADR index | M | med | backlog.json EV-B4 |
+| `EV-B5` | Comparar OLMO e OLMO_GENESIS como ramos paralelos; adaptar gates maduros/convergentes sem copiar runtime, hooks, skills ou dados clinicos | M | med | backlog.json EV-B5; SOTA-DECISIONS 2026-04-27 |
 
 ### P2 — defer ate trigger explicito
 

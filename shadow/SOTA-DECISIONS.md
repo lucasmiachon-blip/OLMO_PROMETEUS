@@ -221,6 +221,35 @@ Criterio negativo: se em 30 dias um topico do PLAN descartado for citado e nao h
 
 Fontes externas (todas verificadas 2026-04-26 via WebSearch): git docs / GitHub / Edward Thomson (renormalize line endings; `.gitattributes` precede `core.autocrlf`); Microsoft WSL docs + vxlabs benchmarks (9P bridge ~5x slowdown `/mnt/c` vs ext4 nativo); Anthropic Claude Code docs 2026 + ofox.ai (hooks deterministicos / skills probabilisticas; minimum viable para solo dev); Google Gemini docs `gemini-3.1-pro-preview` (1M input / 64k output, atualizado 2026-04-23); DevOps.com + Apatero blog (ceremony bloat anti-pattern em solo project).
 
+## OLMO/OLMO_GENESIS selective adaptation scan (2026-04-27)
+
+Decisao: tratar `OLMO` e `OLMO_GENESIS` como ramos paralelos que evoluiram separados; `OLMO` parece hoje mais maduro operacionalmente, mas `OLMO_GENESIS` nao e apenas ancestral descartavel. Aproveitar convergencias e divergencias de padroes, nao copiar diretorios. A leitura read-only autorizada pelo Lucas em 2026-04-27 mostrou alto sinal no `OLMO` em maturidade executavel, auditoria producer-consumer de hooks, integridade, backlog priorizado, pre-commit/CI minimo e catalogo KBP pointer-only. `OLMO_GENESIS` preserva ideias paralelas uteis, mas tem mais ruido: `.env`, caches, venv, node_modules, agent-memory, skills/agentes locais em massa e runtime multiagente com mocks/simulated legs.
+
+Incorporar agora:
+
+- adaptar `maturity_audit.py` como gate pequeno em `scripts/evolve.sh`/`scripts/check.sh`, focado em gaps reais do Prometeus;
+- adaptar `context_audit.py` de forma deterministica primeiro: paths locais, wikilinks, hook targets, shell sources e drift de docs;
+- adaptar `tools/integrity.sh` como `scripts/check.sh --integrity` ou subcomando equivalente que escreve relatorio apenas dentro do repo;
+- adaptar o metodo do `OLMO/docs/audit/hooks-runtime-S258.md`: todo hook/gate novo precisa matriz producer-consumer ou e teatro candidate;
+- manter KBP pointer-only e citar KBP-N em decisoes/PRs antes de expandir o catalogo;
+- avaliar `.pre-commit-config.yaml` e `.github/workflows/ci.yml` como subset seguro, sem herdar build de produto que nao existe aqui.
+
+Nao incorporar agora:
+
+- `.claude/agents`, `.claude/skills`, `.claude/hooks` em massa, APL telemetry, statusline, hook logs, agent-memory, triangulation runtime, MCP proprio, docker/otel e `tools/docling/` inteiro;
+- conteudo clinico bruto de `genesis/10-Medicina`, inbox, emails dump ou memoria de evidence-researcher;
+- scripts que chamem APIs/modelos externos, baixem modelos grandes ou escrevam fora do Prometeus.
+
+Trigger: proxima rodada estrutural de qualidade/harness depois do PR-2 ou quando `scripts/check.sh` precisar provar claims de maturidade alem de existencia de arquivos. Ao minerar legado, comparar `OLMO` vs `OLMO_GENESIS` como forks paralelos: se ambos convergem no mesmo padrao, priorizar; se divergem, registrar tradeoff antes de adaptar.
+
+Risco: importar complexidade e estado sujo do repo principal; misturar dado clinico/memoria externa; transformar SOTA em teatro de hooks.
+
+Custo: 1 batch pequeno, preferencialmente 1 arquivo de auditoria + wiring no harness + uma entrada de backlog/evidencia.
+
+Rollback: remover o subcomando/gate do harness e a entrada de backlog; as leituras externas nao deixam artefato copiado.
+
+Criterio negativo: se o gate novo nao detectar regressao real em 30 dias ou duplicar checks existentes, simplificar para uma unica checagem em `scripts/check.sh` ou remover.
+
 ## Applied when
 
 | Data | Decisao | Aplicada em | Artefato/commit |
@@ -241,6 +270,7 @@ Fontes externas (todas verificadas 2026-04-26 via WebSearch): git docs / GitHub 
 | 2026-04-26 | Bash-first WSL2 harness | Runtime antigo sai do gate principal; workflow passa para Bash | `scripts/check.sh`, `scripts/evolve.sh`, `.github/workflows/self-evolution.yml` |
 | 2026-04-26 | Remove legacy scripts | Guard e harness portados para Bash; scripts antigos removidos do repo | `scripts/guard-olmo-write-hook.sh`, `scripts/test-olmo-boundary-guard.sh`, `scripts/check.sh` |
 | 2026-04-26 | Triadic stack debate consolidation | D04 aplicado + entry curta substitui PLAN+MATRIX (727L → 25L); D01/D09 confirmados; D05/D07/D08/D10 deferidos | commit `50979f9`, `shadow/SOTA-DECISIONS.md`, `shadow/INCORPORATION-LOG.md`, `shadow/EVIDENCE-LOG.md` |
+| 2026-04-27 | OLMO/OLMO_GENESIS selective adaptation scan | Leitura read-only autorizada; padroes aproveitaveis separados de runtime/ruido bloqueado | `shadow/SOTA-DECISIONS.md`, `shadow/EVIDENCE-LOG.md`, `internal/evolution/backlog.json`, `shadow/BACKLOG.md` |
 
 ## Claude Code, Codex e GEMINI.md adapters
 
