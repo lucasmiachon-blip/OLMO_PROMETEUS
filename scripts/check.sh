@@ -41,7 +41,7 @@ required_files=(
   biome.json
   lab/wiki-graph-lab/pyproject.toml lab/wiki-graph-lab/uv.lock
   .gitignore .claudeignore .github/workflows/self-evolution.yml
-  scripts/check.sh scripts/evolve.sh scripts/install-stack.sh scripts/guard-olmo-write-hook.sh scripts/test-olmo-boundary-guard.sh scripts/doctor-github-remote.sh
+  scripts/check.sh scripts/evolve.sh scripts/integrity.sh scripts/install-stack.sh scripts/guard-olmo-write-hook.sh scripts/test-olmo-boundary-guard.sh scripts/doctor-github-remote.sh
   shadow/FOUNDATION.md shadow/HANDOFF.md shadow/AGENT-MODULES.md shadow/HYGIENE.md
   shadow/SOTA-DECISIONS.md shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md
   shadow/GITHUB-REMOTE-WSL.md
@@ -76,6 +76,9 @@ fi
 
 "${root}/scripts/evolve.sh" check
 [[ $? -eq 0 ]] && ok "self-evolution executable passes" || fail "self-evolution executable failed"
+
+bash "${root}/scripts/integrity.sh"
+[[ $? -eq 0 ]] && ok "integrity executable passes" || fail "integrity executable failed"
 
 "${root}/scripts/test-olmo-boundary-guard.sh"
 [[ $? -eq 0 ]] && ok "OLMO boundary guard tests pass" || fail "OLMO boundary guard tests failed"

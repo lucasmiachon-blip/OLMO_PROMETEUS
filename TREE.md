@@ -24,6 +24,7 @@ README.md             # entrada humana rapida
 TREE.md               # mapa profissional da arvore do repo
 scripts/check.sh      # harness local Bash-first, sem writes externos
 scripts/evolve.sh     # executor self-evolving Bash-first read-only
+scripts/integrity.sh  # gate read-only de integridade/maturidade local
 scripts/install-stack.sh # diagnostico idempotente do stack (sem sudo)
 scripts/guard-olmo-write-hook.sh # guard Bash para boundary OLMO
 biome.json            # config raiz biome (lint+format JSON `internal/` + JS `lab/`)
