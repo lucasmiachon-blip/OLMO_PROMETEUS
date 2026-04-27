@@ -41,6 +41,10 @@ Nao usar para promover por entusiasmo. Se a evidencia for fraca, a decisao corre
 | Wiki graph lab | `experiment` | `lab/wiki-graph-lab/` + `Prometeus/wiki/` | talvez | ser usado em 3 ciclos lendo apenas `Prometeus/wiki/` | virar UI paralela sem dados canonicos |
 | Agent module encapsulation | `experiment` | `shadow/AGENT-MODULES.md` + wiki | talvez | 3 usos reais, eval minimo e ferramentas minimas | recriar sprawl de agentes |
 | Orchestration/harness/antifragile gate | `experiment` | `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md` | talvez | aplicar em 3 mudancas estruturais e reduzir sprawl/erro | virar checklist que ninguem usa |
+| BACKLOG markdown view | `experiment` | `shadow/BACKLOG.md` (derivado de `internal/evolution/backlog.json`) | nao | 3 PRs reais usando tiers/effort para priorizar | drift entre JSON e MD; virar duplicacao sem ganho |
+| KBP catalogo pointer-only | `experiment` | `shadow/KBP.md` | nao | 3 PRs reais citando KBP-N para justificar veto/decisao | inflar sem uso real; virar lista morta |
+| PLAN-ARCHIVE/ pattern | `experiment` | `shadow/PLAN-ARCHIVE/` | nao | 3 plans estruturais fechados e arquivados pelo padrao | inchar shadow/ com plans antigos sem indice util |
+| failure-registry.jsonl | `experiment` | `internal/evolution/failure-registry.{jsonl,README.md}` | nao | 3+ entries reais sem PHI/secret leak; schema validado em uso | virar log nunca consultado; ou (pior) PHI/secret leak |
 
 ## Promotion gate
 

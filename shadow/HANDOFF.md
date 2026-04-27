@@ -1,7 +1,7 @@
 # Handoff
 
 Status: active
-Updated: 2026-04-26 (PM tarde, pos hook fixes + doc cleanup)
+Updated: 2026-04-26 (PM noite, pos Round 1 do plan `cuddly-beaming-wind` — incorporacao seletiva OLMO+OLMO_GENESIS)
 Scope: janela hidratada para retomar `OLMO_PROMETEUS` apos `/clear` ou nova sessao.
 
 > Este arquivo e a fonte unica de hidratacao. `session-start.sh` cola top 60 li no inicio de cada sessao. Mantenha denso, sem secoes paralelas.
@@ -140,11 +140,13 @@ Sessao anterior (commit `fe8d26d`) deixou: 7 hooks ativos smoke-tested 5/5; push
 2. **Promover ou aposentar `email-digest-4p` + `study-track-done`**: 0 entries em EVIDENCE-LOG ha 14+ dias. Ou rodar 3x ciclos reais e registrar, ou simplificar/aposentar antes do PR 2.
 
 3. **Inventarios bloqueados** (precisam Bash com `!` prefix do user OU regra `Bash(read:...)` em `.claude/settings.local.json`):
+   - **OLMO + OLMO_GENESIS auditados via Explore read-only em 2026-04-26** (plan `cuddly-beaming-wind`). Round 1 incorporou 4 artefatos: `shadow/BACKLOG.md`, `shadow/KBP.md`, `shadow/PLAN-ARCHIVE/`, `internal/evolution/failure-registry.{jsonl,README.md}`. **Aulas_core ignorado por instrucao explicita do user.**
    - `legacy/2026-04-26/dev/olmo-migration/` (snapshot Linux, paths sob `/home/lucasmiachon/`)
-   - `Aulas_core` (CUIDADO: estado virgem com erros — NAO importar bulk; path em `/mnt/c/Dev/Projetos/`)
    - `aulas-magnas-gemini-20260305.zip` (extrair em `/tmp`; path em `/mnt/c/Dev/Projetos/`)
-   - Snapshots paralelos: `OLMO_GENESIS`, `OLMO_COWORK`, `Projeto_olmo_main` (path em `/mnt/c/Dev/Projetos/`)
+   - Snapshots paralelos remanescentes: `OLMO_COWORK`, `Projeto_olmo_main` (path em `/mnt/c/Dev/Projetos/`)
    - Aux: `cowork-command-center-workspace`, `orquestrador-context`, `Conversores` (path em `/mnt/c/Dev/Projetos/`)
+
+4. **Round 2 do plan `cuddly-beaming-wind`** (~120min, risco medio): adicionar `.pre-commit-config.yaml` (subset seguro: trailing-ws, eof-fixer, large-file 500KB, detect-private-key, merge-conflict, check-yaml), `.github/workflows/ci.yml` (ruff+ruff-format+bash -n+jq validate; matrix 3.11/3.12), estender `scripts/check.sh` com `--integrity` mode (cross-refs FOUNDATION<->AGENTS<->TREE<->HANDOFF, hooks->scripts, ADRs->SOTA-DECISIONS, lanes->INCORPORATION-LOG; output `shadow/INTEGRITY-REPORT.md`), promover `obsidian-crossref-check` a `operational` apos 3 entries em EVIDENCE-LOG. Cross-check com PR 2 antes (ambos editam `scripts/check.sh`).
 
 ### P1 — Medium
 
@@ -185,10 +187,13 @@ Falta antes de promocao de qualquer artefato: `EV-B2` CI verde no remoto; >=3 en
 - `FOUNDATION.md`
 
 **Estado e promocao**
-- `WORK-LANES.md` (lanes + promotion gate)
-- `INCORPORATION-LOG.md` (transicoes aplicadas — 5 entries de 2026-04-26)
+- `WORK-LANES.md` (lanes + promotion gate; +4 entries de Round 1)
+- `INCORPORATION-LOG.md` (transicoes aplicadas — 6 entries de 2026-04-26)
 - `EVIDENCE-LOG.md` (uso real de procedures)
 - `HYGIENE.md` (regras de poda)
+- `BACKLOG.md` (view markdown derivada de `internal/evolution/backlog.json`; tiers + effort + dormancy)
+- `KBP.md` (Known Bad Patterns pointer-only)
+- `PLAN-ARCHIVE/` (plans estruturais arquivados; pattern `YYYY-MM-DD.md`)
 
 **Decisoes**
 - `SOTA-DECISIONS.md` (indice operacional + entry triadic 2026-04-26)

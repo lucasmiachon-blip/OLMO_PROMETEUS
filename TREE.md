@@ -29,8 +29,8 @@ scripts/guard-olmo-write-hook.sh # guard Bash para boundary OLMO
 biome.json            # config raiz biome (lint+format JSON `internal/` + JS `lab/`)
 lab/wiki-graph-lab/pyproject.toml # primeiro projeto Python real; ruff wired
 lab/wiki-graph-lab/uv.lock        # lockfile reproducible (uv pip compile)
-internal/evolution/   # backlog, risk register e review cadence do loop interno
-shadow/               # decisoes, gates, memoria operacional, evidencia e agent usage
+internal/evolution/   # backlog, risk register, review cadence + failure-registry do loop interno
+shadow/               # decisoes, gates, memoria operacional, evidencia, backlog view e KBP
 Prometeus/            # vault Obsidian versionado
 lab/                  # companions visuais e prototipos locais que leem o vault sem virar runtime
 private-learning/     # area local ignorada; nao entra no contexto versionado
@@ -87,6 +87,9 @@ Memoria operacional, nao deposito de pesquisa longa.
 - `HYGIENE.md`: checklist anti-sprawl.
 - `PLAN-*.md`: plans operacionais por rodada estrutural (um por mudanca grande, ex: `PLAN-2026-04-23.md`).
 - `EMAIL-DIGEST-4P.md`, `STUDY-TRACK-DONE.md`: procedures com trigger, contrato, workflow, rubric e mini-evals.
+- `BACKLOG.md`: view markdown derivada de `internal/evolution/backlog.json` (canonical), com tiers P0/P1/P2/Frozen/Resolved + effort + dormancy.
+- `KBP.md`: catalogo pointer-only de Known Bad Patterns observados no lab; cross-ref para AGENTS/CLAUDE/SOTA-DECISIONS, sem prosa inline.
+- `PLAN-ARCHIVE/`: plans operacionais arquivados por mudanca estrutural (`YYYY-MM-DD.md`); imutavel apos arquivado.
 
 ### `private-learning/`
 

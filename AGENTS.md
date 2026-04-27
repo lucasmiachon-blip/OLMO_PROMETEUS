@@ -78,14 +78,16 @@ Regra: agentes que precisarem de criterio detalhado seguem o link acima. Duplica
 - `CODEX.md`: adaptador fino para Codex; importa `AGENTS.md`.
 - `GEMINI.md`: adaptador fino para Gemini CLI; importa `AGENTS.md`.
 - `.github/workflows/self-evolution.yml`: watchdog read-only que roda harness/evolucao sem write automatico.
-- `internal/evolution/`: backlog, risk register e review cadence do loop self-evolving; nao guarda dado sensivel.
+- `internal/evolution/`: backlog (canonical), risk register, review cadence e `failure-registry.jsonl` do loop self-evolving; nao guarda dado sensivel.
 - `shadow/`: fonte operacional. Contratos, gates, rubricas, evidencia e mapas de uso.
   - `shadow/WORK-LANES.md`: fonte unica dos estados (private, experiment, candidate, operational, retired, blocked) e promotion gate.
   - `shadow/EVIDENCE-LOG.md`: registro de uso real dos procedimentos (gate para `operational`).
   - `shadow/SOTA-DECISIONS.md`: decisoes curtas apos SOTA research gate.
   - `shadow/AGENT-USAGE.md`: mapa de agentes/skills globais usados sem scaffold local.
   - `shadow/INCORPORATION-LOG.md`: log de transicoes de estado aplicadas.
-  - `shadow/PLAN-*.md`: plans operacionais de mudancas estruturais (um por rodada).
+  - `shadow/PLAN-*.md`: plans operacionais ativos de mudancas estruturais (um por rodada). Plans fechados ficam em `shadow/PLAN-ARCHIVE/YYYY-MM-DD.md`.
+  - `shadow/BACKLOG.md`: view markdown derivada de `internal/evolution/backlog.json`; tiers P0/P1/P2/Frozen/Resolved + effort + dormancy.
+  - `shadow/KBP.md`: catalogo pointer-only de Known Bad Patterns; cross-ref para regras canonicas, sem prosa inline.
   - `shadow/DATA-CLASSIFICATION.md`, `shadow/PHI-CHECKLIST.md`, `shadow/THREAT-MODEL.md`, `shadow/INCIDENT-LOG.md`: guardas minimos para privacidade, PHI e incidentes sem conteudo sensivel.
 - `TREE.md`: mapa da arvore raiz, casas dos artefatos e politica de incorporacao do `OLMO`.
 - `Prometeus/README.md`: entrada documental do vault Obsidian.
