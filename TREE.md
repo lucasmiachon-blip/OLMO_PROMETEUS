@@ -20,6 +20,7 @@ CLAUDE.md             # adaptador fino Boris-style para Claude Code, importa AGE
 CODEX.md              # adaptador fino para Codex, importa AGENTS.md
 GEMINI.md             # adaptador fino para Gemini CLI, importa AGENTS.md
 PROJECT_CONTRACT.md   # limites, lanes e criterio de promocao
+VALUES.md             # valores, objetivos e lente de gaps
 README.md             # entrada humana rapida
 TREE.md               # mapa profissional da arvore do repo
 scripts/check.sh      # harness local Bash-first, sem writes externos

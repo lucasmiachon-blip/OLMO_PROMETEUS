@@ -37,7 +37,7 @@ legacy_root="$(dirname "$root")/OLMO_ROADMAP"
 [[ -e "$legacy_root" ]] && fail "legacy workspace root exists and can attract stale sessions: $legacy_root" || ok "legacy workspace root absent"
 
 required_files=(
-  AGENTS.md CLAUDE.md CODEX.md GEMINI.md PROJECT_CONTRACT.md README.md TREE.md
+  AGENTS.md CLAUDE.md CODEX.md GEMINI.md PROJECT_CONTRACT.md VALUES.md README.md TREE.md
   biome.json
   lab/wiki-graph-lab/pyproject.toml lab/wiki-graph-lab/uv.lock
   .gitignore .claudeignore .github/workflows/self-evolution.yml
@@ -124,6 +124,9 @@ done
 
 require_text AGENTS.md '^## SOTA Research Gate$' 'AGENTS.md SOTA gate'
 require_text AGENTS.md '^## Memoria$' 'AGENTS.md memory'
+require_text VALUES.md '^## Valores$' 'VALUES.md values'
+require_text VALUES.md '^## Objetivos$' 'VALUES.md objectives'
+require_text VALUES.md '^## Gap Lens$' 'VALUES.md gap lens'
 require_text shadow/HANDOFF.md '^## Migration Readiness$' 'handoff migration readiness'
 require_text shadow/WORK-LANES.md '^## Promotion gate$' 'work lanes promotion gate'
 require_text shadow/SOTA-DECISIONS.md '^## Canonical Linux workspace with Windows UI fallback \(2026-04-26\)$' 'canonical Linux workspace with Windows UI fallback'

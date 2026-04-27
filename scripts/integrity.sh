@@ -90,6 +90,14 @@ check_ev_b5_contract() {
   require_text shadow/EVIDENCE-LOG.md 'OLMO_GENESIS.*EV-B5|EV-B5.*OLMO_GENESIS' 'EV-B5 evidence entry'
 }
 
+check_values_contract() {
+  require_text VALUES.md '^## Valores$' 'values contract has values'
+  require_text VALUES.md '^## Objetivos$' 'values contract has objectives'
+  require_text VALUES.md '^## Gap Lens$' 'values contract has gap lens'
+  require_text PROJECT_CONTRACT.md 'VALUES.md' 'project contract references values'
+  require_text AGENTS.md 'VALUES.md' 'agent contract references values'
+}
+
 check_no_external_write_targets() {
   if rg -n '(^|[^A-Za-z0-9_])(cp|mv|rsync|tee|cat|python|node|bash|sh)[^`\n]*(/mnt/c/Dev/Projetos/OLMO|C:\\Dev\\Projetos\\OLMO)' scripts >/tmp/prometeus-integrity-external-write.txt; then
     fail "script may write or execute against protected OLMO path: $(wc -l </tmp/prometeus-integrity-external-write.txt) finding(s)"
@@ -102,6 +110,7 @@ check_script_syntax
 check_hook_targets
 check_backlog_view_sync
 check_ev_b5_contract
+check_values_contract
 check_no_external_write_targets
 
 if ((${#failures[@]} > 0)); then

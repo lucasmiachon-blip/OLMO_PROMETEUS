@@ -4,6 +4,8 @@
 
 Validar um laboratorio paralelo, guiado por orquestracao de baixo risco, para vault, digest e study flow.
 
+Valores e objetivos operacionais vivem em `VALUES.md`. Qualquer gap novo deve declarar qual valor melhora, dor real, trigger, artefato, consumer, evidencia, custo, risco, rollback e criterio negativo.
+
 ## Limites
 
 - Regra fundamental: nunca escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
@@ -51,6 +53,7 @@ Um artefato daqui so entra em conversa de migracao quando:
 ## Estrutura minima racional
 
 - `AGENTS.md` define o contrato do repo.
+- `VALUES.md` define valores, objetivos e lente de gaps.
 - `CLAUDE.md`, `CODEX.md` e `GEMINI.md` sao adaptadores finos que importam `AGENTS.md`.
 - `TREE.md` define a arvore profissional, casas dos artefatos e politica de incorporacao segura.
 - `shadow/WORK-LANES.md` define os estados e promotion gate.

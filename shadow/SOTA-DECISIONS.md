@@ -250,6 +250,22 @@ Rollback: remover o subcomando/gate do harness e a entrada de backlog; as leitur
 
 Criterio negativo: se o gate novo nao detectar regressao real em 30 dias ou duplicar checks existentes, simplificar para uma unica checagem em `scripts/check.sh` ou remover.
 
+## Prometeus values and gap lens (2026-04-27)
+
+Decisao: criar `VALUES.md` local adaptado de `OLMO/VALUES.md`, menor e proporcional ao Prometeus. O objetivo e dar uma lente de gaps antes de T3/T4: toda melhoria deve declarar valor servido, dor real, trigger, artefato, consumer, evidencia, custo, risco, rollback e criterio negativo.
+
+Trigger: o usuario perguntou se havia valores/objetivos e apontou que eles sao necessarios para identificar gaps.
+
+Nao-trigger: nao importar integralmente a identidade do OLMO, enterprise stack, subagents, skills, APL, antifragile L1-L7 ou conteudo medico do repo principal.
+
+Risco: virar manifesto decorativo. Mitigacao: `scripts/check.sh` e `scripts/integrity.sh` agora exigem `VALUES.md` com `Valores`, `Objetivos` e `Gap Lens`, e `PROJECT_CONTRACT.md` aponta para ele.
+
+Custo: um arquivo raiz pequeno + cross-refs.
+
+Rollback: remover `VALUES.md` e voltar a usar apenas `PROJECT_CONTRACT.md` se a lente nao for citada em decisoes/gaps nos proximos 30 dias.
+
+Criterio negativo: se novas tarefas nao referirem V1-V8 ou Gap Lens ate 2026-05-27, simplificar o arquivo para uma secao curta em `PROJECT_CONTRACT.md`.
+
 ## Applied when
 
 | Data | Decisao | Aplicada em | Artefato/commit |
@@ -271,6 +287,7 @@ Criterio negativo: se o gate novo nao detectar regressao real em 30 dias ou dupl
 | 2026-04-26 | Remove legacy scripts | Guard e harness portados para Bash; scripts antigos removidos do repo | `scripts/guard-olmo-write-hook.sh`, `scripts/test-olmo-boundary-guard.sh`, `scripts/check.sh` |
 | 2026-04-26 | Triadic stack debate consolidation | D04 aplicado + entry curta substitui PLAN+MATRIX (727L → 25L); D01/D09 confirmados; D05/D07/D08/D10 deferidos | commit `50979f9`, `shadow/SOTA-DECISIONS.md`, `shadow/INCORPORATION-LOG.md`, `shadow/EVIDENCE-LOG.md` |
 | 2026-04-27 | OLMO/OLMO_GENESIS selective adaptation scan | Leitura read-only autorizada; padroes aproveitaveis separados de runtime/ruido bloqueado | `shadow/SOTA-DECISIONS.md`, `shadow/EVIDENCE-LOG.md`, `internal/evolution/backlog.json`, `shadow/BACKLOG.md` |
+| 2026-04-27 | Prometeus values and gap lens | `OLMO/VALUES.md` adaptado para o laboratorio; valores viram filtro de gaps | `VALUES.md`, `PROJECT_CONTRACT.md`, `AGENTS.md`, `TREE.md`, `shadow/FOUNDATION.md`, `scripts/check.sh`, `scripts/integrity.sh` |
 
 ## Claude Code, Codex e GEMINI.md adapters
 
