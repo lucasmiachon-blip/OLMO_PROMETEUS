@@ -88,6 +88,8 @@ check_ev_b5_contract() {
   require_text shadow/BACKLOG.md 'EV-B5' 'EV-B5 appears in markdown backlog'
   require_text shadow/SOTA-DECISIONS.md '^## OLMO/OLMO_GENESIS selective adaptation scan \(2026-04-27\)$' 'OLMO/GENESIS selective adaptation decision'
   require_text shadow/EVIDENCE-LOG.md 'OLMO_GENESIS.*EV-B5|EV-B5.*OLMO_GENESIS' 'EV-B5 evidence entry'
+  require_text shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md '^## Producer-Consumer Matrix$' 'producer-consumer matrix exists'
+  require_text shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md 'Regra T3: gate novo sem linha nesta matriz fica bloqueado' 'producer-consumer gate rule'
 }
 
 check_values_contract() {

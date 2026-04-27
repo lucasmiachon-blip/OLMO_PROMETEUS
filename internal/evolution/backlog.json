@@ -1,6 +1,6 @@
 {
   "schema": "prometeus.evolution.backlog.v1",
-  "updated": "2026-04-25",
+  "updated": "2026-04-27",
   "items": [
     {
       "id": "EV-B1",
@@ -91,9 +91,9 @@
         "scripts/check.sh --strict continua passando"
       ],
       "tasks": [
-        "T1 criar gate read-only de integridade/maturidade local",
-        "T2 integrar o gate ao scripts/check.sh",
-        "T3 exigir matriz producer-consumer para qualquer hook/gate novo",
+        "T1 applied: criar gate read-only de integridade/maturidade local",
+        "T2 applied: integrar o gate ao scripts/check.sh",
+        "T3 applied: exigir matriz producer-consumer para qualquer hook/gate novo",
         "T4 manter sync leve entre internal/evolution/backlog.json e shadow/BACKLOG.md",
         "T5 converter erro observado em detector/teste antes de chamar antifragile",
         "T6 revisar em 30 dias: manter, simplificar ou remover o gate se nao detectar regressao real"

@@ -81,6 +81,34 @@ Uma mudanca estrutural de orquestracao/harness/antifragile so esta pronta quando
 
 Se qualquer item falhar, a lane maxima e `experiment`.
 
+## Producer-Consumer Matrix
+
+Todo hook, gate, check ou detector novo precisa declarar produtor, consumidor e acao de falha antes de entrar em `scripts/check.sh`, `.claude/settings.local.json`, workflow remoto ou procedure operacional.
+
+Contrato minimo:
+
+| Campo | Pergunta de aceite |
+| --- | --- |
+| Producer | Que comando, hook, pessoa ou evento gera o sinal? |
+| Artifact | Que arquivo, stdout, exit code ou diff fica depois? |
+| Consumer | Quem ou que comando le isso e decide? |
+| Failure action | O que bloqueia, alerta, pergunta ou simplifica? |
+| OLMO floor | Qual pratica madura do `OLMO` isso usa como piso? |
+| Prometeus extra | Que protecao extra local torna isso maior que la? |
+| Negative criterion | Quando remover ou rebaixar? |
+
+Matriz atual:
+
+| Gate/hook | Producer | Artifact | Consumer | Failure action | OLMO floor | Prometeus extra | Negative criterion |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `scripts/check.sh` | agente/humano antes de commit | stdout + exit code | humano, CI read-only, `scripts/evolve.sh` | bloquear commit ate corrigir ou registrar bloqueio | harness como maturidade executavel | boundary + privacy + stack + wiki + integrity no mesmo dry-run local | se virar lento/ruidoso sem detectar regressao, dividir ou simplificar |
+| `scripts/integrity.sh` | `scripts/check.sh` ou chamada manual | stdout + exit code | humano/agent em T3+ | bloquear drift documental/contratual | `tools/integrity.sh` e auditorias de contexto do OLMO | exige `OLMO como piso`, valores, EV-B5, hook targets e ausencia de writes externos | remover checks que nao detectarem regressao real em 30 dias |
+| `scripts/guard-olmo-write-hook.sh` | Claude PreToolUse local | JSON permissionDecision + stderr | Claude Code/humano | deny para write externo; ask para read externo | hooks como guard deterministico | bloqueio fail-closed de siblings `OLMO*` e workspace legado | se falso positivo recorrente bloquear trabalho legitimo, reduzir matcher e manter teste |
+| `scripts/ask-bash-write.sh` | Claude PreToolUse Bash local | JSON permissionDecision=ask | Claude Code/humano | pedir aprovacao para comandos com write-intent | ask-before-write do OLMO | nao bloqueia reads; deixa decisao humana e auditavel | se ruido superar beneficio, restringir padroes |
+| `.github/workflows/self-evolution.yml` | schedule/push/PR/manual | check remoto read-only | humano/GitHub UI | falhar workflow sem auto-write | self-evolution disciplinado do OLMO | workflow nao escreve, nao cria issue, nao commita, nao toca PHI | se remoto falhar 2 ciclos por ambiente sem bug real, documentar bloqueio |
+
+Regra T3: gate novo sem linha nesta matriz fica bloqueado. Se a linha nao tiver `Producer`, `Consumer`, `Failure action`, `OLMO floor` e `Prometeus extra`, e teatro.
+
 ## Antifragile Lite
 
 Prometeus nao usa "antifragile" como claim amplo. Aprender nao significa autoeditar; significa que erro observado vira detector, regra ou teste de regressao que reduz repeticao.
