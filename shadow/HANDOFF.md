@@ -30,10 +30,10 @@ Perfil do operador: medico solo dev. Padrao de ouro: auditavel, reversivel, huma
 
 ---
 
-## 3. Estado atual (2026-04-26 PM tarde)
+## 3. Estado atual (2026-04-26 PM noite — Round 1 plan `cuddly-beaming-wind` aplicado)
 
 ### Branch & remoto
-- `main` local sincronizado com `origin/main` (push OK em `04dad2f`).
+- `main` local: hashes recentes em `git log --oneline -5`; remoto sincronizado apenas por push humano-autorizado (ver Boundary #6).
 - `gh` configurado via SSH WSL nativo (ver `shadow/GITHUB-REMOTE-WSL.md`).
 - GitHub Actions `Self Evolution` existe; `gh run view --log-failed` retorna HTTP 403 por falta de admin (bloqueio documentado, nao contornar).
 
@@ -116,18 +116,24 @@ Wiki notes novas (4, status `experiment`, source devmentor): `Prometeus/wiki/Not
 
 ---
 
-## 7. DONE nesta sessao (2026-04-26 PM noite — plan `valiant-dreaming-waffle`)
+## 7. DONE nesta sessao (2026-04-26 PM noite — plan `cuddly-beaming-wind` Round 1)
 
-Trigger: user "saiu do papel?" → stack declarada mas zero manifestos no repo.
+Trigger: user "muitas coisas boas se perderam, backlog pode ser aproveitado, sistemas de memoria, gestao, maturidade" — pediu varredura de OLMO atual + OLMO_GENESIS para recuperacao seletiva. Aulas_core ignorado por instrucao explicita.
+
+Workflow: 2 Explore agents read-only mapearam `/mnt/c/Dev/Projetos/OLMO` (95f, atual) e `/mnt/c/Dev/Projetos/OLMO_GENESIS` (64f, snapshot inicial). Plan file: `/home/lucasmiachon/.claude/plans/cuddly-beaming-wind.md` — 3 rounds incrementais.
 
 Commits (em ordem):
 
-- `fe8d26d` — ops: add ask-bash-write hook + cross-refs (sessao anterior).
-- (este commit) — `feat(stack): wire uv+ruff+biome manifests, README workflow with mermaid, install bun via direct binary` — stack saiu do papel: 13/13 tools OK; 3 manifestos novos (`biome.json`, `lab/wiki-graph-lab/pyproject.toml`, `lab/wiki-graph-lab/uv.lock`); `scripts/install-stack.sh` idempotente; `scripts/check.sh` agora roda `ruff` + `biome` gates; README reescrito com stack table + 3 Mermaid diagrams (lanes, SOTA gate, executor selection); cross-refs em AGENTS/PROJECT_CONTRACT/TREE/FOUNDATION/HANDOFF passaram de condicional ("quando houver projeto real") para afirmativo (manifestos vivos).
+- `b6c5603` — feat(stack): wire uv+ruff+biome manifests + README workflow com mermaid (sessao anterior).
+- `5e36a05` — `feat(shadow): selective port from OLMO+OLMO_GENESIS — Round 1`. 12 files, 196+/12-. 4 artefatos `experiment` adicionados:
+  - `shadow/BACKLOG.md` (markdown view derivado de `internal/evolution/backlog.json`; tiers P0/P1/P2/Frozen/Resolved + effort + dormancy >10 sessoes)
+  - `shadow/KBP.md` (catalogo pointer-only Known Bad Patterns; KBP-01..10 seed; cross-ref para AGENTS/CLAUDE/SOTA-DECISIONS)
+  - `shadow/PLAN-ARCHIVE/{README.md,2026-04-23.md}` (PLAN-2026-04-23.md migrado; pattern `YYYY-MM-DD.md`)
+  - `internal/evolution/failure-registry.{jsonl,README.md}` (vazio + schema doc; hook automatico defer ate Round 3)
+  - Cross-refs atualizados: TREE.md, AGENTS.md > Layout, CLAUDE.md > Things that will bite you (KBP-01/02/04 pointers), shadow/WORK-LANES.md (+4 lanes `experiment`), shadow/INCORPORATION-LOG.md (+1 entry).
+  - **NAO incorporados** (proibidos por AGENTS.md sem >=3 EVIDENCE-LOG): triangulation engine, 30+ hooks bulk, agent-memory subdirs, APL telemetry, ARCHITECTURE.md formal, wiki medicina-clinica.
 
-Bun instalado via direct binary download + python unzip (bypass `sudo apt install unzip`); `~/.local/bin/bun 1.3.13`.
-
-Sessao anterior (commit `fe8d26d`) deixou: 7 hooks ativos smoke-tested 5/5; push `origin/main`; HANDOFF reescrito como fonte unica de hidratacao.
+Round 2 (~120min) e Round 3 (doc-only) permanecem pending — ver §8 P0 #4.
 
 ---
 
@@ -209,13 +215,16 @@ Falta antes de promocao de qualquer artefato: `EV-B2` CI verde no remoto; >=3 en
 - `scripts/check.sh`, `scripts/evolve.sh`
 
 **Backlog estruturado**
-- `../internal/evolution/backlog.json` (proximo batch oficial)
+- `../internal/evolution/backlog.json` (canonical, proximo batch oficial)
+- `BACKLOG.md` (markdown view derivada do JSON; tiers + effort + dormancy)
 - `../internal/evolution/risk-register.json` (riscos vivos)
 - `../internal/evolution/review.json` (cadencia)
+- `../internal/evolution/failure-registry.{jsonl,README.md}` (vazio + schema; gate Round 3)
 
 **Planos das ultimas sessoes** (read-only)
-- `/home/lucasmiachon/.claude/plans/harmonic-waddling-spring.md` (esta sessao: hooks fix + doc cleanup; antes: Fase A+B+C)
-- `/home/lucasmiachon/.claude/plans/fuzzy-hatching-harbor.md` (sessao anterior)
+- `/home/lucasmiachon/.claude/plans/cuddly-beaming-wind.md` (esta sessao: incorporacao seletiva OLMO+OLMO_GENESIS; Round 1 aplicado em `5e36a05`; Round 2 e 3 pending)
+- `/home/lucasmiachon/.claude/plans/harmonic-waddling-spring.md` (sessao anterior: hooks fix + doc cleanup)
+- `/home/lucasmiachon/.claude/plans/fuzzy-hatching-harbor.md` (sessao -2)
 
 **Sources legacy autorizados** (read-only, citar ao tocar)
 - `legacy/2026-04-26/devmentor/` (autorizado 2026-04-26; 7 wiki notes lidas, 4 incorporadas)
