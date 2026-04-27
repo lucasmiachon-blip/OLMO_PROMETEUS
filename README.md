@@ -1,6 +1,8 @@
 # open OLMO_PROMETEUS
 
-Laboratorio paralelo solo, baixo risco, para validar fluxo (digest, study, wiki, gates de promocao) antes de promover qualquer artefato para `OLMO` (repo principal, intocavel sem autorizacao explicita).
+Laboratorio paralelo solo, baixo risco, para validar fluxo (digest, study, wiki, gates de promocao), maturidade executavel e self-evolution read-only antes de promover qualquer artefato para `OLMO` (repo principal, intocavel sem autorizacao explicita).
+
+`OLMO` e o primeiro projeto decente e aqui vira piso, nao teto: Prometeus precisa ser maior em boundary, evidencia, privacidade, rollback e anti-teatro, sem copiar runtime ou cerimonia.
 
 Be terse: politica vive uma vez em [`AGENTS.md`](AGENTS.md); adaptadores nao duplicam.
 
@@ -100,8 +102,11 @@ Detalhes + lista completa: [`AGENTS.md > Fundamental Boundary`](AGENTS.md) e [`s
 |---|---|
 | hidratar nova sessao apos `/clear` | [`shadow/HANDOFF.md`](shadow/HANDOFF.md) |
 | entender o contrato | [`AGENTS.md`](AGENTS.md) |
+| entender valores/objetivos/gaps | [`VALUES.md`](VALUES.md) |
 | entender lanes/promocao | [`shadow/WORK-LANES.md`](shadow/WORK-LANES.md) |
 | ver decisoes SOTA + ADRs | [`shadow/SOTA-DECISIONS.md`](shadow/SOTA-DECISIONS.md), [`docs/adr/`](docs/adr/) |
+| ver producer-consumer/antifragile gate | [`shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`](shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md) |
+| ver backlog self-evolving | [`shadow/BACKLOG.md`](shadow/BACKLOG.md), [`internal/evolution/backlog.json`](internal/evolution/backlog.json) |
 | navegar wiki conceitual | `Prometeus/wiki/Home.md` (Obsidian) |
 | rodar harness | `./scripts/check.sh --strict` |
 | diagnosticar stack | `./scripts/install-stack.sh` |

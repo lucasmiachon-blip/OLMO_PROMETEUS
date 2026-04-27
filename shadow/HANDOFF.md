@@ -1,248 +1,188 @@
 # Handoff
 
 Status: active
-Updated: 2026-04-26 (PM noite, pos Round 1 do plan `cuddly-beaming-wind` — incorporacao seletiva OLMO+OLMO_GENESIS)
-Scope: janela hidratada para retomar `OLMO_PROMETEUS` apos `/clear` ou nova sessao.
+Updated: 2026-04-27 (pos EV-B5 T1-T5; OLMO definido como piso, nao teto)
+Scope: hidratacao para retomar `OLMO_PROMETEUS` apos `/clear` ou nova conversa.
 
-> Este arquivo e a fonte unica de hidratacao. `session-start.sh` cola top 60 li no inicio de cada sessao. Mantenha denso, sem secoes paralelas.
-
----
-
-## 1. O que este projeto e
-
-`open OLMO_PROMETEUS` e um laboratorio paralelo solo, baixo risco, para validar fluxo (digest, study, wiki, gates de promocao) antes de promover qualquer artefato para `OLMO` (repo principal, intocavel sem autorizacao explicita).
-
-Workspace canonico unico: **`/home/lucasmiachon/projects/OLMO_PROMETEUS`** em Linux/WSL ext4 (ADR `0001-canonical-linux-workspace`). Caminhos em `/mnt/c/...` ou drive Windows sao referencia historica, archive ou UI humana (Obsidian via UNC `\\wsl.localhost\Ubuntu\...`); nao sao fonte operacional.
-
-Perfil do operador: medico solo dev. Padrao de ouro: auditavel, reversivel, humano-no-loop, sem PHI versionada, proporcional ao tamanho real do projeto. Codex e Claude Code sao executores autorizados (nunca juntos no mesmo escopo); Gemini e pesquisa/contraponto sem write.
+> Este arquivo e a fonte rapida de hidratacao. `session-start.sh` cola o topo no inicio da sessao. Manter denso, operacional e sem relatorio longo.
 
 ---
 
-## 2. Boundaries duras (NAO violar)
+## 1. Identidade
 
-1. **Nunca escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.** Read externo de sibling/legado (sibling principal, Aulas_core, snapshots paralelos, etc) exige autorizacao humana explicita citando caminho e motivo na conversa.
-2. **Sibling principal e read-only autorizado caso-a-caso.** Nunca write; copiar com melhoras para canonical, nunca direto.
-3. **NAO bulk-import de `Aulas_core`.** Estado virgem com muitos erros conhecidos pelo user.
-4. **NAO criar runtime scaffolds** (`.claude/agents/`, `.claude/hooks/`, `.claude/commands/`, `agents/`, `subagents/`, `skills/`, `hooks/`, `playground/`) sem gate. `.claude/skills/` so com procedure operational; `.claude/settings.local.json` e state local (gitignored).
-5. **NAO promover artefato sem 3 entradas reais em `EVIDENCE-LOG.md`** + rubrica + 14 dias estabilidade.
-6. **NAO push autonomo.** Push em `origin/main` e shared-state action — exige confirmacao humana explicita por rodada.
-7. **NAO commit com `--no-verify`, `--no-gpg-sign`, ou skip de hook.** Investigar e consertar root cause.
+`open OLMO_PROMETEUS` e um laboratorio paralelo solo para validar fluxo, digest, estudo, wiki operacional, gates de promocao, maturidade executavel e self-evolution read-only antes de qualquer conversa de promocao para `OLMO`.
 
----
+Workspace canonico unico: `/home/lucasmiachon/projects/OLMO_PROMETEUS` em Linux/WSL ext4. Caminhos Windows e `/mnt/c` sao referencia historica, archive ou UI humana, nao fonte operacional.
 
-## 3. Estado atual (2026-04-26 PM noite — Round 1 plan `cuddly-beaming-wind` aplicado)
+Perfil: medico solo dev. Padrao de ouro: auditavel, reversivel, humano-no-loop, sem PHI versionada, baixo atrito e rigor maior que o `OLMO` em boundary, evidencia, privacidade, rollback e anti-teatro.
 
-### Branch & remoto
-- `main` local: hashes recentes em `git log --oneline -5`; remoto sincronizado apenas por push humano-autorizado (ver Boundary #6).
-- `gh` configurado via SSH WSL nativo (ver `shadow/GITHUB-REMOTE-WSL.md`).
-- GitHub Actions `Self Evolution` existe; `gh run view --log-failed` retorna HTTP 403 por falta de admin (bloqueio documentado, nao contornar).
+Regra de direcao: `OLMO` e o primeiro projeto decente e vira piso profissional, nao teto. Prometeus nao copia a forma; adapta a intencao e adiciona protecao local mensuravel.
 
-### Harness
-- `./scripts/check.sh --strict` passa com 0 warnings.
-- `scripts/test-olmo-boundary-guard.sh` passa 21/21 casos.
-- Stack gates wired: `ruff check lab/wiki-graph-lab/` + `biome check .` rodam em `check.sh` se manifestos presentes.
-- 7 scripts em `scripts/` (todos `bash -n` OK): `check.sh`, `evolve.sh`, `install-stack.sh`, `doctor-github-remote.sh`, `guard-olmo-write-hook.sh`, `test-olmo-boundary-guard.sh`, + 5 hooks abaixo.
+## 2. Boundaries duras
 
-### Tools instaladas (13/13 — stack saiu do papel em 2026-04-26)
-| Ferramenta | Versao | Path | Wired-in |
-|---|---|---|---|
-| Claude Code | 2.1.119 | `~/.local/bin/claude` | autoria/arquitetura |
-| Codex CLI | 0.125.0 | `~/.npm-global/bin/codex` | edicao/auditoria (`xhigh`) |
-| Gemini CLI | 0.39.1 | `~/.npm-global/bin/gemini` | pesquisa/contraponto (READ-ONLY) |
-| `uv` (Astral Python) | 0.11.7 | `~/.local/bin/uv` | `lab/wiki-graph-lab/pyproject.toml` + `uv.lock` |
-| `ruff` | 0.15.12 | `~/.local/bin/ruff` | `pyproject.toml [tool.ruff]`; `check.sh` gate |
-| `biome` | 2.4.13 | `~/.npm-global/bin/biome` | `biome.json` raiz; `check.sh` gate |
-| `pnpm` | 10.33.2 | `~/.npm-global/bin/pnpm` | aguarda projeto JS-heavy real |
-| `node` | 20.20.2 | `/usr/bin/node` | runtime npm globals |
-| `bun` | 1.3.13 | `~/.local/bin/bun` | instalado via direct binary + python unzip (bypass `sudo apt install unzip`); experimento por projeto |
-| `rg` (ripgrep) | 14.1.1 | `~/.local/bin/rg` | `check.sh` (secret scan, OLMO refs) |
-| `jq` | 1.7 | `/usr/bin/jq` | `check.sh` (JSON validation) |
-| `gh` | 2.45.0 | `/usr/bin/gh` | `shadow/GITHUB-REMOTE-WSL.md` |
-| `git` | 2.43 | `/usr/bin/git` | system |
-| Zellij | 0.44.1 | `~/.local/bin/zellij` | multi-pane terminal opcional |
-| WSL | 2.6.3.0 | host | runtime |
-| Ubuntu WSL | 24.04.4 LTS | bloqueado em 24.04 (upgrade exige novo trigger/metrica/rollback) | runtime |
+1. Nunca escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
+2. Read externo de sibling/legado exige autorizacao humana explicita citando caminho e motivo.
+3. `OLMO`, `OLMO_GENESIS`, `OLMO_COWORK`, typos como `OLMO_COWOR` e qualquer sibling `OLMO*`: read-only caso-a-caso; write externo bloqueado.
+4. Nao bulk-import de legacy, hooks, skills, agents, MCP, runtime, caches, `.env`, agent-memory ou conteudo clinico.
+5. Nao criar scaffolds locais (`.claude/agents/`, `.claude/hooks/`, `.claude/commands/`, `.gemini/`, `agents/`, `skills/`, `hooks/`) sem gate e aprovacao humana.
+6. Push em `origin/main` exige confirmacao humana explicita por rodada.
+7. Sem `--no-verify`, `--no-gpg-sign`, skip de hook ou workaround sem diagnostico.
+8. Sem PHI/dado sensivel versionado, em prompt externo ou automacao sem workflow privado aprovado.
 
-Diagnostico: `./scripts/install-stack.sh` (idempotente, sem sudo, reporta versao+path+install hint).
+## 3. Estado atual
 
----
+Branch: `main` local. Push remoto nao foi feito nesta rodada sem confirmacao humana explicita.
 
-## 4. Hooks ativos (`.claude/settings.local.json`, gitignored)
+Harness:
 
-| Hook | Tipo | Matcher | O que faz |
-|---|---|---|---|
-| `guard-olmo-write-hook.sh` | PreToolUse | `Write\|Edit\|MultiEdit\|NotebookEdit\|Bash` | Boundary: bloqueia write para sibling fora do canonical; ask em read externo. Scaneia campos path-only de `tool_input` (file_path/command/workdir/cwd/directory). |
-| `guard-read-secrets.sh` | PreToolUse | `Read\|Grep\|Glob` | Bloqueia `.env`/`.pem`/`.key`/`credentials.json`/`id_rsa` + Grep credential patterns + paths PHI (`paciente_*`, `patient_*`, `phi_*`, `clinical_*`). |
-| `guard-secrets.sh` | PreToolUse | `Bash` | Bloqueia `git commit/add` com staged blob contendo OpenAI/Anthropic/AWS/GitHub/Notion/Google/Slack/Stripe/postgres keys ou symlink. |
-| `ask-bash-write.sh` | PreToolUse | `Bash` | Pede confirmacao humana (permissionDecision=ask) antes de comandos com write-intent (mkdir/rm/mv/cp/git add/commit/push/etc; `>` redirecao; sudo). Reads (ls/cat/grep/git status) sao allow direto. NUNCA bloqueia. |
-| `trace-edits.sh` | PostToolUse | `Edit\|Write\|MultiEdit` | Imprime header + diff/stat em **stderr (visivel ao user em tempo real)** e `additionalContext` (visivel ao modelo). 60 li max; trunca com aviso. |
-| `pre-compact-checkpoint.sh` | PreCompact | `*` | Snapshot em `.claude/.last-checkpoint` com `git log -5` + `git status` + recently modified + HANDOFF top 30. |
-| `session-start.sh` | SessionStart | `*` | Cola HANDOFF top 60 + `git log -5` + `git status` no inicio de cada sessao. |
+- `./scripts/check.sh --strict` passa com `0 warning(s)`.
+- `scripts/integrity.sh` passa e valida contratos vivos: valores, OLMO como piso, EV-B5, producer-consumer, backlog sync, antifragile verificavel, hook targets e ausencia de writes externos.
+- `scripts/test-olmo-boundary-guard.sh` passa.
+- `ruff` e `biome` estao wired no harness quando manifestos existem.
+- Git working tree limpo no fechamento desta janela.
 
-Todos smoke-tested 2026-04-26 (`shadow/EVIDENCE-LOG.md > hook-smoke-test`).
+Stack principal:
 
-Hooks **NAO** incorporados (avaliados, descartados):
-- `guard-bash-write` (overlap com boundary atual);
-- `lint-on-edit` (especifico aulas);
-- `loop-guard` (tied a fluxo `/debug-team`);
-- 24+ outros (chaos-inject, momentum-brake, ambient-pulse, apl-cache-refresh, etc — ceremony bloat solo).
+- Bash + Markdown + JSON como core.
+- `uv` + `ruff` wired em `lab/wiki-graph-lab/`.
+- `biome` wired em `biome.json`.
+- Codex e Claude Code podem executar edicoes, mas nunca juntos no mesmo escopo. Gemini e pesquisa/contraponto sem write.
 
----
+Hooks locais ativos em `.claude/settings.local.json` (gitignored):
 
-## 5. ADRs aceitos (`docs/adr/`)
+- `guard-olmo-write-hook.sh`: bloqueia write externo e pede permissao para read externo protegido.
+- `guard-read-secrets.sh`: bloqueia leitura/grep de segredos e paths PHI obvios.
+- `guard-secrets.sh`: bloqueia commit/add com segredo em staged blob.
+- `ask-bash-write.sh`: pede confirmacao para Bash com write-intent.
+- `trace-edits.sh`: mostra diff/stat de edits em stderr.
+- `pre-compact-checkpoint.sh`: gera checkpoint local antes de compactar.
+- `session-start.sh`: injeta topo do handoff no inicio da sessao.
 
-| # | Titulo | Status | Data |
-|---|---|---|---|
-| 0001 | Canonical Linux workspace | accepted | 2026-04-26 |
-| 0006 | Triadic SOTA stack debate | accepted | 2026-04-26 |
+## 4. Contratos que mandam
 
-ADRs intermediarios (0002-0005) reservados para PR 2 (privacy + governance consolidation).
+- `AGENTS.md`: fonte unica de verdade para agentes.
+- `VALUES.md`: valores, objetivos, `OLMO como piso` e Gap Lens. Mudanca relevante deve declarar valor, dor real, trigger, artefato, consumer, evidencia, custo, risco, rollback e criterio negativo.
+- `shadow/SOTA-DECISIONS.md`: decisoes curtas apos SOTA gate.
+- `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`: gate E2E, matriz producer-consumer e antifragile verificavel.
+- `shadow/WORK-LANES.md`: lanes e promotion gate.
+- `shadow/EVIDENCE-LOG.md`: evidencia real; sem evidencia, sem promocao.
+- `shadow/BACKLOG.md` + `internal/evolution/backlog.json`: backlog humano + canonical JSON.
+- `shadow/KBP.md`: Known Bad Patterns pointer-only.
 
----
+## 5. Commits recentes importantes
 
-## 6. Procedures e lanes ativos
+Linha de maturidade OLMO/Prometeus:
 
-| Procedure | Lane | Casa | Notas |
-|---|---|---|---|
-| `email-digest-4p` | experiment | `shadow/EMAIL-DIGEST-4P.md` | 0 entries em EVIDENCE-LOG; rebaixado de `candidate` em 2026-04-24. Antes de PR 2: provar uso real ou simplificar/aposentar. |
-| `study-track-done` | experiment | `shadow/STUDY-TRACK-DONE.md` | Idem. |
-| `obsidian-crossref-check` | candidate | (harness) | Roda mas sem rubrica/citacao em `AGENTS.md > Do`. |
-| `decision-protocol` | experiment | `procedures/decision-protocol.md` | Adapted; formato DR-NNN para mudancas nao-triviais. |
-| `sota-research-gate` | operational | `AGENTS.md > SOTA Research Gate` | Aplicado em 6+ entries de EVIDENCE-LOG. |
-| `boundary-guard` | operational | `scripts/guard-olmo-write-hook.sh` + `test-olmo-boundary-guard.sh` | Validado por suite de regressao 21/21. |
-| `privacy-guard` | operational | 4 docs em `shadow/` (DATA-CLASSIFICATION/PHI-CHECKLIST/THREAT-MODEL/INCIDENT-LOG) | Exigido pelo harness; sem uso clinico real ainda. |
+- `6f9deae` `docs: record olmo lineage adaptation gate` — OLMO/OLMO_GENESIS como ramos paralelos; OLMO mais maduro; sem bulk copy.
+- `4ae959c` `feat(harness): add local integrity gate` — `scripts/integrity.sh` integrado ao `check.sh`.
+- `08ee8b8` `docs: add prometeus values and gap lens` — `VALUES.md` criado.
+- `0431a3f` `docs: make olmo the prometeus maturity floor` — OLMO virou piso, nao teto.
+- `6ae390d` `docs: require producer consumer for gates` — T3: hook/gate novo exige matriz producer-consumer.
+- `0aefd20` `feat(harness): enforce backlog and antifragile contracts` — T4/T5: sync backlog e antifragile verificavel no harness.
 
-Wiki notes novas (4, status `experiment`, source devmentor): `Prometeus/wiki/Notes/{CLI vs MCP, Karpathy Wiki Pattern, Vault Anti-Pollution, Skills vs MCP}.md`. Promocao a `active` requer uso real; em 30d sem citacao -> HYGIENE delete.
+Validacao final conhecida: `./scripts/check.sh --strict` passou com `0 warning(s)` apos `0aefd20`.
 
----
+## 6. EV-B5 status
 
-## 7. DONE nesta sessao (2026-04-26 PM noite — plan `cuddly-beaming-wind` Round 1)
+Objetivo EV-B5: comparar `OLMO` e `OLMO_GENESIS` como ramos paralelos e adaptar gates maduros/convergentes sem copiar runtime, hooks, skills ou dados clinicos.
 
-Trigger: user "muitas coisas boas se perderam, backlog pode ser aproveitado, sistemas de memoria, gestao, maturidade" — pediu varredura de OLMO atual + OLMO_GENESIS para recuperacao seletiva. Aulas_core ignorado por instrucao explicita.
+Aplicado:
 
-Workflow: 2 Explore agents read-only mapearam `/mnt/c/Dev/Projetos/OLMO` (95f, atual) e `/mnt/c/Dev/Projetos/OLMO_GENESIS` (64f, snapshot inicial). Plan file: `/home/lucasmiachon/.claude/plans/cuddly-beaming-wind.md` — 3 rounds incrementais.
+- T1 applied: gate read-only de integridade/maturidade local.
+- T2 applied: wiring do gate em `scripts/check.sh`.
+- T3 applied: matriz producer-consumer obrigatoria para hook/gate novo.
+- T4 applied: sync leve entre `internal/evolution/backlog.json` e `shadow/BACKLOG.md`.
+- T5 applied: erro observado precisa virar detector/teste antes de claim antifragile.
 
-Commits (em ordem):
+Pendente:
 
-- `b6c5603` — feat(stack): wire uv+ruff+biome manifests + README workflow com mermaid (sessao anterior).
-- `5e36a05` — `feat(shadow): selective port from OLMO+OLMO_GENESIS — Round 1`. 12 files, 196+/12-. 4 artefatos `experiment` adicionados:
-  - `shadow/BACKLOG.md` (markdown view derivado de `internal/evolution/backlog.json`; tiers P0/P1/P2/Frozen/Resolved + effort + dormancy >10 sessoes)
-  - `shadow/KBP.md` (catalogo pointer-only Known Bad Patterns; KBP-01..10 seed; cross-ref para AGENTS/CLAUDE/SOTA-DECISIONS)
-  - `shadow/PLAN-ARCHIVE/{README.md,2026-04-23.md}` (PLAN-2026-04-23.md migrado; pattern `YYYY-MM-DD.md`)
-  - `internal/evolution/failure-registry.{jsonl,README.md}` (vazio + schema doc; hook automatico defer ate Round 3)
-  - Cross-refs atualizados: TREE.md, AGENTS.md > Layout, CLAUDE.md > Things that will bite you (KBP-01/02/04 pointers), shadow/WORK-LANES.md (+4 lanes `experiment`), shadow/INCORPORATION-LOG.md (+1 entry).
-  - **NAO incorporados** (proibidos por AGENTS.md sem >=3 EVIDENCE-LOG): triangulation engine, 30+ hooks bulk, agent-memory subdirs, APL telemetry, ARCHITECTURE.md formal, wiki medicina-clinica.
+- T6: revisar em 2026-05-27 se os checks detectaram regressao real. Se nao detectarem, simplificar ou remover.
 
-Round 2 (~120min) e Round 3 (doc-only) permanecem pending — ver §8 P0 #4.
+## 7. Licoes incorporadas do OLMO
 
----
+Lidos read-only em 2026-04-27:
 
-## 8. PENDING para proxima sessao (priorizado)
+- `OLMO/VALUES.md`.
+- indice de plans do OLMO.
+- plan ativo Conductor 2026.
+- amostras arquivadas S232, S253, S258 e S248.
+- OLMO_GENESIS como ramo paralelo com ideias uteis, mas mais ruido.
 
-### P0 — High value, low risk
+Incorporado como principio, nao como copia:
 
-1. **PR 2 — Privacy + governance consolidation** (~45min, risco medio): mesclar `shadow/{DATA-CLASSIFICATION,PHI-CHECKLIST,THREAT-MODEL,INCIDENT-LOG}.md` em `docs/threat-model.md`. Quebrar `shadow/SOTA-DECISIONS.md` (354L) em ADRs numerados (0002-0005: executor rule, sampling, privacy guard, Codex xhigh). Mover `email-digest-4p` + `study-track-done` para `procedures/`. Atualizar `scripts/check.sh` para novos paths.
+- anti-teatro;
+- evidence-based;
+- humildade epistemica;
+- auditoria adversarial;
+- producer-consumer para hooks/gates;
+- purge de aspiracional;
+- criterio de eficacia antes de debug-team/runtime;
+- self-evolution com risco, rollback e humano no loop.
 
-2. **Promover ou aposentar `email-digest-4p` + `study-track-done`**: 0 entries em EVIDENCE-LOG ha 14+ dias. Ou rodar 3x ciclos reais e registrar, ou simplificar/aposentar antes do PR 2.
+Nao incorporar sem novo gate:
 
-3. **Inventarios bloqueados** (precisam Bash com `!` prefix do user OU regra `Bash(read:...)` em `.claude/settings.local.json`):
-   - **OLMO + OLMO_GENESIS auditados via Explore read-only em 2026-04-26** (plan `cuddly-beaming-wind`). Round 1 incorporou 4 artefatos: `shadow/BACKLOG.md`, `shadow/KBP.md`, `shadow/PLAN-ARCHIVE/`, `internal/evolution/failure-registry.{jsonl,README.md}`. **Aulas_core ignorado por instrucao explicita do user.**
-   - `legacy/2026-04-26/dev/olmo-migration/` (snapshot Linux, paths sob `/home/lucasmiachon/`)
-   - `aulas-magnas-gemini-20260305.zip` (extrair em `/tmp`; path em `/mnt/c/Dev/Projetos/`)
-   - Snapshots paralelos remanescentes: `OLMO_COWORK`, `Projeto_olmo_main` (path em `/mnt/c/Dev/Projetos/`)
-   - Aux: `cowork-command-center-workspace`, `orquestrador-context`, `Conversores` (path em `/mnt/c/Dev/Projetos/`)
+- `.claude/agents`, `.claude/skills`, `.claude/hooks`;
+- APL, agent-memory, telemetry, MCP proprio;
+- runtime multiagente;
+- conteudo clinico cru;
+- caches, `.env`, `node_modules`, `.venv`, zips, dumps.
 
-4. **Round 2 do plan `cuddly-beaming-wind`** (~120min, risco medio): adicionar `.pre-commit-config.yaml` (subset seguro: trailing-ws, eof-fixer, large-file 500KB, detect-private-key, merge-conflict, check-yaml), `.github/workflows/ci.yml` (ruff+ruff-format+bash -n+jq validate; matrix 3.11/3.12), estender `scripts/check.sh` com `--integrity` mode (cross-refs FOUNDATION<->AGENTS<->TREE<->HANDOFF, hooks->scripts, ADRs->SOTA-DECISIONS, lanes->INCORPORATION-LOG; output `shadow/INTEGRITY-REPORT.md`), promover `obsidian-crossref-check` a `operational` apos 3 entries em EVIDENCE-LOG. Cross-check com PR 2 antes (ambos editam `scripts/check.sh`).
+## 8. Proxima sessao: ordem recomendada
 
-### P1 — Medium
+1. Rodar `git status --short` e `./scripts/check.sh --strict`.
+2. Se o user quiser push, pedir confirmacao explicita e entao executar `git push`.
+3. Se continuar T6/EV-B5: criar criterio de revisao 2026-05-27 sem adicionar runtime.
+4. Se for PR-2: consolidar privacidade/governance com cuidado, porque toca `shadow/` e harness.
+5. Se for EV-B2: verificar CI remoto (`gh run list`) e documentar bloqueio; branch protection so depois de workflow verde.
+6. Se for digest/study: rodar uso real e registrar em `EVIDENCE-LOG.md`; senao aposentar/simplificar.
 
-5. **Promocao das 4 wiki notes incorporadas**: `experiment` -> `active` em 30d se citadas em decisao ou expandidas com pensamento autoral; senao HYGIENE delete.
+P0 atual:
 
-6. **Material devmentor restante** (3 grupos): 4 skills (`ingest`/`graduate`/`lint-wiki`/`session-log`) bloqueadas pelo local skills gate ate procedure operational; 1 `setup-second-brain.sh` avaliar adequacao; 2 raw articles (Scalekit + Karpathy) ja referenciados nas wiki notes — arquivar?
+- `EV-B2`: CI remoto verde; depende de auth/permissao.
+- `PR-2`: consolidar privacy/governance e reduzir sprawl documental.
+- `EV-DIGEST`: promover ou aposentar `email-digest-4p` e `study-track-done`.
+- `LEGACY-MINE`: inventarios legacy bloqueados, sempre caso-a-caso.
 
-7. **PR 3 — AGENTS.md SOTA + retire scaffolds** (~60min, risco alto): AGENTS.md ~80L (Toolchain First); mesclar `FOUNDATION/PROJECT_CONTRACT/AGENT-USAGE/AGENT-MODULES/ORCHESTRATION-*` em `docs/runbook.md`; retire `shadow/` folder. Defer: mudanca grande, exige decisao humana sobre que partes morrem ou viram ADR.
+P1 atual:
 
-8. **CI remoto verde**: `EV-B2` em backlog. Confirmar `gh run list` apos push; se falhar, `gh run view --log-failed` (atualmente HTTP 403). Nao aplicar branch protection ate workflow verde ou bloqueio documentado.
+- `EV-B4`: split de `SOTA-DECISIONS.md` em ADR index.
+- `EV-B5`: concluir T6 na data certa.
+- `WIKI-PROMO`: decidir destino das 4 notas wiki incorporadas apos uso real.
 
-### P2 — Future (defer ate trigger real)
+## 9. Arquivos para hidratar contexto
 
-9. **`shared-v2/` design system de OLMO**: defer ate primeiro projeto aula real no Prometeus.
-10. **`gh run view --log-failed` HTTP 403**: defer ate ter admin do repo ou simulacao local.
-11. **Branch protection no `main`**: defer ate workflow verde.
-12. **Aplicar `PHI-CHECKLIST.md` em fluxo real**: trigger = primeiro caso clinico/dado pessoal a entrar no fluxo. Nao tocar antes.
-13. **`pnpm` + `vite` wired**: trigger = primeiro projeto JS-heavy real (>=1 `.tsx` ou >=3 `.ts`). Por enquanto `biome` standalone basta.
+Leia nesta ordem:
 
----
+1. `AGENTS.md`
+2. `VALUES.md`
+3. `shadow/HANDOFF.md`
+4. `shadow/BACKLOG.md`
+5. `shadow/SOTA-DECISIONS.md`
+6. `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`
+7. `scripts/integrity.sh`
+8. `shadow/EVIDENCE-LOG.md`
+
+Para contexto visual/wiki:
+
+- `Prometeus/wiki/Home.md`
+- `Prometeus/wiki/Maps/Prometeus.canvas`
 
 ## Migration Readiness
 
 Ainda nao migrar nada para `OLMO` como padrao operacional.
 
-Pronto: repo canonico em Linux/WSL ext4; `main` sincronizado com origin; harness Bash passa; runtime antigo removido; ADRs 0001/0006 aceitos; executor rule + sampling + Codex xhigh registrados em SOTA-DECISIONS; controles minimos de privacidade/PHI exigidos pelo harness.
+Pronto localmente: workspace canonico Linux/WSL, valores e objetivos versionados, `OLMO` como piso, EV-B5 T1-T5 aplicadas, producer-consumer exigido para gates, antifragile verificavel no harness, privacy guards minimos e `./scripts/check.sh --strict` verde.
 
-Falta antes de promocao de qualquer artefato: `EV-B2` CI verde no remoto; >=3 entradas em `EVIDENCE-LOG.md` por procedure; aplicacao real de `PHI-CHECKLIST.md` em fluxo clinico; trigger/risco/custo/rollback explicito por artefato migravel; rollback simples preservado (revert de commit, sem sync automatico).
-
----
-
-## 10. Cross-references (paths vivos)
-
-**Contrato e boundary**
-- `../AGENTS.md` (fonte unica de verdade)
-- `../CLAUDE.md`, `../CODEX.md`, `../GEMINI.md` (adaptadores finos)
-- `../PROJECT_CONTRACT.md`
-- `FOUNDATION.md`
-
-**Estado e promocao**
-- `WORK-LANES.md` (lanes + promotion gate; +4 entries de Round 1)
-- `INCORPORATION-LOG.md` (transicoes aplicadas — 6 entries de 2026-04-26)
-- `EVIDENCE-LOG.md` (uso real de procedures)
-- `HYGIENE.md` (regras de poda)
-- `BACKLOG.md` (view markdown derivada de `internal/evolution/backlog.json`; tiers + effort + dormancy)
-- `KBP.md` (Known Bad Patterns pointer-only)
-- `PLAN-ARCHIVE/` (plans estruturais arquivados; pattern `YYYY-MM-DD.md`)
-
-**Decisoes**
-- `SOTA-DECISIONS.md` (indice operacional + entry triadic 2026-04-26)
-- `../docs/adr/0001-canonical-linux-workspace.md`
-- `../docs/adr/0006-triadic-stack-debate.md` (raws originais deletados em commit `478bc1d`; recuperaveis via git history pre-este-commit)
-
-**Privacidade / PHI**
-- `DATA-CLASSIFICATION.md`, `PHI-CHECKLIST.md`, `THREAT-MODEL.md`, `INCIDENT-LOG.md`
-
-**Orquestracao / harness**
-- `ORCHESTRATION-HARNESS-ANTIFRAGILE.md` (gate E2E + fault injection)
-- `AGENT-MODULES.md`, `AGENT-USAGE.md`
-- `scripts/check.sh`, `scripts/evolve.sh`
-
-**Backlog estruturado**
-- `../internal/evolution/backlog.json` (canonical, proximo batch oficial)
-- `BACKLOG.md` (markdown view derivada do JSON; tiers + effort + dormancy)
-- `../internal/evolution/risk-register.json` (riscos vivos)
-- `../internal/evolution/review.json` (cadencia)
-- `../internal/evolution/failure-registry.{jsonl,README.md}` (vazio + schema; gate Round 3)
-
-**Planos das ultimas sessoes** (read-only)
-- `/home/lucasmiachon/.claude/plans/cuddly-beaming-wind.md` (esta sessao: incorporacao seletiva OLMO+OLMO_GENESIS; Round 1 aplicado em `5e36a05`; Round 2 e 3 pending)
-- `/home/lucasmiachon/.claude/plans/harmonic-waddling-spring.md` (sessao anterior: hooks fix + doc cleanup)
-- `/home/lucasmiachon/.claude/plans/fuzzy-hatching-harbor.md` (sessao -2)
-
-**Sources legacy autorizados** (read-only, citar ao tocar)
-- `legacy/2026-04-26/devmentor/` (autorizado 2026-04-26; 7 wiki notes lidas, 4 incorporadas)
-- Sibling principal (autorizado caso-a-caso para leitura citada; nunca write)
-- Archive 20260426 (sem perda significativa vs canonical)
-
-**Mapa**
-- `../TREE.md`
-
----
+Falta antes de promocao: CI remoto verde (`EV-B2`), evidencia real por procedure, T6 em 2026-05-27, criterio de rollback por artefato e confirmacao humana explicita para qualquer push/migracao.
 
 ## 10. Stop conditions
 
-- Cada PR deve passar `./scripts/check.sh --strict` antes do commit.
-- Se hook bloquear ou quebrar workflow, `git revert` + restaurar `.claude/settings.local.json` minimal (so `guard-olmo-write-hook.sh`).
-- Se cwd nao for `/home/lucasmiachon/projects/OLMO_PROMETEUS`, parar antes de editar.
-- Se task exigir write em sibling, parar e pedir autorizacao explicita.
-- Se mudanca estrutural nao tiver trigger, aceite, risco e rollback, manter em `experiment`.
-- Se correcao do CI exigir permissao admin, registrar bloqueio em vez de contornar com automacao insegura.
-- Stop ao fim de cada PR; nao encadear PR 1+2+3 em um so commit.
-- Sem dado de paciente/PHI versionado em qualquer fluxo.
+- Cwd diferente do workspace canonico: parar antes de editar.
+- Tarefa exige write externo: parar e pedir autorizacao explicita.
+- Mudanca estrutural sem trigger, consumidor, risco, rollback e criterio negativo: manter em `experiment` ou rejeitar.
+- Hook/gate novo sem linha producer-consumer: bloqueado.
+- Claim antifragile sem detector/regra/teste: bloquear via KBP-11.
+- Dado sensivel/PHI real: bloquear ate workflow privado aprovado.
+- CI/remoto exige permissao admin: registrar bloqueio, nao contornar.
+
+Coautoria: Lucas + GPT-5.x-Codex (xhigh)

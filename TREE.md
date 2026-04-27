@@ -20,7 +20,7 @@ CLAUDE.md             # adaptador fino Boris-style para Claude Code, importa AGE
 CODEX.md              # adaptador fino para Codex, importa AGENTS.md
 GEMINI.md             # adaptador fino para Gemini CLI, importa AGENTS.md
 PROJECT_CONTRACT.md   # limites, lanes e criterio de promocao
-VALUES.md             # valores, objetivos e lente de gaps
+VALUES.md             # valores, objetivos, OLMO como piso e lente de gaps
 README.md             # entrada humana rapida
 TREE.md               # mapa profissional da arvore do repo
 scripts/check.sh      # harness local Bash-first, sem writes externos
@@ -91,6 +91,7 @@ Memoria operacional, nao deposito de pesquisa longa.
 - `EMAIL-DIGEST-4P.md`, `STUDY-TRACK-DONE.md`: procedures com trigger, contrato, workflow, rubric e mini-evals.
 - `BACKLOG.md`: view markdown derivada de `internal/evolution/backlog.json` (canonical), com tiers P0/P1/P2/Frozen/Resolved + effort + dormancy.
 - `KBP.md`: catalogo pointer-only de Known Bad Patterns observados no lab; cross-ref para AGENTS/CLAUDE/SOTA-DECISIONS, sem prosa inline.
+- `ORCHESTRATION-HARNESS-ANTIFRAGILE.md`: gate E2E, matriz producer-consumer e contrato antifragile verificavel.
 - `PLAN-ARCHIVE/`: plans operacionais arquivados por mudanca estrutural (`YYYY-MM-DD.md`); imutavel apos arquivado.
 
 ### `private-learning/`
@@ -146,10 +147,12 @@ Nao copiar:
 - `node_modules`, `.venv`, `__pycache__`, zips e outputs;
 - historico longo que nao muda comportamento.
 
-Copiar/adaptar somente quando houver:
+`OLMO` e piso profissional, nao teto. Copiar/adaptar somente quando houver:
 
 - casa clara neste repo;
 - trigger real;
+- producer-consumer quando for hook/gate;
+- protecao extra Prometeus alem do piso OLMO;
 - risco explicito;
 - rollback simples;
 - harness passando.
