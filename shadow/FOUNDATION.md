@@ -29,7 +29,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 - `private-learning/` para interface e material pessoal.
 - `scripts/check.sh` como harness local Bash-first.
 - `scripts/evolve.sh` como executor self-evolving Bash-first.
-- `scripts/integrity.sh` como gate read-only de integridade/maturidade: sintaxe de scripts, targets de hooks locais, sync backlog JSON/Markdown, evidencia EV-B5 e ausencia de comandos contra paths OLMO externos.
+- `scripts/integrity.sh` como gate read-only de integridade/maturidade: sintaxe de scripts, targets de hooks locais, sync backlog JSON/Markdown, evidencia EV-B5, contrato antifragile verificavel e ausencia de comandos contra paths OLMO externos.
 - `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md > Producer-Consumer Matrix` como contrato T3: gate/hook novo sem produtor, artefato, consumidor, acao de falha, piso OLMO e protecao extra Prometeus fica bloqueado.
 - `scripts/guard-olmo-write-hook.sh` como guard Bash do Claude PreToolUse: write externo para `OLMO`, `OLMO_COWORK`, typo `OLMO_COWOR`, workspace legado ROADMAP ou qualquer sibling `OLMO*` nao canonico vira `deny` (block); read externo vira `ask`.
 - `scripts/test-olmo-boundary-guard.sh` como teste automatizado da trava OLMO.
@@ -103,7 +103,7 @@ Ele valida:
 - caminhos privados e gerados continuam ignorados por Git e pelo contexto de agentes;
 - checks de ignore aceitam LF e CRLF para os workflows `ubuntu-latest` e `windows-latest`;
 - checks textuais pulam arquivos ignorados e redigem linhas em achados de segredo;
-- `scripts/integrity.sh` valida contratos vivos que tendem a driftar: scripts Bash, hook targets, backlog view e evidencia EV-B5;
+- `scripts/integrity.sh` valida contratos vivos que tendem a driftar: scripts Bash, hook targets, backlog view, evidencia EV-B5 e antifragile sem narrativa vazia;
 - todo gate/hook novo precisa linha producer-consumer antes de entrar no harness ou hook local;
 - ausencia de scaffolds fantasmas na raiz;
 - Git status legivel.

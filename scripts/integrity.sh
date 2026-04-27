@@ -67,10 +67,21 @@ check_hook_targets() {
 }
 
 check_backlog_view_sync() {
-  local id
+  local id updated
   if [[ ! -f internal/evolution/backlog.json || ! -f shadow/BACKLOG.md ]]; then
     fail "backlog sync inputs missing"
     return
+  fi
+
+  updated="$(jq -r '.updated // empty' internal/evolution/backlog.json)"
+  if [[ -n "$updated" && "$updated" != "null" ]]; then
+    if grep -Fq "sincronizado $updated" shadow/BACKLOG.md; then
+      ok "backlog markdown sync date matches JSON: $updated"
+    else
+      fail "backlog markdown sync date does not match JSON updated date: $updated"
+    fi
+  else
+    fail "backlog JSON missing updated date"
   fi
 
   while IFS= read -r id; do
@@ -90,6 +101,10 @@ check_ev_b5_contract() {
   require_text shadow/EVIDENCE-LOG.md 'OLMO_GENESIS.*EV-B5|EV-B5.*OLMO_GENESIS' 'EV-B5 evidence entry'
   require_text shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md '^## Producer-Consumer Matrix$' 'producer-consumer matrix exists'
   require_text shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md 'Regra T3: gate novo sem linha nesta matriz fica bloqueado' 'producer-consumer gate rule'
+  require_text internal/evolution/backlog.json 'T4 applied: manter sync leve entre internal/evolution/backlog.json e shadow/BACKLOG.md' 'EV-B5 T4 applied in JSON'
+  require_text shadow/BACKLOG.md 'T4 applied sync leve backlog JSON/Markdown' 'EV-B5 T4 applied in markdown'
+  require_text internal/evolution/backlog.json 'T5 applied: converter erro observado em detector/teste antes de chamar antifragile' 'EV-B5 T5 applied in JSON'
+  require_text shadow/BACKLOG.md 'T5 applied erro observado vira detector/teste antes de claim antifragile' 'EV-B5 T5 applied in markdown'
 }
 
 check_values_contract() {
@@ -100,6 +115,13 @@ check_values_contract() {
   require_text shadow/SOTA-DECISIONS.md '^## OLMO plans as maturity floor \(2026-04-27\)$' 'OLMO plans maturity floor decision'
   require_text PROJECT_CONTRACT.md 'VALUES.md' 'project contract references values'
   require_text AGENTS.md 'VALUES.md' 'agent contract references values'
+}
+
+check_antifragile_contract() {
+  require_text shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md 'erro observado vira detector, regra ou teste de regressao' 'antifragile requires detector/rule/test'
+  require_text VALUES.md 'Falha so vira aprendizado quando reduz repeticao via teste, detector, regra ou backlog com criterio negativo' 'values antifragile is verifiable'
+  require_text shadow/KBP.md 'KBP-11 \| Antifragile narrativo sem detector/regra/teste' 'KBP records narrative antifragile ban'
+  require_text shadow/EVIDENCE-LOG.md 'producer-consumer-gate.*T3 aplicado|T3 aplicado.*producer-consumer-gate' 'producer-consumer evidence exists'
 }
 
 check_no_external_write_targets() {
@@ -115,6 +137,7 @@ check_hook_targets
 check_backlog_view_sync
 check_ev_b5_contract
 check_values_contract
+check_antifragile_contract
 check_no_external_write_targets
 
 if ((${#failures[@]} > 0)); then

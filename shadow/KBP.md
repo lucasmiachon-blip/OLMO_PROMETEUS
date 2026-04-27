@@ -25,5 +25,6 @@ Status: experiment. Promove a candidate apos uso real >=3x (PR cita KBP-N para j
 | KBP-08 | Decisao curta virou relatorio longo (ceremony bloat) | `AGENTS.md > Operating Principles`; `shadow/INCORPORATION-LOG.md` 2026-04-26 PR 1 |
 | KBP-09 | Hook bloqueia Write canonical por content do arquivo (scan full payload em vez de campos path-only) | `scripts/guard-olmo-write-hook.sh`; INCORPORATION-LOG 2026-04-26 |
 | KBP-10 | Stack declarada sem manifest (drift "saiu do papel?") — referencia condicional vira aspiracional | `shadow/INCORPORATION-LOG.md` 2026-04-26 stack manifests; `scripts/install-stack.sh` |
+| KBP-11 | Antifragile narrativo sem detector/regra/teste | `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md > Antifragile Lite`; `VALUES.md > V5` |
 
 Coautoria: Lucas + Claude Opus 4.7 (1M)

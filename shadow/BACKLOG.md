@@ -46,7 +46,7 @@ Item sem update em >10 sessoes -> auto-rebaixar a Frozen no proximo PR de hygien
 | `EV-B4` | SOTA-DECISIONS split em ADR index | M | med | backlog.json EV-B4 |
 | `EV-B5` | Comparar OLMO e OLMO_GENESIS como ramos paralelos; adaptar gates maduros/convergentes sem copiar runtime, hooks, skills ou dados clinicos | M | med | backlog.json EV-B5; SOTA-DECISIONS 2026-04-27 |
 
-EV-B5 tarefas: T1 applied gate read-only de integridade/maturidade local; T2 applied wiring no `scripts/check.sh`; T3 applied producer-consumer para hook/gate novo; T4 sync leve backlog JSON/Markdown; T5 erro observado vira detector/teste antes de claim antifragile; T6 revisao em 30 dias para manter, simplificar ou remover.
+EV-B5 tarefas: T1 applied gate read-only de integridade/maturidade local; T2 applied wiring no `scripts/check.sh`; T3 applied producer-consumer para hook/gate novo; T4 applied sync leve backlog JSON/Markdown; T5 applied erro observado vira detector/teste antes de claim antifragile; T6 revisao em 30 dias para manter, simplificar ou remover.
 
 ### P2 — defer ate trigger explicito
 
