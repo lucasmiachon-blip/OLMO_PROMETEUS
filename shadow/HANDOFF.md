@@ -68,7 +68,7 @@ Hooks ativos (`.claude/settings.local.json`, gitignored):
 ## 4. Contratos que mandam
 
 - `AGENTS.md`: fonte unica de verdade.
-- `VALUES.md`: V1-V9 + Gap Lens. Mudanca declara valor, dor, trigger, artefato, consumer, evidencia, eficacia, viabilidade, risco, rollback, criterio negativo.
+- `VALUES.md`: 4 valores fundadores (Amizade, Autenticidade, Lealdade, Dedicacao) + V1-V7 principios operacionais. Mudanca passa pelo promotion gate em `shadow/WORK-LANES.md`.
 - `shadow/CLUSTER-CONTRACT.md` **(novo 2026-04-28)**: cluster doctrine + path-to-principal (8 criterios para Prometeus suceder OLMO). Fonte unica.
 - `shadow/SOTA-DECISIONS.md`: decisoes curtas pos-SOTA gate.
 - `shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md`: gate E2E, producer-consumer, antifragile verificavel.

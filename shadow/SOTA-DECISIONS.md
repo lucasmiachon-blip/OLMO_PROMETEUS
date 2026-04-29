@@ -507,6 +507,7 @@ Criterio negativo: se a regra criar friction sem catch real em 30 dias, simplifi
 | 2026-04-27 | SOTA alignment batch 01 triage | Implementado CI local read-only + stale evidence warning; PHI prompt hook, handoff JSON, value commit gate e issues:write deferidos/rejeitados | `scripts/simulate-ci.sh`, `scripts/check.sh`, `scripts/integrity.sh`, `shadow/BACKLOG.md`, `internal/evolution/backlog.json` |
 | 2026-04-27 | Frontier orchestration objective | V9 adicionado: LLMs orquestrados para educacao, pesquisa, EBM e auxilio direto, com modelos escolhidos por eval local e HITL | `VALUES.md`, `PROJECT_CONTRACT.md`, `shadow/SOTA-DECISIONS.md` |
 | 2026-04-27 | Multimodel SOTA efficacy priority | Multimodel vira hipotese operacional preferida; SOTA e eficacia acima de custo, que vira constraint de viabilidade | `VALUES.md`, `PROJECT_CONTRACT.md`, `docs/adr/0007-multimodel-sota-efficacy.md` |
+| 2026-04-28 | Values drift correction | V1-V9 + Gap Lens -> 4 raizes + V1-V7 com frontmatter YAML (related: Ignis Animi/Flammula of uncertainty; notes: Notion migracao); removido Identidade, OLMO-piso, Gap Lens, Anti-valores prosa, V9 (em ADR 0007) | `VALUES.md` v2.5, `scripts/check.sh`, `scripts/integrity.sh`, `AGENTS.md`, `PROJECT_CONTRACT.md`, `shadow/HANDOFF.md`, `shadow/FOUNDATION.md` |
 
 ## Claude Code, Codex e GEMINI.md adapters
 

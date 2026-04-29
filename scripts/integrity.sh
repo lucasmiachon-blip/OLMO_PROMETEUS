@@ -111,9 +111,6 @@ check_ev_b5_contract() {
 check_values_contract() {
   require_text VALUES.md '^## Valores$' 'values contract has values'
   require_text VALUES.md '^## Objetivos$' 'values contract has objectives'
-  require_text VALUES.md '^## OLMO como piso$' 'values contract treats OLMO as floor'
-  require_text VALUES.md '^## Gap Lens$' 'values contract has gap lens'
-  require_text shadow/SOTA-DECISIONS.md '^## OLMO plans as maturity floor \(2026-04-27\)$' 'OLMO plans maturity floor decision'
   require_text PROJECT_CONTRACT.md 'VALUES.md' 'project contract references values'
   require_text AGENTS.md 'VALUES.md' 'agent contract references values'
 }

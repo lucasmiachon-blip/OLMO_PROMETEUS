@@ -74,7 +74,7 @@ Regra: agentes que precisarem de criterio detalhado seguem o link acima. Duplica
 ## Layout
 
 - `private-learning/`: cockpit visual e material pessoal local, ignorado pelo Git e pelo contexto.
-- `VALUES.md`: valores, objetivos e lente de gaps para decidir se uma mudanca melhora o laboratorio ou so adiciona estrutura.
+- `VALUES.md`: 4 valores (Amizade, Autenticidade, Lealdade, Dedicacao) + V1-V7 principios operacionais derivados. Promotion gate em `shadow/WORK-LANES.md`.
 - `CLAUDE.md`: adaptador fino para Claude Code; importa `AGENTS.md`.
 - `CODEX.md`: adaptador fino para Codex; importa `AGENTS.md`.
 - `GEMINI.md`: adaptador fino para Gemini CLI; importa `AGENTS.md`.

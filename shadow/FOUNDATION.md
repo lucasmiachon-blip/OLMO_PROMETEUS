@@ -20,7 +20,7 @@ O repo e um laboratorio isolado. A infraestrutura minima e:
 - `AGENTS.md` como contrato operacional.
 - `CLAUDE.md`, `CODEX.md` e `GEMINI.md` como adaptadores de ferramenta que importam `AGENTS.md`.
 - `PROJECT_CONTRACT.md` como limite de risco.
-- `VALUES.md` como filtro de decisao: valores, objetivos, `OLMO` como piso profissional e lente de gaps.
+- `VALUES.md` como filtro de decisao: 4 valores fundadores + V1-V7 principios operacionais.
 - `TREE.md` como mapa profissional da arvore e da politica de incorporacao segura.
 - `shadow/` para decisoes, gates e memoria operacional.
 - `Prometeus/.obsidian/` para configurar o vault Obsidian `Prometeus`.
@@ -65,7 +65,7 @@ Memoria nao e conversa solta. Memoria operacional precisa morar em arquivo certo
 - contrato vivo: `AGENTS.md`;
 - adaptadores de ferramenta: `CLAUDE.md`, `CODEX.md` e `GEMINI.md`;
 - limites do projeto: `PROJECT_CONTRACT.md`;
-- valores, `OLMO` como piso profissional e lente de gaps: `VALUES.md`;
+- valores e principios operacionais: `VALUES.md`;
 - decisoes SOTA: `shadow/SOTA-DECISIONS.md`;
 - decisoes arquiteturais aceitas: `docs/adr/`;
 - lanes e promotion gate: `shadow/WORK-LANES.md`;

@@ -4,7 +4,7 @@
 
 Validar um laboratorio paralelo, guiado por orquestracao de baixo risco, para vault, digest, study flow, educacao, pesquisa, EBM e auxilio direto com LLMs.
 
-Valores e objetivos operacionais vivem em `VALUES.md`. Qualquer gap novo deve declarar qual valor melhora, dor real, trigger, artefato, consumer, evidencia, eficacia, viabilidade, risco, rollback e criterio negativo.
+Valores e principios operacionais vivem em `VALUES.md` (4 raizes + V1-V7). Promotion gate em `shadow/WORK-LANES.md`.
 
 ## Limites
 
@@ -53,7 +53,7 @@ Um artefato daqui so entra em conversa de migracao quando:
 ## Estrutura minima racional
 
 - `AGENTS.md` define o contrato do repo.
-- `VALUES.md` define valores, objetivos e lente de gaps.
+- `VALUES.md` define 4 valores fundadores + V1-V7 principios operacionais.
 - `CLAUDE.md`, `CODEX.md` e `GEMINI.md` sao adaptadores finos que importam `AGENTS.md`.
 - `TREE.md` define a arvore profissional, casas dos artefatos e politica de incorporacao segura.
 - `shadow/WORK-LANES.md` define os estados e promotion gate.
