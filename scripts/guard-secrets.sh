@@ -31,6 +31,7 @@ PATTERNS=(
   'sk_live_[a-zA-Z0-9]{20,}'
   'sk_test_[a-zA-Z0-9]{20,}'
   '(postgres|mysql|mongodb|redis)://[^[:space:]]+:[^[:space:]@]+@'
+  '\b[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}\b'
 )
 
 STAGED=$(git diff --cached --name-only 2>/dev/null || true)
@@ -63,8 +64,8 @@ while IFS= read -r file; do
   [ -z "$CONTENT" ] && continue
 
   for pattern in "${PATTERNS[@]}"; do
-    if echo "$CONTENT" | grep -qE "$pattern" 2>/dev/null; then
-      MATCH=$(echo "$CONTENT" | grep -nE "$pattern" 2>/dev/null | grep -v '\$\{' | head -3 || true)
+    if echo "$CONTENT" | grep -qE -- "$pattern" 2>/dev/null; then
+      MATCH=$(echo "$CONTENT" | grep -nE -- "$pattern" 2>/dev/null | grep -vF '${' | head -3 || true)
       if [ -n "$MATCH" ]; then
         WARNINGS="${WARNINGS}\n[!] $file:\n${MATCH}\n"
         FOUND=1

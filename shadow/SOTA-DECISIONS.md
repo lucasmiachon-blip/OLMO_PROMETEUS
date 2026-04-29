@@ -399,6 +399,37 @@ Criterio negativo: se em 60d (ate 2026-06-27) nenhum SKILL.md ou agent for criad
 
 Proxima acao: avaliar se enforcer detecta drift real nas proximas 3 rodadas; manter em silencio se Phase 0 persistir.
 
+## Guard-secrets PHI lite + test fixtures (2026-04-28)
+
+Decisao: estender `scripts/guard-secrets.sh` (ja com 15 patterns OLMO portados em 2026-04-26) com 1 pattern PHI conservador — CPF formatado (`\b[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}\b`). Criar `scripts/test-guard-secrets.sh` com fixtures positivos por pattern + falsos positivos comuns. Wire em `check.sh --strict`.
+
+Avaliacao dos OLMO patterns (B4.1 do plano): os 15 patterns ja estavam wired em 2026-04-26 e passaram em fixtures sinteticos (verificado em `scripts/test-guard-secrets.sh`). Manter todos os 15 — todos batem em fixtures positivos validos. Adicao: 1 PHI pattern.
+
+Decisao PHI conservadora: apenas CPF formatado entra Phase 0. Razao:
+
+- CPF cru (11 digitos) gera muitos falsos positivos (telefones, IDs internos, datas longas, sequencias arbitrarias).
+- CNS (15 digitos) raro em commits; ROI baixo, risco de ruido.
+- Datas isoladas + nome adjacente (ex: "Joao Silva 1985-01-15") gera falsos positivos enormes em prosa portuguesa comum.
+
+`shadow/PHI-CHECKLIST.md` agora documenta explicitamente "regex e suplemento, nao substituto", listando os falsos negativos garantidos (CPF cru, CNS, narrativa clinica, combinacoes reidentificantes). Detector e ultima linha; checklist humana e primeira.
+
+Bugs encontrados durante implementacao (consertados antes do commit):
+
+- `grep -v '\$\{'` em guard-secrets.sh era BRE quebrado (Unmatched `\{`). Substituido por `grep -vF '${'`.
+- Patterns iniciando com `-` (ex: `-----BEGIN`) eram interpretados como flags. Substituido por `grep -E -- "$pat"`.
+
+Trigger: B4 do plano `happy-drifting-naur.md`.
+
+Risco: PHI false-positive em commits normais (CPF formatado em docs sinteticos legitimos). Mitigacao: allowlist via `${VAR}` nas matches existentes; criterio negativo abaixo.
+
+Custo: +1 linha em PATTERNS, +124 linhas em test-guard-secrets.sh, +13 linhas em PHI-CHECKLIST.md, +3 linhas em check.sh.
+
+Rollback: remover CPF pattern, deletar test-guard-secrets.sh, reverter PHI-CHECKLIST e check.sh wires.
+
+Criterio negativo: se CPF false-positive bloquear edicao normal 2x na mesma sessao, downgrade para apenas patterns secret. Adicionar entry em `KBP.md`.
+
+Proxima acao: monitorar catches reais (registrar em `EVIDENCE-LOG.md` com metadado nao-sensivel) nas proximas 4 semanas; considerar adicionar CNS ou data-iso-em-contexto se volume justificar.
+
 ## Evidence-first applied to subagent reports (2026-04-28)
 
 Decisao: relatorios de Explore/Plan subagents sao input, nao verdade. Antes de agir em uma claim de subagent, validar contra estado real do repo.

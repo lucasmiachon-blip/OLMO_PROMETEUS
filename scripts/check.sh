@@ -42,7 +42,7 @@ required_files=(
   biome.json
   lab/wiki-graph-lab/pyproject.toml lab/wiki-graph-lab/uv.lock
   .gitignore .claudeignore .github/workflows/self-evolution.yml
-  scripts/check.sh scripts/evolve.sh scripts/integrity.sh scripts/install-stack.sh scripts/simulate-ci.sh scripts/guard-olmo-write-hook.sh scripts/test-olmo-boundary-guard.sh scripts/doctor-github-remote.sh
+  scripts/check.sh scripts/evolve.sh scripts/integrity.sh scripts/install-stack.sh scripts/simulate-ci.sh scripts/guard-olmo-write-hook.sh scripts/test-olmo-boundary-guard.sh scripts/test-guard-secrets.sh scripts/doctor-github-remote.sh
   shadow/FOUNDATION.md shadow/HANDOFF.md shadow/AGENT-MODULES.md shadow/HYGIENE.md
   shadow/SOTA-DECISIONS.md shadow/ORCHESTRATION-HARNESS-ANTIFRAGILE.md
   shadow/GITHUB-REMOTE-WSL.md
@@ -83,6 +83,9 @@ bash "${root}/scripts/integrity.sh"
 
 "${root}/scripts/test-olmo-boundary-guard.sh"
 [[ $? -eq 0 ]] && ok "OLMO boundary guard tests pass" || fail "OLMO boundary guard tests failed"
+
+"${root}/scripts/test-guard-secrets.sh"
+[[ $? -eq 0 ]] && ok "guard-secrets tests pass" || fail "guard-secrets tests failed"
 
 if [[ -f lab/wiki-graph-lab/pyproject.toml ]]; then
   if command -v ruff >/dev/null 2>&1; then
@@ -140,10 +143,10 @@ require_text shadow/INCIDENT-LOG.md '^## Entradas$' 'incident log entries'
 require_text shadow/GITHUB-REMOTE-WSL.md '^## Procedimento$' 'GitHub WSL remote procedure'
 
 if has_cmd rg; then
-  secret_scan_cmd=(rg -n --hidden --glob '!.git/**' --glob '!scripts/check.sh' --glob '!private-learning/**' --glob '!Prometeus/wiki/Clippings/**' --glob '!Prometeus/wiki/Daily/**' --glob '!Prometeus/wiki/Attachments/**' 'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|BEGIN RSA PRIVATE KEY' .)
+  secret_scan_cmd=(rg -n --hidden --glob '!.git/**' --glob '!scripts/check.sh' --glob '!scripts/test-guard-secrets.sh' --glob '!private-learning/**' --glob '!Prometeus/wiki/Clippings/**' --glob '!Prometeus/wiki/Daily/**' --glob '!Prometeus/wiki/Attachments/**' 'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|BEGIN RSA PRIVATE KEY' .)
 else
   warn "rg not installed; using grep fallback for secret scan"
-  secret_scan_cmd=(grep -RInE --exclude-dir=.git --exclude=check.sh 'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|BEGIN RSA PRIVATE KEY' .)
+  secret_scan_cmd=(grep -RInE --exclude-dir=.git --exclude=check.sh --exclude=test-guard-secrets.sh 'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|BEGIN RSA PRIVATE KEY' .)
 fi
 
 if "${secret_scan_cmd[@]}" >/tmp/prometeus-secret-scan.txt; then
