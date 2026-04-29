@@ -57,6 +57,14 @@ gh auth refresh --hostname github.com --scopes workflow
 git push origin main
 ```
 
+## CI legs (decisao 2026-04-28)
+
+- **Local Linux/WSL:** `scripts/simulate-ci.sh linux` reproduz o leg ubuntu-latest. E o unico leg simulavel localmente.
+- **Local Windows:** aposentado. `simulate-ci.sh windows` retorna fail explicito desde 2026-04-27 (lab solo nao roda Windows runner).
+- **Remoto ubuntu-latest:** wired em `.github/workflows/self-evolution.yml`. Verde em runs recentes.
+- **Remoto windows-latest:** **aposentado em 2026-04-28**. Removido da matrix do workflow. Razao: harness bash (POSIX paths, find, grep -E, awk) tem comportamento divergente em git-bash do windows-latest e debug per-script excede o ROI para lab solo. Decisao: SOTA-DECISIONS `Retire Windows CI leg (2026-04-28)`.
+- Reabertura: trigger registrado em `SOTA-DECISIONS.md` + evidencia de uso real no Windows + 2h de debug orcado.
+
 ## Criterio negativo
 
 Nao publicar se:

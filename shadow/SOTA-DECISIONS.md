@@ -415,8 +415,9 @@ Decisao PHI conservadora: apenas CPF formatado entra Phase 0. Razao:
 
 Bugs encontrados durante implementacao (consertados antes do commit):
 
-- `grep -v '\$\{'` em guard-secrets.sh era BRE quebrado (Unmatched `\{`). Substituido por `grep -vF '${'`.
-- Patterns iniciando com `-` (ex: `-----BEGIN`) eram interpretados como flags. Substituido por `grep -E -- "$pat"`.
+- `grep -v '\$\{'` em guard-secrets.sh era BRE quebrado (Unmatched chave). Substituido por `grep -vF` com fixed-string.
+- Patterns iniciando com hifens (PEM headers) eram interpretados como flags pelo grep. Substituido por uso de `--` antes do pattern.
+- Pattern PEM original era amplo demais: pegava texto livre que mencionava o nome do header em docs. Apertado para exigir prefixo + espaco + letras maiusculas, evitando self-reference em docs que descrevem o detector.
 
 Trigger: B4 do plano `happy-drifting-naur.md`.
 
@@ -429,6 +430,36 @@ Rollback: remover CPF pattern, deletar test-guard-secrets.sh, reverter PHI-CHECK
 Criterio negativo: se CPF false-positive bloquear edicao normal 2x na mesma sessao, downgrade para apenas patterns secret. Adicionar entry em `KBP.md`.
 
 Proxima acao: monitorar catches reais (registrar em `EVIDENCE-LOG.md` com metadado nao-sensivel) nas proximas 4 semanas; considerar adicionar CNS ou data-iso-em-contexto se volume justificar.
+
+## Retire Windows CI leg (2026-04-28)
+
+Decisao: remover `windows-latest` da matrix em `.github/workflows/self-evolution.yml`. Workflow agora roda apenas em `ubuntu-latest`. Local Windows simulation continua bloqueada em `simulate-ci.sh windows` (sem mudanca).
+
+Audit: `gh run list` mostrou 3 runs recentes (2026-04-27) onde ubuntu-latest passa em ~5s e windows-latest falha em ~19s no step Harness. OLMO CI (`/mnt/c/Dev/Projetos/OLMO/.github/workflows/ci.yml`, lido read-only com autorizacao 2026-04-28) e Linux-only (ubuntu-latest); confirma que precedente nao mantem dual-OS. Plan negative criterion B5: "debug gh auth >2h = aposentar Windows leg sem culpa" — gh auth WSL na verdade funciona (token gho_ ativo, scopes repo+workflow); falha vinha de divergencia bash POSIX vs git-bash do windows-latest no harness, nao de auth.
+
+**Importante:** esta decisao afeta APENAS Prometeus (`OLMO_PROMETEUS/.github/workflows/self-evolution.yml`). O sibling OLMO em `/mnt/c/Dev/Projetos/OLMO` continua intocado e Lucas pode seguir rodando PowerShell + OLMO independentemente. Boundary respeitado.
+
+EV-B2 movido de `next` para `applied` com acceptance ajustado:
+- `.github/workflows/self-evolution.yml` existe (sim).
+- workflow roda em push/PR/schedule/dispatch (sim).
+- Windows leg formalmente aposentado (criterio negativo B5 cumprido).
+- Branch protection: human decision deferida explicitamente para rodada futura (item P2 `BRANCH-PROT` ja registrado em `BACKLOG.md`).
+
+R-CI-DRIFT movido de `open` para `controlled`. Reabertura: trigger registrado em `SOTA-DECISIONS.md` + evidencia de uso real Windows + 2h debug orcado.
+
+EV-B6 promovido de `planned` para `next` (manter exatamente 1 next por contrato `evolve.sh check`).
+
+Trigger: B5 do plano `happy-drifting-naur.md`.
+
+Risco: perder cobertura cross-OS em runtime real. Mitigacao: harness foi desenhado Bash-first / Linux-first desde o inicio; cobertura Windows era aspiracional, nao operacional.
+
+Custo: 4 linhas removidas em workflow yml; sem mudanca em scripts.
+
+Rollback: restaurar `strategy.matrix.os: [ubuntu-latest, windows-latest]` em `self-evolution.yml`. Reverter R-CI-DRIFT para `open` se reabrir.
+
+Criterio negativo: se em 60d alguem precisar rodar Windows runner em CI por trigger real (nao reflexo), reabrir Windows leg com debug priorizado.
+
+Proxima acao: nenhuma; CI em estado limpo. EV-B6 e o proximo batch quando chegar.
 
 ## Evidence-first applied to subagent reports (2026-04-28)
 

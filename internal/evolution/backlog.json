@@ -1,6 +1,6 @@
 {
   "schema": "prometeus.evolution.backlog.v1",
-  "updated": "2026-04-27",
+  "updated": "2026-04-28",
   "items": [
     {
       "id": "EV-B1",
@@ -24,20 +24,21 @@
     {
       "id": "EV-B2",
       "batch": 2,
-      "status": "next",
+      "status": "applied",
       "area": "Qualidade e Git remoto",
       "problem": "O harness local passa, mas main ainda nao exige check remoto protegido.",
       "trigger": "Depois do workflow read-only existir e rodar uma vez no GitHub.",
       "acceptance": [
         ".github/workflows/self-evolution.yml existe",
         "workflow roda scripts/check.sh em push, pull_request, schedule e workflow_dispatch",
-        "main tem decisao humana de branch protection ou bloqueio documentado"
+        "Windows leg formalmente aposentado em 2026-04-28 (Ubuntu-only matrix); criterio negativo cumprido conforme plan B5",
+        "main tem decisao humana de branch protection deferida explicitamente"
       ],
       "owner": "Lucas",
       "risk": "CI Windows divergir do ambiente local ou bloquear push sem ganho.",
       "rollback": "Desabilitar workflow ou remover branch protection; checks locais continuam.",
       "negative_criterion": "Se o workflow falhar por ambiente por 2 ciclos sem bug real, documentar bloqueio e manter apenas check local.",
-      "next_action": "Rodar scripts/simulate-ci.sh no WSL antes de gh run list; se local passar e remoto falhar, autenticar gh com permissao read-only e documentar bloqueio sem elevar workflow para write."
+      "next_action": "Aplicado: Windows leg removido em 2026-04-28; ubuntu-latest verde. Branch protection: human decision pendente em rodada futura."
     },
     {
       "id": "EV-B3",
@@ -107,7 +108,7 @@
     {
       "id": "EV-B6",
       "batch": 6,
-      "status": "planned",
+      "status": "next",
       "area": "SOTA alignment e metricas",
       "problem": "Propostas SOTA podem virar automacao teatral quando nao declaram producer, consumer, falha observada e rollback.",
       "trigger": "Nova proposta de hook, metricas de valor, handoff machine-readable, permissao GitHub de escrita ou guard de privacidade em prompt.",

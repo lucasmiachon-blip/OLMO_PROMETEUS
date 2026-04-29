@@ -25,7 +25,7 @@ Source canonical: [`internal/evolution/backlog.json`](../internal/evolution/back
 
 Item sem update em >10 sessoes -> auto-rebaixar a Frozen no proximo PR de hygiene. Resgate exige novo trigger.
 
-## Items ativos (sincronizado 2026-04-27)
+## Items ativos (sincronizado 2026-04-28)
 
 ### P0 — high value, low risk
 
@@ -33,7 +33,6 @@ Item sem update em >10 sessoes -> auto-rebaixar a Frozen no proximo PR de hygien
 |---|---|---|---|---|
 | `PR-2` | Privacy + governance consolidation: ADRs 0002-0005 criados; pendente decidir se mescla shadow/{DATA-CLASSIFICATION,PHI-CHECKLIST,THREAT-MODEL,INCIDENT-LOG} em docs/threat-model.md e se move email-digest-4p+study-track-done para procedures/ | M | med | HANDOFF §8 P0 #1 |
 | `EV-DIGEST` | Promover ou aposentar email-digest-4p+study-track-done — 0 entries em EVIDENCE-LOG ha 14+d | S | low | HANDOFF §8 P0 #2 |
-| `EV-B2` | CI verde no remoto — `scripts/simulate-ci.sh` cobre leg Linux local; gh run list confirma workflow remoto; sem branch protection ate verde | S | med | HANDOFF §8 P2 #11; backlog.json EV-B2 |
 | `LEGACY-MINE` | Inventarios legacy bloqueados (snapshot Linux + zips) — autorizar caso-a-caso | M | low | HANDOFF §8 P0 #3 |
 
 ### P1 — medium
@@ -45,7 +44,7 @@ Item sem update em >10 sessoes -> auto-rebaixar a Frozen no proximo PR de hygien
 | `PR-3` | AGENTS.md SOTA + retire scaffolds: ~80li Toolchain First; mesclar FOUNDATION/PROJECT_CONTRACT/AGENT-USAGE em docs/runbook.md; retire shadow/ folder | XL | high | HANDOFF §8 P1 #7 |
 | `EV-B4` | SOTA-DECISIONS split em ADR index — ADRs 0002-0005 criados; pendente reduzir SOTA-DECISIONS sem perder historico operacional | S | med | backlog.json EV-B4 |
 | `EV-B5` | Comparar OLMO e OLMO_GENESIS como ramos paralelos; adaptar gates maduros/convergentes sem copiar runtime, hooks, skills ou dados clinicos | M | med | backlog.json EV-B5; SOTA-DECISIONS 2026-04-27 |
-| `EV-B6` | SOTA alignment triage: CI local read-only + stale evidence warning aplicados; PHI prompt hook, handoff JSON, value commit gate e issues:write deferidos/rejeitados ate consumer real | S | med | backlog.json EV-B6; SOTA-DECISIONS 2026-04-27 |
+| `EV-B6` | SOTA alignment triage **(NEXT 2026-04-28)**: CI local read-only + stale evidence warning aplicados; PHI prompt hook, handoff JSON, value commit gate e issues:write deferidos/rejeitados ate consumer real | S | med | backlog.json EV-B6; SOTA-DECISIONS 2026-04-27 |
 
 EV-B5 tarefas: T1 applied gate read-only de integridade/maturidade local; T2 applied wiring no `scripts/check.sh`; T3 applied producer-consumer para hook/gate novo; T4 applied sync leve backlog JSON/Markdown; T5 applied erro observado vira detector/teste antes de claim antifragile; T6 revisao em 30 dias para manter, simplificar ou remover.
 

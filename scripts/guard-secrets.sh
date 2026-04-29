@@ -19,7 +19,7 @@ PATTERNS=(
   'sk-[a-zA-Z0-9]{20,}'
   'sk-ant-[a-zA-Z0-9_\-]{20,}'
   'Bearer [a-zA-Z0-9_\-\.]{20,}'
-  '-----BEGIN'
+  '-----BEGIN [A-Z]+'
   'AKIA[0-9A-Z]{16}'
   'ghp_[a-zA-Z0-9]{36}'
   'gho_[a-zA-Z0-9]{36}'

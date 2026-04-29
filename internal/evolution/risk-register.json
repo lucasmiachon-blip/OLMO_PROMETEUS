@@ -1,6 +1,6 @@
 {
   "schema": "prometeus.evolution.risk-register.v1",
-  "updated": "2026-04-25",
+  "updated": "2026-04-28",
   "risks": [
     {
       "id": "R-SELF-WRITE",
@@ -30,9 +30,9 @@
       "id": "R-CI-DRIFT",
       "severity": "medium",
       "risk": "GitHub Actions Windows divergir do ambiente local e gerar falso bloqueio.",
-      "control": "Workflow primeiro e read-only; branch protection so apos uma execucao verde ou bloqueio documentado. Em 2026-04-26, validacao remota ficou bloqueada por gh sem auth e credential manager Windows quebrado no WSL.",
+      "control": "Workflow primeiro e read-only; branch protection so apos uma execucao verde ou bloqueio documentado. Em 2026-04-28, Windows leg foi formalmente aposentado da matrix (workflow runs ubuntu-latest only). Local Windows simulation continua bloqueada em simulate-ci.sh. gh auth WSL funciona (verificado 2026-04-28). Reabertura exige trigger + 2h debug orcado.",
       "owner": "Lucas",
-      "status": "open"
+      "status": "controlled"
     },
     {
       "id": "R-SPRAWL",
