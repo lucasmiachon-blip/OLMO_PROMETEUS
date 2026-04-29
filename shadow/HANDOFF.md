@@ -154,7 +154,7 @@ Para contexto visual/wiki:
 - `Prometeus/wiki/Home.md`
 - `Prometeus/wiki/Maps/Prometeus.canvas`
 
-## 10. Migration Readiness — Path to principal
+## Migration Readiness
 
 Caminho para Prometeus virar projeto principal: 8 criterios absolutos em `shadow/CLUSTER-CONTRACT.md > Path to principal`. Hoje **0/8** atingidos. Estimativa 12-18 meses. Nao acelerar artificialmente. Nenhum criterio satisfeito por "OLMO esta pior" — barra absoluta.
 
