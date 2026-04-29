@@ -190,6 +190,50 @@ check_stale_candidate_evidence() {
   )
 }
 
+check_cluster_contract() {
+  local valid="harness research study wiki"
+  local cap=2 total=0 kind cluster dir count
+
+  for kind in agents skills; do
+    [[ -d ".claude/$kind" ]] || continue
+    while IFS= read -r dir; do
+      cluster="$(basename "$dir")"
+      if ! [[ " $valid " == *" $cluster "* ]]; then
+        fail "cluster invalid: .claude/$kind/$cluster (must be in: $valid)"
+      fi
+    done < <(find ".claude/$kind" -mindepth 1 -maxdepth 1 -type d | sort)
+  done
+
+  for cluster in $valid; do
+    if [[ -d ".claude/agents/$cluster" ]]; then
+      count="$(find ".claude/agents/$cluster" -mindepth 1 -maxdepth 1 -name '*.md' -type f | wc -l)"
+      (( count > cap )) && fail "cluster cap exceeded: .claude/agents/$cluster has $count agents (max $cap)" || ok "cluster cap ok: .claude/agents/$cluster ($count/$cap)"
+      total=$(( total + count ))
+    fi
+    if [[ -d ".claude/skills/$cluster" ]]; then
+      count="$(find ".claude/skills/$cluster" -mindepth 2 -maxdepth 2 -name 'SKILL.md' -type f | wc -l)"
+      (( count > cap )) && fail "cluster cap exceeded: .claude/skills/$cluster has $count skills (max $cap)" || ok "cluster cap ok: .claude/skills/$cluster ($count/$cap)"
+      total=$(( total + count ))
+    fi
+  done
+
+  (( total > 16 )) && fail "total cluster surface exceeded: $total/16" || ok "total cluster surface: $total/16"
+
+  while IFS= read -r skill_md; do
+    local missing=() field parent declared
+    for field in name description trigger non-trigger source status owner cluster; do
+      grep -Eq "^${field}:" "$skill_md" || missing+=("$field")
+    done
+    if ((${#missing[@]} > 0)); then
+      fail "SKILL.md missing frontmatter: $skill_md (missing: ${missing[*]})"
+    else
+      parent="$(basename "$(dirname "$(dirname "$skill_md")")")"
+      declared="$(awk '/^cluster:/{print $2; exit}' "$skill_md")"
+      [[ "$declared" == "$parent" ]] && ok "SKILL.md cluster ok: $skill_md" || fail "SKILL.md cluster mismatch: $skill_md declares '$declared' but lives in '$parent'"
+    fi
+  done < <(find .claude/skills -name 'SKILL.md' -type f 2>/dev/null)
+}
+
 check_no_external_write_targets() {
   local pattern='(^|[^A-Za-z0-9_])(cp|mv|rsync|tee|cat|python|node|bash|sh)[^`\n]*(/mnt/c/Dev/Projetos/OLMO|C:\\Dev\\Projetos\\OLMO)'
 
@@ -215,6 +259,7 @@ check_values_contract
 check_adr_index
 check_antifragile_contract
 check_stale_candidate_evidence
+check_cluster_contract
 check_no_external_write_targets
 
 if ((${#failures[@]} > 0)); then

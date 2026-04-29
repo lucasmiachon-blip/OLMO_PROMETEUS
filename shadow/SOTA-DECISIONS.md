@@ -366,6 +366,39 @@ Criterio negativo: se em 60 dias (ate 2026-06-27) nenhuma skill ou agent entrar 
 
 Proxima acao: implementar `check_cluster_contract` em B3 (cap, frontmatter 8 fields, cluster batendo com pasta).
 
+## Cluster contract enforcer (2026-04-28)
+
+Decisao: implementar `check_cluster_contract` em `scripts/integrity.sh` para validar contrato de cluster (cap 2, frontmatter 8 campos, cluster batendo com pasta). OLMO `tools/integrity.sh` foi inspiracao mas implementacao em OLMO parse prosa em CLAUDE.md (fragil). Prometeus reescreveu do zero validando FS direto via `find` + `grep`/`awk` (44 linhas, < cap negativo de 50).
+
+Validacoes vivas:
+
+1. Toda subdir em `.claude/{agents,skills}/` deve ser um dos 4 clusters fixos (`harness`/`research`/`study`/`wiki`).
+2. Cap 2 itens por cluster por tipo (agents `*.md` + skills `<name>/SKILL.md`).
+3. Total surface <=16.
+4. SKILL.md exige 8 frontmatter fields (`name`, `description`, `trigger`, `non-trigger`, `source`, `status`, `owner`, `cluster`).
+5. Campo `cluster` em SKILL.md deve bater com pasta pai.
+
+Testes inline executados antes do commit:
+
+- pasta cluster invalida (`.claude/agents/foo/`) -> fail "cluster invalid".
+- 3 skills em harness (cap 2) -> fail "cluster cap exceeded".
+- SKILL.md sem frontmatter completo -> fail "SKILL.md missing frontmatter (missing: ...)".
+- SKILL.md com `cluster: wiki` em pasta `harness` -> fail "cluster mismatch".
+
+Phase 0 estado limpo (8 pastas vazias com .gitkeep) -> 0/16 surface, todos clusters em 0/2, harness passa.
+
+Trigger: B3 do plano `happy-drifting-naur.md`. Pre-condicao: B2 estabeleceu o contrato em `shadow/CLUSTER-CONTRACT.md`.
+
+Risco: regex de frontmatter pode validar campo presente mas valor vazio (ex: `cluster: ` sem valor). Mitigacao: enforcer atual checa `awk '/^cluster:/{print $2}'` que captura o valor; campo vazio falha o match com pasta pai.
+
+Custo: 44 linhas em `scripts/integrity.sh`. Sem novo arquivo.
+
+Rollback: remover funcao `check_cluster_contract` + chamada na lista de checks.
+
+Criterio negativo: se em 60d (ate 2026-06-27) nenhum SKILL.md ou agent for criado (Phase 0 permanente), reduzir enforcer a apenas validacao de pastas (drop frontmatter check) ate haver SKILL.md real. Outra rejeicao: se enforcer crescer >60 linhas, simplificar.
+
+Proxima acao: avaliar se enforcer detecta drift real nas proximas 3 rodadas; manter em silencio se Phase 0 persistir.
+
 ## Evidence-first applied to subagent reports (2026-04-28)
 
 Decisao: relatorios de Explore/Plan subagents sao input, nao verdade. Antes de agir em uma claim de subagent, validar contra estado real do repo.
