@@ -342,6 +342,24 @@ Rollback: remover `scripts/simulate-ci.sh`, a linha de required file em `scripts
 
 Criterio negativo: se em 30 dias o simulador nao ajudar a diagnosticar `EV-B2` ou os warnings de stale evidence nao guiarem promocao/aposentadoria, simplificar ou remover.
 
+## Evidence-first applied to subagent reports (2026-04-28)
+
+Decisao: relatorios de Explore/Plan subagents sao input, nao verdade. Antes de agir em uma claim de subagent, validar contra estado real do repo.
+
+Trigger: planejamento de cherrypick OLMO -> Prometeus rodada 2026-04-28. Explore agent reportou "evolve.sh next sai mudo" e "ADR index orfao". Validacao antes do batch B1 mostrou: (a) `scripts/evolve.sh:85-88` ja emite item; (b) `docs/adr/0001-0007.md` + `README.md` existem e `integrity.sh check_adr_index` passa.
+
+Acao: B1.1 reduzido a melhoria real do `evolve.sh next` (adicionar campo `acceptance` na saida + bloquear emissao se backlog tiver failures). B1.2 (remover `check_adr_index`) descartado — check nao e orfao.
+
+Regra: aplicar a mesma doutrina "OLMO is precedent, not authority" recursivamente aos meus proprios subagents. Subagent report = hipotese a validar, nao fato.
+
+Trigger futuro: qualquer plano baseado em claim de Explore que envolve "remover/retirar X" precisa rodar comando de verificacao antes do edit.
+
+Risco: validacao adiciona ~1 minuto por claim; mitigacao: paralelo com outros reads.
+
+Rollback: nao aplicavel (decisao de processo, nao codigo).
+
+Criterio negativo: se a regra criar friction sem catch real em 30 dias, simplificar para "spot-check apenas em removals destrutivos".
+
 ## Applied when
 
 | Data | Decisao | Aplicada em | Artefato/commit |

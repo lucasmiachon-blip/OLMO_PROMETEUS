@@ -83,7 +83,11 @@ if [[ -f .github/workflows/self-evolution.yml ]]; then
 fi
 
 if [[ "$mode" == "next" ]]; then
-  jq -r '.items[] | select(.status == "next") | "id: \(.id)\nbatch: \(.batch)\narea: \(.area)\nproblem: \(.problem)\nnext_action: \(.next_action)"' internal/evolution/backlog.json
+  if ((${#failures[@]} > 0)); then
+    printf 'Self-evolution backlog invalid; cannot emit next item (%s issue(s)).\n' "${#failures[@]}" >&2
+    exit 1
+  fi
+  jq -r '.items[] | select(.status == "next") | "id: \(.id)\nbatch: \(.batch)\narea: \(.area)\nproblem: \(.problem)\nacceptance:\n\(.acceptance | map("  - " + .) | join("\n"))\nnext_action: \(.next_action)"' internal/evolution/backlog.json
   exit 0
 fi
 
