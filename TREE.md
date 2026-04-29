@@ -20,7 +20,7 @@ CLAUDE.md             # adaptador fino Boris-style para Claude Code, importa AGE
 CODEX.md              # adaptador fino para Codex, importa AGENTS.md
 GEMINI.md             # adaptador fino para Gemini CLI, importa AGENTS.md
 PROJECT_CONTRACT.md   # limites, lanes e criterio de promocao
-VALUES.md             # valores, objetivos, OLMO como piso e lente de gaps
+VALUES.md             # 4 raizes (Amizade, Autenticidade, Lealdade, Dedicacao) + V1-V7 principios operacionais
 README.md             # entrada humana rapida
 TREE.md               # mapa profissional da arvore do repo
 scripts/check.sh      # harness local Bash-first, sem writes externos
@@ -157,7 +157,7 @@ Nao copiar:
 - `node_modules`, `.venv`, `__pycache__`, zips e outputs;
 - historico longo que nao muda comportamento.
 
-`OLMO` e piso profissional, nao teto. Copiar/adaptar somente quando houver:
+`OLMO` e precedente, nao autoridade (vibe-coded com retrabalho). Copiar/adaptar somente quando houver:
 
 - casa clara neste repo;
 - trigger real;

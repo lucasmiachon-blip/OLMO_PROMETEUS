@@ -158,7 +158,7 @@ Para contexto visual/wiki:
 
 Caminho para Prometeus virar projeto principal: 8 criterios absolutos em `shadow/CLUSTER-CONTRACT.md > Path to principal`. Hoje **0/8** atingidos. Estimativa 12-18 meses. Nao acelerar artificialmente. Nenhum criterio satisfeito por "OLMO esta pior" — barra absoluta.
 
-Pronto localmente: workspace canonico, valores V1-V9, `OLMO` como piso, EV-B5 T1-T5, producer-consumer obrigatorio, antifragile verificavel, privacy guards, cluster seed Phase 0, guard-secrets com PHI lite, Windows CI retirado, gh auth WSL ok.
+Pronto localmente: workspace canonico, 4 raizes + V1-V7, EV-B5 T1-T5, producer-consumer obrigatorio, antifragile verificavel, privacy guards, cluster seed Phase 0, guard-secrets com PHI lite, Windows CI retirado, gh auth WSL ok.
 
 Falta antes de promocao: >=3 procedures `operational` em EVIDENCE-LOG, >=4 batches `applied` com uso real (atualmente 4 batches B1/B2/B3/B5 + EV-B6 em queue — proximo a `applied` apos uso real), CI remoto verde 30d consecutivos, >=1 PHI catch real, decisao humana em SOTA-DECISIONS na semana da promocao.
 
