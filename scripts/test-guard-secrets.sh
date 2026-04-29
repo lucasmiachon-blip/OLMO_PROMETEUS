@@ -20,11 +20,15 @@ A40='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
 A20='AAAAAAAAAAAAAAAAAAAA'
 A35='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
 A16='AAAAAAAAAAAAAAAA'
+# PEM header construido em runtime: source nao contem literal "-----BEGIN <UPPER>"
+# para evitar self-reference com pattern em guard-secrets.sh.
+PEM_PREFIX='-----BEGIN'
+PEM_BODY=' RSA PRIVATE KEY-----'
 positives=(
   "sk-${A20}"
   "sk-ant-${A20}"
   "Bearer ${A20}"
-  '-----BEGIN RSA PRIVATE KEY-----'
+  "${PEM_PREFIX}${PEM_BODY}"
   "AKIA${A16}"
   "ghp_${A36}"
   "gho_${A36}"

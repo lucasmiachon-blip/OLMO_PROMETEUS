@@ -51,6 +51,7 @@ while IFS= read -r file; do
   case "$file" in
     *.png|*.jpg|*.jpeg|*.gif|*.woff2|*.pdf|*.ico|*.zip|*.tar.gz) continue ;;
     .env.example|*/.env.example) continue ;;
+    scripts/test-guard-secrets.sh|*/test-guard-secrets.sh) continue ;;
   esac
 
   case "$file" in
