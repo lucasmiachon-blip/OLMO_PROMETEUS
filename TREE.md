@@ -129,17 +129,18 @@ Motivo: esses nomes sugerem runtime ativo, aumentam contexto e recriam sprawl le
 
 ### `.claude/` tratamento especial
 
-`.claude/` nao e totalmente proibido: Claude Code cria `.claude/settings.local.json` automaticamente como state local do harness. O diretorio fica em `.gitignore` e `.claudeignore`, nunca versionado.
+`.claude/` nao e totalmente proibido: Claude Code cria `.claude/settings.local.json` automaticamente como state local do harness (gitignored). Subdirs com cluster contract sao versionados.
+
+Subdirs com cluster contract (versionados, harness valida):
+
+- `.claude/agents/<cluster>/`: 4 clusters fixos (`harness`, `research`, `study`, `wiki`). Cap 2 subagents por cluster. Cada `.md` exige frontmatter com `cluster` batendo com a pasta. Contrato unico: `shadow/CLUSTER-CONTRACT.md`.
+- `.claude/skills/<cluster>/<name>/`: 4 clusters fixos. Cap 2 skills por cluster. Cada `SKILL.md` exige 8 frontmatter fields (`name`, `description`, `trigger`, `non-trigger`, `source`, `status`, `owner`, `cluster`). Aberto desde 2026-04-23, com cluster doctrine adicionada em 2026-04-28. Detalhes em `shadow/AGENT-USAGE.md > Local skills contract` + `shadow/CLUSTER-CONTRACT.md`.
 
 Subdirs proibidos sem gate individual (harness falha):
 
-- `.claude/agents/`
-- `.claude/hooks/`
+- `.claude/hooks/` (gitignored; usado apenas via `settings.local.json`)
 - `.claude/commands/`
-
-Subdirs com gate aberto (harness valida):
-
-- `.claude/skills/`: aberto em 2026-04-23. Cada subdir `.claude/skills/<name>/` precisa de `SKILL.md` com frontmatter valido. Contrato em `shadow/AGENT-USAGE.md > Local skills contract`. Gate de promocao em `shadow/SOTA-DECISIONS.md > Local skills gate`.
+- Qualquer subdir em `.claude/agents/` ou `.claude/skills/` que nao seja um dos 4 clusters fixos (ex: `.claude/agents/foo/` falha em `integrity.sh`).
 
 Para mapa de uso de agentes/skills globais, ver `shadow/AGENT-USAGE.md`.
 

@@ -114,7 +114,7 @@ for file in internal/evolution/backlog.json internal/evolution/risk-register.jso
   fi
 done
 
-for dir in .agents .codex .gemini agents subagents skills hooks playground .claude/agents .claude/hooks .claude/commands; do
+for dir in .agents .codex .gemini agents subagents skills hooks playground .claude/hooks .claude/commands; do
   [[ -d "$dir" ]] && fail "forbidden scaffold exists: $dir" || ok "forbidden scaffold absent: $dir"
 done
 

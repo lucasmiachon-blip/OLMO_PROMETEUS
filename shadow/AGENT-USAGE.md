@@ -85,19 +85,30 @@ Trigger futuro: >=3 ciclos reais em `EVIDENCE-LOG.md` mostram que um procediment
 
 ## Local skills contract
 
-Aberto em 2026-04-23 por decisao em `shadow/SOTA-DECISIONS.md > Local skills gate`. `.claude/skills/` agora e casa valida para skills promovidas. `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` permanecem proibidos.
+Aberto em 2026-04-23 por `shadow/SOTA-DECISIONS.md > Local skills gate`. Em 2026-04-28 estendido para cluster contract: `.claude/agents/<cluster>/` tambem aceito, com cap 2 e gate.
+
+Fonte unica do contrato: **`shadow/CLUSTER-CONTRACT.md`**. Esta secao e detalhe operacional; em caso de conflito, vale CLUSTER-CONTRACT.md.
+
+### Cluster + cap (resumo)
+
+- 4 clusters fixos: `harness`, `research`, `study`, `wiki`.
+- Cap por cluster por tipo: 2 (agents max 2, skills max 2).
+- Total surface max: 16 itens em `.claude/{agents,skills}/`.
+- Sem cluster cross: 1 item = 1 cluster.
+- Anti-sprawl: cap atingido = retire dormante (>60d) antes de adicionar.
 
 ### Quando um procedure vira skill local (cumulativo)
 
 - procedure em lane `operational` em `shadow/WORK-LANES.md`;
-- >=3 entradas em `shadow/EVIDENCE-LOG.md` com rubric media >=0.8;
+- >=3 entradas em `shadow/EVIDENCE-LOG.md` em 30d com rubric media >=0.8;
 - >=30 dias em `operational` sem edit estrutural do procedure;
 - dor concreta onde matching por description (SKILL.md) ganha sobre Read do procedure;
+- cluster apropriado nao no cap;
 - aprovacao humana explicita por skill.
 
-### SKILL.md minimo
+### SKILL.md minimo (8 campos obrigatorios)
 
-Cada subdir `.claude/skills/<name>/SKILL.md` precisa de frontmatter:
+Cada subdir `.claude/skills/<cluster>/<name>/SKILL.md` precisa de frontmatter:
 
 ```yaml
 ---
@@ -106,19 +117,39 @@ description: <1 frase para matching implicito>
 trigger: <quando entra>
 non-trigger: <quando nao entra>
 source: <caminho do procedure em shadow/>
-status: experiment | candidate | operational
+status: seed | operational | retired
+owner: Lucas
+cluster: harness | research | study | wiki
+---
+```
+
+`cluster` deve bater com a pasta pai (validado em `scripts/integrity.sh > check_cluster_contract` quando implementado em B3).
+
+Corpo: resumo curto + links + mini-evals. Nao duplicar integralmente o procedure; o procedure em `shadow/` continua fonte de verdade. Edits estruturais vao no procedure; SKILL.md so atualiza quando trigger ou description mudam.
+
+### Subagent contract (`.claude/agents/<cluster>/<name>.md`)
+
+Subagent so entra apos pelo menos uma skill `operational` no mesmo cluster ter mostrado que matching/triagem manual cria retrabalho que justifica delegacao automatica.
+
+Frontmatter minimo (alem dos campos Claude Code padroes):
+
+```yaml
+---
+name: <curto>
+description: <quando este subagent entra>
+cluster: harness | research | study | wiki
+source: <skill operacional de origem>
+status: seed | operational | retired
 owner: Lucas
 ---
 ```
 
-Corpo: resumo curto + links + mini-evals. Nao duplicar integralmente o procedure; o procedure em `shadow/` continua fonte de verdade. Edits estruturais vao no procedure; SKILL.md so atualiza quando trigger ou description mudam.
-
-### Guardrails de skills locais
+### Guardrails
 
 - Uma skill por procedure; nao criar skill sem procedure em shadow/.
-- Skill nao pode escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
-- Cada uso real de skill vira linha em `shadow/EVIDENCE-LOG.md`.
-- Se em 60 dias (ate 2026-06-22) nenhuma skill reduzir retrabalho, reverter e voltar a proibir `.claude/skills/`.
+- Skill/agent nao pode escrever fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS`.
+- Cada uso real de skill/agent vira linha em `shadow/EVIDENCE-LOG.md`.
+- Se em 60 dias (ate 2026-06-22) nenhuma skill reduzir retrabalho, reverter cluster contract e voltar a proibir `.claude/agents/` e `.claude/skills/`.
 
 ## Guardrails
 

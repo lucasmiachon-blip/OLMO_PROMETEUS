@@ -18,7 +18,7 @@ Status: experiment. Promove a candidate apos uso real >=3x (PR cita KBP-N para j
 | KBP-01 | Workspace stale — typo `OLMO_COWOR` ou cwd em sibling legado | `CLAUDE.md > Things that will bite you`; `AGENTS.md > Fundamental Boundary` |
 | KBP-02 | Write fora de `/home/lucasmiachon/projects/OLMO_PROMETEUS` | `AGENTS.md > Fundamental Boundary`; `scripts/guard-olmo-write-hook.sh` |
 | KBP-03 | Bulk-import de `Aulas_core` (estado virgem com erros conhecidos) | `shadow/HANDOFF.md > Boundaries duras #3` |
-| KBP-04 | Runtime scaffold sem gate (`.claude/agents/`, `agents/`, `subagents/`, `hooks/`, `playground/`) | `TREE.md > Diretorios Proibidos`; `AGENTS.md > Do Not` |
+| KBP-04 | Runtime scaffold sem cluster, cap ou gate de evidencia | `shadow/CLUSTER-CONTRACT.md`; `shadow/AGENT-USAGE.md > Local skills contract` |
 | KBP-05 | Commit com `--no-verify` / `--no-gpg-sign` / skip de hook | `shadow/HANDOFF.md > Boundaries duras #7`; `AGENTS.md > Do Not` |
 | KBP-06 | Push autonomo em `origin/main` sem confirmacao humana por rodada | `shadow/HANDOFF.md > Boundaries duras #6` |
 | KBP-07 | Promover artefato sem 3 entradas em `shadow/EVIDENCE-LOG.md` | `shadow/WORK-LANES.md > Transicao candidate -> operational` |

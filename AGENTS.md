@@ -84,7 +84,8 @@ Regra: agentes que precisarem de criterio detalhado seguem o link acima. Duplica
   - `shadow/WORK-LANES.md`: fonte unica dos estados (private, experiment, candidate, operational, retired, blocked) e promotion gate.
   - `shadow/EVIDENCE-LOG.md`: registro de uso real dos procedimentos (gate para `operational`).
   - `shadow/SOTA-DECISIONS.md`: decisoes curtas apos SOTA research gate.
-  - `shadow/AGENT-USAGE.md`: mapa de agentes/skills globais usados sem scaffold local.
+  - `shadow/AGENT-USAGE.md`: mapa de agentes/skills globais + contrato de skills locais (referenciado pelo cluster contract).
+  - `shadow/CLUSTER-CONTRACT.md`: contrato unico de `.claude/agents/<cluster>/` e `.claude/skills/<cluster>/`. 4 clusters fixos (harness/research/study/wiki), cap 2 por tipo, gate >=3 evidencias, frontmatter completo. Path-to-principal embutido.
   - `shadow/INCORPORATION-LOG.md`: log de transicoes de estado aplicadas.
   - `shadow/PLAN-*.md`: plans operacionais ativos de mudancas estruturais (um por rodada). Plans fechados ficam em `shadow/PLAN-ARCHIVE/YYYY-MM-DD.md`.
   - `shadow/BACKLOG.md`: view markdown derivada de `internal/evolution/backlog.json`; tiers P0/P1/P2/Frozen/Resolved + effort + dormancy.
@@ -139,8 +140,9 @@ Procedures em `experiment` (sem evidencia em `shadow/EVIDENCE-LOG.md`, ver `shad
 - copiar hooks, MCP ou infraestrutura sensivel do `OLMO`;
 - ativar hook sem trigger, evidencia, rollback e aprovacao humana explicita;
 - permitir self-evolution com write, commit, push, issue, PR ou dado sensivel sem aprovacao humana explicita;
-- recriar diretorios locais de agents, subagents, skills, hooks, `.claude/agents/`, `.claude/hooks/`, `.claude/commands/` ou `.gemini/` sem necessidade repetida e aprovacao explicita;
-- criar skill em `.claude/skills/<name>/` sem procedure operational em `shadow/` e sem frontmatter valido (`name`, `description`, `trigger`, `non-trigger`, `source`, `status`, `owner`) — ver `shadow/AGENT-USAGE.md > Local skills contract`;
+- criar agents/skills fora dos 4 clusters fixos (`harness`/`research`/`study`/`wiki`) ou exceder cap 2 por tipo por cluster — ver `shadow/CLUSTER-CONTRACT.md`;
+- criar skill em `.claude/skills/<cluster>/<name>/` sem procedure operational em `shadow/`, sem >=3 evidencias em `shadow/EVIDENCE-LOG.md`, ou sem frontmatter completo de 8 campos (`name`, `description`, `trigger`, `non-trigger`, `source`, `status`, `owner`, `cluster`) — ver `shadow/CLUSTER-CONTRACT.md` e `shadow/AGENT-USAGE.md > Local skills contract`;
+- recriar diretorios locais fora do contrato cluster (`.claude/hooks/` versionado, `.claude/commands/`, `agents/`, `subagents/`, `hooks/`, `playground/`, `.gemini/`) sem trigger, evidencia, rollback e aprovacao explicita;
 - tratar `.claude/settings.local.json` como runtime ativo (e state local; fica em `.gitignore`/`.claudeignore`);
 - marcar `done` sem evidencia de entendimento ou aplicacao;
 - misturar material pessoal com runtime do projeto;

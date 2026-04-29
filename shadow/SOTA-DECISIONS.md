@@ -342,6 +342,30 @@ Rollback: remover `scripts/simulate-ci.sh`, a linha de required file em `scripts
 
 Criterio negativo: se em 30 dias o simulador nao ajudar a diagnosticar `EV-B2` ou os warnings de stale evidence nao guiarem promocao/aposentadoria, simplificar ou remover.
 
+## Cluster architecture seed (2026-04-28)
+
+Decisao: Prometeus aceita agents/subagents/skills em `.claude/{agents,skills}/<cluster>/` com cap baixo + gate de evidencia. Reverte regra anterior `KBP-04` "mantem zero". Justificativa: tendencia industria das 3 plataformas (Claude Code, Codex, Gemini), nao precedente OLMO (que e vibe-coded, ver decisao "Evidence-first applied to subagent reports" abaixo).
+
+Contrato unico: `shadow/CLUSTER-CONTRACT.md`. 4 clusters fixos (`harness`, `research`, `study`, `wiki`). Cap 2 por tipo por cluster. Frontmatter obrigatorio (8 campos para skills). Gate: procedure precisa de >=3 entries em `EVIDENCE-LOG.md` em 30d para virar skill seed; agent so depois de skill `operational` por 30d.
+
+Phase 0 (hoje): pastas vazias com `.gitkeep` em 8 paths. Zero `.md` versionado em `.claude/agents/` ou `.claude/skills/`. Skills/agents entram em rodadas futuras, um por vez, apos gate.
+
+Path to principal embutido em `CLUSTER-CONTRACT.md`: 8 criterios absolutos (maturidade executavel, boundary 100%, anti-teatro, evidencia operacional, PHI, reversibilidade, self-evolution, decisao humana). Hoje 0/8. Estimativa 12-18 meses. Nenhum criterio satisfeito por "OLMO esta pior".
+
+Humildade simetrica: a mesma doutrina (evidencia-first, cap, cluster, anti-sprawl, gate) se aplica ao eventual sucessor de Prometeus. `Path to principal` e reversivel.
+
+Trigger: tendencia industria 2026 + decisao do usuario "ajustes terao agents e subagents e skills, so nao tantos e muito mais organizacoes em clusters".
+
+Risco: sprawl emergir mesmo com cap (cluster pode ser violado por convenience). Mitigacao: enforcer em `scripts/integrity.sh > check_cluster_contract` (batch B3).
+
+Custo: 8 .gitkeep + 1 contrato (`CLUSTER-CONTRACT.md`) + atualizacao cross em `KBP.md`, `CLAUDE.md`, `TREE.md`, `AGENTS.md`, `AGENT-USAGE.md`.
+
+Rollback: remover 8 pastas + `CLUSTER-CONTRACT.md` + reverter KBP-04 para "mantem zero". Documentos cross retornam ao estado anterior via git revert.
+
+Criterio negativo: se em 60 dias (ate 2026-06-27) nenhuma skill ou agent entrar via gate, voltar a proibir `.claude/agents/` e `.claude/skills/` e tratar cluster como aspiracional.
+
+Proxima acao: implementar `check_cluster_contract` em B3 (cap, frontmatter 8 fields, cluster batendo com pasta).
+
 ## Evidence-first applied to subagent reports (2026-04-28)
 
 Decisao: relatorios de Explore/Plan subagents sao input, nao verdade. Antes de agir em uma claim de subagent, validar contra estado real do repo.
