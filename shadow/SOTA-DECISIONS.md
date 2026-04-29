@@ -479,6 +479,33 @@ Rollback: nao aplicavel (decisao de processo, nao codigo).
 
 Criterio negativo: se a regra criar friction sem catch real em 30 dias, simplificar para "spot-check apenas em removals destrutivos".
 
+## Taxonomy artifact deferred (2026-04-29)
+
+Decisao: criar `TAXONOMY.md` em raiz **rejeitado** por falta de evidencia de convencao enterprise. Variantes (`shadow/TAXONOMY.md`, ADR, `ARCHITECTURE.md`, `Prometeus/wiki/Notes/Taxonomy.md`) tambem adiadas. Artefato reabre apenas se processo de cherrypick OLMO -> Prometeus surfacar necessidade concreta de doc consolidador.
+
+Trigger: nota fim-de-sessao 2026-04-28 ("criar taxonomy.md") + pedido do usuario nesta sessao para validar contra convencao enterprise antes de criar.
+
+Evidencia: 3 buscas web (`"TAXONOMY.md" site:github.com root repository convention`, `enterprise repository documentation standard root level files conventions 2026`, `repository taxonomy classification professional codebase structure naming`). Hits `taxonomy` em GitHub sao todos taxonomias-de-dominio: InstructLab knowledge tree para LLM tuning, TokenTaxonomyFramework (Inter-work Alliance), OpenTreeOfLife species reference, Statamic CMS feature. Nenhum e meta-doc classificando o proprio repo. Padroes enterprise reais para classificacao de repositorios: `README.md`, `ARCHITECTURE.md`, ADRs em `docs/adr/`, TOGAF Architecture Repository (multi-arquivo, framework EA), wiki interno (Confluence/Notion), GitHub Enterprise repository properties/policies — nenhum e arquivo unico `TAXONOMY.md`.
+
+Acao: foco vira framework de cherrypicking OLMO -> Prometeus ancorado em `AGENTS.md > SOTA Research Gate` + `VALUES.md` v2.5 (4 raizes + V1-V7) + doctrine "OLMO precedente, nao autoridade". Sem framework novo; uso explicito do que ja existe.
+
+Nao-trigger: pedido reflexo ou estetico para "ter um TAXONOMY.md porque parece profissional".
+
+Risco: rejeitar pode adiar consolidacao util se padroes emergirem mais tarde. Mitigacao: criterio de reabertura abaixo. Aceitar sem evidencia inflaria o repo (anti-pattern KBP-style).
+
+Rollback: nao aplicavel (decisao de adiamento, nao de codigo).
+
+Criterio negativo: se em 90 dias 3+ batches de cherrypick produzirem necessidade concreta de doc consolidador, reabrir escolha entre Opcao A (ADR), Opcao B (`ARCHITECTURE.md` global), Opcao C (`shadow/REPOSITORY-TYPES.md` operacional) com base no padrao real observado.
+
+Fontes:
+
+- `https://github.com/kmindi/special-files-in-repository-root`
+- `https://medium.com/code-factory-berlin/github-repository-structure-best-practices-248e6effc405`
+- `https://bps-enterprise-devsecops.github.io/reponaming.html`
+- `https://pubs.opengroup.org/architecture/togaf91-doc/arch/chap41.html`
+- `https://github.com/instructlab/taxonomy`
+- `https://github.com/InterWorkAlliance/TokenTaxonomyFramework`
+
 ## Applied when
 
 | Data | Decisao | Aplicada em | Artefato/commit |
@@ -508,6 +535,7 @@ Criterio negativo: se a regra criar friction sem catch real em 30 dias, simplifi
 | 2026-04-27 | Frontier orchestration objective | V9 adicionado: LLMs orquestrados para educacao, pesquisa, EBM e auxilio direto, com modelos escolhidos por eval local e HITL | `VALUES.md`, `PROJECT_CONTRACT.md`, `shadow/SOTA-DECISIONS.md` |
 | 2026-04-27 | Multimodel SOTA efficacy priority | Multimodel vira hipotese operacional preferida; SOTA e eficacia acima de custo, que vira constraint de viabilidade | `VALUES.md`, `PROJECT_CONTRACT.md`, `docs/adr/0007-multimodel-sota-efficacy.md` |
 | 2026-04-28 | Values drift correction | V1-V9 + Gap Lens -> 4 raizes + V1-V7 com frontmatter YAML (related: Ignis Animi/Flammula of uncertainty; notes: Notion migracao); removido Identidade, OLMO-piso, Gap Lens, Anti-valores prosa, V9 (em ADR 0007) | `VALUES.md` v2.5, `scripts/check.sh`, `scripts/integrity.sh`, `AGENTS.md`, `PROJECT_CONTRACT.md`, `shadow/HANDOFF.md`, `shadow/FOUNDATION.md` |
+| 2026-04-29 | Taxonomy artifact deferred | TAXONOMY.md root + variantes adiados sem evidencia de convencao enterprise; reabre se cherrypick surfacar necessidade em 90d | `shadow/SOTA-DECISIONS.md`, `shadow/HANDOFF.md`, `~/.claude/plans/rosy-roaming-karp.md` |
 
 ## Claude Code, Codex e GEMINI.md adapters
 

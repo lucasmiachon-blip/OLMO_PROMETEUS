@@ -1,7 +1,7 @@
 # Handoff
 
 Status: active
-Updated: 2026-04-28 (rodada `happy-drifting-naur` aplicada: B1-B5 commits locais; cluster doctrine + Windows CI retired)
+Updated: 2026-04-29 (rodada `rosy-roaming-karp`: taxonomia adiada com evidencia; foco proximo = cherrypick framework SOTA+VALUES). 2026-04-28 (rodada `happy-drifting-naur` aplicada: B1-B5 commits locais; cluster doctrine + Windows CI retired).
 Scope: hidratacao para retomar `OLMO_PROMETEUS` apos `/clear`, nova conversa ou restart em casa.
 
 > Este arquivo e a fonte rapida de hidratacao. `session-start.sh` cola o topo no inicio da sessao. Manter denso, operacional, sem relatorio longo.
@@ -29,7 +29,15 @@ Direcao: **OLMO e precedente, nao autoridade** (foi vibe-coded com retrabalho �
 7. Sem `--no-verify`, `--no-gpg-sign`, skip de hook ou workaround sem diagnostico.
 8. Sem PHI/dado sensivel versionado, em prompt externo ou automacao sem workflow privado aprovado.
 
-## 3. Estado atual (2026-04-28 fim de janela)
+## 3. Estado atual (2026-04-29 fim de janela)
+
+Sessao 2026-04-29 (rodada `rosy-roaming-karp`, plan `~/.claude/plans/rosy-roaming-karp.md`):
+
+- Decisao: criar `TAXONOMY.md` em raiz **rejeitado**. Pesquisa web (3 queries) confirmou que nao e convencao enterprise; hits `taxonomy` no GitHub sao taxonomias-de-dominio (InstructLab, TokenTaxonomy, OpenTreeOfLife, Statamic). Variantes (shadow/, ADR, ARCHITECTURE.md, wiki) tambem adiadas. Detalhes em `shadow/SOTA-DECISIONS.md > Taxonomy artifact deferred (2026-04-29)`.
+- Foco proximo: framework de cherrypicking OLMO -> Prometeus ancorado em SOTA + VALUES. Sem framework novo: uso explicito de `AGENTS.md > SOTA Research Gate`, `VALUES.md` v2.5 (4 raizes + V1-V7), `shadow/SOTA-DECISIONS.md`, `shadow/INCORPORATION-LOG.md`, `shadow/EVIDENCE-LOG.md`, `shadow/WORK-LANES.md`.
+- Auth read externo OLMO escopada a 2026-04-28 expirou. Renovar antes de qualquer leitura de `/mnt/c/Dev/Projetos/OLMO`.
+
+Estado pre-2026-04-29:
 
 Branch: `main` local. **Push pendente** (sera feito apos commit B5 + HANDOFF) com confirmacao explicita do usuario.
 
@@ -107,14 +115,24 @@ Pendente: T6 — revisar 2026-05-27 se checks detectaram regressao real. Se nao,
 
 ## 8. Proxima sessao: ordem recomendada
 
+Top do arc 2026-04-29 (cherrypick framework SOTA+VALUES):
+
 1. Rodar `git status --short` e `./scripts/check.sh --strict`.
-2. Se push pendente: confirmar e `git push origin main` (esta janela ja fez se autorizado).
-3. EV-B6 (next): SOTA alignment triage — manter ou rejeitar PHI prompt hook, handoff JSON, value commit gate. Sem mudanca proativa: deferidos ate consumer real.
-4. PR-2 (P0): ADRs 0002-0005 criados; decidir se privacy docs viram `docs/threat-model.md` ou ficam em `shadow/`.
-5. EV-DIGEST (P0): rodar `email-digest-4p` ou `study-track-done` em uso real e registrar em `EVIDENCE-LOG.md`; senao aposentar/simplificar.
-6. EV-B5 T6: marcar 2026-05-27 para revisao (sem adicionar runtime).
-7. Cluster contract revisao 2026-06-27: se 0 skill/agent entrar via gate, considerar reverter para "mantem zero".
-8. Guard-secrets PHI: revisar 4 semanas; se CPF false-positive bloquear edicao 2x, downgrade.
+2. **Pedir auth read OLMO**: path `/mnt/c/Dev/Projetos/OLMO`, motivo "informar cherrypick batch B6 (SOTA + VALUES)", escopo read-only. 2026-04-28 expirou. Sem grant: framework conceitual ainda revisavel; cherrypick concreto adiado.
+3. **Definir escopo do batch B6** com usuario (qual modulo/aspecto OLMO). Se definido: criar `shadow/PLAN-cherrypick-batch-B6.md` com escopo, criterios SOTA, criterios VALUES (V1-V7 relevantes), criterio negativo, rollback, evidencia esperada. Sem escopo: parar; nao criar plan vazio.
+4. Acrescentar entrada em `shadow/SOTA-DECISIONS.md > Applied when` quando batch B6 fechar.
+5. Se push pendente: confirmar e `git push origin main`.
+
+Itens herdados (continuam validos):
+
+6. EV-B6 (next): SOTA alignment triage — manter ou rejeitar PHI prompt hook, handoff JSON, value commit gate. Sem mudanca proativa: deferidos ate consumer real.
+7. PR-2 (P0): ADRs 0002-0005 criados; decidir se privacy docs viram `docs/threat-model.md` ou ficam em `shadow/`.
+8. EV-DIGEST (P0): rodar `email-digest-4p` ou `study-track-done` em uso real e registrar em `EVIDENCE-LOG.md`; senao aposentar/simplificar.
+9. EV-B5 T6: marcar 2026-05-27 para revisao (sem adicionar runtime).
+10. Cluster contract revisao 2026-06-27: se 0 skill/agent entrar via gate, considerar reverter para "mantem zero".
+11. Guard-secrets PHI: revisar 4 semanas; se CPF false-positive bloquear edicao 2x, downgrade.
+
+NOTA: criar `TAXONOMY.md` (raiz/shadow/ADR/wiki) **adiado 2026-04-29 com evidencia**. Reabrir so se cherrypick surfacar necessidade concreta de doc consolidador (criterio: 3+ batches geram padroes em 90d). Ver `shadow/SOTA-DECISIONS.md > Taxonomy artifact deferred (2026-04-29)`.
 
 P0 atual:
 
