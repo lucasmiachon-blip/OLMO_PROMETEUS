@@ -12,21 +12,29 @@ failures=()
 fail() { failures+=("$1"); }
 
 # Fixtures positivos por pattern (mesmo ordem que PATTERNS em guard-secrets.sh).
+# Fixtures sao construidos em runtime via prefix+body para nao gravar
+# tokens literais que tools de secret-scanning (GitHub, scout) interpretem
+# como credenciais reais. Body e padding repetitivo de baixa entropia.
+A36='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+A40='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+A20='AAAAAAAAAAAAAAAAAAAA'
+A35='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+A16='AAAAAAAAAAAAAAAA'
 positives=(
-  'sk-abcdefghij0123456789ABCDEFGHIJ'
-  'sk-ant-abcdefghij0123456789'
-  'Bearer abcdefghij0123456789'
+  "sk-${A20}"
+  "sk-ant-${A20}"
+  "Bearer ${A20}"
   '-----BEGIN RSA PRIVATE KEY-----'
-  'AKIAABCDEFGHIJKLMNOP'
-  'ghp_abcdefghij0123456789ABCDEFGHIJabcdef'
-  'gho_abcdefghij0123456789ABCDEFGHIJabcdef'
-  'github_pat_abcdefghij0123456789ABCDEFGHIJ'
-  'ntn_abcdefghij0123456789ABCDEFGHIJabcdefghij0'
-  'secret_abcdefghij0123456789ABCDEFGHIJabcdefghij'
-  'AIzaABCDEFGHIJ0123456789abcdefghij012345'
-  'xoxb-abcdefghij'
-  'sk_live_abcdefghij0123456789'
-  'sk_test_abcdefghij0123456789'
+  "AKIA${A16}"
+  "ghp_${A36}"
+  "gho_${A36}"
+  "github_pat_${A20}"
+  "ntn_${A40}"
+  "secret_${A40}"
+  "AIza${A35}"
+  'xoxb-AAAAAAAAAA'
+  "sk_live_${A20}"
+  "sk_test_${A20}"
   'postgres://user:pass@host/db'
   '123.456.789-01'
 )
@@ -96,8 +104,8 @@ run_guard || rc=$?; rc=${rc:-0}
 [[ "$rc" -eq 0 ]] || fail ".env.example: expected allow (exit 0), got $rc"
 git rm -fq .env.example >/dev/null
 
-# config.txt with github token -> block.
-echo 'token = "ghp_abcdefghij0123456789ABCDEFGHIJabcdef"' > config.txt
+# config.txt with synthetic github token -> block.
+echo "token = \"ghp_${A36}\"" > config.txt
 git add config.txt
 run_guard && fail "github token: expected block (exit 2), got allow"
 git rm -fq config.txt >/dev/null
